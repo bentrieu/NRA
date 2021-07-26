@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.WelcomeSceneController">
    <children>
       <AnchorPane layoutX="25.0" layoutY="38.0" prefHeight="279.0" prefWidth="600.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="50.0">
          <children>
@@ -57,7 +57,7 @@
                      </effect>
                   </ImageView>
                   <Label layoutX="321.0" layoutY="131.0" prefHeight="18.0" prefWidth="73.0" text="version: 4.2.1" AnchorPane.bottomAnchor="311.0" AnchorPane.leftAnchor="321.0" AnchorPane.rightAnchor="321.0" AnchorPane.topAnchor="131.0" />
-                  <Button fx:id="closeButton" layoutX="663.0" layoutY="14.0" mnemonicParsing="false" onAction="#close" prefHeight="31.0" prefWidth="38.0" styleClass="button2" stylesheets="@../css/fullpackstyling.css">
+                  <Button fx:id="closeButton" layoutX="663.0" layoutY="14.0" mnemonicParsing="false" onAction="#close" prefHeight="31.0" prefWidth="38.0" styleClass="button2" stylesheets="@../css/loadingscreen.css">
                      <graphic>
                         <ImageView fitHeight="23.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -78,7 +78,7 @@
                         </ImageView>
                      </graphic>
                   </Label>
-                  <Button fx:id="gettingStartedButton" alignment="CENTER" contentDisplay="RIGHT" graphicTextGap="3.0" layoutX="283.0" layoutY="371.0" mnemonicParsing="false" onAction="#gettingStarted" prefHeight="35.0" prefWidth="150.0" styleClass="button1" stylesheets="@../css/fullpackstyling.css" text="Getting Started" AnchorPane.bottomAnchor="54.0" AnchorPane.leftAnchor="283.0" AnchorPane.rightAnchor="282.0">
+                  <Button fx:id="gettingStartedButton" alignment="CENTER" contentDisplay="RIGHT" graphicTextGap="3.0" layoutX="283.0" layoutY="371.0" mnemonicParsing="false" onAction="#gettingStarted" prefHeight="35.0" prefWidth="150.0" styleClass="button1" stylesheets="@../css/loadingscreen.css" text="Getting Started" AnchorPane.bottomAnchor="54.0" AnchorPane.leftAnchor="283.0" AnchorPane.rightAnchor="282.0">
                      <graphic>
                         <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                            <image>

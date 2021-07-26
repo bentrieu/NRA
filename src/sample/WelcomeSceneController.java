@@ -1,6 +1,8 @@
 package sample;
 
 import javafx.animation.FadeTransition;
+import javafx.animation.Interpolator;
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,14 +14,16 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Controller implements Initializable {
+public class WelcomeSceneController implements Initializable {
     @FXML
     private Button closeButton;
     @FXML
@@ -51,15 +55,33 @@ public class Controller implements Initializable {
         fadeTransition.play();
 
         loadingLabel.setVisible(true);
-        FadeTransition fadeTransition1 = new FadeTransition(Duration.millis(2000), loadingLabel);
+        FadeTransition fadeTransition1 = new FadeTransition();
+        fadeTransition1.setNode(loadingLabel);
+        fadeTransition1.setDuration(Duration.millis(1000));
+        fadeTransition1.setCycleCount(3);
+        fadeTransition.setAutoReverse(false);
+        fadeTransition1.setInterpolator(Interpolator.LINEAR);
         fadeTransition1.setFromValue(0);
         fadeTransition1.setToValue(1);
         fadeTransition1.play();
 
-        /*// Translate current scene to home scene
-        Parent nextRoot = FXMLLoader.load(getClass().getResource("HomeScene.fxml"));
-        Scene scene = ((Node)event.getSource()).getScene();
-        scene.setRoot(nextRoot);*/
+        // Translate current scene to home scene
+        fadeTransition.setOnFinished(e -> {
+            ((Stage) ((Node)event.getSource()).getScene().getWindow()).close();
+            Parent nextRoot = null;
+            try {
+                nextRoot = FXMLLoader.load(getClass().getResource("HomeScene.fxml"));
+                Stage stage = new Stage();
+                stage.setMinWidth(500);
+                stage.setMinHeight(500);
+                stage.getIcons().add(new Image("/resource/newsicon.png"));
+                stage.setScene(new Scene(nextRoot));
+                stage.setTitle("NRA News");
+                stage.show();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        });
     }
 
 
