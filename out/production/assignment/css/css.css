@@ -1,0 +1,83 @@
+* {
+    -fx-primary : #F2F2F2;
+    -fx-secondary : #000000;
+    -fx-primarytext : #B2B2B2;
+    -fx-button-hover: #C2C2C2;
+    -fx-blue: #106EBE;
+    -fx-red: #F03442;
+    -fx-color-1:#1976D2;
+}
+
+.root{
+    -fx-background-color: -fx-primary;
+}
+
+/*Home Scene styling from here*/
+.pane1 {
+    -fx-background-color: -fx-primary;
+}
+
+.button1 {
+    -fx-background-color : -fx-primary;
+    -fx-background-radius :  0;
+}
+.button1:hover {
+    -fx-background-color : -fx-button-hover;
+    -fx-background-radius :  0;
+}
+.button1:pressed {
+    -fx-background-color : -fx-primary;
+    -fx-background-radius :  0;
+}
+.button1:focused {
+    -fx-border-color: -fx-blue;
+    -fx-border-width: 0 0 0 6;
+}
+.button1:active {
+    -fx-border-color: -fx-blue;
+    -fx-border-width: 0 0 0 6;
+}
+
+.button2 {
+    -fx-background-color : -fx-primary;
+    -fx-background-radius :  0;
+}
+.button2:hover {
+    -fx-background-color : -fx-button-hover;
+    -fx-background-radius :  0;
+}
+.button2:pressed {
+    -fx-background-color : -fx-primary;
+    -fx-background-radius :  0;
+}
+.button2:focused {
+    -fx-border-color: -fx-blue;
+    -fx-border-width: 0 6 0 0;
+}
+
+.button3 {
+    -fx-background-color : -fx-primary;
+    -fx-background-radius :  0;
+}
+.button3:hover {
+    -fx-font-weight : bold;
+    -fx-background-radius :  0;
+}
+.button3:pressed {
+    -fx-background-color : -fx-primary;
+    -fx-background-radius :  0;
+}
+.button3:focused {
+    -fx-font-weight : bold;
+    -fx-border-color: -fx-blue;
+    -fx-border-width: 0 0 6 0;
+}
+
+.text-field {
+    -fx-background-color: -fx-text-box-border, -fx-background;
+    -fx-background-insets: 0, 0 0 1 0 ;
+    -fx-background-radius: 0 ;
+}
+.text-field:focused {
+    -fx-background-color: -fx-focus-color, -fx-background ;
+}
