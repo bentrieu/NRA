@@ -1,7 +1,7 @@
 <component name="libraryTable">
-  <library name="jsoup-1.14.1">
+  <library name="jfoenix-9.0.10">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../../resources/jsoup/jsoup-1.14.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../jfoenix-9.0.10.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

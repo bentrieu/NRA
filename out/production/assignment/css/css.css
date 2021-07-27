@@ -5,18 +5,46 @@
     -fx-button-hover: #C2C2C2;
     -fx-blue: #106EBE;
     -fx-red: #F03442;
+    -fx-darkred: #E81123;
     -fx-color-1:#1976D2;
+    -fx-black: black;
+    -fx-white: white;
 }
 
 .root{
     -fx-background-color: -fx-primary;
 }
 
-/*Home Scene styling from here*/
-.pane1 {
-    -fx-background-color: -fx-primary;
+.label {
+    -fx-text-fill: black;
 }
 
+/*Home Scene styling from here*/
+/*button*/
+.buttonclose {
+    -fx-background-color : transparent;
+    -fx-background-radius :  0;
+}
+.buttonclose:hover {
+    -fx-background-color : -fx-darkred;
+    -fx-background-radius :  0;
+}
+.buttonclose:pressed {
+    -fx-background-color : -fx-red;
+    -fx-background-radius :  0;
+}
+.buttonmax-minmimize {
+    -fx-background-color : transparent;
+    -fx-background-radius :  0;
+}
+.buttonmax-minmimize:hover {
+    -fx-background-color : -fx-button-hover;
+    -fx-background-radius :  0;
+}
+.buttonmax-minmimize:pressed {
+    -fx-background-color : -fx-blue;
+    -fx-background-radius :  0;
+}
 .button1 {
     -fx-background-color : -fx-primary;
     -fx-background-radius :  0;
@@ -33,10 +61,6 @@
     -fx-border-color: -fx-blue;
     -fx-border-width: 0 0 0 6;
 }
-.button1:active {
-    -fx-border-color: -fx-blue;
-    -fx-border-width: 0 0 0 6;
-}
 
 .button2 {
     -fx-background-color : -fx-primary;
@@ -49,10 +73,6 @@
 .button2:pressed {
     -fx-background-color : -fx-primary;
     -fx-background-radius :  0;
-}
-.button2:focused {
-    -fx-border-color: -fx-blue;
-    -fx-border-width: 0 6 0 0;
 }
 
 .button3 {
@@ -70,14 +90,109 @@
 .button3:focused {
     -fx-font-weight : bold;
     -fx-border-color: -fx-blue;
-    -fx-border-width: 0 0 6 0;
+    -fx-border-width: 0 0 3 0;
 }
 
+.buttonsearch {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 0, 0);
+    -fx-background-color : -fx-button-hover;
+    -fx-background-radius :  100%;
+}
+.buttonsearch:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 0, 0);
+    -fx-background-color : -fx-blue;
+    -fx-background-radius :  100%;
+}
+.buttonsearch:pressed {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 0, 0);
+    -fx-background-color : -fx-primary;
+    -fx-background-radius :  100%;
+}
+
+.pane1 {
+    -fx-background-color: -fx-primary;
+}
+
+/*text-field*/
 .text-field {
-    -fx-background-color: -fx-text-box-border, -fx-background;
-    -fx-background-insets: 0, 0 0 1 0 ;
-    -fx-background-radius: 0 ;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 0, 0);
+    -fx-background-color: white;
+    -fx-background-radius: 5;
 }
 .text-field:focused {
-    -fx-background-color: -fx-focus-color, -fx-background ;
+    -fx-background-color: white;
+}
+
+/*scroll pane*/
+.scroll-pane {
+    -fx-background-color: -fx-primary;
+}
+
+.scroll-bar:horizontal, .scroll-bar:vertical{
+    -fx-background-color: #E8E8E8;
+    -fx-pref-width: 8;
+}
+
+.scroll-bar:pressed, .scroll-bar:hover {
+    -fx-pref-width: 16;
+}
+
+.increment-button, .decrement-button {
+    -fx-background-color: #E8E8E8;
+    -fx-border-color: #E8E8E8;
+}
+.scroll-bar:horizontal .track, .scroll-bar:vertical .track{
+    -fx-background-color: #E8E8E8;
+    -fx-border-color: #E8E8E8;
+    -fx-background-radius: 0em;
+}
+.scroll-bar:horizontal .thumb, .scroll-bar:vertical .thumb {
+    -fx-background-color: #BABABA;
+    -fx-background-radius: 0em;
+}
+.scroll-bar:hover:horizontal .thumb, .scroll-bar:hover:vertical .thumb {
+    -fx-background-color: #8B8B8B;
+    -fx-background-radius: 0em;
+}
+.scroll-bar:pressed:horizontal .thumb, .scroll-bar:pressed:vertical .thumb {
+    -fx-background-color: #5D5D5D;
+    -fx-background-radius: 0em;
+}
+.scroll-pane .corner {
+    -fx-background-color: #E8E8E8;
+}
+
+/*pagination*/
+/* Remove spacing */
+.pagination > .pagination-control > .control-box {
+    -fx-spacing: 0;
+}
+/* You can control the actual button sizes here */
+.pagination > .pagination-control > .control-box > .number-button,
+.pagination > .pagination-control > .control-box > .bullet-button,
+.pagination > .pagination-control > .control-box > .left-arrow-button,
+.pagination > .pagination-control > .control-box > .right-arrow-button {
+    -fx-background-insets: 0, 1;
+    -fx-background-color: lightgray, #FAFAFA;
+    -fx-min-width: 30;
+    -fx-min-height: 30;
+}
+/* Colors on hover */
+.pagination > .pagination-control > .control-box > .number-button:hover,
+.pagination > .pagination-control > .control-box > .bullet-button:hover,
+.pagination > .pagination-control > .control-box > .left-arrow-button:hover,
+.pagination > .pagination-control > .control-box > .right-arrow-button:hover {
+    -fx-background-insets: 0;
+    -fx-background-color: lightgray;
+}
+/* Selected toggle color */
+.pagination > .pagination-control > .control-box > .number-button:selected,
+.pagination > .pagination-control > .control-box > .bullet-button:selected{
+    -fx-background-insets: 0;
+    -fx-background-color: -fx-blue;
+    -fx-text-fill: white;
+}
+/*hide page information*/
+.pagination {
+    -fx-page-information-visible: false;
 }

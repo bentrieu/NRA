@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Border;
 import javafx.util.Duration;
@@ -18,27 +19,22 @@ import java.util.ResourceBundle;
 public class HomeSceneController implements Initializable {
 
     @FXML
-    private Button menuButton, homeButton, videoButton, articlesListButton, settingsButton, refreshButton;
+    private Button menuButton, homeButton, videoButton, articlesListButton, settingsButton, refreshButton, searchButton;
 
     @FXML
     private Button homeInMenuButton, videoInMenuButton, articlesListInMenuButton, settingsInMenuButton;
 
     @FXML
-    private ImageView menuImageView;
-
-    @FXML
     private TextField searchTextField;
 
     @FXML
-    private AnchorPane menuPane, mainPane;
+    private AnchorPane menuPane, mainPane, tempPane;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         menuPane.setVisible(false);
-        TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(0.5), menuPane);
-        translateTransition.setByX(-300);
-        translateTransition.play();
-
+        menuPane.setLayoutX(-300);
+        tempPane.setVisible(false);
     }
 
     public void menu(ActionEvent event) {
@@ -94,6 +90,12 @@ public class HomeSceneController implements Initializable {
     }
     public void refresh() {
 
+    }
+    public void takeSearchInput(MouseEvent event) {
+        tempPane.setVisible(true);
+    }
+    public void exitSearch(MouseEvent event) {
+        tempPane.setVisible(false);
     }
 
 

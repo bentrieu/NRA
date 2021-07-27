@@ -57,13 +57,12 @@ public class WelcomeSceneController implements Initializable {
         loadingLabel.setVisible(true);
         FadeTransition fadeTransition1 = new FadeTransition();
         fadeTransition1.setNode(loadingLabel);
-        fadeTransition1.setDuration(Duration.millis(1000));
+        fadeTransition1.setDuration(Duration.millis(2000));
         fadeTransition1.setCycleCount(3);
-        fadeTransition.setAutoReverse(false);
-        fadeTransition1.setInterpolator(Interpolator.LINEAR);
         fadeTransition1.setFromValue(0);
         fadeTransition1.setToValue(1);
-        fadeTransition1.play();
+        fadeTransition.setAutoReverse(true);
+        fadeTransition1.setInterpolator(Interpolator.LINEAR);
 
         // Translate current scene to home scene
         fadeTransition.setOnFinished(e -> {
@@ -75,13 +74,15 @@ public class WelcomeSceneController implements Initializable {
                 stage.setMinWidth(500);
                 stage.setMinHeight(500);
                 stage.getIcons().add(new Image("/resource/newsicon.png"));
-                stage.setScene(new Scene(nextRoot));
                 stage.setTitle("NRA News");
+                stage.setScene(new Scene(nextRoot));
                 stage.show();
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
         });
+
+        fadeTransition1.play();
     }
 
 
