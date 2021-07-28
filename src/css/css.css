@@ -61,6 +61,10 @@
     -fx-border-color: -fx-blue;
     -fx-border-width: 0 0 0 6;
 }
+.button1:selected {
+    -fx-border-color: -fx-blue;
+    -fx-border-width: 0 0 0 6;
+}
 
 .button2 {
     -fx-background-color : -fx-primary;
@@ -129,34 +133,40 @@
 }
 
 .scroll-bar:horizontal, .scroll-bar:vertical{
-    -fx-background-color: #E8E8E8;
+    -fx-background-color: transparent;
     -fx-pref-width: 8;
 }
 
 .scroll-bar:pressed, .scroll-bar:hover {
-    -fx-pref-width: 16;
+    -fx-pref-width: 12;
+    -fx-background-color: transparent;
 }
 
 .increment-button, .decrement-button {
     -fx-background-color: #E8E8E8;
     -fx-border-color: #E8E8E8;
+    -fx-opacity: 0;
 }
 .scroll-bar:horizontal .track, .scroll-bar:vertical .track{
-    -fx-background-color: #E8E8E8;
-    -fx-border-color: #E8E8E8;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
     -fx-background-radius: 0em;
 }
 .scroll-bar:horizontal .thumb, .scroll-bar:vertical .thumb {
     -fx-background-color: #BABABA;
-    -fx-background-radius: 0em;
+    -fx-background-radius: 2em;
 }
 .scroll-bar:hover:horizontal .thumb, .scroll-bar:hover:vertical .thumb {
     -fx-background-color: #8B8B8B;
-    -fx-background-radius: 0em;
+    -fx-background-radius: 2em;
 }
 .scroll-bar:pressed:horizontal .thumb, .scroll-bar:pressed:vertical .thumb {
     -fx-background-color: #5D5D5D;
-    -fx-background-radius: 0em;
+    -fx-background-radius: 2em;
+}
+.scroll-bar:active:horizontal .thumb, .scroll-bar:pressed:vertical .thumb {
+    -fx-background-color: #5D5D5D;
+    -fx-background-radius: 2em;
 }
 .scroll-pane .corner {
     -fx-background-color: #E8E8E8;

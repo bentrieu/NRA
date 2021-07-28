@@ -10,7 +10,9 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="932.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.HomeSceneController">
    <children>
@@ -146,8 +148,63 @@
                <children>
                   <ScrollPane fitToWidth="true" hmax="1.1" layoutX="376.0" layoutY="210.0" pannable="true" prefHeight="425.0" prefWidth="621.0" stylesheets="@../css/css.css" vmax="1.5" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <content>
-                        <AnchorPane prefHeight="1500.0" prefWidth="200.0" styleClass="root" stylesheets="@../css/css.css">
+                        <AnchorPane prefHeight="1200.0" prefWidth="200.0" styleClass="root" stylesheets="@../css/css.css">
                            <children>
+                              <HBox alignment="TOP_CENTER" prefHeight="409.0" prefWidth="792.0" spacing="10.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <Button alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" wrapText="true" HBox.hgrow="ALWAYS">
+                                       <graphic>
+                                          <ImageView fitHeight="288.0" fitWidth="485.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../resource/test.jpg" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                    <Button alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" HBox.hgrow="ALWAYS">
+                                       <graphic>
+                                          <ImageView fitHeight="305.0" fitWidth="497.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../resource/test2.jpg" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                 </children>
+                                 <padding>
+                                    <Insets left="10.0" right="10.0" />
+                                 </padding>
+                              </HBox>
+                              <VBox alignment="TOP_CENTER" layoutX="557.0" layoutY="287.0" prefHeight="200.0" prefWidth="100.0" spacing="30.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Chủng Delta đe dọa chiến lược của Biden" textAlignment="JUSTIFY" wrappingWidth="900.0">
+                                       <font>
+                                          <Font name="System Bold" size="36.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets top="50.0" />
+                                       </VBox.margin>
+                                    </Text>
+                                    <Text lineSpacing="3.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Biden từng kỳ vọng giúp nước Mỹ nhanh chóng thoát đại dịch và hướng đến những kế hoạch khác, nhưng chủng Delta trỗi dậy đe dọa tham vọng này.Trong một chương trình đối thoại với cử tri trên truyền hình tuần trước, hầu hết câu hỏi dành cho Tổng thống Mỹ Joe Biden đều liên quan đến Covid-19. Đây được coi là sự thay đổi rõ rệt trong mối quan tâm của người Mỹ, so với cuộc họp báo đầu tiên của ông hồi cuối tháng 3, khi đại dịch không phải vấn đề trọng tâm.Dấu hiệu này cho thấy người Mỹ dường như ngày càng lo ngại về tình hình dịch bệnh sau thời gian tình hình có vẻ khả quan. Theo cuộc khảo sát được Axios - Ipsos thực hiện từ ngày 16 đến 19/7, 39% người được hỏi cho rằng việc trở lại cuộc sống bình thường như trước đại dịch giờ đây tiềm ẩn rủi ro, trong khi con số này tháng trước là 28%.Giới chức Mỹ đang xem xét những mô hình dự đoán số ca nhiễm mới tại các địa phương có thể tăng từ vài nghìn lên hơn 200.000 mỗi ngày vào mùa thu. Một dự báo mới đây cũng ước tính Mỹ có thể ghi nhận số người chết vì Covid-19 hàng ngày cao gấp ba lần so với hiện tại vào tháng 10. Ca tử vong trung bình mỗi ngày trong 7 ngày gần đây là khoảng 250.Trong khi Biden cáo buộc các nền tảng mạng xã hội &quot;đang giết người&quot; bằng cách cho phép lan truyền tin giả về vaccine, các đồng minh của ông cũng lưu ý những bang ghi nhận số ca nhiễm tăng mạnh nhất đều do đảng Cộng hòa lãnh đạo." textAlignment="JUSTIFY" wrappingWidth="900.0">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Text>
+                                    <ImageView fitHeight="394.0" fitWidth="728.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../resource/test.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <Text lineSpacing="3.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Trong khi đó, Nhà Trắng khẳng định Biden sẽ không ngừng thúc đẩy tiêm chủng và kiểm soát Covid-19. &quot;Kiểm soát đại dịch và bảo vệ người Mỹ vẫn là ưu tiên số một của Tổng thống. Đây sẽ tiếp tục là ưu tiên của ông ấy trong tương lai&quot;, thư ký báo chí Nhà Trắng Jen Psaki phát biểu hôm 22/7.Một quan chức Nhà Trắng giấu tên cho biết các chuyên gia y tế của chính phủ dự đoán số ca nhập viện và tử vong vì Covid-19 sẽ không cao như thời kỳ đỉnh điểm của đại dịch, nói thêm rằng họ cũng cảm thấy bớt căng thẳng khi tỷ lệ tiêm chủng tại một số bang gần đây tăng nhanh hơn mức trung bình toàn quốc, như Nevada và Florida.Tuy nhiên, mối nguy hiểm từ biến chủng Delta vẫn khiến giới chức Nhà Trắng phải tranh luận rằng liệu có nên kêu gọi những người đã tiêm vaccine Covid-19 đeo khẩu trang tại nhiều nơi hơn không.Mike Donilon, cố vấn cấp cao của Biden, khẳng định Tổng thống Mỹ &quot;chưa hề rời mắt&quot; khỏi vấn đề đại dịch. Mặc dù vậy, đội ngũ cố vấn và đồng minh của Biden cũng thể hiện rõ rằng họ còn muốn người Mỹ chú ý đến những vấn đề khác trong chương trình nghị sự, bao gồm quyền bỏ phiếu, kiểm soát súng đạn, nhập cư, hay kế hoạch cơ sở hạ tầng đầy tham vọng.Những quan chức hàng đầu tại Unite the Country, một siêu ủy ban hành động chính trị (PAC) ủng hộ Biden, hồi đầu tháng cảnh báo các nhà tài trợ và người đại diện rằng theo ghi nhận tại các bang chiến trường, ngay cả nhiều người ủng hộ Biden cũng chỉ biết rất ít về thành tựu của ông trong các lĩnh vực khác.&quot;Thực sự thiếu thông tin về những điểm cụ thể trong chính sách của Biden, đặt ra yêu cầu giao tiếp với cử tri, ngay cả với những người ủng hộ chăm cập nhật về Tổng thống&quot;, bản ghi nhớ từ Unite the Country mà Washington Post thu thập được có đoạn.Các cử tri đánh giá cao cách Biden xử lý cuộc khủng hoảng Covid-19, cảm thấy yên tâm hơn so với khi ông đối mặt những vấn đề khác như kinh tế và nhập cư. Biden liên tục đạt tỷ lệ tín nhiệm cao hơn về cách xử lý đại dịch so với mức tín nhiệm tổng thể. Theo cuộc khảo sát gần đây của CBS News-YouGov, 66% người Mỹ cho biết Biden đang làm tốt việc ứng phó Covid-19, 58% ủng hộ vai trò tổng thống của ông.Celinda Lake, nhà thăm dò thuộc đảng Dân chủ, đánh giá tỷ lệ ủng hộ Biden sẽ giảm nhẹ khi người dân không còn tập trung vào Covid-19, bởi họ có lẽ không kỳ vọng nhiều vào Tổng thống trong những vấn đề khác. Trong khi đó, đảng Cộng hòa cho rằng giai đoạn tiếp theo của đại dịch là điểm yếu tiềm tàng của ông chủ Nhà Trắng.&quot;Thông điệp quan trọng nhất mà người dân từng nhận được là đại dịch sẽ kết thúc vào ngày 4/7. Giờ đây, thêm vài tuần đã trôi qua, Nhà Trắng lại làm như họ không biết chuyện gì đang xảy ra&quot;, chiến lược gia đảng Cộng hòa Corry Bliss nhận xét, nói thêm rằng Nhà Trắng &quot;có vẻ mất phương hướng và thiếu thông điệp&quot;.&quot;Yếu tố duy nhất của quá trình đưa đất nước trở lại trạng thái bình thường là việc triển khai vaccine, vốn là kết quả trực tiếp từ chính quyền Donald Trump và Chiến dịch Thần tốc. Không rõ họ đã làm bất cứ điều gì để cải thiện tình hình đại dịch hay chưa&quot;, Bliss nêu quan điểm.Hồi tháng 3, Biden đặt mục tiêu ngày quốc khánh 4/7 sẽ đánh dấu thời điểm nước Mỹ &quot;bắt đầu thoát khỏi virus&quot;. Đến tháng 5, khi hàng triệu người dân được tiêm chủng, Trung tâm Kiểm soát và Phòng ngừa Dịch bệnh Mỹ (CDC) cho biết những người đã tiêm đầy đủ có thể bỏ khẩu trang trong hầu hết trường hợp. Tuy nhiên, biến chủng Delta, hiện chiếm hơn 83% số ca nhiễm mới tại Mỹ, đã khiến không khí lạc quan trở nên u ám.Giới chuyên gia cho hay biến chủng Delta có khả năng lây lan mạnh hơn nhiều so với các chủng virus trước đây. Số ca nhiễm trung bình mỗi ngày tại Mỹ đã tăng gấp 4 lần trong tháng qua, từ 11.000 hồi cuối tháng 6 lên hơn 44.000. Số ca nhập viện tại Florida và Louisiana tuần qua cũng tăng lần lượt 59% và 76%, hầu hết là những người chưa tiêm vaccine.&quot;Đây là một trong những chủng virus hô hấp lây lan mạnh nhất mà chúng ta biết đến, cũng như trong suốt 20 năm sự nghiệp của tôi&quot;, giám đốc CDC Rochelle Walensky phát biểu hôm 22/7, đồng thời kêu gọi những người còn ngần ngại nhanh chóng tiêm chủng. Theo số liệu của Washington Post, mới có khoảng 49% dân số Mỹ được tiêm đầy đủ vaccine Covid-19.Nhà dịch tễ học Michael Osterholm, giám đốc Trung tâm Nghiên cứu và Chính sách Bệnh Truyền nhiễm thuộc Đại học Minnesota, cho biết ông cùng đội ngũ của mình đã xem xét dữ liệu của Quỹ Kaiser Family về số người Mỹ còn nguy cơ nhiễm virus.&quot;100 triệu người Mỹ vẫn chưa được tiêm chủng hoặc từng nhiễm nCoV để có khả năng miễn dịch. Thế là quá đủ gỗ để đám cháy Covid-19 lan rộng. Điều đó sẽ xảy ra&quot;, Osterholm dự đoán." textAlignment="JUSTIFY" wrappingWidth="900.0">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets bottom="100.0" />
+                                       </VBox.margin>
+                                    </Text>
+                                 </children>
+                              </VBox>
                               <Pagination maxPageIndicatorCount="5" pageCount="5" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                            </children>
                         </AnchorPane>
@@ -202,7 +259,7 @@
          </children>
       </AnchorPane>
       <AnchorPane fx:id="tempPane" onMouseClicked="#exitSearch" opacity="0.33" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: black;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <HBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" prefWidth="200.0" spacing="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="96.0" AnchorPane.topAnchor="0.0">
+      <HBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" prefWidth="200.0" spacing="10.0" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="96.0" AnchorPane.topAnchor="0.0">
          <children>
             <TextField fx:id="searchTextField" onMouseClicked="#takeSearchInput" prefHeight="38.0" prefWidth="426.0" promptText="Search Interests and Web" styleClass="text-field" stylesheets="@../css/css.css" HBox.hgrow="NEVER">
                <font>
@@ -226,7 +283,7 @@
             </Button>
          </children>
          <padding>
-            <Insets left="100.0" right="100.0" />
+            <Insets left="10.0" right="10.0" />
          </padding>
       </HBox>
    </children>

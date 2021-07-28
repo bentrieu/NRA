@@ -1,11 +1,14 @@
 package sample;
 
 import javafx.animation.TranslateTransition;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -20,6 +23,9 @@ public class HomeSceneController implements Initializable {
 
     @FXML
     private Button menuButton, homeButton, videoButton, articlesListButton, settingsButton, refreshButton, searchButton;
+
+    @FXML
+    private ToggleButton toggleButton;
 
     @FXML
     private Button homeInMenuButton, videoInMenuButton, articlesListInMenuButton, settingsInMenuButton;
@@ -96,6 +102,7 @@ public class HomeSceneController implements Initializable {
     }
     public void exitSearch(MouseEvent event) {
         tempPane.setVisible(false);
+        menuButton.requestFocus();
     }
 
 
