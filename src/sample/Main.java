@@ -4,13 +4,16 @@ import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -27,9 +30,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Main extends Application {
-
-//    @FXML
-//    FlowPane mainText;
 
     List<String> newsText = new ArrayList<String>();
     public void extractNews(String url) throws IOException {
@@ -48,12 +48,15 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
 
-        FlowPane flowPane = new FlowPane();
-//        ScrollPane scrollPane = new ScrollPane(flowPane);
-//        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-//        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-        flowPane.setOrientation(Orientation.VERTICAL);
-        flowPane.setVgap(10);
+        VBox vbox = new VBox(20);
+        AnchorPane anchorPane = new AnchorPane();
+        AnchorPane.setBottomAnchor(vbox,50.0);
+        AnchorPane.setTopAnchor(vbox,50.0);
+        AnchorPane.setRightAnchor(vbox,480.0);
+        AnchorPane.setLeftAnchor(vbox,480.0);
+        anchorPane.getChildren().add(vbox);
+        ScrollPane scrollPane = new ScrollPane(anchorPane);
+
         //Url to connect
         final String url = "https://vnexpress.net/them-hon-1-2-trieu-lieu-vaccine-astrazeneca-ve-viet-nam-4329275.html";
 
@@ -78,22 +81,22 @@ public class Main extends Application {
                 image.add(new Image(newsText.get(i)));
                 imageView.add(new ImageView(image.get(imgCount)));
 
-                flowPane.getChildren().add(imageView.get(imgCount));
+                vbox.getChildren().add(imageView.get(imgCount));
                 imgCount++;
             } else {
                 label.add(new Label(newsText.get(i)));
                 label.get(textCount).setFont(new Font("Arial", 15));
                 label.get(textCount).setWrapText(true);
-                label.get(textCount).setMaxSize(750, 500);
+                label.get(textCount).setMaxSize(750, 1000);
 
-                flowPane.getChildren().add(label.get(textCount));
+                vbox.getChildren().add(label.get(textCount));
                 textCount++;
             }
         }
 
-//        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("sample.fxml")));
+
         primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(flowPane,1600,900));
+        primaryStage.setScene(new Scene(scrollPane,500,500));
         primaryStage.show();
     }
 
