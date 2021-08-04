@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.application.Application;
 import javafx.fxml.FXML;
@@ -29,7 +30,7 @@ import java.util.regex.Pattern;
 
 public class Controller {
 
-    public void start() {
+    public void start(ActionEvent e) {
 
     }
 }
