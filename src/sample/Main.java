@@ -14,7 +14,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 import org.jsoup.Jsoup;
@@ -45,6 +47,18 @@ public class Main extends Application {
         }
     }
 
+    public String extractTitle(String url) throws IOException {
+        Document doc = Jsoup.connect(url).get();
+        String title = doc.getElementsByClass("title-detail").text();
+        return title;
+    }
+
+    public String extractDay(String url) throws IOException {
+        Document doc = Jsoup.connect(url).get();
+        String day = doc.getElementsByClass("date").text();
+        return day;
+    }
+
     @Override
     public void start(Stage primaryStage) throws Exception{
 
@@ -68,6 +82,23 @@ public class Main extends Application {
         //Run the method
         extractNews(url);
 
+        //Get date and format it
+        Label date = new Label(extractDay(url));
+        date.setFont(Font.font("Arial",15));
+        date.setWrapText(true);
+        date.setMaxSize(750,800);
+        date.setAlignment(Pos.TOP_RIGHT);
+        date.setTextFill(Color.GRAY);
+        vbox.getChildren().add(date);
+
+        //Get title and format it
+        Label title = new Label(extractTitle(url));
+        title.setFont(Font.font("Merriweather",FontWeight.BOLD,32));
+        title.setWrapText(true);
+        title.setMaxSize(750,800);
+        vbox.getChildren().add(title);
+
+
         //Regex
         Pattern http = Pattern.compile("^https");
         Matcher matcher;
@@ -85,15 +116,18 @@ public class Main extends Application {
                 imgCount++;
             } else {
                 label.add(new Label(newsText.get(i)));
-                label.get(textCount).setFont(new Font("Arial", 15));
+                label.get(textCount).setFont(Font.font("Arial", 15));
                 label.get(textCount).setWrapText(true);
                 label.get(textCount).setMaxSize(750, 1000);
-
+                //Author name have to be bold, usually the last text
+                if(i == newsText.size()-1){
+                    label.get(textCount).setFont(Font.font("Arial",FontWeight.BOLD, 15));
+                    label.get(textCount).setAlignment(Pos.BOTTOM_RIGHT);
+                }
                 vbox.getChildren().add(label.get(textCount));
                 textCount++;
             }
         }
-
 
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(scrollPane,500,500));
