@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="wrapAnchorPane" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.HomeLayoutController">
+   <children>
+      <VBox alignment="CENTER" spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+         <children>
+            <HBox alignment="CENTER" spacing="5.0">
+               <children>
+                  <AnchorPane fx:id="anchorPane1" prefHeight="300.0" prefWidth="300.0">
+                     <children>
+                        <Button fx:id="button1" alignment="BOTTOM_LEFT" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" styleClass="buttonhome" stylesheets="@theme.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets bottom="20.0" left="20.0" right="20.0" />
+                           </padding>
+                        </Button>
+                        <Label fx:id="label1" alignment="CENTER" text="Nhóm người vi phạm Chỉ thị 16, lăng mạ lực lượng chống dịch" textFill="WHITE" wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                           <font>
+                              <Font name="System Bold" size="22.0" />
+                           </font>
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="anchorPane2" prefHeight="300.0" prefWidth="300.0">
+                     <children>
+                        <Button fx:id="button2" alignment="BOTTOM_LEFT" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" styleClass="buttonhome" stylesheets="@theme.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets bottom="20.0" left="20.0" right="20.0" />
+                           </padding>
+                        </Button>
+                        <Label fx:id="label2" alignment="CENTER" text="TP.HCM cần thêm 12.000 nhân viên y tế, kiến nghị Bộ Quốc phòng hỗ trợ" textFill="WHITE" wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                           <font>
+                              <Font name="System Bold" size="22.0" />
+                           </font>
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" spacing="5.0">
+               <children>
+                  <AnchorPane fx:id="anchorPane3" prefHeight="300.0" prefWidth="300.0">
+                     <children>
+                        <Button fx:id="button3" alignment="BOTTOM_LEFT" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="370.0" styleClass="buttonhome" stylesheets="@theme.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets bottom="20.0" left="20.0" right="20.0" />
+                           </padding>
+                        </Button>
+                        <Label fx:id="label3" alignment="CENTER" text="Nhóm người vi phạm Chỉ thị 16, lăng mạ lực lượng chống dịch" textFill="WHITE" wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                           <font>
+                              <Font name="System Bold" size="22.0" />
+                           </font>
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="anchorPane4" prefHeight="300.0" prefWidth="300.0">
+                     <children>
+                        <Button fx:id="button4" alignment="BOTTOM_LEFT" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="370.0" styleClass="buttonhome" stylesheets="@theme.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets bottom="20.0" left="20.0" right="20.0" />
+                           </padding>
+                        </Button>
+                        <Label fx:id="label4" alignment="CENTER" text="TP.HCM cần thêm 12.000 nhân viên y tế, kiến nghị Bộ Quốc phòng hỗ trợ" textFill="WHITE" wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                           <font>
+                              <Font name="System Bold" size="22.0" />
+                           </font>
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="anchorPane5" prefHeight="300.0" prefWidth="300.0">
+                     <children>
+                        <Button fx:id="button5" alignment="BOTTOM_LEFT" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="370.0" styleClass="buttonhome" stylesheets="@theme.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets bottom="20.0" left="20.0" right="20.0" />
+                           </padding>
+                        </Button>
+                        <Label fx:id="label5" alignment="CENTER" text="Nhóm người vi phạm Chỉ thị 16, lăng mạ lực lượng chống dịch" textFill="WHITE" wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                           <font>
+                              <Font name="System Bold" size="22.0" />
+                           </font>
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </HBox>
+            <HBox alignment="CENTER" spacing="5.0">
+               <children>
+                  <AnchorPane fx:id="anchorPane6" prefHeight="300.0" prefWidth="300.0">
+                     <children>
+                        <Button fx:id="button6" alignment="BOTTOM_LEFT" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="370.0" styleClass="buttonhome" stylesheets="@theme.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets bottom="20.0" left="20.0" right="20.0" />
+                           </padding>
+                        </Button>
+                        <Label fx:id="label6" alignment="CENTER" text="Nhóm người vi phạm Chỉ thị 16, lăng mạ lực lượng chống dịch" textFill="WHITE" wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                           <font>
+                              <Font name="System Bold" size="22.0" />
+                           </font>
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="anchorPane7" prefHeight="300.0" prefWidth="300.0">
+                     <children>
+                        <Button fx:id="button7" alignment="BOTTOM_LEFT" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="370.0" styleClass="buttonhome" stylesheets="@theme.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets bottom="20.0" left="20.0" right="20.0" />
+                           </padding>
+                        </Button>
+                        <Label fx:id="label7" alignment="CENTER" text="TP.HCM cần thêm 12.000 nhân viên y tế, kiến nghị Bộ Quốc phòng hỗ trợ" textFill="WHITE" wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                           <font>
+                              <Font name="System Bold" size="22.0" />
+                           </font>
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="anchorPane8" prefHeight="300.0" prefWidth="300.0">
+                     <children>
+                        <Button fx:id="button8" alignment="BOTTOM_LEFT" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="370.0" styleClass="buttonhome" stylesheets="@theme.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets bottom="20.0" left="20.0" right="20.0" />
+                           </padding>
+                        </Button>
+                        <Label fx:id="label8" alignment="CENTER" text="Nhóm người vi phạm Chỉ thị 16, lăng mạ lực lượng chống dịch" textFill="WHITE" wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                           <font>
+                              <Font name="System Bold" size="22.0" />
+                           </font>
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

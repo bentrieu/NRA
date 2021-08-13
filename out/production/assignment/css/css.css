@@ -9,6 +9,7 @@
     -fx-color-1:#1976D2;
     -fx-black: black;
     -fx-white: white;
+    -fx-dark: #9C9C9C;
 }
 
 .root{
@@ -57,10 +58,6 @@
     -fx-background-color : -fx-primary;
     -fx-background-radius :  0;
 }
-.button1:focused {
-    -fx-border-color: -fx-blue;
-    -fx-border-width: 0 0 0 6;
-}
 .button1:selected {
     -fx-border-color: -fx-blue;
     -fx-border-width: 0 0 0 6;
@@ -88,13 +85,14 @@
     -fx-background-radius :  0;
 }
 .button3:pressed {
-    -fx-background-color : -fx-primary;
+    -fx-background-color : -fx-button-hover;
     -fx-background-radius :  0;
 }
-.button3:focused {
+.button3:selected {
     -fx-font-weight : bold;
     -fx-border-color: -fx-blue;
     -fx-border-width: 0 0 3 0;
+    -fx-background-radius :  0;
 }
 
 .buttonsearch {
@@ -113,8 +111,17 @@
     -fx-background-radius :  100%;
 }
 
-.pane1 {
-    -fx-background-color: -fx-primary;
+.buttonarr {
+    -fx-background-color : -fx-dark;
+    -fx-background-radius :  0;
+}
+.buttonarr:hover {
+    -fx-background-color : -fx-button-hover;
+    -fx-background-radius :  0;
+}
+.buttonarr:pressed {
+    -fx-background-color : black;
+    -fx-background-radius :  0;
 }
 
 /*text-field*/
@@ -205,4 +212,38 @@
 /*hide page information*/
 .pagination {
     -fx-page-information-visible: false;
+}
+
+/*Home layout start from here*/
+.buttonhome {
+    -fx-background-color: transparent;
+    -fx-background-radius: 5;
+}
+.buttonhome:hover {
+    -fx-background-color: black;
+    -fx-opacity: 0.5;
+    -fx-border-width: 2 2 2 2;
+    -fx-border-color: white;
+    -fx-border-radius: 5;
+}
+.buttonhome:pressed {
+    -fx-background-color: black;
+    -fx-opacity: 0.8;
+    -fx-border-radius: 5;
+}
+
+.anchorpanebutton {
+    -fx-border-width: 2 2 2 2;
+    -fx-border-radius: 5;
+}
+.anchorpanebutton:hover {
+    -fx-border-width: 2 2 2 2;
+    -fx-border-color: black;
+    -fx-border-radius: 5;
+}
+
+.labelhomelayoutbutton {
+    -fx-text-fill: -fx-white;
+    -fx-font-size: 22;
+    -fx-effect: dropshadow(three-pass-box, black, 10, 0, 0, 0);
 }

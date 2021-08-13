@@ -6,28 +6,18 @@
 <?import javafx.scene.control.Pagination?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="932.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.HomeSceneController">
+<AnchorPane fx:id="rootAnchorPane" prefHeight="900.0" prefWidth="1200.0" styleClass="root" stylesheets="@../css/css.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.HomeSceneController">
    <children>
-      <AnchorPane layoutY="32.0" prefHeight="200.0" prefWidth="48.0" styleClass="pane1" stylesheets="@../css/css.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane layoutY="32.0" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="48.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Button fx:id="homeButton" layoutX="11.0" layoutY="73.0" mnemonicParsing="false" onAction="#home" prefHeight="45.0" prefWidth="23.0" styleClass="button1" stylesheets="@../css/css.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
-               <graphic>
-                  <ImageView fitHeight="35.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../resource/home.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="menuButton" layoutX="2.0" layoutY="62.0" mnemonicParsing="false" onAction="#menu" prefHeight="50.0" styleClass="button1" stylesheets="@../css/css.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Button fx:id="menuButton" accessibleRole="BUTTON" layoutX="2.0" layoutY="62.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#menu" prefHeight="50.0" styleClass="button2" stylesheets="@../css/css.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <graphic>
                   <ImageView fitHeight="35.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -36,7 +26,16 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="videoButton" layoutX="4.0" layoutY="95.0" mnemonicParsing="false" onAction="#video" prefHeight="45.0" prefWidth="23.0" styleClass="button1" stylesheets="@../css/css.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="95.0">
+            <ToggleButton fx:id="homeButton" layoutX="11.0" layoutY="73.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#home" prefHeight="45.0" styleClass="button1" stylesheets="@../css/css.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+               <graphic>
+                  <ImageView fitHeight="35.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resource/home.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </ToggleButton>
+            <ToggleButton fx:id="videoButton" accessibleRole="TOGGLE_BUTTON" layoutX="4.0" layoutY="95.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#video" prefHeight="45.0" styleClass="button1" stylesheets="@../css/css.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="95.0">
                <graphic>
                   <ImageView fitHeight="35.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -44,8 +43,8 @@
                      </image>
                   </ImageView>
                </graphic>
-            </Button>
-            <Button fx:id="articlesListButton" layoutX="6.0" layoutY="162.0" mnemonicParsing="false" onAction="#articlesList" prefHeight="45.0" prefWidth="23.0" styleClass="button1" stylesheets="@../css/css.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="140.0">
+            </ToggleButton>
+            <ToggleButton fx:id="articlesListButton" accessibleRole="TOGGLE_BUTTON" layoutX="6.0" layoutY="162.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#articlesList" prefHeight="45.0" styleClass="button1" stylesheets="@../css/css.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="140.0">
                <graphic>
                   <ImageView fitHeight="35.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -53,8 +52,8 @@
                      </image>
                   </ImageView>
                </graphic>
-            </Button>
-            <Button fx:id="settingsButton" layoutX="6.0" layoutY="289.0" mnemonicParsing="false" onAction="#settings" prefHeight="45.0" prefWidth="48.0" styleClass="button1" stylesheets="@../css/css.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            </ToggleButton>
+            <ToggleButton fx:id="settingsButton" accessibleRole="TOGGLE_BUTTON" layoutX="6.0" layoutY="289.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#settings" prefHeight="45.0" styleClass="button1" stylesheets="@../css/css.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -62,17 +61,17 @@
                      </image>
                   </ImageView>
                </graphic>
-            </Button>
+            </ToggleButton>
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="48.0" layoutY="32.0" prefHeight="50.0" prefWidth="200.0" styleClass="pane1" stylesheets="@../css/css.css" AnchorPane.leftAnchor="48.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane layoutX="48.0" layoutY="32.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" AnchorPane.leftAnchor="48.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label layoutX="33.0" layoutY="13.0" text="Today" AnchorPane.leftAnchor="30.0">
+            <Label fx:id="todayLabel" layoutX="33.0" layoutY="13.0" text="Today" AnchorPane.leftAnchor="25.0">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <Button layoutX="1086.0" layoutY="13.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="48.0" styleClass="button2" stylesheets="@../css/css.css" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Button layoutX="1086.0" layoutY="13.0" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="48.0" styleClass="button2" stylesheets="@../css/css.css" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <graphic>
                   <ImageView fitHeight="35.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -81,7 +80,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="refreshButton" layoutX="1056.0" mnemonicParsing="false" onAction="#refresh" prefHeight="50.0" prefWidth="48.0" styleClass="button2" stylesheets="@../css/css.css" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="48.0" AnchorPane.topAnchor="0.0">
+            <Button fx:id="refreshButton" layoutX="1056.0" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#refresh" prefWidth="48.0" styleClass="button2" stylesheets="@../css/css.css" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="48.0" AnchorPane.topAnchor="0.0">
                <graphic>
                   <ImageView fitHeight="35.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -92,120 +91,91 @@
             </Button>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="mainPane" layoutX="48.0" layoutY="82.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="48.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+      <AnchorPane fx:id="mainPane" layoutX="48.0" layoutY="82.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="48.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
          <children>
-            <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="100.0" styleClass="button3" stylesheets="@../css/css.css" text="News" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
-            <Button layoutX="110.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="100.0" styleClass="button3" stylesheets="@../css/css.css" text="Covid" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="0.0">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
-            <Button layoutX="220.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="100.0" styleClass="button3" stylesheets="@../css/css.css" text="Politics" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="0.0">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
-            <Button layoutX="330.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="100.0" styleClass="button3" stylesheets="@../css/css.css" text="Business" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="0.0">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
-            <Button layoutX="440.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="120.0" styleClass="button3" stylesheets="@../css/css.css" text="Technology" AnchorPane.leftAnchor="400.0" AnchorPane.topAnchor="0.0">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
-            <Button layoutX="550.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="100.0" styleClass="button3" stylesheets="@../css/css.css" text="Health" AnchorPane.leftAnchor="520.0" AnchorPane.topAnchor="0.0">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
-            <Button layoutX="670.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="100.0" styleClass="button3" stylesheets="@../css/css.css" text="Sports" AnchorPane.leftAnchor="620.0" AnchorPane.topAnchor="0.0">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
-            <Button layoutX="798.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="140.0" styleClass="button3" stylesheets="@../css/css.css" text="Entertainment" AnchorPane.leftAnchor="720.0" AnchorPane.topAnchor="0.0">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
-            <Button layoutX="938.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="100.0" styleClass="button3" stylesheets="@../css/css.css" text="World" AnchorPane.leftAnchor="860.0" AnchorPane.topAnchor="0.0">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
-            <Button layoutX="1057.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="100.0" styleClass="button3" stylesheets="@../css/css.css" text="Others" AnchorPane.leftAnchor="960.0" AnchorPane.topAnchor="0.0">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
-            <AnchorPane layoutX="-6.0" layoutY="45.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0">
+            <AnchorPane fx:id="articlesListPane" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="45.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <ScrollPane fitToWidth="true" hmax="1.1" layoutX="376.0" layoutY="210.0" pannable="true" prefHeight="425.0" prefWidth="621.0" stylesheets="@../css/css.css" vmax="1.5" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <HBox fx:id="categoryHbox" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="45.0" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <ToggleButton fx:id="newsButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayNewsList" prefHeight="45.0" prefWidth="100.0" styleClass="button3" stylesheets="@../css/css.css" text="News">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </ToggleButton>
+                        <ToggleButton fx:id="covidButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayCovidList" prefHeight="45.0" prefWidth="100.0" styleClass="button3" stylesheets="@../css/css.css" text="Covid">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </ToggleButton>
+                        <ToggleButton fx:id="politicsButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayPoliticsList" prefHeight="45.0" prefWidth="100.0" styleClass="button3" stylesheets="@../css/css.css" text="Politics">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </ToggleButton>
+                        <ToggleButton fx:id="businessButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayBusinessList" prefHeight="45.0" prefWidth="100.0" styleClass="button3" stylesheets="@../css/css.css" text="Business">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </ToggleButton>
+                        <ToggleButton fx:id="technologyButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayTechnologyList" prefHeight="45.0" prefWidth="120.0" styleClass="button3" stylesheets="@../css/css.css" text="Technology">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </ToggleButton>
+                        <ToggleButton fx:id="healthButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayHealthList" prefHeight="45.0" prefWidth="100.0" styleClass="button3" stylesheets="@../css/css.css" text="Health">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </ToggleButton>
+                        <ToggleButton fx:id="sportsButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displaySportsList" prefHeight="45.0" prefWidth="100.0" styleClass="button3" stylesheets="@../css/css.css" text="Sports">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </ToggleButton>
+                        <ToggleButton fx:id="entertainmentButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayEntertainmentList" prefHeight="45.0" prefWidth="140.0" styleClass="button3" stylesheets="@../css/css.css" text="Entertainment">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </ToggleButton>
+                        <ToggleButton fx:id="worldButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayWorldList" prefHeight="45.0" prefWidth="100.0" styleClass="button3" stylesheets="@../css/css.css" text="World">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </ToggleButton>
+                        <ToggleButton fx:id="othersButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayOthersList" prefHeight="45.0" prefWidth="100.0" styleClass="button3" stylesheets="@../css/css.css" text="Others">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </ToggleButton>
+                     </children>
+                  </HBox>
+                  <Button fx:id="leftArrowButton" accessibleRole="BUTTON" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="25.0" styleClass="buttonarr" stylesheets="@../css/css.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <graphic>
+                        <ImageView fitHeight="18.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resource/backarrow.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="rightArrowButton" accessibleRole="BUTTON" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="25.0" styleClass="buttonarr" stylesheets="@../css/css.css" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <graphic>
+                        <ImageView fitHeight="18.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resource/forwardarrow.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="anchorPaneAboveScrollPane" layoutX="-6.0" layoutY="45.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0">
+               <children>
+                  <ScrollPane fx:id="scrollPane" fitToWidth="true" hmax="1.1" layoutX="376.0" layoutY="210.0" pannable="true" styleClass=".scroll-pane" stylesheets="@../css/css.css" vmax="1.5" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <content>
-                        <AnchorPane prefHeight="1200.0" prefWidth="200.0" styleClass="root" stylesheets="@../css/css.css">
+                        <AnchorPane fx:id="anchorPaneUnderScrollPane">
                            <children>
-                              <HBox alignment="TOP_CENTER" prefHeight="409.0" prefWidth="792.0" spacing="10.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <children>
-                                    <Button alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" wrapText="true" HBox.hgrow="ALWAYS">
-                                       <graphic>
-                                          <ImageView fitHeight="288.0" fitWidth="485.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../resource/test.jpg" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                    </Button>
-                                    <Button alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" HBox.hgrow="ALWAYS">
-                                       <graphic>
-                                          <ImageView fitHeight="305.0" fitWidth="497.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../resource/test2.jpg" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                    </Button>
-                                 </children>
-                                 <padding>
-                                    <Insets left="10.0" right="10.0" />
-                                 </padding>
-                              </HBox>
-                              <VBox alignment="TOP_CENTER" layoutX="557.0" layoutY="287.0" prefHeight="200.0" prefWidth="100.0" spacing="30.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Chủng Delta đe dọa chiến lược của Biden" textAlignment="JUSTIFY" wrappingWidth="900.0">
-                                       <font>
-                                          <Font name="System Bold" size="36.0" />
-                                       </font>
-                                       <VBox.margin>
-                                          <Insets top="50.0" />
-                                       </VBox.margin>
-                                    </Text>
-                                    <Text lineSpacing="3.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Biden từng kỳ vọng giúp nước Mỹ nhanh chóng thoát đại dịch và hướng đến những kế hoạch khác, nhưng chủng Delta trỗi dậy đe dọa tham vọng này.Trong một chương trình đối thoại với cử tri trên truyền hình tuần trước, hầu hết câu hỏi dành cho Tổng thống Mỹ Joe Biden đều liên quan đến Covid-19. Đây được coi là sự thay đổi rõ rệt trong mối quan tâm của người Mỹ, so với cuộc họp báo đầu tiên của ông hồi cuối tháng 3, khi đại dịch không phải vấn đề trọng tâm.Dấu hiệu này cho thấy người Mỹ dường như ngày càng lo ngại về tình hình dịch bệnh sau thời gian tình hình có vẻ khả quan. Theo cuộc khảo sát được Axios - Ipsos thực hiện từ ngày 16 đến 19/7, 39% người được hỏi cho rằng việc trở lại cuộc sống bình thường như trước đại dịch giờ đây tiềm ẩn rủi ro, trong khi con số này tháng trước là 28%.Giới chức Mỹ đang xem xét những mô hình dự đoán số ca nhiễm mới tại các địa phương có thể tăng từ vài nghìn lên hơn 200.000 mỗi ngày vào mùa thu. Một dự báo mới đây cũng ước tính Mỹ có thể ghi nhận số người chết vì Covid-19 hàng ngày cao gấp ba lần so với hiện tại vào tháng 10. Ca tử vong trung bình mỗi ngày trong 7 ngày gần đây là khoảng 250.Trong khi Biden cáo buộc các nền tảng mạng xã hội &quot;đang giết người&quot; bằng cách cho phép lan truyền tin giả về vaccine, các đồng minh của ông cũng lưu ý những bang ghi nhận số ca nhiễm tăng mạnh nhất đều do đảng Cộng hòa lãnh đạo." textAlignment="JUSTIFY" wrappingWidth="900.0">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Text>
-                                    <ImageView fitHeight="394.0" fitWidth="728.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../resource/test.jpg" />
-                                       </image>
-                                    </ImageView>
-                                    <Text lineSpacing="3.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Trong khi đó, Nhà Trắng khẳng định Biden sẽ không ngừng thúc đẩy tiêm chủng và kiểm soát Covid-19. &quot;Kiểm soát đại dịch và bảo vệ người Mỹ vẫn là ưu tiên số một của Tổng thống. Đây sẽ tiếp tục là ưu tiên của ông ấy trong tương lai&quot;, thư ký báo chí Nhà Trắng Jen Psaki phát biểu hôm 22/7.Một quan chức Nhà Trắng giấu tên cho biết các chuyên gia y tế của chính phủ dự đoán số ca nhập viện và tử vong vì Covid-19 sẽ không cao như thời kỳ đỉnh điểm của đại dịch, nói thêm rằng họ cũng cảm thấy bớt căng thẳng khi tỷ lệ tiêm chủng tại một số bang gần đây tăng nhanh hơn mức trung bình toàn quốc, như Nevada và Florida.Tuy nhiên, mối nguy hiểm từ biến chủng Delta vẫn khiến giới chức Nhà Trắng phải tranh luận rằng liệu có nên kêu gọi những người đã tiêm vaccine Covid-19 đeo khẩu trang tại nhiều nơi hơn không.Mike Donilon, cố vấn cấp cao của Biden, khẳng định Tổng thống Mỹ &quot;chưa hề rời mắt&quot; khỏi vấn đề đại dịch. Mặc dù vậy, đội ngũ cố vấn và đồng minh của Biden cũng thể hiện rõ rằng họ còn muốn người Mỹ chú ý đến những vấn đề khác trong chương trình nghị sự, bao gồm quyền bỏ phiếu, kiểm soát súng đạn, nhập cư, hay kế hoạch cơ sở hạ tầng đầy tham vọng.Những quan chức hàng đầu tại Unite the Country, một siêu ủy ban hành động chính trị (PAC) ủng hộ Biden, hồi đầu tháng cảnh báo các nhà tài trợ và người đại diện rằng theo ghi nhận tại các bang chiến trường, ngay cả nhiều người ủng hộ Biden cũng chỉ biết rất ít về thành tựu của ông trong các lĩnh vực khác.&quot;Thực sự thiếu thông tin về những điểm cụ thể trong chính sách của Biden, đặt ra yêu cầu giao tiếp với cử tri, ngay cả với những người ủng hộ chăm cập nhật về Tổng thống&quot;, bản ghi nhớ từ Unite the Country mà Washington Post thu thập được có đoạn.Các cử tri đánh giá cao cách Biden xử lý cuộc khủng hoảng Covid-19, cảm thấy yên tâm hơn so với khi ông đối mặt những vấn đề khác như kinh tế và nhập cư. Biden liên tục đạt tỷ lệ tín nhiệm cao hơn về cách xử lý đại dịch so với mức tín nhiệm tổng thể. Theo cuộc khảo sát gần đây của CBS News-YouGov, 66% người Mỹ cho biết Biden đang làm tốt việc ứng phó Covid-19, 58% ủng hộ vai trò tổng thống của ông.Celinda Lake, nhà thăm dò thuộc đảng Dân chủ, đánh giá tỷ lệ ủng hộ Biden sẽ giảm nhẹ khi người dân không còn tập trung vào Covid-19, bởi họ có lẽ không kỳ vọng nhiều vào Tổng thống trong những vấn đề khác. Trong khi đó, đảng Cộng hòa cho rằng giai đoạn tiếp theo của đại dịch là điểm yếu tiềm tàng của ông chủ Nhà Trắng.&quot;Thông điệp quan trọng nhất mà người dân từng nhận được là đại dịch sẽ kết thúc vào ngày 4/7. Giờ đây, thêm vài tuần đã trôi qua, Nhà Trắng lại làm như họ không biết chuyện gì đang xảy ra&quot;, chiến lược gia đảng Cộng hòa Corry Bliss nhận xét, nói thêm rằng Nhà Trắng &quot;có vẻ mất phương hướng và thiếu thông điệp&quot;.&quot;Yếu tố duy nhất của quá trình đưa đất nước trở lại trạng thái bình thường là việc triển khai vaccine, vốn là kết quả trực tiếp từ chính quyền Donald Trump và Chiến dịch Thần tốc. Không rõ họ đã làm bất cứ điều gì để cải thiện tình hình đại dịch hay chưa&quot;, Bliss nêu quan điểm.Hồi tháng 3, Biden đặt mục tiêu ngày quốc khánh 4/7 sẽ đánh dấu thời điểm nước Mỹ &quot;bắt đầu thoát khỏi virus&quot;. Đến tháng 5, khi hàng triệu người dân được tiêm chủng, Trung tâm Kiểm soát và Phòng ngừa Dịch bệnh Mỹ (CDC) cho biết những người đã tiêm đầy đủ có thể bỏ khẩu trang trong hầu hết trường hợp. Tuy nhiên, biến chủng Delta, hiện chiếm hơn 83% số ca nhiễm mới tại Mỹ, đã khiến không khí lạc quan trở nên u ám.Giới chuyên gia cho hay biến chủng Delta có khả năng lây lan mạnh hơn nhiều so với các chủng virus trước đây. Số ca nhiễm trung bình mỗi ngày tại Mỹ đã tăng gấp 4 lần trong tháng qua, từ 11.000 hồi cuối tháng 6 lên hơn 44.000. Số ca nhập viện tại Florida và Louisiana tuần qua cũng tăng lần lượt 59% và 76%, hầu hết là những người chưa tiêm vaccine.&quot;Đây là một trong những chủng virus hô hấp lây lan mạnh nhất mà chúng ta biết đến, cũng như trong suốt 20 năm sự nghiệp của tôi&quot;, giám đốc CDC Rochelle Walensky phát biểu hôm 22/7, đồng thời kêu gọi những người còn ngần ngại nhanh chóng tiêm chủng. Theo số liệu của Washington Post, mới có khoảng 49% dân số Mỹ được tiêm đầy đủ vaccine Covid-19.Nhà dịch tễ học Michael Osterholm, giám đốc Trung tâm Nghiên cứu và Chính sách Bệnh Truyền nhiễm thuộc Đại học Minnesota, cho biết ông cùng đội ngũ của mình đã xem xét dữ liệu của Quỹ Kaiser Family về số người Mỹ còn nguy cơ nhiễm virus.&quot;100 triệu người Mỹ vẫn chưa được tiêm chủng hoặc từng nhiễm nCoV để có khả năng miễn dịch. Thế là quá đủ gỗ để đám cháy Covid-19 lan rộng. Điều đó sẽ xảy ra&quot;, Osterholm dự đoán." textAlignment="JUSTIFY" wrappingWidth="900.0">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                       <VBox.margin>
-                                          <Insets bottom="100.0" />
-                                       </VBox.margin>
-                                    </Text>
-                                 </children>
-                              </VBox>
-                              <Pagination maxPageIndicatorCount="5" pageCount="5" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                              <Pagination fx:id="pagination" maxPageIndicatorCount="5" pageCount="5" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                            </children>
                         </AnchorPane>
                      </content>
@@ -258,8 +228,8 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="tempPane" onMouseClicked="#exitSearch" opacity="0.33" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: black;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <HBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" prefWidth="200.0" spacing="10.0" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="96.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane fx:id="tempPane" onMouseClicked="#exitSearch" opacity="0.33" style="-fx-background-color: black;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <HBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" spacing="10.0" AnchorPane.leftAnchor="175.0" AnchorPane.rightAnchor="96.0" AnchorPane.topAnchor="0.0">
          <children>
             <TextField fx:id="searchTextField" onMouseClicked="#takeSearchInput" prefHeight="38.0" prefWidth="426.0" promptText="Search Interests and Web" styleClass="text-field" stylesheets="@../css/css.css" HBox.hgrow="NEVER">
                <font>

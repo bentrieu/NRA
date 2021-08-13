@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -66,17 +67,29 @@ public class WelcomeSceneController implements Initializable {
 
         // Translate current scene to home scene
         fadeTransition.setOnFinished(e -> {
-            ((Stage) ((Node)event.getSource()).getScene().getWindow()).close();
             Parent nextRoot = null;
             try {
+                Main.stage.setMinWidth(500);
+                Main.stage.setMinHeight(500);
+                Main.stage.getIcons().add(new Image("/resource/newsicon.png"));
+                Main.stage.setTitle("NRA News");
+                Main.stage.setWidth(1200);
+                Main.stage.setHeight(900);
+                Main.stage.setMinWidth(500);
+                Main.stage.setMinHeight(500);
+
+                GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+                int width = gd.getDisplayMode().getWidth();
+                int height = gd.getDisplayMode().getHeight();
+                if (width < 1300) {
+                    Main.stage.setWidth(width - 100);
+                    Main.stage.setHeight(height - 100);
+                }
+
                 nextRoot = FXMLLoader.load(getClass().getResource("HomeScene.fxml"));
-                Stage stage = new Stage();
-                stage.setMinWidth(500);
-                stage.setMinHeight(500);
-                stage.getIcons().add(new Image("/resource/newsicon.png"));
-                stage.setTitle("NRA News");
-                stage.setScene(new Scene(nextRoot));
-                stage.show();
+                Main.stage.setScene(new Scene(nextRoot));
+                ((Stage) ((Node)event.getSource()).getScene().getWindow()).close();
+                Main.stage.show();
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
