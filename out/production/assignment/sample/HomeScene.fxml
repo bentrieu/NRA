@@ -10,6 +10,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
@@ -169,19 +170,15 @@
                   </Button>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="anchorPaneAboveScrollPane" layoutX="-6.0" layoutY="45.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0">
-               <children>
-                  <ScrollPane fx:id="scrollPane" fitToWidth="true" hmax="1.1" layoutX="376.0" layoutY="210.0" pannable="true" styleClass=".scroll-pane" stylesheets="@../css/css.css" vmax="1.5" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <content>
-                        <AnchorPane fx:id="anchorPaneUnderScrollPane">
-                           <children>
-                              <Pagination fx:id="pagination" maxPageIndicatorCount="5" pageCount="5" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-                           </children>
-                        </AnchorPane>
-                     </content>
-                  </ScrollPane>
-               </children>
-            </AnchorPane>
+            <ScrollPane fx:id="scrollPane" fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0">
+               <content>
+                  <BorderPane fx:id="borderPaneUnderScrollPane">
+                     <center>
+                        <Pagination fx:id="pagination" BorderPane.alignment="CENTER" />
+                     </center>
+                  </BorderPane>
+               </content>
+            </ScrollPane>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="menuPane" layoutY="82.0" prefHeight="200.0" prefWidth="260.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="50.0">

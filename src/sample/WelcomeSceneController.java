@@ -73,8 +73,9 @@ public class WelcomeSceneController implements Initializable {
                 Main.stage.setMinHeight(500);
                 Main.stage.getIcons().add(new Image("/resource/newsicon.png"));
                 Main.stage.setTitle("NRA News");
-                Main.stage.setWidth(1200);
-                Main.stage.setHeight(900);
+                Main.stage.setFullScreen(true);
+//                Main.stage.setWidth(1200);
+//                Main.stage.setHeight(900);
                 Main.stage.setMinWidth(500);
                 Main.stage.setMinHeight(500);
 
