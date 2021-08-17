@@ -50,6 +50,16 @@ public class Main extends Application {
     public static ArrayList<Article> tuoiTreEntertainmentList = new ArrayList<>();
     public static ArrayList<Article> tuoiTreWorldList = new ArrayList<>();
 
+    public static ArrayList<Article> thanhNienNewsList = new ArrayList<>();
+    public static ArrayList<Article> thanhNienCovidList = new ArrayList<>();
+    public static ArrayList<Article> thanhNienPoliticsList = new ArrayList<>();
+    public static ArrayList<Article> thanhNienBusinessList = new ArrayList<>();
+    public static ArrayList<Article> thanhNienTechnologyList = new ArrayList<>();
+    public static ArrayList<Article> thanhNienHealthList = new ArrayList<>();
+    public static ArrayList<Article> thanhNienSportsList = new ArrayList<>();
+    public static ArrayList<Article> thanhNienEntertainmentList = new ArrayList<>();
+    public static ArrayList<Article> thanhNienWorldList = new ArrayList<>();
+
     double initialX, initialY;
 
     @Override
@@ -68,27 +78,39 @@ public class Main extends Application {
         vnexpressWorldList = articlesManager.getVnexpressList("https://vnexpress.net/rss/the-gioi.rss", "World");
 
         // ZingNews list
-        zingNewsList = articlesManager.getZingList("https://zingnews.vn/thoi-su.html", "News");
-        zingCovidList = articlesManager.getSearchListZing("covid", "Covid");
-        zingPoliticsList = articlesManager.getZingList("https://zingnews.vn/chinh-tri.html", "Politics");
-        zingBusinessList = articlesManager.getZingList("https://zingnews.vn/kinh-doanh-tai-chinh.html", "Business");
-        zingTechnologyList = articlesManager.getZingList("https://zingnews.vn/cong-nghe.html", "Technology");
-        zingHealthList = articlesManager.getZingList("https://zingnews.vn/suc-khoe.html", "Health");
-        zingSportsList = articlesManager.getZingList("https://zingnews.vn/the-thao.html", "Sports");
-        zingEntertainmentList = articlesManager.getZingList("https://zingnews.vn/giai-tri.html", "Entertainment");
-        zingWorldList = articlesManager.getZingList("https://zingnews.vn/the-gioi.html", "World");
+//        zingNewsList = articlesManager.getZingList("https://zingnews.vn/thoi-su.html", "News");
+//        zingCovidList = articlesManager.getSearchListZing("covid", "Covid");
+//        zingPoliticsList = articlesManager.getZingList("https://zingnews.vn/chinh-tri.html", "Politics");
+//        zingBusinessList = articlesManager.getZingList("https://zingnews.vn/kinh-doanh-tai-chinh.html", "Business");
+//        zingTechnologyList = articlesManager.getZingList("https://zingnews.vn/cong-nghe.html", "Technology");
+//        zingHealthList = articlesManager.getZingList("https://zingnews.vn/suc-khoe.html", "Health");
+//        zingSportsList = articlesManager.getZingList("https://zingnews.vn/the-thao.html", "Sports");
+//        zingEntertainmentList = articlesManager.getZingList("https://zingnews.vn/giai-tri.html", "Entertainment");
+//        zingWorldList = articlesManager.getZingList("https://zingnews.vn/the-gioi.html", "World");
 
         // TuoiTre list
-//        tuoiTreNewsList = articlesManager.getTuoiTreList("https://tuoitre.vn/rss/tin-moi-nhat.rss", "News");
-//        tuoiTreCovidList = articlesManager.getSearchListTuoiTre("covid", "Covid");
-//        tuoiTrePoliticsList = articlesManager.getSearchListTuoiTre("chính trị", "Politics");
-//        tuoiTreBusinessList = articlesManager.getTuoiTreList("https://tuoitre.vn/rss/kinh-doanh.rss", "Business");
-//        tuoiTreTechnologyList = articlesManager.getTuoiTreList("https://tuoitre.vn/rss/nhip-song-so.rss", "Technology");
-//        tuoiTreHealthList = articlesManager.getTuoiTreList("https://tuoitre.vn/rss/suc-khoe.rss", "Health");
-//        tuoiTreSportsList = articlesManager.getTuoiTreList("https://tuoitre.vn/rss/the-thao.rss", "Sports");
-//        tuoiTreEntertainmentList = articlesManager.getTuoiTreList("https://tuoitre.vn/rss/giai-tri.rss", "Entertainment");
-//        tuoiTreWorldList = articlesManager.getTuoiTreList("https://tuoitre.vn/rss/the-gioi.rss", "World");
-//        articlesManager.printSortArticles(tuoiTreBusinessList);
+        tuoiTreNewsList = articlesManager.getTuoiTreList("https://tuoitre.vn/rss/tin-moi-nhat.rss", "News");
+        tuoiTreCovidList = articlesManager.getTuoiTreSearchList("covid", "Covid");
+        tuoiTrePoliticsList = articlesManager.getTuoiTreSearchList("chính trị", "Politics");
+        tuoiTreBusinessList = articlesManager.getTuoiTreList("https://tuoitre.vn/rss/kinh-doanh.rss", "Business");
+        tuoiTreTechnologyList = articlesManager.getTuoiTreList("https://tuoitre.vn/rss/nhip-song-so.rss", "Technology");
+        tuoiTreHealthList = articlesManager.getTuoiTreList("https://tuoitre.vn/rss/suc-khoe.rss", "Health");
+        tuoiTreSportsList = articlesManager.getTuoiTreList("https://tuoitre.vn/rss/the-thao.rss", "Sports");
+        tuoiTreEntertainmentList = articlesManager.getTuoiTreList("https://tuoitre.vn/rss/giai-tri.rss", "Entertainment");
+        tuoiTreWorldList = articlesManager.getTuoiTreList("https://tuoitre.vn/rss/the-gioi.rss", "World");
+
+        // ThanhNien list
+//        thanhNienNewsList = articlesManager.getThanhNienList("https://thanhnien.vn/rss/thoi-su/chinh-tri.rss", "Politics");
+//        thanhNienCovidList = articlesManager.getThanhNienWebList("https://thanhnien.vn/dich-covid-19/", "Politics");
+//        thanhNienPoliticsList = articlesManager.getThanhNienWebList("https://thanhnien.vn/thoi-su/chinh-tri/", "Politics");
+//        thanhNienBusinessList = articlesManager.getThanhNienWebList("https://thanhnien.vn/tai-chinh-kinh-doanh/", "Business");
+//        thanhNienTechnologyList = articlesManager.getThanhNienWebList("https://thanhnien.vn/cong-nghe/", "Technology");
+//        thanhNienHealthList = articlesManager.getThanhNienWebList("https://thanhnien.vn/suc-khoe/", "Health");
+//        thanhNienSportsList = articlesManager.getThanhNienWebList("https://thanhnien.vn/the-thao/", "Sports");
+//        thanhNienEntertainmentList = articlesManager.getThanhNienWebList("https://thanhnien.vn/giai-tri/", "Entertainment");
+//        thanhNienWorldList = articlesManager.getThanhNienWebList("https://thanhnien.vn/the-gioi/", "World");
+
+//        articlesManager.printSortArticles(tuoiTreCovidList);
 
         Parent root = FXMLLoader.load(getClass().getResource("WelcomeScene.fxml"));
         Scene scene = new Scene(root);

@@ -7,60 +7,39 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="rootAnchorPane" prefHeight="900.0" prefWidth="1200.0" styleClass="root" stylesheets="@../css/css.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.HomeSceneController">
    <children>
       <AnchorPane layoutY="32.0" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="48.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Button fx:id="menuButton" accessibleRole="BUTTON" layoutX="2.0" layoutY="62.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#menu" prefHeight="50.0" styleClass="button2" stylesheets="@../css/css.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Button fx:id="menuButton" accessibleRole="BUTTON" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="2.0" layoutY="62.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#menu" prefHeight="50.0" styleClass="button2" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <graphic>
-                  <ImageView fitHeight="35.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../resource/burger.png" />
-                     </image>
-                  </ImageView>
+                  <SVGPath content="M0 1.5A1.5 1.5 0 0 1 1.5 0h2A1.5 1.5 0 0 1 5 1.5v2A1.5 1.5 0 0 1 3.5 5h-2A1.5 1.5 0 0 1 0 3.5v-2zM1.5 1a.5.5 0 0 0-.5.5v2a.5.5 0 0 0 .5.5h2a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 0-.5-.5h-2zM0 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V8zm1 3v2a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2H1zm14-1V8a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v2h14zM2 8.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0 4a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z" styleClass="iconsvg" />
                </graphic>
             </Button>
-            <ToggleButton fx:id="homeButton" layoutX="11.0" layoutY="73.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#home" prefHeight="45.0" styleClass="button1" stylesheets="@../css/css.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+            <ToggleButton fx:id="homeButton" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="11.0" layoutY="73.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#home" prefHeight="45.0" prefWidth="48.0" styleClass="button1" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
                <graphic>
-                  <ImageView fitHeight="35.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../resource/home.png" />
-                     </image>
-                  </ImageView>
+                  <SVGPath content="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5z" styleClass="iconsvg" />
                </graphic>
             </ToggleButton>
-            <ToggleButton fx:id="videoButton" accessibleRole="TOGGLE_BUTTON" layoutX="4.0" layoutY="95.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#video" prefHeight="45.0" styleClass="button1" stylesheets="@../css/css.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="95.0">
+            <ToggleButton fx:id="videoButton" accessibleRole="TOGGLE_BUTTON" layoutX="4.0" layoutY="95.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#video" prefHeight="45.0" styleClass="button1" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="95.0">
                <graphic>
-                  <ImageView fitHeight="35.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../resource/video.png" />
-                     </image>
-                  </ImageView>
+                  <SVGPath content="M0 1a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V1zm4 0v6h8V1H4zm8 8H4v6h8V9zM1 1v2h2V1H1zm2 3H1v2h2V4zM1 7v2h2V7H1zm2 3H1v2h2v-2zm-2 3v2h2v-2H1zM15 1h-2v2h2V1zm-2 3v2h2V4h-2zm2 3h-2v2h2V7zm-2 3v2h2v-2h-2zm2 3h-2v2h2v-2z" styleClass="iconsvg" />
                </graphic>
             </ToggleButton>
-            <ToggleButton fx:id="articlesListButton" accessibleRole="TOGGLE_BUTTON" layoutX="6.0" layoutY="162.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#articlesList" prefHeight="45.0" styleClass="button1" stylesheets="@../css/css.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="140.0">
+            <ToggleButton fx:id="articlesListButton" accessibleRole="TOGGLE_BUTTON" layoutX="6.0" layoutY="162.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#articlesList" prefHeight="45.0" styleClass="button1" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="140.0">
                <graphic>
-                  <ImageView fitHeight="35.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../resource/tag.png" />
-                     </image>
-                  </ImageView>
+                  <SVGPath content="M3 2v4.586l7 7L14.586 9l-7-7H3zM2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2z M5.5 5a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm0 1a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM1 7.086a1 1 0 0 0 .293.707L8.75 15.25l-.043.043a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 0 7.586V3a1 1 0 0 1 1-1v5.086z" styleClass="iconsvg" />
                </graphic>
             </ToggleButton>
-            <ToggleButton fx:id="settingsButton" accessibleRole="TOGGLE_BUTTON" layoutX="6.0" layoutY="289.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#settings" prefHeight="45.0" styleClass="button1" stylesheets="@../css/css.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <ToggleButton fx:id="settingsButton" accessibleRole="TOGGLE_BUTTON" layoutX="6.0" layoutY="289.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#settings" prefHeight="45.0" styleClass="button1" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <graphic>
-                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../resource/settings.png" />
-                     </image>
-                  </ImageView>
+                  <SVGPath content="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z" styleClass="iconsvg" />
                </graphic>
             </ToggleButton>
          </children>
@@ -72,22 +51,19 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <Button layoutX="1086.0" layoutY="13.0" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="48.0" styleClass="button2" stylesheets="@../css/css.css" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Button layoutX="1086.0" layoutY="13.0" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="48.0" styleClass="button2" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <graphic>
-                  <ImageView fitHeight="35.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../resource/3dot.png" />
-                     </image>
-                  </ImageView>
+                  <SVGPath content="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" styleClass="iconsvg" />
                </graphic>
             </Button>
-            <Button fx:id="refreshButton" layoutX="1056.0" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#refresh" prefWidth="48.0" styleClass="button2" stylesheets="@../css/css.css" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="48.0" AnchorPane.topAnchor="0.0">
+            <Button fx:id="refreshButton" layoutX="1056.0" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#refresh" prefWidth="48.0" styleClass="button2" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="48.0" AnchorPane.topAnchor="0.0">
                <graphic>
-                  <ImageView fitHeight="35.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../resource/refresh.png" />
-                     </image>
-                  </ImageView>
+                  <SVGPath content="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" styleClass="iconsvg" />
+               </graphic>
+            </Button>
+            <Button fx:id="copyArticleLinkButton" layoutX="1004.0" layoutY="13.0" mnemonicParsing="false" onAction="#copyArticleLink" prefWidth="48.0" styleClass="button2" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="96.0" AnchorPane.topAnchor="0.0">
+               <graphic>
+                  <SVGPath content="M6.354 5.5H4a3 3 0 0 0 0 6h3a3 3 0 0 0 2.83-4H9c-.086 0-.17.01-.25.031A2 2 0 0 1 7 10.5H4a2 2 0 1 1 0-4h1.535c.218-.376.495-.714.82-1z M9 5.5a3 3 0 0 0-2.83 4h1.098A2 2 0 0 1 9 6.5h3a2 2 0 1 1 0 4h-1.535a4.02 4.02 0 0 1-.82 1H12a3 3 0 1 0 0-6H9z" styleClass="iconsvg" />
                </graphic>
             </Button>
          </children>
@@ -96,85 +72,77 @@
          <children>
             <AnchorPane fx:id="articlesListPane" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="45.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <HBox fx:id="categoryHbox" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="45.0" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="0.0">
+                  <HBox fx:id="categoryHbox" alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="45.0" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <ToggleButton fx:id="newsButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayNewsList" prefHeight="45.0" prefWidth="100.0" styleClass="button3" stylesheets="@../css/css.css" text="News">
+                        <ToggleButton fx:id="newsButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayNewsList" prefHeight="45.0" prefWidth="100.0" styleClass="button3" text="News">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </ToggleButton>
-                        <ToggleButton fx:id="covidButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayCovidList" prefHeight="45.0" prefWidth="100.0" styleClass="button3" stylesheets="@../css/css.css" text="Covid">
+                        <ToggleButton fx:id="covidButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayCovidList" prefHeight="45.0" prefWidth="100.0" styleClass="button3" text="Covid">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </ToggleButton>
-                        <ToggleButton fx:id="politicsButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayPoliticsList" prefHeight="45.0" prefWidth="100.0" styleClass="button3" stylesheets="@../css/css.css" text="Politics">
+                        <ToggleButton fx:id="politicsButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayPoliticsList" prefHeight="45.0" prefWidth="100.0" styleClass="button3" text="Politics">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </ToggleButton>
-                        <ToggleButton fx:id="businessButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayBusinessList" prefHeight="45.0" prefWidth="100.0" styleClass="button3" stylesheets="@../css/css.css" text="Business">
+                        <ToggleButton fx:id="businessButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayBusinessList" prefHeight="45.0" prefWidth="100.0" styleClass="button3" text="Business">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </ToggleButton>
-                        <ToggleButton fx:id="technologyButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayTechnologyList" prefHeight="45.0" prefWidth="120.0" styleClass="button3" stylesheets="@../css/css.css" text="Technology">
+                        <ToggleButton fx:id="technologyButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayTechnologyList" prefHeight="45.0" prefWidth="140.0" styleClass="button3" text="Technology">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </ToggleButton>
-                        <ToggleButton fx:id="healthButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayHealthList" prefHeight="45.0" prefWidth="100.0" styleClass="button3" stylesheets="@../css/css.css" text="Health">
+                        <ToggleButton fx:id="healthButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayHealthList" prefHeight="45.0" prefWidth="100.0" styleClass="button3" text="Health">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </ToggleButton>
-                        <ToggleButton fx:id="sportsButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displaySportsList" prefHeight="45.0" prefWidth="100.0" styleClass="button3" stylesheets="@../css/css.css" text="Sports">
+                        <ToggleButton fx:id="sportsButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displaySportsList" prefHeight="45.0" prefWidth="100.0" styleClass="button3" text="Sports">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </ToggleButton>
-                        <ToggleButton fx:id="entertainmentButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayEntertainmentList" prefHeight="45.0" prefWidth="140.0" styleClass="button3" stylesheets="@../css/css.css" text="Entertainment">
+                        <ToggleButton fx:id="entertainmentButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayEntertainmentList" prefHeight="45.0" prefWidth="150.0" styleClass="button3" text="Entertainment">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </ToggleButton>
-                        <ToggleButton fx:id="worldButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayWorldList" prefHeight="45.0" prefWidth="100.0" styleClass="button3" stylesheets="@../css/css.css" text="World">
+                        <ToggleButton fx:id="worldButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayWorldList" prefHeight="45.0" prefWidth="100.0" styleClass="button3" text="World">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </ToggleButton>
-                        <ToggleButton fx:id="othersButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayOthersList" prefHeight="45.0" prefWidth="100.0" styleClass="button3" stylesheets="@../css/css.css" text="Others">
+                        <ToggleButton fx:id="othersButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayOthersList" prefHeight="45.0" prefWidth="100.0" styleClass="button3" text="Others">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </ToggleButton>
                      </children>
                   </HBox>
-                  <Button fx:id="leftArrowButton" accessibleRole="BUTTON" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="25.0" styleClass="buttonarr" stylesheets="@../css/css.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Button fx:id="previousCategoryButton" accessibleRole="BUTTON" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="25.0" styleClass="buttonarr" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <graphic>
-                        <ImageView fitHeight="18.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../resource/backarrow.png" />
-                           </image>
-                        </ImageView>
+                        <SVGPath content="M10 12.796V3.204L4.519 8 10 12.796zm-.659.753-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753z" styleClass="iconsvg" />
                      </graphic>
                   </Button>
-                  <Button fx:id="rightArrowButton" accessibleRole="BUTTON" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="25.0" styleClass="buttonarr" stylesheets="@../css/css.css" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Button fx:id="nextCategoryButton" accessibleRole="BUTTON" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="25.0" styleClass="buttonarr" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <graphic>
-                        <ImageView fitHeight="18.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../resource/forwardarrow.png" />
-                           </image>
-                        </ImageView>
+                        <SVGPath content="M6 12.796V3.204L11.481 8 6 12.796zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z" styleClass="iconsvg" />
                      </graphic>
                   </Button>
                </children>
             </AnchorPane>
-            <ScrollPane fx:id="scrollPane" fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0">
+            <ScrollPane fx:id="scrollPane" fitToWidth="true" pannable="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0">
                <content>
                   <BorderPane fx:id="borderPaneUnderScrollPane">
                      <center>
-                        <Pagination fx:id="pagination" BorderPane.alignment="CENTER" />
+                        <Pagination fx:id="pagination" pageCount="10" BorderPane.alignment="CENTER" />
                      </center>
                   </BorderPane>
                </content>
@@ -183,52 +151,61 @@
       </AnchorPane>
       <AnchorPane fx:id="menuPane" layoutY="82.0" prefHeight="200.0" prefWidth="260.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="50.0">
          <children>
-            <Button fx:id="homeInMenuButton" alignment="BASELINE_LEFT" layoutX="104.0" layoutY="50.0" mnemonicParsing="false" onAction="#homeInMenu" prefHeight="45.0" prefWidth="260.0" styleClass="button1" stylesheets="@../css/css.css" text="            Today" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Button fx:id="homeInMenuButton" alignment="BASELINE_LEFT" graphicTextGap="0.0" layoutX="104.0" layoutY="50.0" mnemonicParsing="false" onAction="#homeInMenu" prefHeight="45.0" prefWidth="260.0" styleClass="button1" text="       Today" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <font>
                   <Font size="16.0" />
                </font>
+               <graphic>
+                  <SVGPath content="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5z" styleClass="iconsvg" />
+               </graphic>
+               <padding>
+                  <Insets left="17.0" />
+               </padding>
             </Button>
-            <Button fx:id="videoInMenuButton" alignment="BASELINE_LEFT" layoutX="104.0" layoutY="125.0" mnemonicParsing="false" onAction="#videoInMenu" prefHeight="45.0" prefWidth="260.0" styleClass="button1" stylesheets="@../css/css.css" text="            Video Hub" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="45.0">
+            <Button fx:id="videoInMenuButton" alignment="BASELINE_LEFT" graphicTextGap="0.0" layoutX="104.0" layoutY="125.0" mnemonicParsing="false" onAction="#videoInMenu" prefHeight="45.0" prefWidth="260.0" styleClass="button1" text="       Video Hub" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0">
                <font>
                   <Font size="16.0" />
                </font>
+               <graphic>
+                  <SVGPath content="M0 1a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V1zm4 0v6h8V1H4zm8 8H4v6h8V9zM1 1v2h2V1H1zm2 3H1v2h2V4zM1 7v2h2V7H1zm2 3H1v2h2v-2zm-2 3v2h2v-2H1zM15 1h-2v2h2V1zm-2 3v2h2V4h-2zm2 3h-2v2h2V7zm-2 3v2h2v-2h-2zm2 3h-2v2h2v-2z" styleClass="iconsvg" />
+               </graphic>
+               <padding>
+                  <Insets left="17.0" />
+               </padding>
             </Button>
-            <Button fx:id="articlesListInMenuButton" alignment="BASELINE_LEFT" layoutX="26.0" layoutY="155.0" mnemonicParsing="false" onAction="#articlesListInMenu" prefHeight="45.0" prefWidth="260.0" styleClass="button1" stylesheets="@../css/css.css" text="            Catalog" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="90.0">
+            <Button fx:id="articlesListInMenuButton" alignment="BASELINE_LEFT" graphicTextGap="0.0" layoutX="26.0" layoutY="155.0" mnemonicParsing="false" onAction="#articlesListInMenu" prefHeight="45.0" prefWidth="260.0" styleClass="button1" text="       Catalog" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="90.0">
                <font>
                   <Font size="16.0" />
                </font>
+               <graphic>
+                  <SVGPath content="M3 2v4.586l7 7L14.586 9l-7-7H3zM2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2z M5.5 5a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm0 1a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM1 7.086a1 1 0 0 0 .293.707L8.75 15.25l-.043.043a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 0 7.586V3a1 1 0 0 1 1-1v5.086z" styleClass="iconsvg" />
+               </graphic>
+               <padding>
+                  <Insets left="17.0" />
+               </padding>
             </Button>
-            <Button fx:id="settingsInMenuButton" alignment="BASELINE_LEFT" layoutX="44.0" layoutY="274.0" mnemonicParsing="false" onAction="#settingsInMenu" prefHeight="45.0" prefWidth="260.0" styleClass="button1" stylesheets="@../css/css.css" text="            Settings" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
+            <Button fx:id="settingsInMenuButton" alignment="BASELINE_LEFT" graphicTextGap="0.0" layoutX="44.0" layoutY="274.0" mnemonicParsing="false" onAction="#settingsInMenu" prefHeight="45.0" prefWidth="260.0" styleClass="button1" text="       Settings" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
                <font>
                   <Font size="16.0" />
                </font>
+               <graphic>
+                  <SVGPath content="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z" styleClass="iconsvg" />
+               </graphic>
+               <padding>
+                  <Insets left="17.0" />
+               </padding>
             </Button>
-            <ImageView fitHeight="35.0" fitWidth="20.0" layoutX="14.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../resource/home.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="35.0" fitWidth="20.0" layoutX="14.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../resource/video.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="35.0" fitWidth="20.0" layoutX="14.0" layoutY="103.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../resource/tag.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="24.0" fitWidth="29.0" layoutX="12.0" layoutY="816.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="14.0">
-               <image>
-                  <Image url="@../resource/settings.png" />
-               </image>
-            </ImageView>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="tempPane" onMouseClicked="#exitSearch" opacity="0.33" style="-fx-background-color: black;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <HBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" spacing="10.0" AnchorPane.leftAnchor="175.0" AnchorPane.rightAnchor="96.0" AnchorPane.topAnchor="0.0">
+      <HBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" spacing="10.0" AnchorPane.leftAnchor="175.0" AnchorPane.rightAnchor="144.0" AnchorPane.topAnchor="0.0">
          <children>
-            <TextField fx:id="searchTextField" onMouseClicked="#takeSearchInput" prefHeight="38.0" prefWidth="426.0" promptText="Search Interests and Web" styleClass="text-field" stylesheets="@../css/css.css" HBox.hgrow="NEVER">
+            <Button fx:id="backToHomeButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#backToHome" prefHeight="35.0" prefWidth="35.0" styleClass="buttonsearch" HBox.hgrow="NEVER">
+               <graphic>
+                  <SVGPath content="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z" styleClass="iconsvg" />
+               </graphic>
+            </Button>
+            <TextField fx:id="searchTextField" onMouseClicked="#takeSearchInput" prefHeight="38.0" prefWidth="426.0" promptText="Search Interests and Web" styleClass="text-field" HBox.hgrow="NEVER">
                <font>
                   <Font size="14.0" />
                </font>
@@ -239,19 +216,12 @@
                   <Insets left="10.0" />
                </padding>
             </TextField>
-            <Button fx:id="searchButton" mnemonicParsing="false" onAction="#search" prefHeight="35.0" prefWidth="30.0" styleClass="buttonsearch" stylesheets="@../css/css.css" HBox.hgrow="SOMETIMES">
+            <Button fx:id="searchButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#search" prefHeight="35.0" prefWidth="35.0" styleClass="buttonsearch" HBox.hgrow="NEVER">
                <graphic>
-                  <ImageView fitHeight="35.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../resource/search.png" />
-                     </image>
-                  </ImageView>
+                  <SVGPath content="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" styleClass="iconsvg" />
                </graphic>
             </Button>
          </children>
-         <padding>
-            <Insets left="10.0" right="10.0" />
-         </padding>
       </HBox>
    </children>
 </AnchorPane>

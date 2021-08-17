@@ -18,11 +18,11 @@
             <AnchorPane fx:id="anchorPane1" prefHeight="400.0" prefWidth="616.0" styleClass="anchorpanebutton" stylesheets="@../css/css.css">
                <children>
                   <Button fx:id="button1" mnemonicParsing="false" styleClass="buttonhome" stylesheets="@../css/css.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <VBox alignment="BOTTOM_LEFT" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                  <VBox alignment="BOTTOM_LEFT" mouseTransparent="true" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                      <children>
                         <HBox alignment="CENTER_LEFT" spacing="10.0">
                            <children>
-                              <ImageView fx:id="imageSource1" fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="imageSource1" fitHeight="18.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../resource/vnexpress_small.png" />
                                  </image>
@@ -53,11 +53,11 @@
             <AnchorPane fx:id="anchorPane2" prefHeight="400.0" prefWidth="616.0" styleClass="anchorpanebutton" stylesheets="@../css/css.css">
                <children>
                   <Button fx:id="button2" mnemonicParsing="false" styleClass="buttonhome" stylesheets="@../css/css.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <VBox alignment="BOTTOM_LEFT" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                  <VBox alignment="BOTTOM_LEFT" mouseTransparent="true" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                      <children>
                         <HBox alignment="CENTER_LEFT" spacing="10.0">
                            <children>
-                              <ImageView fx:id="imageSource2" fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="imageSource2" fitHeight="18.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../resource/vnexpress_small.png" />
                                  </image>
@@ -88,11 +88,11 @@
             <AnchorPane fx:id="anchorPane3" prefHeight="400.0" prefWidth="616.0" styleClass="anchorpanebutton" stylesheets="@../css/css.css">
                <children>
                   <Button fx:id="button3" mnemonicParsing="false" styleClass="buttonhome" stylesheets="@../css/css.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <VBox alignment="BOTTOM_LEFT" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                  <VBox alignment="BOTTOM_LEFT" mouseTransparent="true" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                      <children>
                         <HBox alignment="CENTER_LEFT" spacing="10.0">
                            <children>
-                              <ImageView fx:id="imageSource3" fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="imageSource3" fitHeight="18.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../resource/vnexpress_small.png" />
                                  </image>
@@ -128,11 +128,11 @@
                <children>
                   <AnchorPane fx:id="anchorPaneImage1" prefHeight="360.0" prefWidth="354.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                   <Button fx:id="button4" mnemonicParsing="false" styleClass="buttonhomevertical" stylesheets="@../css/css.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <VBox alignment="CENTER_LEFT" prefHeight="138.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                  <VBox alignment="CENTER_LEFT" mouseTransparent="true" prefHeight="138.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                      <children>
                         <HBox alignment="CENTER_LEFT" spacing="10.0">
                            <children>
-                              <ImageView fx:id="imageSource4" fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="imageSource4" fitHeight="18.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../resource/vnexpress_small.png" />
                                  </image>
@@ -165,11 +165,11 @@
                   <AnchorPane fx:id="anchorPane5" prefHeight="240.5" prefWidth="725.0" styleClass="anchorpanebutton" stylesheets="@../css/css.css">
                      <children>
                         <Button fx:id="button5" mnemonicParsing="false" styleClass="buttonhome" stylesheets="@../css/css.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                        <VBox alignment="BOTTOM_LEFT" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                        <VBox alignment="BOTTOM_LEFT" mouseTransparent="true" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                            <children>
                               <HBox alignment="CENTER_LEFT" spacing="10.0">
                                  <children>
-                                    <ImageView fx:id="imageSource5" fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fx:id="imageSource5" fitHeight="18.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../resource/vnexpress_small.png" />
                                        </image>
@@ -198,11 +198,11 @@
                         <AnchorPane fx:id="anchorPane6" prefHeight="240.5" prefWidth="354.0" styleClass="anchorpanebutton" stylesheets="@../css/css.css">
                            <children>
                               <Button fx:id="button6" mnemonicParsing="false" styleClass="buttonhome" stylesheets="@../css/css.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                              <VBox alignment="BOTTOM_LEFT" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                              <VBox alignment="BOTTOM_LEFT" mouseTransparent="true" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                                  <children>
                                     <HBox alignment="CENTER_LEFT" spacing="10.0">
                                        <children>
-                                          <ImageView fx:id="imageSource6" fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                                          <ImageView fx:id="imageSource6" fitHeight="18.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
                                                 <Image url="@../resource/vnexpress_small.png" />
                                              </image>
@@ -229,11 +229,11 @@
                         <AnchorPane fx:id="anchorPane7" prefHeight="240.5" prefWidth="354.0" styleClass="anchorpanebutton" stylesheets="@../css/css.css">
                            <children>
                               <Button fx:id="button7" mnemonicParsing="false" styleClass="buttonhome" stylesheets="@../css/css.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                              <VBox alignment="BOTTOM_LEFT" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                              <VBox alignment="BOTTOM_LEFT" mouseTransparent="true" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                                  <children>
                                     <HBox alignment="CENTER_LEFT" spacing="10.0">
                                        <children>
-                                          <ImageView fx:id="imageSource7" fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                                          <ImageView fx:id="imageSource7" fitHeight="18.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
                                                 <Image url="@../resource/vnexpress_small.png" />
                                              </image>
@@ -265,11 +265,11 @@
                <children>
                   <AnchorPane fx:id="anchorPaneImage2" prefHeight="360.0" prefWidth="354.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                   <Button fx:id="button8" mnemonicParsing="false" styleClass="buttonhomevertical" stylesheets="@../css/css.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <VBox alignment="CENTER_LEFT" prefHeight="138.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                  <VBox alignment="CENTER_LEFT" mouseTransparent="true" prefHeight="138.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                      <children>
                         <HBox alignment="CENTER_LEFT" spacing="10.0">
                            <children>
-                              <ImageView fx:id="imageSource8" fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="imageSource8" fitHeight="18.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../resource/vnexpress_small.png" />
                                  </image>
@@ -302,11 +302,11 @@
                   <AnchorPane fx:id="anchorPane9" prefHeight="240.5" prefWidth="354.0" styleClass="anchorpanebutton" stylesheets="@../css/css.css">
                      <children>
                         <Button fx:id="button9" mnemonicParsing="false" styleClass="buttonhome" stylesheets="@../css/css.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                        <VBox alignment="BOTTOM_LEFT" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                        <VBox alignment="BOTTOM_LEFT" mouseTransparent="true" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                            <children>
                               <HBox alignment="CENTER_LEFT" spacing="10.0">
                                  <children>
-                                    <ImageView fx:id="imageSource9" fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fx:id="imageSource9" fitHeight="18.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../resource/vnexpress_small.png" />
                                        </image>
@@ -333,11 +333,11 @@
                   <AnchorPane fx:id="anchorPane10" prefHeight="240.5" prefWidth="354.0" styleClass="anchorpanebutton" stylesheets="@../css/css.css">
                      <children>
                         <Button fx:id="button10" mnemonicParsing="false" styleClass="buttonhome" stylesheets="@../css/css.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                        <VBox alignment="BOTTOM_LEFT" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                        <VBox alignment="BOTTOM_LEFT" mouseTransparent="true" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                            <children>
                               <HBox id="text" alignment="CENTER_LEFT" spacing="10.0">
                                  <children>
-                                    <ImageView fx:id="imageSource10" fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fx:id="imageSource10" fitHeight="18.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../resource/vnexpress_small.png" />
                                        </image>

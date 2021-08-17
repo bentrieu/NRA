@@ -11,12 +11,12 @@
     -fx-white: white;
     -fx-dark: #9C9C9C;
     -fx-grey: #D5D4D0;
+    -fx-descriptionHbox: #F2F4F5;
 }
 
 .root{
     -fx-background-color: -fx-primary;
     -fx-font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', 'Helvetica', 'Arial', 'Lucida Grande', sans-serif;
-    -fx-fill: red;
 }
 
 .label {
@@ -25,6 +25,9 @@
 
 /*Home Scene styling from here*/
 /*button*/
+.iconsvg {
+    -fx-fill: -fx-black;
+}
 .buttonclose {
     -fx-background-color : transparent;
     -fx-background-radius :  0;
@@ -83,6 +86,7 @@
     -fx-background-color : -fx-primary;
     -fx-background-radius :  0;
     -fx-text-fill: -fx-black;
+    -fx-font-size: 18;
 }
 .button3:hover {
     -fx-font-weight : bold;
@@ -131,11 +135,11 @@
 /*text-field*/
 .text-field {
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 0, 0);
-    -fx-background-color: white;
+    -fx-background-color: -fx-white;
     -fx-background-radius: 5;
 }
 .text-field:focused {
-    -fx-background-color: white;
+    -fx-background-color: -fx-white;
 }
 
 /*scroll pane*/
@@ -293,7 +297,7 @@
 }
 .textTitleVertical, .textTitleVertical:hover, .textTitleVertical:pressed {
     -fx-font-family: Arial;
-    -fx-font-size: 20;
+    -fx-font-size: 18;
     -fx-font-weight: bold;
     -fx-fill: -fx-black;
     -fx-effect: dropshadow(three-pass-box, white, 10, 0, 0, 0);
@@ -308,7 +312,7 @@
     -fx-effect: dropshadow(three-pass-box, black, 15, 0, 0, 0);
 }
 .textcategory {
-    -fx-font-size: 40;
+    -fx-font-size: 46;
     -fx-text-alignment: left;
     -fx-fill: -fx-black;
 }
@@ -346,7 +350,46 @@
     -fx-fill: -fx-black;
 }
 .textauthor {
-    -fx-font-size: 18;
+    -fx-font-size: 24;
     -fx-font-weight: bold;
     -fx-text-alignment: right;
+}
+.textReadTheOriginalPost {
+    -fx-font-size: 18;
+    -fx-text-alignment: left;
+}
+.textflowright {
+    -fx-text-alignment: right;
+}
+.textflowleft {
+    -fx-text-alignment: left;
+}
+.textflowjustify {
+    -fx-text-alignment: justify;
+}
+.textflowcenter {
+    -fx-text-alignment: center;
+}
+.texthyperlink {
+    -fx-font-size: 18;
+    -fx-padding: 0;
+}
+.descriptionHbox {
+    -fx-background-color: -fx-descriptionHbox;
+    -fx-padding: 15;
+}
+.previousAndNextArticleButton {
+    -fx-background-color : -fx-white;
+    -fx-background-radius :  0;
+    -fx-effect: dropshadow(three-pass-box, black, 10, 0, 0, 0);
+}
+.previousAndNextArticleButton:hover {
+    -fx-background-color : -fx-blue;
+    -fx-background-radius :  0;
+    -fx-effect: dropshadow(three-pass-box, black, 10, 0, 0, 0);
+}
+.previousAndNextArticleButton:pressed {
+    -fx-background-color : -fx-white;
+    -fx-background-radius :  0;
+    -fx-effect: dropshadow(three-pass-box, black, 10, 0, 0, 0);
 }

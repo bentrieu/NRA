@@ -7,6 +7,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
@@ -33,7 +34,7 @@ public class ArticlesManager extends Application {
        Get search keyword list
        Display the full article  */
     // Zing web list: https://zingnews.vn/the-gioi.html
-    public ArrayList<Article> getZingList(String urlToShortArticle, String category) throws IOException {
+    public ArrayList<Article> getZingWebList(String urlToShortArticle, String category) throws IOException {
         // Create new arraylist of article for return
         ArrayList<Article> zingNewsList = new ArrayList<>();
 
@@ -43,12 +44,12 @@ public class ArticlesManager extends Application {
         final String url = urlToShortArticle;
         Document document = Jsoup.connect(url).userAgent("Mozilla").get();
         Elements all;
-        if (category.equals("Sports")) {
+//        if (category.equals("Sports")) {
              all = document.select("section#news-latest div.article-list article.article-item.type-text, section#news-latest div.article-list article.article-item.type-picture, section#news-latest div.article-list article.article-item.type-hasvideo");
-        }
-        else {
-            all = document.select("section#news-latest div.article-list article.article-item.type-text, section#news-latest div.article-list article.article-item.type-picture");
-        }
+//        }
+//        else {
+//            all = document.select("section#news-latest div.article-list article.article-item.type-text, section#news-latest div.article-list article.article-item.type-picture");
+//        }
         Elements thumb = all.select("p.article-thumbnail img");
         Elements titleAndLink = all.select("p.article-title a[href]");
         Elements description = all.select("p.article-summary");
@@ -83,7 +84,7 @@ public class ArticlesManager extends Application {
     }
 
     // Zing search
-    public ArrayList<Article> getSearchListZing(String keyWord, String category) throws IOException {
+    public ArrayList<Article> getZingSearchList(String keyWord, String category) throws IOException {
         // Create new arraylist of article for return
         ArrayList<Article> searchZingList = new ArrayList<>();
 
@@ -127,7 +128,7 @@ public class ArticlesManager extends Application {
     // Zing full article scrape and display
     public void displayZingFullArticle(Article article, VBox vbox) throws IOException {
         // Clear vbox
-        vbox.getChildren().remove(2, vbox.getChildren().size());
+        vbox.getChildren().clear();
 
         // Setup jsoup for each article
         final String fullArticlesUrl = article.getLinkToFullArticles(); // link to full article
@@ -164,22 +165,25 @@ public class ArticlesManager extends Application {
         Text text0 = new Text(article.getFullDate());
         text0.getStyleClass().add("textfulldate");
         TextFlow textFlow0 = new TextFlow(text0);
-        textFlow0.setStyle("-fx-text-alignment: center");
+        textFlow0.getStyleClass().add("textflowcenter");
         vbox.getChildren().add(textFlow0);
 
         // Display title
         Text text1 = new Text(article.getTitle());
         text1.getStyleClass().add("texttitle");
         TextFlow textFlow1 = new TextFlow(text1);
-        textFlow1.setStyle("-fx-text-alignment: justify");
+        textFlow1.getStyleClass().add("textflowjustify");
         vbox.getChildren().add(textFlow1);
 
         // Display description
         Text text2 = new Text(article.getDescription());
         text2.getStyleClass().add("textdescription");
         TextFlow textFlow2 = new TextFlow(text2);
-        textFlow2.setStyle("-fx-text-alignment: justify");
-        vbox.getChildren().add(textFlow2);
+        textFlow2.getStyleClass().add("textflowjustify");
+        HBox descriptionHbox = new HBox();
+        descriptionHbox.getStyleClass().add("descriptionHbox");
+        descriptionHbox.getChildren().add(textFlow2);
+        vbox.getChildren().add(descriptionHbox);
 
         // Display all content
         for (Element index : body) {
@@ -229,7 +233,7 @@ public class ArticlesManager extends Application {
                 Text imagecap = new Text(index.select("p").text());
                 imagecap.getStyleClass().add("textimagecap");
                 textFlow3.getChildren().add(imagecap);
-                textFlow3.setStyle("-fx-text-alignment: center");
+                textFlow3.getStyleClass().add("textflowcenter");
                 continue;
             }
             // Add Body ( h3 bold + text thuong)
@@ -237,14 +241,14 @@ public class ArticlesManager extends Application {
                 Text boldtext = new Text(index.text());
                 boldtext.getStyleClass().add("textbold");
                 textFlow3.getChildren().add(boldtext);
-                textFlow3.setStyle("-fx-text-alignment: justify");
+                textFlow3.getStyleClass().add("textflowjustify");
                 continue;
             }
             if (index.select("p").hasText() && !index.parent().parent().hasClass("inner-article")) { // text thuong
                 Text normaltext = new Text(index.text());
                 normaltext.getStyleClass().add("textnormal");
                 textFlow3.getChildren().add(normaltext);
-                textFlow3.setStyle("-fx-text-alignment: justify");
+                textFlow3.getStyleClass().add("textflowjustify");
                 continue;
             }
             // If not adding anything then remove the last index element (the new TextFlow)
@@ -256,8 +260,22 @@ public class ArticlesManager extends Application {
         Text text4 = new Text(article.getAuthor());
         text4.getStyleClass().add("textauthor");
         textFlow4.getChildren().add(text4);
-        textFlow4.setStyle("-fx-text-alignment: right");
+        textFlow4.getStyleClass().add("textflowright");
         vbox.getChildren().add(textFlow4);
+
+        // Link to full article (read original post here.)
+        TextFlow textFlow5 = new TextFlow();
+        Text text5 = new Text("Read the original post ");
+        text5.getStyleClass().add("textReadTheOriginalPost");
+        Hyperlink articleLink = new Hyperlink("here");
+        articleLink.getStyleClass().add("texthyperlink");
+        articleLink.setOnAction(e -> {
+            getHostServices().showDocument(article.getLinkToFullArticles());
+        });
+        Text text6 = new Text(".");
+        textFlow5.getChildren().addAll(text5, articleLink, text6);
+        textFlow5.setStyle("-fx-font-style: italic; -fx-font-size: 18; -fx-alignment: left;");
+        vbox.getChildren().add(textFlow5);
     }
 
     /* FROM HERE WILL BE THE FUNCTION FOR VNEXPRESS.COM
@@ -315,7 +333,7 @@ public class ArticlesManager extends Application {
     }
 
     // Vnexpress search
-    public ArrayList<Article> getSearchListVnexpress(String keyWord, String category) throws IOException {
+    public ArrayList<Article> getVnexpressSearchList(String keyWord, String category) throws IOException {
         // Create new arraylist of article for return
         ArrayList<Article> searchVnexpressList = new ArrayList<>();
 
@@ -422,7 +440,7 @@ public class ArticlesManager extends Application {
     // Vnexpres full article scrape and display
     public void displayVnexpressFullArticle(Article article, VBox vbox) throws IOException {
         // Clear vbox
-        vbox.getChildren().remove(2, vbox.getChildren().size());
+        vbox.getChildren().clear();
 
         // Setup jsoup for each article
         final String fullArticlesUrl = article.getLinkToFullArticles(); // link to full article
@@ -439,40 +457,60 @@ public class ArticlesManager extends Application {
         article.setOriginalCategory("");
         int k = 0;
         for (Element index : originalCategory) {
-            if (k != originalCategory.size() - 1) article.setOriginalCategory(article.getOriginalCategory() + index.text() + " > ");
+            if (k != originalCategory.size() - 1) article.setOriginalCategory(article.getOriginalCategory() + index.text() + " - ");
             else article.setOriginalCategory(article.getOriginalCategory() + index.text());
             k++;
         }
 
-        // CSS
-
         // Display category
-        TextFlow textFlow = new TextFlow(new Text(article.getCategory()));
+        Text text = new Text(article.getCategory());
+        text.getStyleClass().add("textcategory");
+        TextFlow textFlow = new TextFlow(text);
         vbox.getChildren().add(textFlow);
-        textFlow.setStyle("-fx-font-size: 20; -fx-text-alignment: left; -fx-text-fill: grey;");
 
-        // Display fullDate
-        TextFlow textFlow0 = new TextFlow(new Text(article.getSource() + " * " + article.getFullDate()));
+        // Display image source
+        Image imageSource = new Image("resource/vnexpress_big.png");
+        ImageView imageViewSource = new ImageView(imageSource);
+        imageViewSource.setPreserveRatio(true);
+        imageViewSource.setFitHeight(60);
+        vbox.getChildren().add(imageViewSource);
+
+        // Display original category + fullDate
+        Text text0 = new Text(article.getOriginalCategory() + "\n" + article.getFullDate());
+        text0.getStyleClass().add("textfulldate");
+        TextFlow textFlow0 = new TextFlow(text0);
+        textFlow0.getStyleClass().add("textflowcenter");
         vbox.getChildren().add(textFlow0);
-        textFlow0.setStyle("-fx-font-size: 14; -fx-text-alignment: right; -fx-text-fill: grey;");
 
         // Display title
-        TextFlow textFlow1 = new TextFlow(new Text(article.getTitle()));
+        Text text1 = new Text(article.getTitle());
+        text1.getStyleClass().add("texttitle");
+        TextFlow textFlow1 = new TextFlow(text1);
+        textFlow1.setStyle("-fx-text-alignment: justify");
         vbox.getChildren().add(textFlow1);
-        textFlow1.setStyle("-fx-font-size: 32; -fx-font-weight: bold; -fx-text-alignment: justify;");
 
         // Display description
         if (description.select("span.location-stamp").hasText()) {
             article.setDescription(description.select("span.location-stamp").text() + " - " + description.text().replaceFirst(description.select("span.location-stamp").text(), ""));
-            TextFlow textFlow2 = new TextFlow(new Text(article.getDescription()));
-            vbox.getChildren().add(textFlow2);
-            textFlow2.setStyle("-fx-font-size: 18; -fx-text-alignment: justify;");
+            Text text2 = new Text(article.getDescription());
+            text2.getStyleClass().add("textdescription");
+            TextFlow textFlow2 = new TextFlow(text2);
+            textFlow2.getStyleClass().add("textflowjustify");
+            HBox descriptionHbox = new HBox();
+            descriptionHbox.getStyleClass().add("descriptionHbox");
+            descriptionHbox.getChildren().add(textFlow2);
+            vbox.getChildren().add(descriptionHbox);
         }
         else {
             article.setDescription(description.text());
-            TextFlow textFlow2 = new TextFlow(new Text(article.getDescription()));
-            vbox.getChildren().add(textFlow2);
-            textFlow2.setStyle("-fx-font-size: 18; -fx-text-alignment: justify;");
+            Text text2 = new Text(article.getDescription());
+            text2.getStyleClass().add("textdescription");
+            TextFlow textFlow2 = new TextFlow(text2);
+            textFlow2.getStyleClass().add("textflowjustify");
+            HBox descriptionHbox = new HBox();
+            descriptionHbox.getStyleClass().add("descriptionHbox");
+            descriptionHbox.getChildren().add(textFlow2);
+            vbox.getChildren().add(descriptionHbox);
         }
 
         // Display all content
@@ -481,8 +519,10 @@ public class ArticlesManager extends Application {
             vbox.getChildren().add(textFlow3);
             // Image cap
             if (index.select("figcaption").attr("itemprop").equals("description")) { // image_cap
-                textFlow3.getChildren().add(new Text(index.select("p.Image").text()));
-                textFlow3.setStyle("-fx-font-size: 12; -fx-text-alignment: left;");
+                Text imagecap = new Text(index.select("p.Image").text());
+                imagecap.getStyleClass().add("textimagecap");
+                textFlow3.getChildren().add(imagecap);
+                textFlow3.getStyleClass().add("textflowcenter");
                 continue;
             }
             // Add image
@@ -528,7 +568,7 @@ public class ArticlesManager extends Application {
                 vbox.getChildren().remove(vbox.getChildren().size() - 1);
                 continue;
             }
-            //
+            // Eliminate the p.Normal tag with their parent has class "item_slide_show"
             if (index.parent().parent().parent().hasClass("item_slide_show")) {
                 vbox.getChildren().remove(vbox.getChildren().size() - 1);
                 continue;
@@ -544,30 +584,37 @@ public class ArticlesManager extends Application {
                 }
                 // Add author
                 if (index.attr("style").contains("right") || index.hasAttr("align")) {
-                    textFlow3.getChildren().add(new Text(index.text()));
-                    textFlow3.setStyle("-fx-font-size: 22; -fx-font-weight: bold; -fx-text-alignment: right;");
+                    Text author = new Text(index.text());
+                    author.getStyleClass().add("textauthor");
+                    textFlow3.getChildren().add(author);
+                    textFlow3.getStyleClass().add("textflowright");
                     continue;
                 }
                 // Strong text
                 if (index.getElementsByTag("strong").hasText()) {
                     if (index.hasClass("author_mail") || index.hasClass("author")) {
-                        textFlow3.getChildren().add(new Text(index.text()));
-                        textFlow3.setStyle("-fx-font-size: 22; -fx-font-weight: bold; -fx-text-alignment: right;");
+                        Text author2 = new Text(index.text());
+                        author2.getStyleClass().add("textbold");
+                        textFlow3.getChildren().add(author2);
+                        textFlow3.getStyleClass().add("textflowright");
                         continue;
                     }
                     else { // làm tương tự như hyper link
                         String string = index.text().replaceAll(index.select("strong").text(), "<strong>" + index.select("strong").text() + "</strong>");
                         String[] stringSplit = string.split("<strong>");
                         if (!stringSplit[0].isEmpty()) {
-                            textFlow3.getChildren().add(new Text(stringSplit[0]));
-                            textFlow3.setStyle("-fx-font-size: 18; -fx-text-alignment: justify;");
+                            Text tempText = new Text(stringSplit[0]);
+                            tempText.getStyleClass().add("textnormal");
+                            textFlow3.getChildren().add(tempText);
+                            textFlow3.getStyleClass().add("textflowjustify");
                         }
                         for (int i = 1; i < stringSplit.length; i++) {
-                            Text text = new Text(stringSplit[i].substring(0, stringSplit[i].indexOf("</strong>")));
-                            text.setStyle("-fx-font-size: 18; -fx-font-weight: bold; -fx-text-alignment: justify;");
-                            Text text1 = new Text(stringSplit[i].substring(stringSplit[i].indexOf("</strong>") + 9));
-                            text1.setStyle("-fx-font-size: 18; -fx-text-alignment: justify;");
-                            textFlow3.getChildren().addAll(text, text1);
+                            Text textTemp = new Text(stringSplit[i].substring(0, stringSplit[i].indexOf("</strong>")));
+                            textTemp.getStyleClass().add("textbold");
+                            Text textTemp1 = new Text(stringSplit[i].substring(stringSplit[i].indexOf("</strong>") + 9));
+                            textTemp1.getStyleClass().add("textnormal");
+                            textFlow3.getChildren().addAll(textTemp, textTemp1);
+                            textFlow3.getStyleClass().add("textflowjustify");
                         }
                         continue;
                     }
@@ -578,20 +625,38 @@ public class ArticlesManager extends Application {
                         vbox.getChildren().remove(vbox.getChildren().size() - 1);
                         continue;
                     }
-                    textFlow3.getChildren().add(new Text(index.text()));
-                    textFlow3.setStyle("-fx-font-size: 18; -fx-text-alignment: justify;");
+                    Text textNormal = new Text(index.text());
+                    textNormal.getStyleClass().add("textnormal");
+                    textFlow3.getChildren().add(textNormal);
+                    textFlow3.getStyleClass().add("textflowjustify");
                 }
                 continue;
             }
             // Add author in some special case
             if (index.select("p.author_mail").hasText()) { // tác giả (có bài viết tác giả phải lấy kiểu này, không lấy bằng text thông thường được)
-                textFlow3.getChildren().add(new Text(index.text()));
-                textFlow3.setStyle("-fx-font-size: 22; -fx-font-weight: bold; -fx-text-alignment: right;");
+                Text author3 = new Text(index.text());
+                author3.getStyleClass().add("textbold");
+                textFlow3.getChildren().add(author3);
+                textFlow3.getStyleClass().add("textflowright");
                 continue;
             }
             // If not adding anything then remove the last index element (the new TextFlow)
             vbox.getChildren().remove(vbox.getChildren().size() - 1);
         }
+
+        // Link to full article (read original post here.)
+        TextFlow textFlow5 = new TextFlow();
+        Text text5 = new Text("Read the original post ");
+        text5.getStyleClass().add("textReadTheOriginalPost");
+        Hyperlink articleLink = new Hyperlink("here");
+        articleLink.getStyleClass().add("texthyperlink");
+        articleLink.setOnAction(e -> {
+            getHostServices().showDocument(article.getLinkToFullArticles());
+        });
+        Text text6 = new Text(".");
+        textFlow5.getChildren().addAll(text5, articleLink, text6);
+        textFlow5.setStyle("-fx-font-style: italic; -fx-font-size: 18; -fx-alignment: left;");
+        vbox.getChildren().add(textFlow5);
     }
 
     /* FROM HERE WILL BE THE FUNCTION FOR TUOITRE.VN
@@ -636,7 +701,7 @@ public class ArticlesManager extends Application {
             int startLink = string.indexOf("src=\"") + 5;
             int endLink = string.indexOf("\"", startLink) - 1;
             int startDescription = string.indexOf("</a>") + 4;
-            tuoiTreList.get(i).setThumb(string.substring(startLink, endLink + 1));
+            tuoiTreList.get(i).setThumb(string.substring(startLink, endLink + 1).replaceFirst("zoom/[_0-9]+/", "thumb_w/586/"));
             tuoiTreList.get(i).setDescription(string.substring(startDescription));
             // Set link to full article for each object
             tuoiTreList.get(i).setLinkToFullArticles(link.get(i).text());
@@ -645,8 +710,53 @@ public class ArticlesManager extends Application {
         return tuoiTreList;
     }
 
+    // Tuoitre web list: https://tuoitre.vn/thoi-su.htm (not yet done)
+    public ArrayList<Article> getTuoiTreWebList(String urlToShortArticle, String category) throws IOException {
+        // Create new arraylist of article for return
+        ArrayList<Article> tuoiTreWebList = new ArrayList<>();
+
+        /* Bắt đầu từ đây là add dữ liệu cho sort article
+         */
+        // Setup jsoup for scraping data
+        final String url = urlToShortArticle;
+        Document document = Jsoup.connect(url).userAgent("Mozilla").get();
+        Elements all = document.select("item");
+        Elements thumbAndDescription = all.select("description");
+        Elements title = all.select("title");
+        Elements link = all.select("link");
+        Elements date = all.select("pubDate");
+
+        // Add data to vnexpressNewsList (Title + date + thumb + link)
+        for (int i = 0; i < 15; i++) {
+            // Create new article object then add the object into the ArrayList
+            tuoiTreWebList.add(new Article());
+            // Set source
+            tuoiTreWebList.get(i).setSource("tuoitre");
+            // Set category manually
+            tuoiTreWebList.get(i).setCategory(category);
+            // Set title for each object
+            tuoiTreWebList.get(i).setTitle(title.get(i).text());
+            // Set date for each object
+            String dateTemp = timeToUnixString4(date.get(i).text());
+            tuoiTreWebList.get(i).setDate(dateTemp);
+            // Set time ago for each object
+            tuoiTreWebList.get(i).setTimeAgo(timeDiff(dateTemp));
+            // Set thumb and description for each object
+            String string = thumbAndDescription.get(i).text();
+            int startLink = string.indexOf("src=\"") + 5;
+            int endLink = string.indexOf("\"", startLink) - 1;
+            int startDescription = string.indexOf("</a>") + 4;
+            tuoiTreWebList.get(i).setThumb(string.substring(startLink, endLink + 1).replaceFirst("zoom/[_0-9]+/", "thumb_w/586/"));
+            tuoiTreWebList.get(i).setDescription(string.substring(startDescription));
+            // Set link to full article for each object
+            tuoiTreWebList.get(i).setLinkToFullArticles(link.get(i).text());
+        }
+
+        return tuoiTreWebList;
+    }
+
     // Tuoitre search
-    public ArrayList<Article> getSearchListTuoiTre(String keyWord, String category) throws IOException {
+    public ArrayList<Article> getTuoiTreSearchList(String keyWord, String category) throws IOException {
         // Create new arraylist of article for return
         ArrayList<Article> searchTuoiTreList = new ArrayList<>();
 
@@ -673,7 +783,7 @@ public class ArticlesManager extends Application {
             searchTuoiTreList.get(i).setTitle(all.get(i).select("h3.title-news").text());
             // Set thumb for each object
             String linkThumb = all.get(i).select("img").attr("abs:data-src");
-            searchTuoiTreList.get(i).setThumb(linkThumb);
+            searchTuoiTreList.get(i).setThumb(linkThumb.replaceFirst("zoom/[_0-9]+/", "thumb_w/586/"));
             // Set description for each object
             searchTuoiTreList.get(i).setDescription(all.get(i).select("div.name-news p.sapo").text());
             // Set link to full article for each object
@@ -691,7 +801,7 @@ public class ArticlesManager extends Application {
     // Tuoitre full article scrape and display
     public void displayTuoiTreFullArticle(Article article, VBox vbox) throws IOException {
         // Clear vbox
-        vbox.getChildren().remove(2, vbox.getChildren().size());
+        vbox.getChildren().clear();
 
         // Setup jsoup for each article
         String fullArticlesUrl = article.getLinkToFullArticles(); // link to full article
@@ -716,32 +826,47 @@ public class ArticlesManager extends Application {
         article.setOriginalCategory("");
         int k = 0;
         for (Element index : originalCategory) {
-            if (k != originalCategory.size() - 1) article.setOriginalCategory(article.getOriginalCategory() + index.text() + " > ");
+            if (k != originalCategory.size() - 1) article.setOriginalCategory(article.getOriginalCategory() + index.text() + " - ");
             else article.setOriginalCategory(article.getOriginalCategory() + index.text());
             k++;
         }
 
-        // CSS
-
         // Display category
-        TextFlow textFlow = new TextFlow(new Text(article.getCategory()));
+        Text text = new Text(article.getCategory());
+        text.getStyleClass().add("textcategory");
+        TextFlow textFlow = new TextFlow(text);
         vbox.getChildren().add(textFlow);
-        textFlow.setStyle("-fx-font-size: 20; -fx-text-alignment: left; -fx-text-fill: grey;");
 
-        // Display fullDate
-        TextFlow textFlow0 = new TextFlow(new Text(article.getSource() + " * " + article.getFullDate()));
+        // Display image source
+        Image imageSource = new Image("resource/tuoitre_big.png");
+        ImageView imageViewSource = new ImageView(imageSource);
+        imageViewSource.setPreserveRatio(true);
+        imageViewSource.setFitHeight(60);
+        vbox.getChildren().add(imageViewSource);
+
+        // Display original category + fullDate
+        Text text0 = new Text(article.getOriginalCategory() + "\n" + article.getFullDate());
+        text0.getStyleClass().add("textfulldate");
+        TextFlow textFlow0 = new TextFlow(text0);
+        textFlow0.getStyleClass().add("textflowcenter");
         vbox.getChildren().add(textFlow0);
-        textFlow0.setStyle("-fx-font-size: 14; -fx-text-alignment: right; -fx-text-fill: grey;");
 
         // Display title
-        TextFlow textFlow1 = new TextFlow(new Text(article.getTitle()));
+        Text text1 = new Text(article.getTitle());
+        text1.getStyleClass().add("texttitle");
+        TextFlow textFlow1 = new TextFlow(text1);
+        textFlow1.getStyleClass().add("textflowjustify");
         vbox.getChildren().add(textFlow1);
-        textFlow1.setStyle("-fx-font-size: 32; -fx-font-weight: bold; -fx-text-alignment: justify;");
 
         // Display description
-        TextFlow textFlow2 = new TextFlow(new Text(article.getDescription()));
-        vbox.getChildren().add(textFlow2);
-        textFlow2.setStyle("-fx-font-size: 18; -fx-text-alignment: justify;");
+        Text text2 = new Text(article.getDescription());
+        text2.getStyleClass().add("textdescription");
+        TextFlow textFlow2 = new TextFlow(text2);
+        textFlow2.getStyleClass().add("textflowjustify");
+        HBox descriptionHbox = new HBox();
+        descriptionHbox.getStyleClass().add("descriptionHbox");
+        descriptionHbox.getChildren().add(textFlow2);
+        vbox.getChildren().add(descriptionHbox);
 
         // Display all content
         for (Element index : body) {
@@ -753,36 +878,37 @@ public class ArticlesManager extends Application {
                 ImageView imageView = new ImageView(new Image(index.select("img").attr("data-original")));
                 imageView.setPreserveRatio(true);
                 // Set the initial fitwidth for imageview
-                if (Main.stage.getWidth() < 1000) {
-                    imageView.setFitWidth(Main.stage.getWidth() - 100);
+                if (Main.stage.getWidth() < 900) {
+                    imageView.setFitWidth(Main.stage.getWidth() - 140);
+                    vbox.setMaxWidth(Main.stage.getWidth() - 140);
+                    vbox.setMinWidth(Main.stage.getWidth() - 140);
                 }
-                if (1000 <= Main.stage.getWidth() && Main.stage.getWidth() < 1400) {
-                    imageView.setFitWidth(Main.stage.getWidth() - 450);
-                }
-                if (Main.stage.getWidth() >= 1400) {
-                    imageView.setFitWidth(Main.stage.getWidth() - 850);
+                if (Main.stage.getWidth() >= 900) {
+                    imageView.setFitWidth(800);
+                    vbox.setMaxWidth(800);
+                    vbox.setMinWidth(800);
                 }
                 // Bind the fitwidth property of imageView with stagewidth property
                 Main.stage.widthProperty().addListener(new ChangeListener<Number>() {
                     @Override
                     public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
-                        if (t1.doubleValue() < 1000) {
-                            vbox.setPadding(new Insets(150, 30, 150, 30));
-                            imageView.fitWidthProperty().bind(Main.stage.widthProperty().subtract(100));
+                        if (t1.doubleValue() < 900) {
+                            imageView.setFitWidth(t1.doubleValue() - 140);
+                            vbox.setMaxWidth(t1.doubleValue() - 140);
+                            vbox.setMinWidth(t1.doubleValue() - 140);
                         }
-                        if (1000 <= t1.doubleValue() && t1.doubleValue() < 1400 ) {
-                            vbox.setPadding(new Insets(150, 200, 150, 200));
-                            imageView.fitWidthProperty().bind(Main.stage.widthProperty().subtract(450));
-                        }
-                        if (t1.doubleValue() > 1400) {
-                            vbox.setPadding(new Insets(150, 400, 150, 400));
-                            imageView.fitWidthProperty().bind(Main.stage.widthProperty().subtract(850));
+                        if (t1.doubleValue() >= 900) {
+                            imageView.setFitWidth(800);
+                            vbox.setMaxWidth(800);
+                            vbox.setMinWidth(800);
                         }
                     }
                 });
                 // Add image cap
-                textFlow3.getChildren().add(new Text(index.select("div.PhotoCMS_Caption").text()));
-                textFlow3.setStyle("-fx-font-size: 12; -fx-text-alignment: left;");
+                Text imagecap = new Text(index.select("div.PhotoCMS_Caption").text());
+                imagecap.getStyleClass().add("textimagecap");
+                textFlow3.getChildren().add(imagecap);
+                textFlow3.getStyleClass().add("textflowcenter");
                 vbox.getChildren().remove(vbox.getChildren().size() - 1);
                 vbox.getChildren().addAll(imageView, textFlow3);
                 continue;
@@ -801,25 +927,27 @@ public class ArticlesManager extends Application {
                     String string = index.text().replaceAll(index.select("b").text().replaceAll("\\*", ""), "<strong>" + index.select("b").text().replaceAll("\\*", "") + "</strong>");
                     String[] stringSplit = string.split("<strong>");
                     if (!stringSplit[0].isEmpty()) {
-                        textFlow3.getChildren().add(new Text(stringSplit[0]));
-                        textFlow3.setStyle("-fx-font-size: 18; -fx-text-alignment: justify;");
+                        Text textTemp = new Text(stringSplit[0]);
+                        textTemp.getStyleClass().add("textnormal");
+                        textFlow3.getChildren().add(textTemp);
+                        textFlow3.getStyleClass().add("textflowjustify");
                     }
                     for (int i = 1; i < stringSplit.length; i++) {
-                        Text text = new Text(stringSplit[i].substring(0, stringSplit[i].indexOf("</strong>")));
-                        text.setStyle("-fx-font-size: 18; -fx-font-weight: bold; -fx-text-alignment: justify;");
-                        Text text1 = new Text(stringSplit[i].substring(stringSplit[i].indexOf("</strong>") + 9));
-                        text1.setStyle("-fx-font-size: 18; -fx-text-alignment: justify;");
-                        textFlow3.getChildren().addAll(text, text1);
+                        Text textTemp0 = new Text(stringSplit[i].substring(0, stringSplit[i].indexOf("</strong>")));
+                        textTemp0.getStyleClass().add("textbold");
+                        Text textTemp1 = new Text(stringSplit[i].substring(stringSplit[i].indexOf("</strong>") + 9));
+                        textTemp1.getStyleClass().add("textnormal");
+                        textFlow3.getChildren().addAll(textTemp0, textTemp1);
+                        textFlow3.getStyleClass().add("textflowjustify");
                     }
                     continue;
                 }
                 else  {
-                    textFlow3.getChildren().add(new Text(index.text()));
-                    textFlow3.setStyle("-fx-font-size: 18; -fx-text-alignment: justify;");
+                    Text textTemp3 = new Text(index.text());
+                    textTemp3.getStyleClass().add("textnormal");
+                    textFlow3.getChildren().add(textTemp3);
+                    textFlow3.getStyleClass().add("textflowjustify");
                 }
-//                else {
-//
-//                }
                 continue;
             }
             // If not adding anything then remove the last index element (the new TextFlow)
@@ -828,9 +956,382 @@ public class ArticlesManager extends Application {
 
         // Display author
         TextFlow textFlow4 = new TextFlow();
-        textFlow4.getChildren().add(new Text(article.getAuthor()));
+        Text author1 = new Text(article.getAuthor());
+        author1.getStyleClass().add("textauthor");
+        textFlow4.getChildren().add(author1);
+        textFlow4.getStyleClass().add("textflowright");
         vbox.getChildren().add(textFlow4);
-        textFlow4.setStyle("-fx-font-family: \"Arial\"; -fx-font-size: 22; -fx-font-weight: bold; -fx-text-alignment: right;");
+
+        // Link to full article (read original post here.)
+        TextFlow textFlow5 = new TextFlow();
+        Text text5 = new Text("Read the original post ");
+        text5.getStyleClass().add("textReadTheOriginalPost");
+        Hyperlink articleLink = new Hyperlink("here");
+        articleLink.getStyleClass().add("texthyperlink");
+        articleLink.setOnAction(e -> {
+            getHostServices().showDocument(article.getLinkToFullArticles());
+        });
+        Text text6 = new Text(".");
+        textFlow5.getChildren().addAll(text5, articleLink, text6);
+        textFlow5.setStyle("-fx-font-style: italic; -fx-font-size: 18; -fx-alignment: left;");
+        vbox.getChildren().add(textFlow5);
+    }
+
+    /* FROM HERE WILL BE THE FUNCTION FOR THANHNIEN.VN
+       There will be 4 function
+       Get RSS list
+       Get search keyword list
+       Get list open from web
+       Display the full article  */
+    // Thanhnien rss
+    public ArrayList<Article> getThanhNienList(String urlToShortArticle, String category) throws IOException {
+        // Create new arraylist of article for return
+        ArrayList<Article> thanhNienList = new ArrayList<>();
+
+        /* Bắt đầu từ đây là add dữ liệu cho sort article
+         */
+        // Setup jsoup for scraping data
+        final String url = urlToShortArticle;
+        Document document = Jsoup.connect(url).userAgent("Mozilla").get();
+        Elements all = document.select("item");
+        Elements thumb = all.select("image");
+        Elements title = all.select("title");
+        Elements link = all.select("link");
+        Elements date = all.select("pubDate");
+
+        // Add data to vnexpressNewsList (Title + date + thumb + link)
+        for (int i = 0; i < 15; i++) {
+            // Create new article object then add the object into the ArrayList
+            thanhNienList.add(new Article());
+            // Set source
+            thanhNienList.get(i).setSource("thanhnien");
+            // Set category manually
+            thanhNienList.get(i).setCategory(category);
+            // Set title for each object
+            thanhNienList.get(i).setTitle(title.get(i).text());
+            // Set date for each object
+            String dateTemp = timeToUnixString2(date.get(i).text());
+            thanhNienList.get(i).setDate(dateTemp);
+            // Set time ago for each object
+            thanhNienList.get(i).setTimeAgo(timeDiff(dateTemp));
+            // Set thumb for each object
+            thanhNienList.get(i).setThumb(thumb.get(i).text().replaceFirst("400x300", "2048"));
+            // Set link to full article for each object
+            thanhNienList.get(i).setLinkToFullArticles(link.get(i).text());
+        }
+
+        return thanhNienList;
+    }
+
+    // Thanhnien web list (https://thanhnien.vn/the-gioi/)
+    public ArrayList<Article> getThanhNienWebList(String urlToShortArticle, String category) throws IOException {
+        // Create new arraylist of article for return
+        ArrayList<Article> thanhNienWebList = new ArrayList<>();
+
+        /* Bắt đầu từ đây là add dữ liệu cho sort article
+         */
+        // Setup jsoup for scraping data
+        final String url = urlToShortArticle;
+        Document document = Jsoup.connect(url).userAgent("Mozilla").get();
+        Elements all = document.select("article.story.story--primary, div.l-grid article.story");
+        Elements thumb = all.select("img");
+        Elements titleAndLink = all.select("a.story__title");
+        Elements date = all.select("time[rel]");
+
+        // Add data to vnexpressNewsList (Title + date + thumb + link)
+        for (int i = 0; i < 15; i++) {
+            // Create new article object then add the object into the ArrayList
+            thanhNienWebList.add(new Article());
+            // Set source
+            thanhNienWebList.get(i).setSource("thanhnien");
+            // Set category manually
+            thanhNienWebList.get(i).setCategory(category);
+            // Set title for each object
+            thanhNienWebList.get(i).setTitle(titleAndLink.get(i).text());
+            // Set date for each object
+            String dateTemp = date.get(i).attr("rel").substring(0, 10);
+            thanhNienWebList.get(i).setDate(dateTemp);
+            // Set time ago for each object
+            thanhNienWebList.get(i).setTimeAgo(timeDiffThanhNien(dateTemp));
+            // Set thumb for each object
+            String thumbTemp;
+            if (thumb.get(i).attr("data-src").isEmpty()) {
+                thumbTemp = thumb.get(i).attr("src");
+            } else {
+                thumbTemp = thumb.get(i).attr("data-src");
+            }
+            if (thumbTemp.contains("c150x100")) thumbTemp = thumbTemp.replaceFirst("c150x100/[,0-9]+/", "2048/"); // c150x100/8,0,92,0
+            else {
+                if (thumbTemp.contains("150x100")) thumbTemp = thumbTemp.replaceFirst("150x100", "2048"); // 150x100
+            }
+            thanhNienWebList.get(i).setThumb(thumbTemp);
+            // Set link to full article for each object
+            thanhNienWebList.get(i).setLinkToFullArticles(titleAndLink.get(i).attr("abs:href"));
+        }
+
+        return thanhNienWebList;
+    }
+
+    public void displayThanhNienFullArticle(Article article, VBox vbox) throws IOException {
+        // Clear vbox
+        vbox.getChildren().clear();
+
+        // Setup jsoup for each article
+        String fullArticlesUrl = article.getLinkToFullArticles(); // link to full article
+        Document document = Jsoup.connect(fullArticlesUrl).userAgent("Mozilla").get();
+        Elements all = document.select("div.l-content div.pswp-content");
+        Elements description = all.select("div.sapo");
+        Elements body = all.select("div#abody").select("> div, h2, div.pswp-content__wrapimage img, div.pswp-content__caption div.imgcaption, table.video");
+        Elements author = document.select("div.details__author div.left h4");
+        Elements originalCategory = document.select("div.breadcrumbs span[itemprop] a[href] span");
+        Elements fullDate = document.select("div.details__meta div.meta time");
+        Elements descriptionImage = all.select("div#contentAvatar");
+
+        // Set fullDate for each object
+        if (fullDate.hasText()) {
+            article.setFullDate(fullDate.first().text());
+        }
+
+        // Set author for each object
+        if (author.hasText()) {
+            article.setAuthor(author.first().text());
+        }
+
+        // Set original category for each object
+        article.setOriginalCategory("");
+        int k = 0;
+        for (Element index : originalCategory) {
+            if (k != originalCategory.size() - 1) article.setOriginalCategory(article.getOriginalCategory() + index.text() + " - ");
+            else article.setOriginalCategory(article.getOriginalCategory() + index.text());
+            k++;
+        }
+
+        // Display category
+        Text text = new Text(article.getCategory());
+        text.getStyleClass().add("textcategory");
+        TextFlow textFlow = new TextFlow(text);
+        vbox.getChildren().add(textFlow);
+
+        // Display image source
+        Image imageSource = new Image("resource/thanhnien_big.png");
+        ImageView imageViewSource = new ImageView(imageSource);
+        imageViewSource.setPreserveRatio(true);
+        imageViewSource.setFitHeight(60);
+        vbox.getChildren().add(imageViewSource);
+
+        // Display original category + fullDate
+        Text text0 = new Text(article.getOriginalCategory() + "\n" + article.getFullDate());
+        text0.getStyleClass().add("textfulldate");
+        TextFlow textFlow0 = new TextFlow(text0);
+        textFlow0.getStyleClass().add("textflowcenter");
+        vbox.getChildren().add(textFlow0);
+
+        // Display title
+        Text text1 = new Text(article.getTitle());
+        text1.getStyleClass().add("texttitle");
+        TextFlow textFlow1 = new TextFlow(text1);
+        textFlow1.getStyleClass().add("textflowjustify");
+        vbox.getChildren().add(textFlow1);
+
+        // Display description
+        if (description.select("a").hasAttr("href")) {
+            TextFlow textFlow2 = getHyperLink(description.first());
+            textFlow2.getStyleClass().add("textflowjustify");
+            HBox descriptionHbox = new HBox();
+            descriptionHbox.getStyleClass().add("descriptionHbox");
+            descriptionHbox.getChildren().add(textFlow2);
+            vbox.getChildren().add(descriptionHbox);
+        } else {
+            Text text2 = new Text();
+            if (!description.first().ownText().isEmpty()) {
+                text2.setText(description.first().ownText());
+            } else text2.setText(description.text());
+            text2.getStyleClass().add("textdescription");
+            TextFlow textFlow2 = new TextFlow(text2);
+            textFlow2.getStyleClass().add("textflowjustify");
+            HBox descriptionHbox = new HBox();
+            descriptionHbox.getStyleClass().add("descriptionHbox");
+            descriptionHbox.getChildren().add(textFlow2);
+            vbox.getChildren().add(descriptionHbox);
+        }
+
+        // Display image description
+        if (descriptionImage.select("img").hasAttr("data-src") || descriptionImage.select("img").hasAttr("src")) {
+            // Create new imageView
+            ImageView imageView0 = new ImageView();
+            if (descriptionImage.select("img").attr("data-src").isEmpty()) {
+                imageView0 = new ImageView(new Image(descriptionImage.select("img").attr("abs:src")));
+            }
+            else {
+                imageView0 = new ImageView(new Image(descriptionImage.select("img").attr("abs:data-src")));
+            }
+            imageView0.setPreserveRatio(true);
+            // Set the initial fitwidth for imageview
+            if (Main.stage.getWidth() < 900) {
+                imageView0.setFitWidth(Main.stage.getWidth() - 140);
+                vbox.setMaxWidth(Main.stage.getWidth() - 140);
+                vbox.setMinWidth(Main.stage.getWidth() - 140);
+            }
+            if (Main.stage.getWidth() >= 900) {
+                imageView0.setFitWidth(800);
+                vbox.setMaxWidth(800);
+                vbox.setMinWidth(800);
+            }
+            // Bind the fitwidth property of imageView with stagewidth property
+            ImageView finalImageView = imageView0;
+            Main.stage.widthProperty().addListener(new ChangeListener<Number>() {
+                @Override
+                public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
+                    if (t1.doubleValue() < 900) {
+                        finalImageView.setFitWidth(t1.doubleValue() - 140);
+                        vbox.setMaxWidth(t1.doubleValue() - 140);
+                        vbox.setMinWidth(t1.doubleValue() - 140);
+                    }
+                    if (t1.doubleValue() >= 900) {
+                        finalImageView.setFitWidth(800);
+                        vbox.setMaxWidth(800);
+                        vbox.setMinWidth(800);
+                    }
+                }
+            });
+            // Get image cap
+            Text imagecap = new Text(descriptionImage.select("div.imgcaption").text());
+            imagecap.getStyleClass().add("textimagecap");
+            TextFlow textFlowTemp = new TextFlow();
+            textFlowTemp.getChildren().add(imagecap);
+            textFlowTemp.getStyleClass().add("textflowcenter");
+            vbox.getChildren().addAll(imageView0, textFlowTemp);
+        }
+
+
+        // Display all content
+        for (Element index : body) {
+            TextFlow textFlow3 = new TextFlow();
+            vbox.getChildren().add(textFlow3);
+            // Eliminate details__morenews element
+            if (index.hasClass("details__morenews")) {
+                vbox.getChildren().remove(vbox.getChildren().size() - 1);
+                continue;
+            }
+            // Add video open link caption
+            if (index.hasClass("video")) {
+                Text text51 = new Text("Watch video on this ");
+                text51.getStyleClass().add("textReadTheOriginalPost");
+                Hyperlink articleLink1 = new Hyperlink("link");
+                articleLink1.getStyleClass().add("texthyperlink");
+                articleLink1.setOnAction(e -> {
+                    getHostServices().showDocument(article.getLinkToFullArticles());
+                });
+                Text text61 = new Text(".");
+                textFlow3.getChildren().addAll(text51, articleLink1, text61);
+                textFlow3.setStyle("-fx-text-alignment: center; -fx-font-style: italic; -fx-font-size: 18;");
+                continue;
+            }
+            // Add imageview
+            if (index.select("img").hasAttr("data-src")) {
+                // Create new imageView
+                ImageView imageView = new ImageView(new Image(index.select("img").attr("data-src")));
+                imageView.setPreserveRatio(true);
+                // Set the initial fitwidth for imageview
+                if (Main.stage.getWidth() < 900) {
+                    imageView.setFitWidth(Main.stage.getWidth() - 140);
+                    vbox.setMaxWidth(Main.stage.getWidth() - 140);
+                    vbox.setMinWidth(Main.stage.getWidth() - 140);
+                }
+                if (Main.stage.getWidth() >= 900) {
+                    imageView.setFitWidth(800);
+                    vbox.setMaxWidth(800);
+                    vbox.setMinWidth(800);
+                }
+                // Bind the fitwidth property of imageView with stagewidth property
+                Main.stage.widthProperty().addListener(new ChangeListener<Number>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
+                        if (t1.doubleValue() < 900) {
+                            imageView.setFitWidth(t1.doubleValue() - 140);
+                            vbox.setMaxWidth(t1.doubleValue() - 140);
+                            vbox.setMinWidth(t1.doubleValue() - 140);
+                        }
+                        if (t1.doubleValue() >= 900) {
+                            imageView.setFitWidth(800);
+                            vbox.setMaxWidth(800);
+                            vbox.setMinWidth(800);
+                        }
+                    }
+                });
+                vbox.getChildren().addAll(imageView);
+                continue;
+            }
+            // Add image cap
+            if (index.hasClass("imgcaption")) {
+                Text imagecap = new Text(index.select("p").text());
+                imagecap.getStyleClass().add("textimagecap");
+                textFlow3.getChildren().add(imagecap);
+                textFlow3.getStyleClass().add("textflowcenter");
+                continue;
+            }
+            // Add Body ( hyper link + bold + text normal text)
+            if (index.hasText()) {
+                // Hyper link
+                if (index.select("a").hasAttr("href")) {
+                    textFlow3 = getHyperLink(index);
+                    vbox.getChildren().remove(vbox.getChildren().size() - 1);
+                    vbox.getChildren().add(textFlow3);
+                    continue;
+                }
+                // Bold text
+                if (index.select("h2").hasText()) {
+                    String string = index.text().replaceAll(index.select("h2").text().replaceAll("\\*", ""), "<strong>" + index.select("h2").text().replaceAll("\\*", "") + "</strong>");
+                    String[] stringSplit = string.split("<strong>");
+                    if (!stringSplit[0].isEmpty()) {
+                        Text textTemp = new Text(stringSplit[0]);
+                        textTemp.getStyleClass().add("textnormal");
+                        textFlow3.getChildren().add(textTemp);
+                        textFlow3.getStyleClass().add("textflowjustify");
+                    }
+                    for (int i = 1; i < stringSplit.length; i++) {
+                        Text textTemp0 = new Text(stringSplit[i].substring(0, stringSplit[i].indexOf("</strong>")));
+                        textTemp0.getStyleClass().add("textbold");
+                        Text textTemp1 = new Text(stringSplit[i].substring(stringSplit[i].indexOf("</strong>") + 9));
+                        textTemp1.getStyleClass().add("textnormal");
+                        textFlow3.getChildren().addAll(textTemp0, textTemp1);
+                        textFlow3.getStyleClass().add("textflowjustify");
+                    }
+                    continue;
+                }
+                else  {
+                    Text textTemp3 = new Text(index.text());
+                    textTemp3.getStyleClass().add("textnormal");
+                    textFlow3.getChildren().add(textTemp3);
+                    textFlow3.getStyleClass().add("textflowjustify");
+                }
+                continue;
+            }
+            // If not adding anything then remove the last index element (the new TextFlow)
+            vbox.getChildren().remove(vbox.getChildren().size() - 1);
+        }
+
+        // Display author
+        TextFlow textFlow4 = new TextFlow();
+        Text author1 = new Text(article.getAuthor());
+        author1.getStyleClass().add("textauthor");
+        textFlow4.getChildren().add(author1);
+        textFlow4.getStyleClass().add("textflowright");
+        vbox.getChildren().add(textFlow4);
+
+        // Link to full article (read original post here.)
+        TextFlow textFlow5 = new TextFlow();
+        Text text5 = new Text("Read the original post ");
+        text5.getStyleClass().add("textReadTheOriginalPost");
+        Hyperlink articleLink = new Hyperlink("here");
+        articleLink.getStyleClass().add("texthyperlink");
+        articleLink.setOnAction(e -> {
+            getHostServices().showDocument(article.getLinkToFullArticles());
+        });
+        Text text6 = new Text(".");
+        textFlow5.getChildren().addAll(text5, articleLink, text6);
+        textFlow5.setStyle("-fx-font-style: italic; -fx-font-size: 18; -fx-alignment: left;");
+        vbox.getChildren().add(textFlow5);
     }
 
     /* FROM HERE IS THE HELPER FUNCTION
@@ -847,23 +1348,27 @@ public class ArticlesManager extends Application {
         // Split string into sub string, delimiter <Hyper>
         String[] stringSplit = string.split("<Hyper>");
         // Add the first text (not include hyperlink into the textflow)
-        textFlow3.getChildren().add(new Text(stringSplit[0]));
+        Text textTemp0 = new Text(stringSplit[0]);
+        textTemp0.getStyleClass().add("textnormal");
+        textFlow3.getChildren().add(textTemp0);
         // Add the hyperlink + text of hyperlink
         for (int i = 1; i < stringSplit.length; i++) {
             // Set the hyperlink text
             Hyperlink hyperlink = new Hyperlink(stringSplit[i].substring(stringSplit[i].indexOf("</") + 2, stringSplit[i].indexOf("+>")));
+            hyperlink.getStyleClass().add("texthyperlink");
             int finalI = i; // create new final variables to set action of lamb (required final variable)
             // Add link into the hyperlink
             hyperlink.setOnAction(e -> {
                 getHostServices().showDocument(stringSplit[finalI].substring(0, stringSplit[finalI].indexOf("</")));
             });
-            hyperlink.setStyle("-fx-padding: 0; -fx-font-size: 18;");
             // Add the hyperlink into the flow text
             textFlow3.getChildren().add(hyperlink);
             // Add the next text behind hyperlink text into flow text ( <Hyper>link<Text>next text )
-            textFlow3.getChildren().add(new Text(stringSplit[i].substring(stringSplit[i].indexOf("+>") + 2)));
+            Text textTemp1 = new Text(stringSplit[i].substring(stringSplit[i].indexOf("+>") + 2));
+            textTemp1.getStyleClass().add("textnormal");
+            textFlow3.getChildren().add(textTemp1);
         }
-        textFlow3.setStyle("-fx-font-size: 18; -fx-text-alignment: justify;");
+        textFlow3.getStyleClass().add("textflowjustify");
         return textFlow3;
     }
 
@@ -930,6 +1435,63 @@ public class ArticlesManager extends Application {
                 }
             }
         } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return res.toString();
+    }
+    public static String timeDiffThanhNien(String date)  {
+        StringBuilder res = new StringBuilder();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        try {
+            Date startDate = sdf.parse(unixToTime(date));
+            Date endDate = new Date();
+            long difference_In_Time = endDate.getTime() - (startDate.getTime() - 25200000);
+
+            long difference_In_Seconds = (difference_In_Time / 1000) % 60;
+            long difference_In_Minutes = (difference_In_Time / (1000 * 60)) % 60;
+            long difference_In_Hours = (difference_In_Time / (1000 * 60 * 60)) % 24;
+            long difference_In_Years = (difference_In_Time / (1000l * 60 * 60 * 24 * 365));
+            long difference_In_Days = (difference_In_Time / (1000 * 60 * 60 * 24)) % 365;
+            long difference_In_Months = (difference_In_Time / (1000L * 60 * 60 * 24 * 30));
+
+            if(difference_In_Years != 0){
+                if(difference_In_Years != 1){
+                    res.append(difference_In_Years + " years ago");
+                } else {
+                    res.append(difference_In_Years + " year ago");
+                }
+            } else if(difference_In_Months != 0) {
+                if(difference_In_Months != 1){
+                    res.append(difference_In_Months + " months ago");
+                } else {
+                    res.append(difference_In_Months + " month ago");
+                }
+            } else if(difference_In_Days != 0){
+                if(difference_In_Days != 1){
+                    res.append(difference_In_Days + " days ago");
+                } else {
+                    res.append(difference_In_Days + " day ago");
+                }
+            } else if(difference_In_Hours != 0){
+                if(difference_In_Hours != 1){
+                    res.append(difference_In_Hours + " hours ago");
+                } else {
+                    res.append(difference_In_Hours + " hour ago");
+                }
+            } else if(difference_In_Minutes != 0){
+                if(difference_In_Minutes != 1){
+                    res.append(difference_In_Minutes + " minutes ago");
+                } else {
+                    res.append(difference_In_Minutes + " minute ago");
+                }
+            } else if(difference_In_Seconds != 0){
+                if(difference_In_Seconds != 1){
+                    res.append(difference_In_Seconds + " seconds ago");
+                } else {
+                    res.append(difference_In_Seconds + " second ago");
+                }
+            }
+        } catch (ParseException e){
             e.printStackTrace();
         }
         return res.toString();

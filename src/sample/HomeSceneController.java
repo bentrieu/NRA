@@ -1,6 +1,13 @@
 package sample;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
+import javafx.beans.binding.Binding;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.NumberBinding;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -9,14 +16,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
+import javafx.scene.shape.SVGPath;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
@@ -29,7 +37,7 @@ import java.util.ResourceBundle;
 public class HomeSceneController implements Initializable {
 
     @FXML
-    private Button menuButton, refreshButton, searchButton, rightArrowButton, leftArrowButton;
+    private Button menuButton, refreshButton, searchButton, nextCategoryButton, previousCategoryButton, backToHomeButton, copyArticleLinkButton;
 
     @FXML
     private ToggleButton homeButton, videoButton, articlesListButton, settingsButton;
@@ -68,7 +76,7 @@ public class HomeSceneController implements Initializable {
     @FXML
     private LayoutController layoutController;
 
-    public int currentCategory = 0;
+    public int currentCategory = 0, currentArticle = 0;
 
     public ArticlesManager articlesManager = new ArticlesManager();
 
@@ -88,23 +96,23 @@ public class HomeSceneController implements Initializable {
         tempPane.setVisible(false);
 
         // Set up visible mode to 2 arrows
-        rightArrowButton.setVisible(false);
-        leftArrowButton.setVisible(false);
+        nextCategoryButton.setVisible(false);
+        previousCategoryButton.setVisible(false);
         articlesListPane.addEventFilter(MouseEvent.MOUSE_ENTERED, e -> {
-            rightArrowButton.setVisible(true);
-            leftArrowButton.setVisible(true);
+            nextCategoryButton.setVisible(true);
+            previousCategoryButton.setVisible(true);
             e.consume();
         });
         articlesListPane.addEventFilter(MouseEvent.MOUSE_EXITED, e -> {
-            rightArrowButton.setVisible(false);
-            leftArrowButton.setVisible(false);
+            nextCategoryButton.setVisible(false);
+            previousCategoryButton.setVisible(false);
             e.consume();
         });
-        rightArrowButton.addEventFilter(MouseEvent.MOUSE_PRESSED, e -> {
+        nextCategoryButton.addEventFilter(MouseEvent.MOUSE_PRESSED, e -> {
             nextCategoryList();
             e.consume();
         });
-        leftArrowButton.addEventFilter(MouseEvent.MOUSE_PRESSED, e -> {
+        previousCategoryButton.addEventFilter(MouseEvent.MOUSE_PRESSED, e -> {
             previousCategoryList();
             e.consume();
         });
@@ -113,7 +121,7 @@ public class HomeSceneController implements Initializable {
         displayFullArticleVbox.setMinHeight(985);
         displayFullArticleVbox.setSpacing(20);
         displayFullArticleVbox.setAlignment(Pos.TOP_CENTER);
-        displayFullArticleVbox.setPadding(new Insets(0, 0, 100, 0));
+        displayFullArticleVbox.setPadding(new Insets(100, 0, 100, 0));
         if (Main.stage.getWidth() < 900) {
             displayFullArticleVbox.setMaxWidth(Main.stage.getWidth() - 80);
             displayFullArticleVbox.setMinWidth(Main.stage.getWidth() - 80);
@@ -122,17 +130,11 @@ public class HomeSceneController implements Initializable {
             displayFullArticleVbox.setMaxWidth(800);
             displayFullArticleVbox.setMinWidth(800);
         }
-        Button backButton = new Button("back");
-        Button nothingButton = new Button("nothing");
-        displayFullArticleVbox.getChildren().addAll(backButton, nothingButton);
-        backButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-            borderPaneUnderScrollPane.setCenter(null);
-            borderPaneUnderScrollPane.setCenter(pagination);
-        });
 
         // Stack pane 1 for Border pane 2
         stackPane1.setAlignment(Pos.TOP_CENTER);
         stackPane1.getStyleClass().add("stackpane1");
+        stackPane1.setVisible(false);
 
         // Stack pane 2 for displayFullArticleVbox
         StackPane stackPane2 = new StackPane();
@@ -142,20 +144,6 @@ public class HomeSceneController implements Initializable {
         stackPane2.getStyleClass().add("stackpane2");
         stackPane2.getChildren().add(displayFullArticleVbox);
         stackPane1.getChildren().add(stackPane2);
-
-        // Next and previous border pane
-        BorderPane nextAndPrevBorderPane = new BorderPane();
-//            nextAndPrevBorderPane.setMinHeight(985);
-        nextAndPrevBorderPane.setMaxHeight(985);
-        Button nextArticleButton = new Button("Next");
-        nextArticleButton.setPrefSize(30, 65);
-        Button previousArticleButton = new Button("Prev");
-        previousArticleButton.setPrefSize(30, 65);
-        nextAndPrevBorderPane.setRight(nextArticleButton);
-        nextAndPrevBorderPane.setLeft(previousArticleButton);
-        BorderPane.setAlignment(nextArticleButton, Pos.CENTER_RIGHT);
-        BorderPane.setAlignment(previousArticleButton, Pos.CENTER_LEFT);
-//            stackPane2.getChildren().add(nextAndPrevBorderPane);
 
         // Responsive design
         Main.stage.widthProperty().addListener(new ChangeListener<Number>() {
@@ -176,10 +164,41 @@ public class HomeSceneController implements Initializable {
         try {
             pagination.setMaxHeight(980);
             pagination.setMinHeight(980);
-            setPaginationList(Main.zingBusinessList, stackPane1, displayFullArticleVbox);
+            setPaginationList(Main.tuoiTreCovidList, stackPane1, displayFullArticleVbox);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        // Setup nextArticleButton and previousArticleButton
+        Button previousArticleButton = new Button();
+        previousArticleButton.getStyleClass().add("previousAndNextArticleButton");
+        previousArticleButton.setPrefSize(30, 100);
+        Button nextArticleButton = new Button();
+        nextArticleButton.getStyleClass().add("previousAndNextArticleButton");
+        nextArticleButton.setPrefSize(30, 100);
+        mainPane.getChildren().addAll(previousArticleButton, nextArticleButton);
+        // Set graphic for each button
+        SVGPath previousSVG = new SVGPath();
+        previousSVG.setContent("M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z");
+        previousArticleButton.setGraphic(previousSVG);
+        SVGPath nextSVG = new SVGPath();
+        nextSVG.setContent("M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z");
+        previousArticleButton.setGraphic(previousSVG);
+        nextArticleButton.setGraphic(nextSVG);
+        // Set constrain layoutX and layoutY for each button
+        previousArticleButton.translateXProperty().bind(stackPane2.layoutXProperty().add(1));
+        previousArticleButton.translateYProperty().bind(mainPane.heightProperty().divide(2));
+        NumberBinding number = Bindings.add(stackPane2.layoutXProperty(), stackPane2.widthProperty());
+        nextArticleButton.translateXProperty().bind(number.subtract(30));
+        nextArticleButton.translateYProperty().bind(mainPane.heightProperty().divide(2));
+        previousArticleButton.visibleProperty().bind(stackPane1.visibleProperty());
+        nextArticleButton.visibleProperty().bind(stackPane1.visibleProperty());
+
+        // Setup back to home button
+        backToHomeButton.visibleProperty().bind(stackPane1.visibleProperty());
+
+        // Setup copy article link button
+        copyArticleLinkButton.visibleProperty().bind(stackPane1.visibleProperty());
     }
 
     public void menuPaneSetVisble(boolean a) {
@@ -264,11 +283,27 @@ public class HomeSceneController implements Initializable {
     public void refresh() throws IOException {
         switch (currentCategory) {
             case 0:
-                setPaginationList(Main.zingBusinessList, stackPane1, displayFullArticleVbox);
+                setPaginationList(Main.tuoiTreNewsList, stackPane1, displayFullArticleVbox);
                 break;
             default:
                 break;
         }
+    }
+    public void backToHome(ActionEvent event) {
+        if (!tempPane.isVisible()) {
+            borderPaneUnderScrollPane.setCenter(null);
+            borderPaneUnderScrollPane.setCenter(pagination);
+            stackPane1.setVisible(false);
+        } else {
+            tempPane.setVisible(false);
+        }
+    }
+    public void copyArticleLink() {
+//        final Clipboard clipboard = Clipboard.getSystemClipboard();
+//        final ClipboardContent content = new ClipboardContent();
+//        content.putString("Some text");
+//        content.putHtml("<b>Some</b> text");
+//        clipboard.setContent(content);
     }
     public void takeSearchInput(MouseEvent event) {
         tempPane.setVisible(true);
@@ -520,7 +555,6 @@ public class HomeSceneController implements Initializable {
                 int finalI = i;
                 // Set title text for each article
                 textTitleList[i].setText(articlesList.get(i).getTitle());
-                textTitleList[i].setDisable(true);
                 // Set source text + time ago + source image + action event for each button for each article
                 switch (articlesList.get(i).getSource()) {
                     case "vnexpress":
@@ -531,6 +565,7 @@ public class HomeSceneController implements Initializable {
                                 articlesManager.displayVnexpressFullArticle(articlesList.get(finalI), displayFullArticleVbox);
                                 borderPaneUnderScrollPane.setCenter(null);
                                 borderPaneUnderScrollPane.setCenter(stackPane1);
+                                stackPane1.setVisible(true);
                             } catch (IOException ioException) {
                                 ioException.printStackTrace();
                             }
@@ -544,21 +579,43 @@ public class HomeSceneController implements Initializable {
                                 articlesManager.displayZingFullArticle(articlesList.get(finalI), displayFullArticleVbox);
                                 borderPaneUnderScrollPane.setCenter(null);
                                 borderPaneUnderScrollPane.setCenter(stackPane1);
+                                stackPane1.setVisible(true);
                             } catch (IOException ioException) {
                                 ioException.printStackTrace();
                             }
                         });
                         break;
                     case "tuoitre":
-                        textSourceList[i].setText("Tuổi trẻ - " + Main.vnexpressNewsList.get(i).getTimeAgo());
+                        textSourceList[i].setText("Tuổi trẻ - " + articlesList.get(i).getTimeAgo());
                         imageSourceList[i].setImage(new Image("resource/tuoitre_small.png"));
+                        buttonList[i].addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
+                            try {
+                                articlesManager.displayTuoiTreFullArticle(articlesList.get(finalI), displayFullArticleVbox);
+                                borderPaneUnderScrollPane.setCenter(null);
+                                borderPaneUnderScrollPane.setCenter(stackPane1);
+                                stackPane1.setVisible(true);
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
+                            }
+                        });
                         break;
                     case "nhandan":
                         textSourceList[i].setText("Nhân dân - " + Main.vnexpressNewsList.get(i).getTimeAgo());
                         imageSourceList[i].setImage(new Image("resource/nhandan_small.png")); break;
                     case "thanhnien":
-                        textSourceList[i].setText("Thanh niên - " + Main.vnexpressNewsList.get(i).getTimeAgo());
-                        imageSourceList[i].setImage(new Image("resource/thanhnien_small.png")); break;
+                        textSourceList[i].setText("Thanh niên - " + articlesList.get(i).getTimeAgo());
+                        imageSourceList[i].setImage(new Image("resource/thanhnien_small.png"));
+                        buttonList[i].addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
+                            try {
+                                articlesManager.displayThanhNienFullArticle(articlesList.get(finalI), displayFullArticleVbox);
+                                borderPaneUnderScrollPane.setCenter(null);
+                                borderPaneUnderScrollPane.setCenter(stackPane1);
+                                stackPane1.setVisible(true);
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
+                            }
+                        });
+                        break;
                 }
                 // Set thumb image for each object
                 if (i != 3 && i != 7) {
@@ -572,6 +629,23 @@ public class HomeSceneController implements Initializable {
                     else layoutController.anchorPaneImage2.setBackground(background);
                 }
             }
+
+            // Animation for each transition of pagination
+            Timeline timeline = new Timeline();
+            timeline.getKeyFrames().add(
+                    new KeyFrame(Duration.ZERO,
+                            new KeyValue(displayLayoutVbox.opacityProperty(), 0)
+                    )
+            );
+            for (int i = 1; i < 10; i++) {
+                timeline.getKeyFrames().add(
+                        new KeyFrame(new Duration(i * 60),
+                                new KeyValue(displayLayoutVbox.opacityProperty(), i / 10.0)
+                        )
+                );
+            }
+            timeline.play();
+
             return displayLayoutVbox;
         });
     }
