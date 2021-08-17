@@ -142,7 +142,7 @@
                <content>
                   <BorderPane fx:id="borderPaneUnderScrollPane">
                      <center>
-                        <Pagination fx:id="pagination" pageCount="10" BorderPane.alignment="CENTER" />
+                        <Pagination fx:id="pagination" maxPageIndicatorCount="5" pageCount="5" BorderPane.alignment="CENTER" />
                      </center>
                   </BorderPane>
                </content>

@@ -1472,7 +1472,7 @@ public class ArticlesManager extends Application {
         Elements description = all.select("div.box-des-detail");
         Elements body = all.select("div.detail-content-body ").select("> p, figure");
         Elements author = all.select("div.box-author");
-        Elements originalCategory = document.select("div.uk-breadcrumb li");
+        Elements originalCategory = document.select("ul.uk-breadcrumb li");
         Elements fullDate = document.select("div.box-date.pull-left");
         Elements descriptionImage = document.select("div.box-detail-thumb");
 

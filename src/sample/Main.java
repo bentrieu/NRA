@@ -70,6 +70,8 @@ public class Main extends Application {
     public static ArrayList<Article> nhanDanEntertainmentList = new ArrayList<>();
     public static ArrayList<Article> nhanDanWorldList = new ArrayList<>();
 
+    public static ArrayList<Article> covidList = new ArrayList<>();
+
     double initialX, initialY;
 
     @Override
@@ -77,19 +79,19 @@ public class Main extends Application {
         Stage stage = new Stage();
         Main.stage = stage;
         // Vnexpress list (no description in sort list)
-        vnexpressNewsList = articlesManager.getVnexpressList("https://vnexpress.net/rss/tin-moi-nhat.rss", "News");
+//        vnexpressNewsList = articlesManager.getVnexpressList("https://vnexpress.net/rss/tin-moi-nhat.rss", "News");
         vnexpressCovidList = articlesManager.getVnexpressWebList("https://vnexpress.net/chu-de/covid-19-tp-hcm-3273", "Covid");
-        vnexpressPoliticsList = articlesManager.getVnexpressWebList("https://vnexpress.net/thoi-su/chinh-tri", "Politics");
-        vnexpressBusinessList = articlesManager.getVnexpressList("https://vnexpress.net/rss/kinh-doanh.rss", "Business");
-        vnexpressTechnologyList = articlesManager.getVnexpressList("https://vnexpress.net/rss/so-hoa.rss", "Technology");
-        vnexpressHealthList = articlesManager.getVnexpressList("https://vnexpress.net/rss/suc-khoe.rss", "Health");
-        vnexpressSportsList = articlesManager.getVnexpressList("https://vnexpress.net/rss/the-thao.rss", "Sports");
-        vnexpressEntertainmentList = articlesManager.getVnexpressList("https://vnexpress.net/rss/cuoi.rss", "Entertainment");
-        vnexpressWorldList = articlesManager.getVnexpressList("https://vnexpress.net/rss/the-gioi.rss", "World");
+//        vnexpressPoliticsList = articlesManager.getVnexpressWebList("https://vnexpress.net/thoi-su/chinh-tri", "Politics");
+//        vnexpressBusinessList = articlesManager.getVnexpressList("https://vnexpress.net/rss/kinh-doanh.rss", "Business");
+//        vnexpressTechnologyList = articlesManager.getVnexpressList("https://vnexpress.net/rss/so-hoa.rss", "Technology");
+//        vnexpressHealthList = articlesManager.getVnexpressList("https://vnexpress.net/rss/suc-khoe.rss", "Health");
+//        vnexpressSportsList = articlesManager.getVnexpressList("https://vnexpress.net/rss/the-thao.rss", "Sports");
+//        vnexpressEntertainmentList = articlesManager.getVnexpressList("https://vnexpress.net/rss/cuoi.rss", "Entertainment");
+//        vnexpressWorldList = articlesManager.getVnexpressList("https://vnexpress.net/rss/the-gioi.rss", "World");
 
         // ZingNews list
 //        zingNewsList = articlesManager.getZingList("https://zingnews.vn/thoi-su.html", "News");
-//        zingCovidList = articlesManager.getSearchListZing("covid", "Covid");
+        zingCovidList = articlesManager.getZingSearchList("covid", "Covid");
 //        zingPoliticsList = articlesManager.getZingList("https://zingnews.vn/chinh-tri.html", "Politics");
 //        zingBusinessList = articlesManager.getZingList("https://zingnews.vn/kinh-doanh-tai-chinh.html", "Business");
 //        zingTechnologyList = articlesManager.getZingList("https://zingnews.vn/cong-nghe.html", "Technology");
@@ -100,7 +102,7 @@ public class Main extends Application {
 
         // TuoiTre list
 //        tuoiTreNewsList = articlesManager.getTuoiTreList("https://tuoitre.vn/rss/tin-moi-nhat.rss", "News");
-//        tuoiTreCovidList = articlesManager.getTuoiTreSearchList("covid", "Covid");
+        tuoiTreCovidList = articlesManager.getTuoiTreSearchList("covid", "Covid");
 //        tuoiTrePoliticsList = articlesManager.getTuoiTreSearchList("chính trị", "Politics");
 //        tuoiTreBusinessList = articlesManager.getTuoiTreList("https://tuoitre.vn/rss/kinh-doanh.rss", "Business");
 //        tuoiTreTechnologyList = articlesManager.getTuoiTreList("https://tuoitre.vn/rss/nhip-song-so.rss", "Technology");
@@ -111,7 +113,7 @@ public class Main extends Application {
 
         // ThanhNien list
 //        thanhNienNewsList = articlesManager.getThanhNienList("https://thanhnien.vn/rss/thoi-su/chinh-tri.rss", "Politics");
-//        thanhNienCovidList = articlesManager.getThanhNienWebList("https://thanhnien.vn/dich-covid-19/", "Politics");
+        thanhNienCovidList = articlesManager.getThanhNienWebList("https://thanhnien.vn/dich-covid-19/", "Politics");
 //        thanhNienPoliticsList = articlesManager.getThanhNienWebList("https://thanhnien.vn/thoi-su/chinh-tri/", "Politics");
 //        thanhNienBusinessList = articlesManager.getThanhNienWebList("https://thanhnien.vn/tai-chinh-kinh-doanh/", "Business");
 //        thanhNienTechnologyList = articlesManager.getThanhNienWebList("https://thanhnien.vn/cong-nghe/", "Technology");
@@ -123,13 +125,19 @@ public class Main extends Application {
         // Nhandan list
 //        nhanDanNewsList = articlesManager.getNhanDanWebList("https://tuoitre.vn/rss/tin-moi-nhat.rss", "News");
         nhanDanCovidList = articlesManager.getNhanDanWebList("https://nhandan.vn/tag/Covid19-53", "Covid");
-        nhanDanPoliticsList = articlesManager.getNhanDanWebList("https://nhandan.vn/chinhtri", "Politics");
-        nhanDanBusinessList = articlesManager.getNhanDanWebList("https://nhandan.vn/kinhte", "Business");
-        nhanDanTechnologyList = articlesManager.getNhanDanWebList("https://nhandan.vn/khoahoc-congnghe", "Technology");
-        nhanDanHealthList = articlesManager.getNhanDanWebList("https://nhandan.vn/y-te", "Health");
-        nhanDanSportsList = articlesManager.getNhanDanWebList("https://nhandan.vn/thethao", "Sports");
-        nhanDanEntertainmentList = articlesManager.getNhanDanWebList("https://nhandan.vn/du-lich", "Entertainment");
-        nhanDanWorldList = articlesManager.getNhanDanWebList("https://nhandan.vn/thegioi", "World");
+//        nhanDanPoliticsList = articlesManager.getNhanDanWebList("https://nhandan.vn/chinhtri", "Politics");
+//        nhanDanBusinessList = articlesManager.getNhanDanWebList("https://nhandan.vn/kinhte", "Business");
+//        nhanDanTechnologyList = articlesManager.getNhanDanWebList("https://nhandan.vn/khoahoc-congnghe", "Technology");
+//        nhanDanHealthList = articlesManager.getNhanDanWebList("https://nhandan.vn/y-te", "Health");
+//        nhanDanSportsList = articlesManager.getNhanDanWebList("https://nhandan.vn/thethao", "Sports");
+//        nhanDanEntertainmentList = articlesManager.getNhanDanWebList("https://nhandan.vn/du-lich", "Entertainment");
+//        nhanDanWorldList = articlesManager.getNhanDanWebList("https://nhandan.vn/thegioi", "World");
+
+        covidList.addAll(vnexpressCovidList);
+        covidList.addAll(zingCovidList);
+        covidList.addAll(tuoiTreCovidList);
+        covidList.addAll(thanhNienCovidList);
+        covidList.addAll(nhanDanCovidList);
 //        articlesManager.printSortArticles(nhanDanCovidList);
 
         Parent root = FXMLLoader.load(getClass().getResource("WelcomeScene.fxml"));

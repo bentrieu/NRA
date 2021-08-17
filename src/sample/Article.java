@@ -13,6 +13,20 @@ public class Article {
     private String source;
     private String author;
 
+    Article() {
+        this.date = "";
+        this.fullDate = "";
+        this.timeAgo = "";
+        this.thumb = "";
+        this.title = "";
+        this.linkToFullArticles = "";
+        this.category = "";
+        this.originalCategory = "";
+        this.description = "";
+        this.source = "";
+        this.author = "";
+    }
+
     // Setter
     public void setDate(String date) {
         this.date = date;

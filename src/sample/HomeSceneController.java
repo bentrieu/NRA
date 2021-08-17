@@ -164,7 +164,7 @@ public class HomeSceneController implements Initializable {
         try {
             pagination.setMaxHeight(980);
             pagination.setMinHeight(980);
-            setPaginationList(Main.nhanDanCovidList, stackPane1, displayFullArticleVbox);
+            setPaginationList(Main.covidList, stackPane1, displayFullArticleVbox);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -281,13 +281,13 @@ public class HomeSceneController implements Initializable {
 
     }
     public void refresh() throws IOException {
-        switch (currentCategory) {
-            case 0:
-                setPaginationList(Main.tuoiTreNewsList, stackPane1, displayFullArticleVbox);
-                break;
-            default:
-                break;
-        }
+//        switch (currentCategory) {
+//            case 0:
+//                setPaginationList(Main.tuoiTreNewsList, stackPane1, displayFullArticleVbox);
+//                break;
+//            default:
+//                break;
+//        }
     }
     public void backToHome(ActionEvent event) {
         if (!tempPane.isVisible()) {
@@ -551,16 +551,16 @@ public class HomeSceneController implements Initializable {
         Button[] buttonList = {layoutController.button1, layoutController.button2, layoutController.button3, layoutController.button4, layoutController.button5, layoutController.button6, layoutController.button7, layoutController.button8, layoutController.button9, layoutController.button10};
 
         pagination.setPageFactory(pageindex -> {
-            for (int i = 0; i < 10; i++) {
+            for (int i = 10 * pageindex, k = 0; i < 10 + 10 * pageindex; i++, k++) {
                 int finalI = i;
                 // Set title text for each article
-                textTitleList[i].setText(articlesList.get(i).getTitle());
+                textTitleList[k].setText(articlesList.get(i).getTitle());
                 // Set source text + time ago + source image + action event for each button for each article
                 switch (articlesList.get(i).getSource()) {
                     case "vnexpress":
-                        textSourceList[i].setText("VnExpress - " + articlesList.get(i).getTimeAgo());
-                        imageSourceList[i].setImage(new Image("resource/vnexpress_small.png"));
-                        buttonList[i].addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
+                        textSourceList[k].setText("VnExpress - " + articlesList.get(i).getTimeAgo());
+                        imageSourceList[k].setImage(new Image("resource/vnexpress_small.png"));
+                        buttonList[k].addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
                             try {
                                 articlesManager.displayVnexpressFullArticle(articlesList.get(finalI), displayFullArticleVbox);
                                 borderPaneUnderScrollPane.setCenter(null);
@@ -572,9 +572,9 @@ public class HomeSceneController implements Initializable {
                         });
                         break;
                     case "zingnews":
-                        textSourceList[i].setText("ZingNews - " + articlesList.get(i).getTimeAgo());
-                        imageSourceList[i].setImage(new Image("resource/zingnews_small.png"));
-                        buttonList[i].addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
+                        textSourceList[k].setText("ZingNews - " + articlesList.get(i).getTimeAgo());
+                        imageSourceList[k].setImage(new Image("resource/zingnews_small.png"));
+                        buttonList[k].addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
                             try {
                                 articlesManager.displayZingFullArticle(articlesList.get(finalI), displayFullArticleVbox);
                                 borderPaneUnderScrollPane.setCenter(null);
@@ -586,9 +586,9 @@ public class HomeSceneController implements Initializable {
                         });
                         break;
                     case "tuoitre":
-                        textSourceList[i].setText("Tuổi trẻ - " + articlesList.get(i).getTimeAgo());
-                        imageSourceList[i].setImage(new Image("resource/tuoitre_small.png"));
-                        buttonList[i].addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
+                        textSourceList[k].setText("Tuổi trẻ - " + articlesList.get(i).getTimeAgo());
+                        imageSourceList[k].setImage(new Image("resource/tuoitre_small.png"));
+                        buttonList[k].addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
                             try {
                                 articlesManager.displayTuoiTreFullArticle(articlesList.get(finalI), displayFullArticleVbox);
                                 borderPaneUnderScrollPane.setCenter(null);
@@ -600,9 +600,9 @@ public class HomeSceneController implements Initializable {
                         });
                         break;
                     case "nhandan":
-                        textSourceList[i].setText("Nhân dân - " + articlesList.get(i).getTimeAgo());
-                        imageSourceList[i].setImage(new Image("resource/nhandan_small.png"));
-                        buttonList[i].addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
+                        textSourceList[k].setText("Nhân dân - " + articlesList.get(i).getTimeAgo());
+                        imageSourceList[k].setImage(new Image("resource/nhandan_small.png"));
+                        buttonList[k].addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
                             try {
                                 articlesManager.displayNhanDanFullArticle(articlesList.get(finalI), displayFullArticleVbox);
                                 borderPaneUnderScrollPane.setCenter(null);
@@ -614,9 +614,9 @@ public class HomeSceneController implements Initializable {
                         });
                         break;
                     case "thanhnien":
-                        textSourceList[i].setText("Thanh niên - " + articlesList.get(i).getTimeAgo());
-                        imageSourceList[i].setImage(new Image("resource/thanhnien_small.png"));
-                        buttonList[i].addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
+                        textSourceList[k].setText("Thanh niên - " + articlesList.get(i).getTimeAgo());
+                        imageSourceList[k].setImage(new Image("resource/thanhnien_small.png"));
+                        buttonList[k].addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
                             try {
                                 articlesManager.displayThanhNienFullArticle(articlesList.get(finalI), displayFullArticleVbox);
                                 borderPaneUnderScrollPane.setCenter(null);
@@ -629,14 +629,14 @@ public class HomeSceneController implements Initializable {
                         break;
                 }
                 // Set thumb image for each object
-                if (i != 3 && i != 7) {
+                if (k != 3 && k != 7) {
                     BackgroundImage backgroundImage = new BackgroundImage(new Image(articlesList.get(i).getThumb()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1.0, 1.0, true, true, false, true));
                     Background background = new Background(backgroundImage);
-                    anchorPaneList[i].setBackground(background);
+                    anchorPaneList[k].setBackground(background);
                 } else {
                     BackgroundImage backgroundImage = new BackgroundImage(new Image(articlesList.get(i).getThumb()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1.0, 1.0, true, true, false, true));
                     Background background = new Background(backgroundImage);
-                    if (i == 3) layoutController.anchorPaneImage1.setBackground(background);
+                    if (k == 3) layoutController.anchorPaneImage1.setBackground(background);
                     else layoutController.anchorPaneImage2.setBackground(background);
                 }
             }
