@@ -26,6 +26,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 public class ArticlesManager extends Application {
     /* FROM HERE WILL BE THE FUNCTION FOR ZINGNEWS.VN
@@ -1072,6 +1073,7 @@ public class ArticlesManager extends Application {
         return thanhNienWebList;
     }
 
+    // Thanhnien full article scrape and display
     public void displayThanhNienFullArticle(Article article, VBox vbox) throws IOException {
         // Clear vbox
         vbox.getChildren().clear();
@@ -1334,6 +1336,379 @@ public class ArticlesManager extends Application {
         vbox.getChildren().add(textFlow5);
     }
 
+    /* FROM HERE WILL BE THE FUNCTION FOR NHANDAN.VN
+       There will be 4 function
+       Get RSS list
+       Get search keyword list
+       Get list open from web
+       Display the full article  */
+    // Nhandan web list (https://nhandan.vn/chinhtri)
+    public ArrayList<Article> getNhanDanWebList(String urlToShortArticle, String category) throws IOException {
+        // Create new arraylist of article for return
+        ArrayList<Article> nhanDanWebList = new ArrayList<>();
+
+        /* Bắt đầu từ đây là add dữ liệu cho sort article
+         */
+        // Setup jsoup for scraping data
+        final String url = urlToShortArticle;
+        Document document = Jsoup.connect(url).userAgent("Mozilla").get();
+        Elements all = document.select("div.uk-grid-site article, div.featured-bottom article, div.uk-width-1-1 article");
+        Elements thumb = all.select("div.box-img");
+        Elements titleAndLink = all.select("div.box-title");
+
+        int maxArticle = 15;
+        if (category.equals("Covid")) maxArticle = 10;
+
+        // Add data to vnexpressNewsList (Title + date + thumb + link)
+        for (int i = 0; i < maxArticle; i++) {
+            // Create new article object then add the object into the ArrayList
+            nhanDanWebList.add(new Article());
+            // Set source
+            nhanDanWebList.get(i).setSource("nhandan");
+            // Set category manually
+            nhanDanWebList.get(i).setCategory(category);
+            // Set title for each object
+            nhanDanWebList.get(i).setTitle(titleAndLink.get(i).text());
+            // Set date for each object
+            String dateTemp;
+            if (all.get(i).select("div.box-meta-small").hasText()) {
+                dateTemp = all.get(i).select("div.box-meta-small").text();
+                dateTemp = timeToUnixString5(dateTemp);
+                nhanDanWebList.get(i).setDate(dateTemp);
+            } else {
+                dateTemp = thumb.get(i).select("img").attr("data-src").toLowerCase();
+                int endLink = 0;
+                if (dateTemp.contains(".jpg")) endLink = dateTemp.indexOf(".jpg");
+                if (dateTemp.contains(".png")) endLink = dateTemp.indexOf(".png");
+                if (dateTemp.contains(".jpeg")) endLink = dateTemp.indexOf(".jpeg");
+                if (dateTemp.contains(".gif")) endLink = dateTemp.indexOf(".gif");
+                dateTemp = dateTemp.substring(endLink - 13, endLink - 3);
+                nhanDanWebList.get(i).setDate(dateTemp);
+            }
+            // Set time ago for each object
+            nhanDanWebList.get(i).setTimeAgo(timeDiff(dateTemp));
+            // Set thumb for each object
+            String thumbTemp = thumb.get(i).select("img").attr("data-src");
+            thumbTemp = thumbTemp.replaceFirst("resize/[^/]+/", "");
+            nhanDanWebList.get(i).setThumb(thumbTemp);
+            // Set link to full article for each object
+            nhanDanWebList.get(i).setLinkToFullArticles(titleAndLink.get(i).select("a").attr("abs:href"));
+        }
+
+        return nhanDanWebList;
+    }
+
+    // Nhandan seach list https://nhandan.vn/Search/%22h%E1%BB%8Dc%20vi%E1%BB%87n%22
+    public ArrayList<Article> getNhanDanSearchList(String keyword, String category) throws IOException {
+        // Create new arraylist of article for return
+        ArrayList<Article> nhanDanWebList = new ArrayList<>();
+
+        // Bắt đầu từ đây là add dữ liệu cho sort article
+        // Setup jsoup for scraping data
+        keyword = keyword.toLowerCase().trim();
+        keyword = keyword.replaceAll("\\s", "%20");
+        final String url = "https://nhandan.vn/Search/" + keyword;
+        Document document = Jsoup.connect(url).userAgent("Mozilla").get();
+        Elements all = document.select("div.uk-grid-site article, div.featured-bottom article, div.uk-width-1-1 article");
+        Elements thumb = all.select("div.box-img");
+        Elements titleAndLink = all.select("div.box-title");
+
+        int maxArticle = 15;
+        if (thumb.size() < 15) maxArticle = thumb.size();
+
+        // Add data to vnexpressNewsList (Title + date + thumb + link)
+        for (int i = 0, k = 0; i < maxArticle; i++, k++) {
+            // Eliminate elements don't have thumb
+            if (!all.select("div.box-img a").hasAttr("href")) {
+                i--;
+                continue;
+            }
+            // Create new article object then add the object into the ArrayList
+            nhanDanWebList.add(new Article());
+            // Set source
+            nhanDanWebList.get(i).setSource("nhandan");
+            // Set category manually
+            nhanDanWebList.get(i).setCategory(category);
+            // Set title for each object
+            nhanDanWebList.get(i).setTitle(titleAndLink.get(k).text());
+            // Set date for each object
+            String dateTemp;
+            if (all.get(i).select("div.box-meta-small").hasText()) {
+                dateTemp = all.get(k).select("div.box-meta-small").text();
+                dateTemp = timeToUnixString5(dateTemp);
+                nhanDanWebList.get(i).setDate(dateTemp);
+            } else {
+                dateTemp = all.get(k).select("div.box-img img").attr("abs:data-src").toLowerCase();
+                int endLink = 0;
+                if (dateTemp.contains(".jpg")) endLink = dateTemp.indexOf(".jpg");
+                if (dateTemp.contains(".png")) endLink = dateTemp.indexOf(".png");
+                if (dateTemp.contains(".jpeg")) endLink = dateTemp.indexOf(".jpeg");
+                if (dateTemp.contains(".gif")) endLink = dateTemp.indexOf(".gif");
+                dateTemp = dateTemp.substring(endLink - 13, endLink - 3);
+                nhanDanWebList.get(i).setDate(dateTemp);
+            }
+            // Set time ago for each object
+            nhanDanWebList.get(i).setTimeAgo(timeDiff(dateTemp));
+            // Set thumb for each object
+            String thumbTemp = all.get(k).select("div.box-img img").attr("abs:data-src");
+            thumbTemp = thumbTemp.replaceFirst("resize/[^/]+/", "");
+            nhanDanWebList.get(i).setThumb(thumbTemp);
+            // Set link to full article for each object
+            nhanDanWebList.get(i).setLinkToFullArticles(all.get(k).select("div.box-title a").attr("abs:href"));
+        }
+
+        return nhanDanWebList;
+    }
+
+    // Thanhnien full article scrape and display
+    public void displayNhanDanFullArticle(Article article, VBox vbox) throws IOException {
+        // Clear vbox
+        vbox.getChildren().clear();
+
+        // Setup jsoup for each article
+        String fullArticlesUrl = article.getLinkToFullArticles(); // link to full article
+        Document document = Jsoup.connect(fullArticlesUrl).userAgent("Mozilla").get();
+        Elements all = document.select("div.box-content-detail");
+        Elements description = all.select("div.box-des-detail");
+        Elements body = all.select("div.detail-content-body ").select("> p, figure");
+        Elements author = all.select("div.box-author");
+        Elements originalCategory = document.select("div.uk-breadcrumb li");
+        Elements fullDate = document.select("div.box-date.pull-left");
+        Elements descriptionImage = document.select("div.box-detail-thumb");
+
+        // Set fullDate for each object
+        if (fullDate.hasText()) {
+            article.setFullDate(fullDate.first().text());
+        }
+
+        // Set author for each object
+        if (author.hasText()) {
+            article.setAuthor(author.first().text());
+        }
+
+        // Set original category for each object
+        article.setOriginalCategory("");
+        int k = 0;
+        for (Element index : originalCategory) {
+            if (k != originalCategory.size() - 1) article.setOriginalCategory(article.getOriginalCategory() + index.text() + " - ");
+            else article.setOriginalCategory(article.getOriginalCategory() + index.text());
+            k++;
+        }
+
+        // Display category
+        Text text = new Text(article.getCategory());
+        text.getStyleClass().add("textcategory");
+        TextFlow textFlow = new TextFlow(text);
+        vbox.getChildren().add(textFlow);
+
+        // Display image source
+        Image imageSource = new Image("resource/nhandan_big.png");
+        ImageView imageViewSource = new ImageView(imageSource);
+        imageViewSource.setPreserveRatio(true);
+        imageViewSource.setFitHeight(60);
+        vbox.getChildren().add(imageViewSource);
+
+        // Display original category + fullDate
+        Text text0 = new Text(article.getOriginalCategory() + "\n" + article.getFullDate());
+        text0.getStyleClass().add("textfulldate");
+        TextFlow textFlow0 = new TextFlow(text0);
+        textFlow0.getStyleClass().add("textflowcenter");
+        vbox.getChildren().add(textFlow0);
+
+        // Display title
+        Text text1 = new Text(article.getTitle());
+        text1.getStyleClass().add("texttitle");
+        TextFlow textFlow1 = new TextFlow(text1);
+        textFlow1.getStyleClass().add("textflowjustify");
+        vbox.getChildren().add(textFlow1);
+
+        // Display description
+        Text text2 = new Text(description.text());
+        text2.getStyleClass().add("textdescription");
+        TextFlow textFlow2 = new TextFlow(text2);
+        textFlow2.getStyleClass().add("textflowjustify");
+        HBox descriptionHbox = new HBox();
+        descriptionHbox.getStyleClass().add("descriptionHbox");
+        descriptionHbox.getChildren().add(textFlow2);
+        vbox.getChildren().add(descriptionHbox);
+
+        // Display image description
+        if (descriptionImage.select("img").hasAttr("data-src") || descriptionImage.select("img").hasAttr("src")) {
+            // Create new imageView
+            ImageView imageView0 = new ImageView();
+            if (descriptionImage.select("img").attr("data-src").isEmpty()) {
+                imageView0 = new ImageView(new Image(descriptionImage.select("img").attr("abs:src")));
+            }
+            else {
+                imageView0 = new ImageView(new Image(descriptionImage.select("img").attr("abs:data-src")));
+            }
+            imageView0.setPreserveRatio(true);
+            // Set the initial fitwidth for imageview
+            if (Main.stage.getWidth() < 900) {
+                imageView0.setFitWidth(Main.stage.getWidth() - 140);
+                vbox.setMaxWidth(Main.stage.getWidth() - 140);
+                vbox.setMinWidth(Main.stage.getWidth() - 140);
+            }
+            if (Main.stage.getWidth() >= 900) {
+                imageView0.setFitWidth(800);
+                vbox.setMaxWidth(800);
+                vbox.setMinWidth(800);
+            }
+            // Bind the fitwidth property of imageView with stagewidth property
+            ImageView finalImageView = imageView0;
+            Main.stage.widthProperty().addListener(new ChangeListener<Number>() {
+                @Override
+                public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
+                    if (t1.doubleValue() < 900) {
+                        finalImageView.setFitWidth(t1.doubleValue() - 140);
+                        vbox.setMaxWidth(t1.doubleValue() - 140);
+                        vbox.setMinWidth(t1.doubleValue() - 140);
+                    }
+                    if (t1.doubleValue() >= 900) {
+                        finalImageView.setFitWidth(800);
+                        vbox.setMaxWidth(800);
+                        vbox.setMinWidth(800);
+                    }
+                }
+            });
+            // Get image cap
+            Text imagecap = new Text(descriptionImage.text());
+            imagecap.getStyleClass().add("textimagecap");
+            TextFlow textFlowTemp = new TextFlow();
+            textFlowTemp.getChildren().add(imagecap);
+            textFlowTemp.getStyleClass().add("textflowcenter");
+            vbox.getChildren().addAll(imageView0, textFlowTemp);
+        }
+
+        // Display all content
+        for (Element index : body) {
+            TextFlow textFlow3 = new TextFlow();
+            vbox.getChildren().add(textFlow3);
+            // Eliminate details__morenews element
+//            if (index.hasClass("details__morenews")) {
+//                vbox.getChildren().remove(vbox.getChildren().size() - 1);
+//                continue;
+//            }
+            // Add video open link caption
+//            if (index.hasClass("video")) {
+//                Text text51 = new Text("Watch video on this ");
+//                text51.getStyleClass().add("textReadTheOriginalPost");
+//                Hyperlink articleLink1 = new Hyperlink("link");
+//                articleLink1.getStyleClass().add("texthyperlink");
+//                articleLink1.setOnAction(e -> {
+//                    getHostServices().showDocument(article.getLinkToFullArticles());
+//                });
+//                Text text61 = new Text(".");
+//                textFlow3.getChildren().addAll(text51, articleLink1, text61);
+//                textFlow3.setStyle("-fx-text-alignment: center; -fx-font-style: italic; -fx-font-size: 18;");
+//                continue;
+//            }
+            // Add imageview
+            if (index.select("img").hasAttr("data-src") || index.select("img").hasAttr("src")) {
+                // Create new imageView
+                ImageView imageView = new ImageView();
+                if (index.select("img").hasAttr("data-src")) imageView.setImage(new Image(index.select("img").attr("data-src")));
+                if (index.select("img").hasAttr("src")) imageView.setImage(new Image(index.select("img").attr("src")));
+                imageView.setPreserveRatio(true);
+                // Set the initial fitwidth for imageview
+                if (Main.stage.getWidth() < 900) {
+                    imageView.setFitWidth(Main.stage.getWidth() - 140);
+                    vbox.setMaxWidth(Main.stage.getWidth() - 140);
+                    vbox.setMinWidth(Main.stage.getWidth() - 140);
+                }
+                if (Main.stage.getWidth() >= 900) {
+                    imageView.setFitWidth(800);
+                    vbox.setMaxWidth(800);
+                    vbox.setMinWidth(800);
+                }
+                // Bind the fitwidth property of imageView with stagewidth property
+                Main.stage.widthProperty().addListener(new ChangeListener<Number>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
+                        if (t1.doubleValue() < 900) {
+                            imageView.setFitWidth(t1.doubleValue() - 140);
+                            vbox.setMaxWidth(t1.doubleValue() - 140);
+                            vbox.setMinWidth(t1.doubleValue() - 140);
+                        }
+                        if (t1.doubleValue() >= 900) {
+                            imageView.setFitWidth(800);
+                            vbox.setMaxWidth(800);
+                            vbox.setMinWidth(800);
+                        }
+                    }
+                });
+                // Add image cap
+                if (index.hasText()) {
+                    Text imagecap = new Text(index.text());
+                    imagecap.getStyleClass().add("textimagecap");
+                    textFlow3.getChildren().add(imagecap);
+                    textFlow3.getStyleClass().add("textflowcenter");
+                }
+                vbox.getChildren().remove(vbox.getChildren().size() - 1);
+                vbox.getChildren().addAll(imageView);
+                vbox.getChildren().add(textFlow3);
+                continue;
+            }
+
+            // Add Body ( hyper link + bold + text normal text)
+            if (index.hasText()) {
+                // Bold text
+                if (index.select("strong").hasText()) {
+                    String string = index.text().replaceAll(index.select("strong").text().replaceAll("\\*", ""), "<strong>" + index.select("strong").text().replaceAll("\\*", "") + "</strong>");
+                    String[] stringSplit = string.split("<strong>");
+                    if (!stringSplit[0].isEmpty()) {
+                        Text textTemp = new Text(stringSplit[0]);
+                        textTemp.getStyleClass().add("textnormal");
+                        textFlow3.getChildren().add(textTemp);
+                        textFlow3.getStyleClass().add("textflowjustify");
+                    }
+                    for (int i = 1; i < stringSplit.length; i++) {
+                        Text textTemp0 = new Text(stringSplit[i].substring(0, stringSplit[i].indexOf("</strong>")));
+                        textTemp0.getStyleClass().add("textbold");
+                        Text textTemp1 = new Text(stringSplit[i].substring(stringSplit[i].indexOf("</strong>") + 9));
+                        textTemp1.getStyleClass().add("textnormal");
+                        textFlow3.getChildren().addAll(textTemp0, textTemp1);
+                        textFlow3.getStyleClass().add("textflowjustify");
+                    }
+                    continue;
+                }
+                else  {
+                    Text textTemp3 = new Text(index.text());
+                    textTemp3.getStyleClass().add("textnormal");
+                    textFlow3.getChildren().add(textTemp3);
+                    textFlow3.getStyleClass().add("textflowjustify");
+                }
+                continue;
+            }
+            // If not adding anything then remove the last index element (the new TextFlow)
+            vbox.getChildren().remove(vbox.getChildren().size() - 1);
+        }
+
+        // Display author
+        if (!article.getAuthor().isEmpty()) {
+            TextFlow textFlow4 = new TextFlow();
+            Text author1 = new Text(article.getAuthor());
+            author1.getStyleClass().add("textauthor");
+            textFlow4.getChildren().add(author1);
+            textFlow4.getStyleClass().add("textflowright");
+            vbox.getChildren().add(textFlow4);
+        }
+
+        // Link to full article (read original post here.)
+        TextFlow textFlow5 = new TextFlow();
+        Text text5 = new Text("Read the original post ");
+        text5.getStyleClass().add("textReadTheOriginalPost");
+        Hyperlink articleLink = new Hyperlink("here");
+        articleLink.getStyleClass().add("texthyperlink");
+        articleLink.setOnAction(e -> {
+            getHostServices().showDocument(article.getLinkToFullArticles());
+        });
+        Text text6 = new Text(".");
+        textFlow5.getChildren().addAll(text5, articleLink, text6);
+        textFlow5.setStyle("-fx-font-style: italic; -fx-font-size: 18; -fx-alignment: left;");
+        vbox.getChildren().add(textFlow5);
+    }
+
     /* FROM HERE IS THE HELPER FUNCTION
        */
     // This function will get hyperlink
@@ -1532,7 +1907,7 @@ public class ArticlesManager extends Application {
         return String.valueOf(unixTime);
     }
 
-    // This function will convert from readable date (HH:mm dd/MM/yyyy) to unix time String (20:02 15/8/2021)
+    // This function will convert from readable date (dd/MM/yyyy HH:mm) to unix time String (15/8/2021 20:02)
     public static String timeToUnixString3(String time){
         long unixTime = 0;
         try {
@@ -1551,6 +1926,20 @@ public class ArticlesManager extends Application {
         long unixTime = 0;
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss");
+            Date date = sdf.parse(time);
+            unixTime = date.getTime() / 1000;
+
+        } catch (ParseException e){
+            e.printStackTrace();
+        }
+        return String.valueOf(unixTime);
+    }
+
+    // // This function will convert from readable date (HH:mm dd/MM/yyyy) to unix time String (20:02 15/8/2021)
+    public static String timeToUnixString5(String time){
+        long unixTime = 0;
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm dd/MM/yyyy");
             Date date = sdf.parse(time);
             unixTime = date.getTime() / 1000;
 

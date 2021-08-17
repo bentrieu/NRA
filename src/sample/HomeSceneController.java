@@ -164,7 +164,7 @@ public class HomeSceneController implements Initializable {
         try {
             pagination.setMaxHeight(980);
             pagination.setMinHeight(980);
-            setPaginationList(Main.tuoiTreCovidList, stackPane1, displayFullArticleVbox);
+            setPaginationList(Main.nhanDanCovidList, stackPane1, displayFullArticleVbox);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -600,8 +600,19 @@ public class HomeSceneController implements Initializable {
                         });
                         break;
                     case "nhandan":
-                        textSourceList[i].setText("Nhân dân - " + Main.vnexpressNewsList.get(i).getTimeAgo());
-                        imageSourceList[i].setImage(new Image("resource/nhandan_small.png")); break;
+                        textSourceList[i].setText("Nhân dân - " + articlesList.get(i).getTimeAgo());
+                        imageSourceList[i].setImage(new Image("resource/nhandan_small.png"));
+                        buttonList[i].addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
+                            try {
+                                articlesManager.displayNhanDanFullArticle(articlesList.get(finalI), displayFullArticleVbox);
+                                borderPaneUnderScrollPane.setCenter(null);
+                                borderPaneUnderScrollPane.setCenter(stackPane1);
+                                stackPane1.setVisible(true);
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
+                            }
+                        });
+                        break;
                     case "thanhnien":
                         textSourceList[i].setText("Thanh niên - " + articlesList.get(i).getTimeAgo());
                         imageSourceList[i].setImage(new Image("resource/thanhnien_small.png"));
