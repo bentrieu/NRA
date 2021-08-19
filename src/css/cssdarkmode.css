@@ -1,17 +1,17 @@
 * {
-    -fx-primary : #F2F2F2;
-    -fx-secondary : #000000;
+    -fx-primary : #171717;
+    -fx-secondary : #FFFFFF;
     -fx-primarytext : #B2B2B2;
-    -fx-button-hover: #C2C2C2;
+    -fx-button-hover: #696969;
     -fx-blue: #106EBE;
     -fx-red: #F03442;
     -fx-darkred: #E81123;
     -fx-color-1:#1976D2;
-    -fx-black: black;
-    -fx-white: white;
+    -fx-black: white;
+    -fx-white: black;
     -fx-dark: #9C9C9C;
     -fx-grey: #D5D4D0;
-    -fx-descriptionHbox: #F2F4F5;
+    -fx-descriptionHbox: #171717;
 }
 
 .root{
@@ -55,14 +55,17 @@
 .button1 {
     -fx-background-color : -fx-primary;
     -fx-background-radius :  0;
+    -fx-text-fill: -fx-secondary;
 }
 .button1:hover {
     -fx-background-color : -fx-button-hover;
     -fx-background-radius :  0;
+    -fx-text-fill: -fx-secondary;
 }
 .button1:pressed {
     -fx-background-color : -fx-primary;
     -fx-background-radius :  0;
+    -fx-text-fill: -fx-secondary;
 }
 .button1:selected {
     -fx-border-color: -fx-blue;
@@ -105,7 +108,7 @@
 
 .buttonsearch {
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 0, 0);
-    -fx-background-color : -fx-button-hover;
+    -fx-background-color : #282828;
     -fx-background-radius :  100%;
 }
 .buttonsearch:hover {
@@ -115,7 +118,7 @@
 }
 .buttonsearch:pressed {
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 0, 0);
-    -fx-background-color : -fx-primary;
+    -fx-background-color : #282828;
     -fx-background-radius :  100%;
 }
 
@@ -184,11 +187,14 @@
     -fx-background-radius: 2em;
 }
 .scroll-pane .corner {
-    -fx-background-color: #E8E8E8;
+    -fx-background-color: transparent;
 }
 
 /*pagination*/
 /* Remove spacing */
+.pagination {
+    -fx-background-color: -fx-primary;
+}
 .pagination > .pagination-control > .control-box {
     -fx-spacing: 0;
 }
@@ -198,9 +204,10 @@
 .pagination > .pagination-control > .control-box > .left-arrow-button,
 .pagination > .pagination-control > .control-box > .right-arrow-button {
     -fx-background-insets: 0, 1;
-    -fx-background-color: lightgray, #FAFAFA;
+    -fx-background-color: #1F1F1F;
     -fx-min-width: 25;
     -fx-min-height: 25;
+    -fx-text-fill: white;
 }
 /* Colors on hover */
 .pagination > .pagination-control > .control-box > .number-button:hover,
@@ -208,7 +215,7 @@
 .pagination > .pagination-control > .control-box > .left-arrow-button:hover,
 .pagination > .pagination-control > .control-box > .right-arrow-button:hover {
     -fx-background-insets: 0;
-    -fx-background-color: lightgray;
+    -fx-background-color: #696969;
 }
 /* Selected toggle color */
 .pagination > .pagination-control > .control-box > .number-button:selected,
@@ -224,17 +231,17 @@
 
 /*Home layout start from here*/
 .buttonhome {
-    -fx-background-color: -fx-black;
+    -fx-background-color: black;
     -fx-opacity: 0.3;
 }
 .buttonhome:hover {
-    -fx-background-color: -fx-black;
+    -fx-background-color: black;
     -fx-opacity: 0.3;
     -fx-border-width: 2 2 2 2;
     -fx-border-color: -fx-white;
 }
 .buttonhome:pressed {
-    -fx-background-color: -fx-black;
+    -fx-background-color: black;
     -fx-opacity: 0.2;
 }
 
@@ -247,12 +254,12 @@
     -fx-border-color: #9E9E9E;
 }
 .anchorpanebuttonvertical {
-    -fx-background-color: -fx-white;
+    -fx-background-color: #1F1F1F;
     -fx-border-width: 2 2 2 2;
     -fx-boder-color: -fx-black;
 }
 .anchorpanebuttonvertical:hover {
-    -fx-background-color: -fx-white;
+    -fx-background-color: #1F1F1F;
     -fx-border-width: 2 2 2 2;
     -fx-border-color: #9E9E9E;
 }
@@ -272,27 +279,27 @@
 .textSource, .textSource:hover, .textSource:pressed {
     -fx-font-family: Arial;
     -fx-font-size: 14;
-    -fx-fill: -fx-white;
+    -fx-fill: white;
     -fx-effect: dropshadow(three-pass-box, black, 10, 0, 0, 0);
 }
 .textSourceVertical, .textSourceVertical:hover, .textSourceVertical:pressed {
     -fx-font-family: Arial;
     -fx-font-size: 14;
     -fx-fill: -fx-black;
-    -fx-effect: dropshadow(three-pass-box, white, 10, 0, 0, 0);
+    -fx-effect: dropshadow(three-pass-box, black, 10, 0, 0, 0);
 }
 .textTitleSmall, .textTitleSmall:hover, .textTitleSmall:pressed {
     -fx-font-family: Arial;
     -fx-font-size: 20;
     -fx-font-weight: bold;
-    -fx-fill: -fx-white;
+    -fx-fill: white;
     -fx-effect: dropshadow(three-pass-box, black, 10, 0, 0, 0);
 }
 .textTitleBig, .textTitleBig:hover, .textTitleBig:pressed {
     -fx-font-family: Arial;
     -fx-font-size: 28;
     -fx-font-weight: bold;
-    -fx-fill: -fx-white;
+    -fx-fill: white;
     -fx-effect: dropshadow(three-pass-box, black, 10, 0, 0, 0);
 }
 .textTitleVertical, .textTitleVertical:hover, .textTitleVertical:pressed {
@@ -300,15 +307,15 @@
     -fx-font-size: 18;
     -fx-font-weight: bold;
     -fx-fill: -fx-black;
-    -fx-effect: dropshadow(three-pass-box, white, 10, 0, 0, 0);
+    -fx-effect: dropshadow(three-pass-box, black, 10, 0, 0, 0);
 }
 
 /*Display layout start from here*/
 .stackpane1 {
-    -fx-background-color: -fx-grey;
+    -fx-background-color: #1F1F1F;
 }
 .stackpane2 {
-    -fx-background-color: -fx-white;
+    -fx-background-color: #242424;
     -fx-effect: dropshadow(three-pass-box, black, 15, 0, 0, 0);
 }
 .textcategory {
@@ -353,10 +360,12 @@
     -fx-font-size: 24;
     -fx-font-weight: bold;
     -fx-text-alignment: right;
+    -fx-fill: -fx-black;
 }
 .textReadTheOriginalPost {
     -fx-font-size: 18;
     -fx-text-alignment: left;
+    -fx-fill: -fx-black;
 }
 .textflowright {
     -fx-text-alignment: right;
@@ -384,7 +393,7 @@
     -fx-padding: 15;
 }
 .previousAndNextArticleButton {
-    -fx-background-color : -fx-white;
+    -fx-background-color : #3B3B3B;
     -fx-background-radius :  0;
     -fx-effect: dropshadow(three-pass-box, black, 10, 0, 0, 0);
 }
@@ -394,7 +403,7 @@
     -fx-effect: dropshadow(three-pass-box, black, 10, 0, 0, 0);
 }
 .previousAndNextArticleButton:pressed {
-    -fx-background-color : -fx-white;
+    -fx-background-color : #3B3B3B;
     -fx-background-radius :  0;
     -fx-effect: dropshadow(three-pass-box, black, 10, 0, 0, 0);
 }

@@ -51,21 +51,25 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <Button layoutX="1086.0" layoutY="13.0" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="48.0" styleClass="button2" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <graphic>
-                  <SVGPath content="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" styleClass="iconsvg" />
-               </graphic>
-            </Button>
-            <Button fx:id="refreshButton" layoutX="1056.0" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#refresh" prefWidth="48.0" styleClass="button2" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="48.0" AnchorPane.topAnchor="0.0">
-               <graphic>
-                  <SVGPath content="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" styleClass="iconsvg" />
-               </graphic>
-            </Button>
-            <Button fx:id="copyArticleLinkButton" layoutX="1004.0" layoutY="13.0" mnemonicParsing="false" onAction="#copyArticleLink" prefWidth="48.0" styleClass="button2" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="96.0" AnchorPane.topAnchor="0.0">
-               <graphic>
-                  <SVGPath content="M6.354 5.5H4a3 3 0 0 0 0 6h3a3 3 0 0 0 2.83-4H9c-.086 0-.17.01-.25.031A2 2 0 0 1 7 10.5H4a2 2 0 1 1 0-4h1.535c.218-.376.495-.714.82-1z M9 5.5a3 3 0 0 0-2.83 4h1.098A2 2 0 0 1 9 6.5h3a2 2 0 1 1 0 4h-1.535a4.02 4.02 0 0 1-.82 1H12a3 3 0 1 0 0-6H9z" styleClass="iconsvg" />
-               </graphic>
-            </Button>
+            <HBox maxWidth="-Infinity" minWidth="-Infinity" prefWidth="144.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Button fx:id="copyArticleLinkButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#copyArticleLink" prefHeight="50.0" prefWidth="48.0" styleClass="button2">
+                     <graphic>
+                        <SVGPath content="M6.354 5.5H4a3 3 0 0 0 0 6h3a3 3 0 0 0 2.83-4H9c-.086 0-.17.01-.25.031A2 2 0 0 1 7 10.5H4a2 2 0 1 1 0-4h1.535c.218-.376.495-.714.82-1z M9 5.5a3 3 0 0 0-2.83 4h1.098A2 2 0 0 1 9 6.5h3a2 2 0 1 1 0 4h-1.535a4.02 4.02 0 0 1-.82 1H12a3 3 0 1 0 0-6H9z" styleClass="iconsvg" />
+                     </graphic>
+                  </Button>
+                  <Button fx:id="refreshButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#refresh" prefHeight="50.0" prefWidth="48.0" styleClass="button2">
+                     <graphic>
+                        <SVGPath content="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" styleClass="iconsvg" />
+                     </graphic>
+                  </Button>
+                  <ToggleButton fx:id="darkModeButton" accessibleRole="TOGGLE_BUTTON" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#darkMode" prefHeight="50.0" prefWidth="48.0" styleClass="button2">
+                     <graphic>
+                        <SVGPath fx:id="darkModeSVGPath" content="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z" styleClass="iconsvg" />
+                     </graphic>
+                  </ToggleButton>
+               </children>
+            </HBox>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="mainPane" layoutX="48.0" layoutY="82.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="48.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
@@ -142,7 +146,7 @@
                <content>
                   <BorderPane fx:id="borderPaneUnderScrollPane">
                      <center>
-                        <Pagination fx:id="pagination" pageCount="10" BorderPane.alignment="CENTER" />
+                        <Pagination fx:id="pagination" maxPageIndicatorCount="5" pageCount="5" BorderPane.alignment="CENTER" />
                      </center>
                   </BorderPane>
                </content>
