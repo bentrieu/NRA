@@ -23,7 +23,7 @@ import javafx.scene.layout.*;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-
+import org.springframework.util.StopWatch;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -92,6 +92,8 @@ public class HomeSceneController implements Initializable {
     public Button[] buttonList = new Button[10];
 
     public boolean isDarkMode = false;
+
+    public static StopWatch stopWatch = new StopWatch("My Stop Watch");
 
     public HomeSceneController() {
         // Setup fxml loader
@@ -734,6 +736,7 @@ public class HomeSceneController implements Initializable {
 
     public void setPaginationList(ArrayList<Article> articlesList) throws IOException {
 
+//        stopWatch.start("pagination setup");
         AnchorPane[] anchorPaneList = {layoutController.anchorPane1, layoutController.anchorPane2, layoutController.anchorPane3, layoutController.anchorPane4, layoutController.anchorPane5, layoutController.anchorPane6, layoutController.anchorPane7, layoutController.anchorPane8, layoutController.anchorPane9, layoutController.anchorPane10};
         ImageView[] imageSourceList = {layoutController.imageSource1, layoutController.imageSource2, layoutController.imageSource3, layoutController.imageSource4, layoutController.imageSource5, layoutController.imageSource6, layoutController.imageSource7, layoutController.imageSource8, layoutController.imageSource9, layoutController.imageSource10};
         Text[] textSourceList = {layoutController.textSource1, layoutController.textSource2, layoutController.textSource3, layoutController.textSource4, layoutController.textSource5, layoutController.textSource6, layoutController.textSource7, layoutController.textSource8, layoutController.textSource9, layoutController.textSource10};
@@ -824,23 +827,23 @@ public class HomeSceneController implements Initializable {
                         break;
                 }
                 // Set thumb image for each object
-                if (k != 3 && k != 7) {
-                    Image image = new Image(articlesList.get(i).getThumb());
-                    BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1.0, 1.0, true, true, false, true));
-                    Background background = new Background(backgroundImage);
-                    anchorPaneList[k].setCache(true);
-                    anchorPaneList[k].setCacheHint(CacheHint.SPEED);
-                    anchorPaneList[k].setBackground(background);
-                } else {
-                    BackgroundImage backgroundImage = new BackgroundImage(new Image(articlesList.get(i).getThumb()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1.0, 1.0, true, true, false, true));
-                    Background background = new Background(backgroundImage);
-                    layoutController.anchorPaneImage1.setCache(true);
-                    layoutController.anchorPaneImage1.setCacheHint(CacheHint.SPEED);
-                    layoutController.anchorPaneImage2.setCache(true);
-                    layoutController.anchorPaneImage2.setCacheHint(CacheHint.SPEED);
-                    if (k == 3) layoutController.anchorPaneImage1.setBackground(background);
-                    else layoutController.anchorPaneImage2.setBackground(background);
-                }
+//                if (k != 3 && k != 7) {
+//                    Image image = new Image(articlesList.get(i).getThumb());
+//                    BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1.0, 1.0, true, true, false, true));
+//                    Background background = new Background(backgroundImage);
+//                    anchorPaneList[k].setCache(true);
+//                    anchorPaneList[k].setCacheHint(CacheHint.SPEED);
+//                    anchorPaneList[k].setBackground(background);
+//                } else {
+//                    BackgroundImage backgroundImage = new BackgroundImage(new Image(articlesList.get(i).getThumb()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1.0, 1.0, true, true, false, true));
+//                    Background background = new Background(backgroundImage);
+//                    layoutController.anchorPaneImage1.setCache(true);
+//                    layoutController.anchorPaneImage1.setCacheHint(CacheHint.SPEED);
+//                    layoutController.anchorPaneImage2.setCache(true);
+//                    layoutController.anchorPaneImage2.setCacheHint(CacheHint.SPEED);
+//                    if (k == 3) layoutController.anchorPaneImage1.setBackground(background);
+//                    else layoutController.anchorPaneImage2.setBackground(background);
+//                }
             }
 
             // Animation for each transition of pagination
@@ -858,7 +861,6 @@ public class HomeSceneController implements Initializable {
 //                );
 //            }
 //            timeline.play();
-
             return displayLayoutVbox;
         });
     }

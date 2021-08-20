@@ -11,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Stop;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
@@ -18,6 +19,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.util.StopWatch;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -425,15 +427,15 @@ public class ArticlesManager extends Application {
         ArrayList<Article> getVnexpressWebList = new ArrayList<>();
 
         // Set up jsoup
-        Document document = Jsoup.connect(webURL).get();
-        Elements doc = document.select("article:not(.off-thumb):has([data-publishtime])");
-        Elements all = document.select("article:not(.off-thumb)");
+        Document document = Jsoup.connect(webURL).userAgent("mozilla").get();
+        Elements all = document.select("article:not(.off-thumb).item-news-common");
         Elements links = all.select("div.thumb-art a[href]");
         Elements titles = all.select("div.thumb-art a[title]");
 //        Elements descriptions = document.getElementsByClass("description");
         Elements pictures = all.select("div.thumb-art img[itemprop]");
 
         int maxSize = pictures.size() - all.select("ins.adsbyeclick").size();
+        if (maxSize > 15) maxSize = 15;
 
         //Add scraped items into the class
         for(int i = 0, k = 0; i < maxSize; i++, k++){
@@ -1142,7 +1144,7 @@ public class ArticlesManager extends Application {
 
         // Setup jsoup for each article
         String fullArticlesUrl = article.getLinkToFullArticles();
-//        String fullArticlesUrl = "https://thanhnien.vn/tai-chinh-kinh-doanh/lo-dien-tuyen-duong-bien-dep-va-lon-nhat-viet-nam-1432858.html";
+//        String fullArticlesUrl = "https://thanhnien.vn/thoi-su/tphcm-quan-doi-se-dua-luong-thuc-thuc-pham-den-tung-nha-dan-1433485.html";
         Document document = Jsoup.connect(fullArticlesUrl).userAgent("Mozilla").get();
         Elements all = document.select("div.l-content div.pswp-content, div.l-grid, section.container");
         Elements description = all.select("div.sapo");
@@ -1151,11 +1153,7 @@ public class ArticlesManager extends Application {
         Elements originalCategory = document.select("div.breadcrumbs span[itemprop] a[href] span");
         Elements fullDate = document.select("div.details__meta div.meta time");
         Elements descriptionImage = all.select("div#contentAvatar");
-        for (Element index : body) {
-            System.out.println(index);
-            System.out.println();
-            System.out.println();
-        }
+        System.out.println(all);
 
         // Set fullDate for each object
         if (fullDate.hasText()) {
@@ -1275,21 +1273,21 @@ public class ArticlesManager extends Application {
         }
 
         // Add video open link caption when scrape video article
-//        if (document.select("div").hasClass("cms-video")) {
-//            Text text512 = new Text("Watch video on this ");
-//            text512.getStyleClass().add("textReadTheOriginalPost");
-//            Hyperlink articleLink12 = new Hyperlink("link");
-//            articleLink12.getStyleClass().add("texthyperlink");
-//            articleLink12.setOnAction(e -> {
-//                HostServices services = Helper.getInstance().getHostServices();
-//                services.showDocument(article.getLinkToFullArticles());
-//            });
-//            Text text612 = new Text(".");
-//            TextFlow textFlow31 = new TextFlow();
-//            textFlow31.getChildren().addAll(text512, articleLink12, text612);
-//            textFlow31.getStyleClass().add("textflowcenteritalic");
-//            vbox.getChildren().add(textFlow31);
-//        }
+        if (document.select("div.media-player div").hasClass("cms-video")) {
+            Text text512 = new Text("Watch video on this ");
+            text512.getStyleClass().add("textReadTheOriginalPost");
+            Hyperlink articleLink12 = new Hyperlink("link");
+            articleLink12.getStyleClass().add("texthyperlink");
+            articleLink12.setOnAction(e -> {
+                HostServices services = Helper.getInstance().getHostServices();
+                services.showDocument(article.getLinkToFullArticles());
+            });
+            Text text612 = new Text(".");
+            TextFlow textFlow31 = new TextFlow();
+            textFlow31.getChildren().addAll(text512, articleLink12, text612);
+            textFlow31.getStyleClass().add("textflowcenteritalic");
+            vbox.getChildren().add(textFlow31);
+        }
 
         ArrayList<String> repeatCheck = new ArrayList<>();
         // Display all content

@@ -1,5 +1,7 @@
 package sample;
 
+import org.springframework.util.StopWatch;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -69,83 +71,201 @@ public class ArticlesList {
     public static ArrayList<Article> worldList = new ArrayList<>();
 
     public static ArrayList<Article> getNewsList() throws IOException {
+        StopWatch stopWatch = new StopWatch("News");
+        stopWatch.start("vnexpress");
         vnexpressNewsList = ArticlesManager.getVnexpressList("https://vnexpress.net/rss/tin-moi-nhat.rss", "News");
+        stopWatch.stop();
+        stopWatch.start("zing");
         zingNewsList = ArticlesManager.getZingWebList("https://zingnews.vn/", "News");
+        stopWatch.stop();
+        stopWatch.start("tuoitre");
         tuoiTreNewsList = ArticlesManager.getTuoiTreList("https://tuoitre.vn/rss/tin-moi-nhat.rss", "News");
+        stopWatch.stop();
+        stopWatch.start("thanhnien");
         thanhNienNewsList = ArticlesManager.getThanhNienList("https://thanhnien.vn/rss/home.rss", "News");
+        stopWatch.stop();
+        stopWatch.start("nhandan");
         nhanDanNewsList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/", "News");
-        return ArticlesManager.getSortedArticlesList(vnexpressNewsList, zingNewsList, tuoiTreNewsList, thanhNienNewsList, nhanDanNewsList);
+        stopWatch.stop();
+        newsList = ArticlesManager.getSortedArticlesList(vnexpressNewsList, zingNewsList, tuoiTreNewsList, thanhNienNewsList, nhanDanNewsList);
+        System.out.println(stopWatch.prettyPrint());
+        return newsList;
     }
 
     public static ArrayList<Article> getCovidList() throws IOException {
-        vnexpressCovidList = ArticlesManager.getVnexpressWebList("https://vnexpress.net/chu-de/covid-19-tp-hcm-3273", "Covid");
+        StopWatch stopWatch = new StopWatch("covid");
+        stopWatch.start("vnexpress");
+        vnexpressCovidList = ArticlesManager.getVnexpressWebList("https://vnexpress.net/covid-19/tin-tuc", "Covid");
+        stopWatch.stop();
+        stopWatch.start("zing");
         zingCovidList = ArticlesManager.getZingSearchList("covid", "Covid");
+        stopWatch.stop();
+        stopWatch.start("tuoitre");
         tuoiTreCovidList = ArticlesManager.getTuoiTreSearchList("covid", "Covid");
+        stopWatch.stop();
+        stopWatch.start("thanhnien");
         thanhNienCovidList = ArticlesManager.getThanhNienWebList("https://thanhnien.vn/dich-covid-19/", "Politics");
+        stopWatch.stop();
+        stopWatch.start("nhandan");
         nhanDanCovidList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/tag/Covid19-53", "Covid");
-        return ArticlesManager.getSortedArticlesList(vnexpressCovidList, zingCovidList, tuoiTreCovidList, thanhNienCovidList, nhanDanCovidList);
+        stopWatch.stop();
+        covidList = ArticlesManager.getSortedArticlesList(vnexpressCovidList, zingCovidList, tuoiTreCovidList, thanhNienCovidList, nhanDanCovidList);
+        System.out.println(stopWatch.prettyPrint());
+        return covidList;
     }
 
     public static ArrayList<Article> getPoliticsList() throws IOException {
+        StopWatch stopWatch = new StopWatch("Politics");
+        stopWatch.start("vnexpress");
         vnexpressPoliticsList = ArticlesManager.getVnexpressWebList("https://vnexpress.net/thoi-su/chinh-tri", "Politics");
+        stopWatch.stop();
+        stopWatch.start("zing");
         zingPoliticsList = ArticlesManager.getZingWebList("https://zingnews.vn/chinh-tri.html", "Politics");
+        stopWatch.stop();
+        stopWatch.start("tuoitre");
         tuoiTrePoliticsList = ArticlesManager.getTuoiTreSearchList("chính trị", "Politics");
+        stopWatch.stop();
+        stopWatch.start("thanhnien");
         thanhNienPoliticsList = ArticlesManager.getThanhNienWebList("https://thanhnien.vn/thoi-su/chinh-tri/", "Politics");
+        stopWatch.stop();
+        stopWatch.start("nhandan");
         nhanDanPoliticsList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/chinhtri", "Politics");
-        return ArticlesManager.getSortedArticlesList(vnexpressPoliticsList, zingPoliticsList, tuoiTrePoliticsList, thanhNienPoliticsList, nhanDanPoliticsList);
+        stopWatch.stop();
+        politicsList = ArticlesManager.getSortedArticlesList(vnexpressPoliticsList, zingPoliticsList, tuoiTrePoliticsList, thanhNienPoliticsList, nhanDanPoliticsList);
+        System.out.println(stopWatch.prettyPrint());
+        return politicsList;
     }
 
     public static ArrayList<Article> getBusinessList() throws IOException {
+        StopWatch stopWatch = new StopWatch("Business");
+        stopWatch.start("vnexpress");
         vnexpressBusinessList = ArticlesManager.getVnexpressList("https://vnexpress.net/rss/kinh-doanh.rss", "Business");
+        stopWatch.stop();
+        stopWatch.start("zing");
         zingBusinessList = ArticlesManager.getZingWebList("https://zingnews.vn/kinh-doanh-tai-chinh.html", "Business");
+        stopWatch.stop();
+        stopWatch.start("tuoitre");
         tuoiTreBusinessList = ArticlesManager.getTuoiTreList("https://tuoitre.vn/rss/kinh-doanh.rss", "Business");
+        stopWatch.stop();
+        stopWatch.start("thanhnien");
         thanhNienBusinessList = ArticlesManager.getThanhNienWebList("https://thanhnien.vn/tai-chinh-kinh-doanh/", "Business");
+        stopWatch.stop();
+        stopWatch.start("nhandan");
         nhanDanBusinessList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/kinhte", "Business");
-        return ArticlesManager.getSortedArticlesList(vnexpressBusinessList, zingBusinessList, tuoiTreBusinessList, thanhNienBusinessList, nhanDanBusinessList);
+        stopWatch.stop();
+        businessList = ArticlesManager.getSortedArticlesList(vnexpressBusinessList, zingBusinessList, tuoiTreBusinessList, thanhNienBusinessList, nhanDanBusinessList);
+        System.out.println(stopWatch.prettyPrint());
+        return businessList;
     }
 
     public static ArrayList<Article> getTechnologyList() throws IOException {
+        StopWatch stopWatch = new StopWatch("Technology");
+        stopWatch.start("vnexpress");
         vnexpressTechnologyList = ArticlesManager.getVnexpressList("https://vnexpress.net/rss/so-hoa.rss", "Technology");
+        stopWatch.stop();
+        stopWatch.start("zing");
         zingTechnologyList = ArticlesManager.getZingWebList("https://zingnews.vn/cong-nghe.html", "Technology");
+        stopWatch.stop();
+        stopWatch.start("tuoitre");
         tuoiTreTechnologyList = ArticlesManager.getTuoiTreList("https://tuoitre.vn/rss/nhip-song-so.rss", "Technology");
+        stopWatch.stop();
+        stopWatch.start("thanhnien");
         thanhNienTechnologyList = ArticlesManager.getThanhNienWebList("https://thanhnien.vn/cong-nghe/", "Technology");
+        stopWatch.stop();
+        stopWatch.start("nhandan");
         nhanDanTechnologyList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/khoahoc-congnghe", "Technology");
-        return ArticlesManager.getSortedArticlesList(vnexpressTechnologyList, zingTechnologyList, tuoiTreTechnologyList, thanhNienTechnologyList, nhanDanTechnologyList);
+        stopWatch.stop();
+        technologyList = ArticlesManager.getSortedArticlesList(vnexpressTechnologyList, zingTechnologyList, tuoiTreTechnologyList, thanhNienTechnologyList, nhanDanTechnologyList);
+        System.out.println(stopWatch.prettyPrint());
+        return technologyList;
     }
 
     public static ArrayList<Article> getHealthList() throws IOException {
-        vnexpressHealthList = ArticlesManager.getVnexpressList("https://vnexpress.net/rss/suc-khoe.rss", "Health");
+        StopWatch stopWatch = new StopWatch("Health");
+        stopWatch.start("vnexpress");
+//        vnexpressHealthList = ArticlesManager.getVnexpressList("https://vnexpress.net/rss/suc-khoe.rss", "Health");
+        vnexpressHealthList = ArticlesManager.getVnexpressWebList("https://vnexpress.net/suc-khoe", "Health");
+        stopWatch.stop();
+        stopWatch.start("zing");
         zingHealthList = ArticlesManager.getZingWebList("https://zingnews.vn/suc-khoe.html", "Health");
+        stopWatch.stop();
+        stopWatch.start("tuoitre");
         tuoiTreHealthList = ArticlesManager.getTuoiTreList("https://tuoitre.vn/rss/suc-khoe.rss", "Health");
+        stopWatch.stop();
+        stopWatch.start("thanhnien");
         thanhNienHealthList = ArticlesManager.getThanhNienWebList("https://thanhnien.vn/suc-khoe/", "Health");
+        stopWatch.stop();
+        stopWatch.start("nhandan");
         nhanDanHealthList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/y-te", "Health");
-        return ArticlesManager.getSortedArticlesList(vnexpressHealthList, zingHealthList, tuoiTreHealthList, thanhNienHealthList, nhanDanHealthList);
+        stopWatch.stop();
+        healthList = ArticlesManager.getSortedArticlesList(vnexpressHealthList, zingHealthList, tuoiTreHealthList, thanhNienHealthList, nhanDanHealthList);
+        System.out.println(stopWatch.prettyPrint());
+        return healthList;
     }
 
     public static ArrayList<Article> getSportsList() throws IOException {
+        StopWatch stopWatch = new StopWatch("Sports");
+        stopWatch.start("vnexpress");
         vnexpressSportsList = ArticlesManager.getVnexpressList("https://vnexpress.net/rss/the-thao.rss", "Sports");
+        stopWatch.stop();
+        stopWatch.start("zing");
         zingSportsList = ArticlesManager.getZingWebList("https://zingnews.vn/the-thao.html", "Sports");
+        stopWatch.stop();
+        stopWatch.start("tuoitre");
         tuoiTreSportsList = ArticlesManager.getTuoiTreList("https://tuoitre.vn/rss/the-thao.rss", "Sports");
+        stopWatch.stop();
+        stopWatch.start("thanhnien");
         thanhNienSportsList = ArticlesManager.getThanhNienWebList("https://thanhnien.vn/the-thao/", "Sports");
+        stopWatch.stop();
+        stopWatch.start("nhandan");
         nhanDanSportsList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/thethao", "Sports");
-        return ArticlesManager.getSortedArticlesList(vnexpressSportsList, zingSportsList, tuoiTreSportsList, thanhNienSportsList, nhanDanSportsList);
+        stopWatch.stop();
+        sportsList = ArticlesManager.getSortedArticlesList(vnexpressSportsList, zingSportsList, tuoiTreSportsList, thanhNienSportsList, nhanDanSportsList);
+        System.out.println(stopWatch.prettyPrint());
+        return sportsList;
     }
 
     public static ArrayList<Article> getEntertainmentList() throws IOException {
+        StopWatch stopWatch = new StopWatch("Entertainment");
+        stopWatch.start("vnexpress");
         vnexpressEntertainmentList = ArticlesManager.getVnexpressList("https://vnexpress.net/rss/cuoi.rss", "Entertainment");
+        stopWatch.stop();
+        stopWatch.start("zing");
         zingEntertainmentList = ArticlesManager.getZingWebList("https://zingnews.vn/giai-tri.html", "Entertainment");
+        stopWatch.stop();
+        stopWatch.start("tuoitre");
         tuoiTreEntertainmentList = ArticlesManager.getTuoiTreList("https://tuoitre.vn/rss/giai-tri.rss", "Entertainment");
+        stopWatch.stop();
+        stopWatch.start("thanhnien");
         thanhNienEntertainmentList = ArticlesManager.getThanhNienWebList("https://thanhnien.vn/giai-tri/", "Entertainment");
+        stopWatch.stop();
+        stopWatch.start("nhandan");
         nhanDanEntertainmentList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/vanhoa", "Entertainment");
-        return ArticlesManager.getSortedArticlesList(vnexpressEntertainmentList, zingEntertainmentList, tuoiTreEntertainmentList, thanhNienEntertainmentList, nhanDanEntertainmentList);
+        stopWatch.stop();
+        entertainmentList = ArticlesManager.getSortedArticlesList(vnexpressEntertainmentList, zingEntertainmentList, tuoiTreEntertainmentList, thanhNienEntertainmentList, nhanDanEntertainmentList);
+        System.out.println(stopWatch.prettyPrint());
+        return entertainmentList;
     }
 
     public static ArrayList<Article> getWorldList() throws IOException {
+        StopWatch stopWatch = new StopWatch("World");
+        stopWatch.start("vnexpress");
         vnexpressWorldList = ArticlesManager.getVnexpressList("https://vnexpress.net/rss/the-gioi.rss", "World");
+        stopWatch.stop();
+        stopWatch.start("zing");
         zingWorldList = ArticlesManager.getZingWebList("https://zingnews.vn/the-gioi.html", "World");
+        stopWatch.stop();
+        stopWatch.start("tuoitre");
         tuoiTreWorldList = ArticlesManager.getTuoiTreList("https://tuoitre.vn/rss/the-gioi.rss", "World");
+        stopWatch.stop();
+        stopWatch.start("thanhnien");
         thanhNienWorldList = ArticlesManager.getThanhNienWebList("https://thanhnien.vn/the-gioi/", "World");
+        stopWatch.stop();
+        stopWatch.start("nhandan");
         nhanDanWorldList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/thegioi", "World");
-        return ArticlesManager.getSortedArticlesList(vnexpressWorldList, zingWorldList, tuoiTreWorldList, thanhNienWorldList, nhanDanWorldList);
+        stopWatch.stop();
+        worldList = ArticlesManager.getSortedArticlesList(vnexpressWorldList, zingWorldList, tuoiTreWorldList, thanhNienWorldList, nhanDanWorldList);
+        System.out.println(stopWatch.prettyPrint());
+        return worldList;
     }
 }
