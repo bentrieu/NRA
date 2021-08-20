@@ -14,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.CacheHint;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -25,6 +26,7 @@ import javafx.util.Duration;
 
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -71,8 +73,7 @@ public class HomeSceneController implements Initializable {
     @FXML
     private SVGPath darkModeSVGPath;
 
-    @FXML
-    private LayoutController layoutController = new LayoutController();
+    public LayoutController layoutController = new LayoutController();
 
     public int currentCategoryIndex = 0, currentArticleIndex = 0;
 
@@ -84,10 +85,42 @@ public class HomeSceneController implements Initializable {
 
     public VBox displayLayoutVbox = new VBox();
 
+    public AnchorPane[] anchorPaneList = new AnchorPane[10];
+    public ImageView[] imageSourceList = new ImageView[10];
+    public Text[] textSourceList = new Text[10];
+    public Text[] textTitleList = new Text[10];
+    public Button[] buttonList = new Button[10];
+
     public boolean isDarkMode = false;
+
+    public HomeSceneController() {
+        // Setup fxml loader
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("Layout.fxml"));
+
+        // Get the vbox root of the layout.fxml
+        try {
+            displayLayoutVbox = (VBox) loader.load();
+            displayLayoutVbox.setCache(true);
+            displayLayoutVbox.setCacheHint(CacheHint.SPEED);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (isDarkMode) {
+            displayLayoutVbox.getStylesheets().clear();
+            displayLayoutVbox.getStylesheets().add("/css/cssdarkmode.css");
+        } else {
+            displayLayoutVbox.getStylesheets().clear();
+            displayLayoutVbox.getStylesheets().add("/css/css.css");
+        }
+
+        // Get the LayoutController instance of layout.fxml
+        layoutController = (LayoutController) loader.getController();
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         // Set initial dark mode
         if (isDarkMode) {
             rootAnchorPane.getStylesheets().clear();
@@ -148,6 +181,8 @@ public class HomeSceneController implements Initializable {
         displayFullArticleVbox.setSpacing(20);
         displayFullArticleVbox.setAlignment(Pos.TOP_CENTER);
         displayFullArticleVbox.setPadding(new Insets(100, 0, 100, 0));
+        displayFullArticleVbox.setCache(true);
+        displayFullArticleVbox.setCacheHint(CacheHint.SPEED);
         // Setup initial width for vbox
         if (Main.stage.getWidth() < 900) {
             displayFullArticleVbox.setMaxWidth(Main.stage.getWidth() - 140);
@@ -200,14 +235,6 @@ public class HomeSceneController implements Initializable {
             }
         });
 
-        // Setup pagination
-//        try {
-//
-////            setPaginationList(Main.newsList, stackPane1, displayFullArticleVbox);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
         // Setup nextArticleButton and previousArticleButton
         Button previousArticleButton = new Button();
         previousArticleButton.getStyleClass().add("previousAndNextArticleButton");
@@ -254,7 +281,7 @@ public class HomeSceneController implements Initializable {
         // Setup copy article link button
         copyArticleLinkButton.visibleProperty().bind(stackPane1.visibleProperty());
 
-        // Setup initial category
+        // Setup initial category (pagination)
         pagination.setMaxHeight(983);
         pagination.setMinHeight(983);
         try {
@@ -706,27 +733,7 @@ public class HomeSceneController implements Initializable {
     }
 
     public void setPaginationList(ArrayList<Article> articlesList) throws IOException {
-        // Save current articles category list
-        currentCategoryList = articlesList;
 
-        // Setup fxml loader
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(Main.class.getResource("layout.fxml"));
-
-        // Get the vbox root of the layout.fxml
-        displayLayoutVbox = (VBox) loader.load();
-        if (isDarkMode) {
-            displayLayoutVbox.getStylesheets().clear();
-            displayLayoutVbox.getStylesheets().add("/css/cssdarkmode.css");
-        } else {
-            displayLayoutVbox.getStylesheets().clear();
-            displayLayoutVbox.getStylesheets().add("/css/css.css");
-        }
-
-        // Get the LayoutController instance of layout.fxml
-        layoutController = loader.getController();
-
-        // Setup the lists of childrens in layoutController instance
         AnchorPane[] anchorPaneList = {layoutController.anchorPane1, layoutController.anchorPane2, layoutController.anchorPane3, layoutController.anchorPane4, layoutController.anchorPane5, layoutController.anchorPane6, layoutController.anchorPane7, layoutController.anchorPane8, layoutController.anchorPane9, layoutController.anchorPane10};
         ImageView[] imageSourceList = {layoutController.imageSource1, layoutController.imageSource2, layoutController.imageSource3, layoutController.imageSource4, layoutController.imageSource5, layoutController.imageSource6, layoutController.imageSource7, layoutController.imageSource8, layoutController.imageSource9, layoutController.imageSource10};
         Text[] textSourceList = {layoutController.textSource1, layoutController.textSource2, layoutController.textSource3, layoutController.textSource4, layoutController.textSource5, layoutController.textSource6, layoutController.textSource7, layoutController.textSource8, layoutController.textSource9, layoutController.textSource10};
@@ -818,32 +825,39 @@ public class HomeSceneController implements Initializable {
                 }
                 // Set thumb image for each object
                 if (k != 3 && k != 7) {
-                    BackgroundImage backgroundImage = new BackgroundImage(new Image(articlesList.get(i).getThumb()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1.0, 1.0, true, true, false, true));
+                    Image image = new Image(articlesList.get(i).getThumb());
+                    BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1.0, 1.0, true, true, false, true));
                     Background background = new Background(backgroundImage);
+                    anchorPaneList[k].setCache(true);
+                    anchorPaneList[k].setCacheHint(CacheHint.SPEED);
                     anchorPaneList[k].setBackground(background);
                 } else {
                     BackgroundImage backgroundImage = new BackgroundImage(new Image(articlesList.get(i).getThumb()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1.0, 1.0, true, true, false, true));
                     Background background = new Background(backgroundImage);
+                    layoutController.anchorPaneImage1.setCache(true);
+                    layoutController.anchorPaneImage1.setCacheHint(CacheHint.SPEED);
+                    layoutController.anchorPaneImage2.setCache(true);
+                    layoutController.anchorPaneImage2.setCacheHint(CacheHint.SPEED);
                     if (k == 3) layoutController.anchorPaneImage1.setBackground(background);
                     else layoutController.anchorPaneImage2.setBackground(background);
                 }
             }
 
             // Animation for each transition of pagination
-            Timeline timeline = new Timeline();
-            timeline.getKeyFrames().add(
-                    new KeyFrame(Duration.ZERO,
-                            new KeyValue(displayLayoutVbox.opacityProperty(), 0)
-                    )
-            );
-            for (int i = 1; i < 10; i++) {
-                timeline.getKeyFrames().add(
-                        new KeyFrame(new Duration(i * 60),
-                                new KeyValue(displayLayoutVbox.opacityProperty(), i / 10.0)
-                        )
-                );
-            }
-            timeline.play();
+//            Timeline timeline = new Timeline();
+//            timeline.getKeyFrames().add(
+//                    new KeyFrame(Duration.ZERO,
+//                            new KeyValue(displayLayoutVbox.opacityProperty(), 0)
+//                    )
+//            );
+//            for (int i = 1; i < 10; i++) {
+//                timeline.getKeyFrames().add(
+//                        new KeyFrame(new Duration(i * 60),
+//                                new KeyValue(displayLayoutVbox.opacityProperty(), i / 10.0)
+//                        )
+//                );
+//            }
+//            timeline.play();
 
             return displayLayoutVbox;
         });

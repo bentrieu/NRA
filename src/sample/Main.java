@@ -23,23 +23,18 @@ public class Main extends Application {
 
     public static ArrayList<Article> newsTemp;
 
-    static {
-        try {
-            newsTemp = ArticlesList.getNewsList();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     @Override
     public void start(Stage primaryStage) throws Exception{
         Stage stage = new Stage();
         Main.stage = stage;
 
-        long startTime = System.nanoTime();
-        long endTime = System.nanoTime();
-        long duration = (endTime - startTime);
-        System.out.println(duration / 1000000 + " milliseconds");
+        // Load the first news category
+        try {
+            newsTemp = ArticlesList.getNewsList();
+//            ArticlesManager.printSortArticles(newsTemp);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         Parent root = FXMLLoader.load(getClass().getResource("WelcomeScene.fxml"));
         Scene scene = new Scene(root);

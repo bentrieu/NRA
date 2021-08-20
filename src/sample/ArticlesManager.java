@@ -5,6 +5,7 @@ import javafx.application.HostServices;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
+import javafx.scene.CacheHint;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -332,6 +333,11 @@ public class ArticlesManager extends Application {
 
         // Add data to vnexpressNewsList (Title + date + thumb + link + category + source)
         for (int i = 0, k = 0; k < 15; i++, k++) {
+            // Eliminate the elements do not have thumb
+            if (!all.get(i).select("description").text().contains("img")) {
+                k--;
+                continue;
+            }
             // Create new article object then add the object into the ArrayList
             vnexpressNewsList.add(new Article());
             // Get the description (link + thumb) of each object => Then cut into link + thumb
@@ -1086,9 +1092,12 @@ public class ArticlesManager extends Application {
         Elements titleAndLink = all.select("a.story__title");
         Elements date = all.select("time[rel]");
 
+        int maxSize = 15;
+        if (category.equals("Sports")) maxSize = 10;
+
         // Add data to vnexpressNewsList (Title + date + thumb + link)
-        for (int i = 0, k = 0; k < 15; i++, k++) {
-            if (all.get(i).hasClass("story--video")) {
+        for (int i = 0, k = 0; k < maxSize; i++, k++) {
+            if (all.get(i).hasClass("story--video") || all.get(i).parent().hasClass("feature")) {
                 k--;
                 continue;
             }
@@ -1132,15 +1141,21 @@ public class ArticlesManager extends Application {
         vbox.getChildren().clear();
 
         // Setup jsoup for each article
-        String fullArticlesUrl = article.getLinkToFullArticles(); // link to full article
+        String fullArticlesUrl = article.getLinkToFullArticles();
+//        String fullArticlesUrl = "https://thanhnien.vn/tai-chinh-kinh-doanh/lo-dien-tuyen-duong-bien-dep-va-lon-nhat-viet-nam-1432858.html";
         Document document = Jsoup.connect(fullArticlesUrl).userAgent("Mozilla").get();
-        Elements all = document.select("div.l-content div.pswp-content, div.l-grid");
+        Elements all = document.select("div.l-content div.pswp-content, div.l-grid, section.container");
         Elements description = all.select("div.sapo");
-        Elements body = all.select("div#abody").select("> div, p, h2, div.pswp-content__wrapimage img, div.pswp-content__caption div.imgcaption, table.video");
+        Elements body = all.select("div#abody").select("div, h2, p");
         Elements author = document.select("div.details__author div.left h4");
         Elements originalCategory = document.select("div.breadcrumbs span[itemprop] a[href] span");
         Elements fullDate = document.select("div.details__meta div.meta time");
         Elements descriptionImage = all.select("div#contentAvatar");
+        for (Element index : body) {
+            System.out.println(index);
+            System.out.println();
+            System.out.println();
+        }
 
         // Set fullDate for each object
         if (fullDate.hasText()) {
@@ -1201,14 +1216,17 @@ public class ArticlesManager extends Application {
             if (description.size() > 0) {
                 if (!description.first().ownText().isEmpty()) {
                     text2.setText(description.first().ownText());
-                } else text2.setText(description.text());
-                text2.getStyleClass().add("textdescription");
-                TextFlow textFlow2 = new TextFlow(text2);
-                textFlow2.getStyleClass().add("textflowjustify");
-                HBox descriptionHbox = new HBox();
-                descriptionHbox.getStyleClass().add("descriptionHbox");
-                descriptionHbox.getChildren().add(textFlow2);
-                vbox.getChildren().add(descriptionHbox);
+                }
+                if (description.hasText()) {
+                    text2.setText(description.text());
+                    text2.getStyleClass().add("textdescription");
+                    TextFlow textFlow2 = new TextFlow(text2);
+                    textFlow2.getStyleClass().add("textflowjustify");
+                    HBox descriptionHbox = new HBox();
+                    descriptionHbox.getStyleClass().add("descriptionHbox");
+                    descriptionHbox.getChildren().add(textFlow2);
+                    vbox.getChildren().add(descriptionHbox);
+                }
             }
         }
 
@@ -1216,6 +1234,8 @@ public class ArticlesManager extends Application {
         if (descriptionImage.select("img").hasAttr("data-src") || descriptionImage.select("img").hasAttr("src")) {
             // Create new imageView
             ImageView imageView0 = new ImageView();
+            imageView0.setCache(true);
+            imageView0.setCacheHint(CacheHint.SPEED);
             if (descriptionImage.select("img").attr("data-src").isEmpty()) {
                 imageView0 = new ImageView(new Image(descriptionImage.select("img").attr("abs:src")));
             }
@@ -1244,31 +1264,34 @@ public class ArticlesManager extends Application {
                 }
             });
             // Get image cap
-            Text imagecap = new Text(descriptionImage.select("div.imgcaption").text());
-            imagecap.getStyleClass().add("textimagecap");
-            TextFlow textFlowTemp = new TextFlow();
-            textFlowTemp.getChildren().add(imagecap);
-            textFlowTemp.getStyleClass().add("textflowcenter");
-            vbox.getChildren().addAll(imageView0, textFlowTemp);
+            if (!descriptionImage.select("div.imgcaption").text().isEmpty()) {
+                Text imagecap0 = new Text(descriptionImage.select("div.imgcaption").text());
+                imagecap0.getStyleClass().add("textimagecap");
+                TextFlow textFlowTemp = new TextFlow();
+                textFlowTemp.getChildren().add(imagecap0);
+                textFlowTemp.getStyleClass().add("textflowcenter");
+                vbox.getChildren().addAll(imageView0, textFlowTemp);
+            }
         }
 
         // Add video open link caption when scrape video article
-        if (document.select("div").hasClass("cms-video")) {
-            Text text512 = new Text("Watch video on this ");
-            text512.getStyleClass().add("textReadTheOriginalPost");
-            Hyperlink articleLink12 = new Hyperlink("link");
-            articleLink12.getStyleClass().add("texthyperlink");
-            articleLink12.setOnAction(e -> {
-                HostServices services = Helper.getInstance().getHostServices();
-                services.showDocument(article.getLinkToFullArticles());
-            });
-            Text text612 = new Text(".");
-            TextFlow textFlow31 = new TextFlow();
-            textFlow31.getChildren().addAll(text512, articleLink12, text612);
-            textFlow31.getStyleClass().add("textflowcenteritalic");
-            vbox.getChildren().add(textFlow31);
-        }
+//        if (document.select("div").hasClass("cms-video")) {
+//            Text text512 = new Text("Watch video on this ");
+//            text512.getStyleClass().add("textReadTheOriginalPost");
+//            Hyperlink articleLink12 = new Hyperlink("link");
+//            articleLink12.getStyleClass().add("texthyperlink");
+//            articleLink12.setOnAction(e -> {
+//                HostServices services = Helper.getInstance().getHostServices();
+//                services.showDocument(article.getLinkToFullArticles());
+//            });
+//            Text text612 = new Text(".");
+//            TextFlow textFlow31 = new TextFlow();
+//            textFlow31.getChildren().addAll(text512, articleLink12, text612);
+//            textFlow31.getStyleClass().add("textflowcenteritalic");
+//            vbox.getChildren().add(textFlow31);
+//        }
 
+        ArrayList<String> repeatCheck = new ArrayList<>();
         // Display all content
         for (Element index : body) {
             TextFlow textFlow3 = new TextFlow();
@@ -1279,7 +1302,7 @@ public class ArticlesManager extends Application {
                 continue;
             }
             // Add video open link caption
-            if (index.hasClass("video") || index.hasClass("cms-video")) {
+            if (index.hasAttr("data-video-src") /*|| index.hasAttr("clearfix")*/) {
                 Text text51 = new Text("Watch video on this ");
                 text51.getStyleClass().add("textReadTheOriginalPost");
                 Hyperlink articleLink1 = new Hyperlink("link");
@@ -1294,7 +1317,7 @@ public class ArticlesManager extends Application {
                 continue;
             }
             // Add imageview
-            if (index.select("img").hasAttr("data-src")) {
+            if (index.select("> img").hasAttr("data-src") /*&& !index.hasClass("cms-body")*/) {
                 // Create new imageView
                 ImageView imageView = new ImageView(new Image(index.select("img").attr("data-src")));
                 imageView.setPreserveRatio(true);
@@ -1317,6 +1340,7 @@ public class ArticlesManager extends Application {
                         }
                     }
                 });
+                vbox.getChildren().remove(vbox.getChildren().size() - 1);
                 vbox.getChildren().addAll(imageView);
                 continue;
             }
@@ -1328,17 +1352,24 @@ public class ArticlesManager extends Application {
                 textFlow3.getStyleClass().add("textflowcenter");
                 continue;
             }
-            // Add Body ( hyper link + bold + text normal text)
-            if (index.hasText()) {
+            // Add body
+            if ((!index.ownText().isEmpty() && !index.parent().hasClass("imgcaption") && !index.parent().hasClass("source")) || index.is("h2")) {
                 // Hyper link
                 if (index.select("a").hasAttr("href")) {
-                    textFlow3 = Helper.getHyperLink(index);
                     vbox.getChildren().remove(vbox.getChildren().size() - 1);
+                    textFlow3 = Helper.getHyperLink(index);
                     vbox.getChildren().add(textFlow3);
                     continue;
                 }
                 // Bold text
-                if (index.select("h2").hasText()) {
+                if (index.is("h2")) {
+//                    repeatCheck.add(index.select("h2").text());
+//                    if (repeatCheck.size() > 1) {
+//                        if (index.select("h2").text().equals(repeatCheck.get(repeatCheck.size() - 1 - 1))) {
+//                            vbox.getChildren().remove(vbox.getChildren().size() - 1);
+//                            continue;
+//                        }
+//                    }
                     String string = index.text().replaceAll(index.select("h2").text().replaceAll("\\*", ""), "<strong>" + index.select("h2").text().replaceAll("\\*", "") + "</strong>");
                     String[] stringSplit = string.split("<strong>");
                     if (!stringSplit[0].isEmpty()) {
@@ -1357,15 +1388,12 @@ public class ArticlesManager extends Application {
                     }
                     continue;
                 }
-                else  {
-                    if (!index.parent().hasClass("imgcaption") && !index.parent().hasClass("source")) {
-                        Text textTemp3 = new Text(index.text());
-                        textTemp3.getStyleClass().add("textnormal");
-                        textFlow3.getChildren().add(textTemp3);
-                        textFlow3.getStyleClass().add("textflowjustify");
-                        continue;
-                    }
-                }
+                // Normal text
+                Text textTemp3 = new Text(index.text());
+                textTemp3.getStyleClass().add("textnormal");
+                textFlow3.getChildren().add(textTemp3);
+                textFlow3.getStyleClass().add("textflowjustify");
+                continue;
             }
             // If not adding anything then remove the last index element (the new TextFlow)
             vbox.getChildren().remove(vbox.getChildren().size() - 1);
@@ -1832,6 +1860,24 @@ public class ArticlesManager extends Application {
     // This function will help the sort function: Find max number among 5 numbers
     public static long maxNum(long date1, long date2, long date3, long date4, long date5) {
         return Math.max(date1, Math.max(date2, Math.max(date3, Math.max(date4, date5))));
+    }
+
+    //
+    public static ArrayList<Article> getSortedArticlesList(ArrayList<Article> list1, ArrayList<Article> list2, ArrayList<Article> list3, ArrayList<Article> list4, ArrayList<Article> list5) {
+        ArrayList<Article> sortedArticles = new ArrayList<>();
+        sortedArticles.addAll(list1);
+        sortedArticles.addAll(list2);
+        sortedArticles.addAll(list3);
+        sortedArticles.addAll(list4);
+        sortedArticles.addAll(list5);
+        Collections.sort(sortedArticles, new Comparator<Article>() {
+            @Override
+            public int compare(Article o1, Article o2) {
+                if (Long.parseLong(o1.getDate()) - Long.parseLong(o2.getDate()) == 0) return -1;
+                return Long.parseLong(o1.getDate()) - Long.parseLong(o2.getDate()) > 0 ? -1 : 1;
+            }
+        });
+        return sortedArticles;
     }
 
     /* FROM HERE IS PRINT FUNCTION

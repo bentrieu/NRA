@@ -2,6 +2,8 @@ package sample;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /*This class will have many static array list*/
 
@@ -72,7 +74,7 @@ public class ArticlesList {
         tuoiTreNewsList = ArticlesManager.getTuoiTreList("https://tuoitre.vn/rss/tin-moi-nhat.rss", "News");
         thanhNienNewsList = ArticlesManager.getThanhNienList("https://thanhnien.vn/rss/home.rss", "News");
         nhanDanNewsList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/", "News");
-        return newsList = ArticlesManager.sortArticle(vnexpressNewsList, zingNewsList, tuoiTreNewsList, thanhNienNewsList, nhanDanNewsList);
+        return ArticlesManager.getSortedArticlesList(vnexpressNewsList, zingNewsList, tuoiTreNewsList, thanhNienNewsList, nhanDanNewsList);
     }
 
     public static ArrayList<Article> getCovidList() throws IOException {
@@ -81,7 +83,7 @@ public class ArticlesList {
         tuoiTreCovidList = ArticlesManager.getTuoiTreSearchList("covid", "Covid");
         thanhNienCovidList = ArticlesManager.getThanhNienWebList("https://thanhnien.vn/dich-covid-19/", "Politics");
         nhanDanCovidList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/tag/Covid19-53", "Covid");
-        return covidList = ArticlesManager.sortArticle(vnexpressCovidList, zingCovidList, tuoiTreCovidList, thanhNienCovidList, nhanDanCovidList);
+        return ArticlesManager.getSortedArticlesList(vnexpressCovidList, zingCovidList, tuoiTreCovidList, thanhNienCovidList, nhanDanCovidList);
     }
 
     public static ArrayList<Article> getPoliticsList() throws IOException {
@@ -90,7 +92,7 @@ public class ArticlesList {
         tuoiTrePoliticsList = ArticlesManager.getTuoiTreSearchList("chính trị", "Politics");
         thanhNienPoliticsList = ArticlesManager.getThanhNienWebList("https://thanhnien.vn/thoi-su/chinh-tri/", "Politics");
         nhanDanPoliticsList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/chinhtri", "Politics");
-        return politicsList = ArticlesManager.sortArticle(vnexpressPoliticsList, zingPoliticsList, tuoiTrePoliticsList, thanhNienPoliticsList, nhanDanPoliticsList);
+        return ArticlesManager.getSortedArticlesList(vnexpressPoliticsList, zingPoliticsList, tuoiTrePoliticsList, thanhNienPoliticsList, nhanDanPoliticsList);
     }
 
     public static ArrayList<Article> getBusinessList() throws IOException {
@@ -99,7 +101,7 @@ public class ArticlesList {
         tuoiTreBusinessList = ArticlesManager.getTuoiTreList("https://tuoitre.vn/rss/kinh-doanh.rss", "Business");
         thanhNienBusinessList = ArticlesManager.getThanhNienWebList("https://thanhnien.vn/tai-chinh-kinh-doanh/", "Business");
         nhanDanBusinessList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/kinhte", "Business");
-        return businessList = ArticlesManager.sortArticle(vnexpressBusinessList, zingBusinessList, tuoiTreBusinessList, thanhNienBusinessList, nhanDanBusinessList);
+        return ArticlesManager.getSortedArticlesList(vnexpressBusinessList, zingBusinessList, tuoiTreBusinessList, thanhNienBusinessList, nhanDanBusinessList);
     }
 
     public static ArrayList<Article> getTechnologyList() throws IOException {
@@ -108,7 +110,7 @@ public class ArticlesList {
         tuoiTreTechnologyList = ArticlesManager.getTuoiTreList("https://tuoitre.vn/rss/nhip-song-so.rss", "Technology");
         thanhNienTechnologyList = ArticlesManager.getThanhNienWebList("https://thanhnien.vn/cong-nghe/", "Technology");
         nhanDanTechnologyList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/khoahoc-congnghe", "Technology");
-        return technologyList = ArticlesManager.sortArticle(vnexpressTechnologyList, zingTechnologyList, tuoiTreTechnologyList, thanhNienTechnologyList, nhanDanTechnologyList);
+        return ArticlesManager.getSortedArticlesList(vnexpressTechnologyList, zingTechnologyList, tuoiTreTechnologyList, thanhNienTechnologyList, nhanDanTechnologyList);
     }
 
     public static ArrayList<Article> getHealthList() throws IOException {
@@ -117,7 +119,7 @@ public class ArticlesList {
         tuoiTreHealthList = ArticlesManager.getTuoiTreList("https://tuoitre.vn/rss/suc-khoe.rss", "Health");
         thanhNienHealthList = ArticlesManager.getThanhNienWebList("https://thanhnien.vn/suc-khoe/", "Health");
         nhanDanHealthList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/y-te", "Health");
-        return healthList = ArticlesManager.sortArticle(vnexpressHealthList, zingHealthList, tuoiTreHealthList, thanhNienHealthList, nhanDanHealthList);
+        return ArticlesManager.getSortedArticlesList(vnexpressHealthList, zingHealthList, tuoiTreHealthList, thanhNienHealthList, nhanDanHealthList);
     }
 
     public static ArrayList<Article> getSportsList() throws IOException {
@@ -126,7 +128,7 @@ public class ArticlesList {
         tuoiTreSportsList = ArticlesManager.getTuoiTreList("https://tuoitre.vn/rss/the-thao.rss", "Sports");
         thanhNienSportsList = ArticlesManager.getThanhNienWebList("https://thanhnien.vn/the-thao/", "Sports");
         nhanDanSportsList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/thethao", "Sports");
-        return sportsList = ArticlesManager.sortArticle(vnexpressSportsList, zingSportsList, tuoiTreSportsList, thanhNienSportsList, nhanDanSportsList);
+        return ArticlesManager.getSortedArticlesList(vnexpressSportsList, zingSportsList, tuoiTreSportsList, thanhNienSportsList, nhanDanSportsList);
     }
 
     public static ArrayList<Article> getEntertainmentList() throws IOException {
@@ -135,7 +137,7 @@ public class ArticlesList {
         tuoiTreEntertainmentList = ArticlesManager.getTuoiTreList("https://tuoitre.vn/rss/giai-tri.rss", "Entertainment");
         thanhNienEntertainmentList = ArticlesManager.getThanhNienWebList("https://thanhnien.vn/giai-tri/", "Entertainment");
         nhanDanEntertainmentList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/vanhoa", "Entertainment");
-        return entertainmentList = ArticlesManager.sortArticle(vnexpressEntertainmentList, zingEntertainmentList, tuoiTreEntertainmentList, thanhNienEntertainmentList, nhanDanEntertainmentList);
+        return ArticlesManager.getSortedArticlesList(vnexpressEntertainmentList, zingEntertainmentList, tuoiTreEntertainmentList, thanhNienEntertainmentList, nhanDanEntertainmentList);
     }
 
     public static ArrayList<Article> getWorldList() throws IOException {
@@ -144,6 +146,6 @@ public class ArticlesList {
         tuoiTreWorldList = ArticlesManager.getTuoiTreList("https://tuoitre.vn/rss/the-gioi.rss", "World");
         thanhNienWorldList = ArticlesManager.getThanhNienWebList("https://thanhnien.vn/the-gioi/", "World");
         nhanDanWorldList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/thegioi", "World");
-        return worldList = ArticlesManager.sortArticle(vnexpressWorldList, zingWorldList, tuoiTreWorldList, thanhNienWorldList, nhanDanWorldList);
+        return ArticlesManager.getSortedArticlesList(vnexpressWorldList, zingWorldList, tuoiTreWorldList, thanhNienWorldList, nhanDanWorldList);
     }
 }
