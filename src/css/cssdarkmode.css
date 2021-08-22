@@ -140,9 +140,11 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 0, 0);
     -fx-background-color: -fx-white;
     -fx-background-radius: 5;
+    -fx-text-fill: white;
 }
 .text-field:focused {
     -fx-background-color: -fx-white;
+    -fx-text-fill: white;
 }
 
 /*scroll pane*/

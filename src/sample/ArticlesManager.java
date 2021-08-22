@@ -4,15 +4,12 @@ import javafx.application.Application;
 import javafx.application.HostServices;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.geometry.Insets;
 import javafx.scene.CacheHint;
 import javafx.scene.control.Hyperlink;
-import javafx.scene.control.Pagination;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Stop;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
@@ -20,15 +17,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.util.StopWatch;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /* This class will have static functions that manipulate articles*/
@@ -162,7 +152,7 @@ public class ArticlesManager extends Application {
         Elements fullDate = all.select("ul.the-article-meta li.the-article-publish");
         Elements body = all.select("div.the-article-body").select("> p, p ~ h3, td.pic img[src], td.pCaption.caption, div#innerarticle, figure.video");
         Elements author = document.select("div.the-article-credit p.author");
-        Elements originalCategory = all.select("p.the-article-category");
+        Elements originalCategory = all.select("p.the-article-category a");
         Elements videoWeb = document.select("div.video-container");
 
         // Set fullDate for each object
@@ -180,10 +170,13 @@ public class ArticlesManager extends Application {
         }
 
         // Set original category
-        if (videoWeb.select("span.video-breadcrumb").hasText()) {
-            article.setOriginalCategory(videoWeb.select("span.video-breadcrumb").text());
+        article.setOriginalCategory("");
+        int k = 0;
+        for (Element index : originalCategory) {
+            if (k != originalCategory.size() - 1) article.setOriginalCategory(article.getOriginalCategory() + index.text() + " - ");
+            else article.setOriginalCategory(article.getOriginalCategory() + index.text());
+            k++;
         }
-        if (originalCategory.hasText()) article.setOriginalCategory(originalCategory.text());
 
         // Display category
         Text text = new Text(article.getCategory());
@@ -201,8 +194,8 @@ public class ArticlesManager extends Application {
         imageViewSource.setFitHeight(60);
         vbox.getChildren().add(imageViewSource);
 
-        // Display fullDate
-        Text text0 = new Text(article.getFullDate());
+        // Display original category + fullDate
+        Text text0 = new Text(article.getOriginalCategory() + "\n" + article.getFullDate());
         text0.getStyleClass().add("textfulldate");
         TextFlow textFlow0 = new TextFlow(text0);
         textFlow0.getStyleClass().add("textflowcenter");
@@ -236,6 +229,7 @@ public class ArticlesManager extends Application {
                 services.showDocument(article.getLinkToFullArticles());
             });
             Text text610 = new Text(".");
+            text610.getStyleClass().add("textReadTheOriginalPost");
             TextFlow textFlow30 = new TextFlow();
             textFlow30.getChildren().addAll(text510, articleLink10, text610);
             textFlow30.getStyleClass().add("textflowcenteritalic");
@@ -257,6 +251,7 @@ public class ArticlesManager extends Application {
                     services.showDocument(article.getLinkToFullArticles());
                 });
                 Text text61 = new Text(".");
+                text61.getStyleClass().add("textReadTheOriginalPost");
                 textFlow3.getChildren().addAll(text51, articleLink1, text61);
                 textFlow3.getStyleClass().add("textflowcenteritalic");
                 // Add video cap
@@ -306,6 +301,13 @@ public class ArticlesManager extends Application {
             }
             // Add image cap
             if (index.hasClass("pCaption") && index.hasText()) {
+                if (!index.ownText().isEmpty()) {
+                    Text imagecapTemp = new Text(index.ownText());
+                    imagecapTemp.getStyleClass().add("textimagecap");
+                    textFlow3.getChildren().add(imagecapTemp);
+                    textFlow3.getStyleClass().add("textflowcenter");
+                    continue;
+                }
                 Text imagecap = new Text(index.select("p").text());
                 imagecap.getStyleClass().add("textimagecap");
                 textFlow3.getChildren().add(imagecap);
@@ -540,6 +542,8 @@ public class ArticlesManager extends Application {
         Elements fck_detail = document.select("div.container article.fck_detail p, figcaption, img[data-src], source[data-src-image], p.author_mail, div.videoContainter"); //div.fig-picture == img[data-src], source[data-src-image]
         Elements time = document.select("div.container span.date");
         Elements originalCategory = document.select("div.container ul.breadcrumb li");
+        Elements titleFolder = document.select("div.title-folder");
+        Elements audioContainer = document.select("div.audioContainter");
 
         // Set fullDate for each object
         article.setFullDate(time.text());
@@ -570,11 +574,19 @@ public class ArticlesManager extends Application {
         vbox.getChildren().add(imageViewSource);
 
         // Display original category + fullDate
-        Text text0 = new Text(article.getOriginalCategory() + "\n" + article.getFullDate());
-        text0.getStyleClass().add("textfulldate");
-        TextFlow textFlow0 = new TextFlow(text0);
-        textFlow0.getStyleClass().add("textflowcenter");
-        vbox.getChildren().add(textFlow0);
+        if (titleFolder.hasText()) {
+            Text text0 = new Text(titleFolder.text() + "\n" + article.getFullDate());
+            text0.getStyleClass().add("textfulldate");
+            TextFlow textFlow0 = new TextFlow(text0);
+            textFlow0.getStyleClass().add("textflowcenter");
+            vbox.getChildren().add(textFlow0);
+        } else {
+            Text text0 = new Text(article.getOriginalCategory() + "\n" + article.getFullDate());
+            text0.getStyleClass().add("textfulldate");
+            TextFlow textFlow0 = new TextFlow(text0);
+            textFlow0.getStyleClass().add("textflowcenter");
+            vbox.getChildren().add(textFlow0);
+        }
 
         // Display title
         Text text1 = new Text(article.getTitle());
@@ -607,6 +619,23 @@ public class ArticlesManager extends Application {
             vbox.getChildren().add(descriptionHbox);
         }
 
+        if (audioContainer.select("audio").hasAttr("src") || audioContainer.select("audio").hasAttr("data-src")) {
+            Text text510 = new Text("Listen audio on this ");
+            text510.getStyleClass().add("textReadTheOriginalPost");
+            Hyperlink articleLink10 = new Hyperlink("link");
+            articleLink10.getStyleClass().add("texthyperlink");
+            articleLink10.setOnAction(e -> {
+                HostServices services = Helper.getInstance().getHostServices();
+                services.showDocument(article.getLinkToFullArticles());
+            });
+            Text text610 = new Text(".");
+            text610.getStyleClass().add("textReadTheOriginalPost");
+            TextFlow textFlow30 = new TextFlow();
+            textFlow30.getChildren().addAll(text510, articleLink10, text610);
+            textFlow30.getStyleClass().add("textflowcenteritalic");
+            vbox.getChildren().add(textFlow30);
+        }
+
         // Display all content
         for (Element index : fck_detail) {
             TextFlow textFlow3 = new TextFlow();
@@ -622,6 +651,7 @@ public class ArticlesManager extends Application {
                     services.showDocument(article.getLinkToFullArticles());
                 });
                 Text text61 = new Text(".");
+                text61.getStyleClass().add("textReadTheOriginalPost");
                 textFlow3.getChildren().addAll(text51, articleLink1, text61);
                 textFlow3.getStyleClass().add("textflowcenteritalic");
                 continue;
@@ -682,11 +712,15 @@ public class ArticlesManager extends Application {
             // Add body (text)
             if (index.hasText()) {
                 // Hyper link
-                if (index.getElementsByTag("a").hasText()) {
-                    textFlow3 = Helper.getHyperLink(index);
-                    vbox.getChildren().remove(vbox.getChildren().size() - 1);
-                    vbox.getChildren().add(textFlow3);
-                    continue;
+                try {
+                    if (index.getElementsByTag("a").hasText()) {
+                        textFlow3 = Helper.getHyperLink(index);
+                        vbox.getChildren().remove(vbox.getChildren().size() - 1);
+                        vbox.getChildren().add(textFlow3);
+                        continue;
+                    }
+                } catch (Exception e) {
+
                 }
                 // Add author
                 if (index.attr("style").contains("right") || index.hasAttr("align")) {
@@ -925,7 +959,6 @@ public class ArticlesManager extends Application {
         Elements body = all.select("div.main-content-body div.content.fck").select("> p, div.VCSortableInPreviewMode");
         Elements author = all.select("div.author");
         Elements originalCategory = document.select("div.bread-crumbs li");
-        System.out.println(body);
 
         // Set fullDate for each object
         if (fullDate.hasText()) {
@@ -991,7 +1024,7 @@ public class ArticlesManager extends Application {
             TextFlow textFlow3 = new TextFlow();
             vbox.getChildren().add(textFlow3);
             // Add video open link caption
-            if (index.attr("type").equals("insertembedcode")) {
+            if (index.attr("type").equals("insertembedcode") || index.attr("type").equals("videostream")) {
                 Text text51 = new Text("Watch video on this ");
                 text51.getStyleClass().add("textReadTheOriginalPost");
                 Hyperlink articleLink1 = new Hyperlink("link");
@@ -1001,6 +1034,7 @@ public class ArticlesManager extends Application {
                     services.showDocument(article.getLinkToFullArticles());
                 });
                 Text text61 = new Text(".");
+                text61.getStyleClass().add("textReadTheOriginalPost");
                 textFlow3.getChildren().addAll(text51, articleLink1, text61);
                 textFlow3.getStyleClass().add("textflowcenteritalic");
                 continue;
@@ -1046,11 +1080,15 @@ public class ArticlesManager extends Application {
             // Add Body ( hyper link + bold + text normal text)
             if (index.hasText() && !index.attr("type").equals("RelatedOneNews") && !index.attr("type").equals("RelatedNews")) {
                 // Hyper link
-                if (index.select("a").hasAttr("href")) {
-                    textFlow3 = Helper.getHyperLink(index);
-                    vbox.getChildren().remove(vbox.getChildren().size() - 1);
-                    vbox.getChildren().add(textFlow3);
-                    continue;
+                try {
+                    if (index.select("a").hasAttr("href")) {
+                        textFlow3 = Helper.getHyperLink(index);
+                        vbox.getChildren().remove(vbox.getChildren().size() - 1);
+                        vbox.getChildren().add(textFlow3);
+                        continue;
+                    }
+                } catch (Exception e) {
+
                 }
                 // Bold text
                 if (index.select("b").hasText()) {
@@ -1308,12 +1346,32 @@ public class ArticlesManager extends Application {
 
         // Display description
         if (description.select("a").hasAttr("href")) {
-            TextFlow textFlow2 = Helper.getHyperLink(description.first());
-            textFlow2.getStyleClass().add("textflowjustify");
-            HBox descriptionHbox = new HBox();
-            descriptionHbox.getStyleClass().add("descriptionHbox");
-            descriptionHbox.getChildren().add(textFlow2);
-            vbox.getChildren().add(descriptionHbox);
+            try {
+                TextFlow textFlow2 = Helper.getHyperLink(description.first());
+                textFlow2.getStyleClass().add("textflowjustify");
+                HBox descriptionHbox = new HBox();
+                descriptionHbox.getStyleClass().add("descriptionHbox");
+                descriptionHbox.getChildren().add(textFlow2);
+                vbox.getChildren().add(descriptionHbox);
+            }
+            catch (Exception e) {
+                Text text2 = new Text();
+                if (description.size() > 0) {
+                    if (!description.first().ownText().isEmpty()) {
+                        text2.setText(description.first().ownText());
+                    }
+                    if (description.hasText()) {
+                        text2.setText(description.text());
+                        text2.getStyleClass().add("textdescription");
+                        TextFlow textFlow2 = new TextFlow(text2);
+                        textFlow2.getStyleClass().add("textflowjustify");
+                        HBox descriptionHbox = new HBox();
+                        descriptionHbox.getStyleClass().add("descriptionHbox");
+                        descriptionHbox.getChildren().add(textFlow2);
+                        vbox.getChildren().add(descriptionHbox);
+                    }
+                }
+            }
         } else {
             Text text2 = new Text();
             if (description.size() > 0) {
@@ -1389,6 +1447,7 @@ public class ArticlesManager extends Application {
                 services.showDocument(article.getLinkToFullArticles());
             });
             Text text612 = new Text(".");
+            text612.getStyleClass().add("textReadTheOriginalPost");
             TextFlow textFlow31 = new TextFlow();
             textFlow31.getChildren().addAll(text512, articleLink12, text612);
             textFlow31.getStyleClass().add("textflowcenteritalic");
@@ -1416,6 +1475,7 @@ public class ArticlesManager extends Application {
                     services.showDocument(article.getLinkToFullArticles());
                 });
                 Text text61 = new Text(".");
+                text61.getStyleClass().add("textReadTheOriginalPost");
                 textFlow3.getChildren().addAll(text51, articleLink1, text61);
                 textFlow3.getStyleClass().add("textflowcenteritalic");
                 continue;
@@ -1464,11 +1524,15 @@ public class ArticlesManager extends Application {
             // Add body
             if ((!index.ownText().isEmpty() && !index.parent().hasClass("imgcaption") && !index.parent().hasClass("source")) || index.is("h2")) {
                 // Hyper link
-                if (index.select("a").hasAttr("href")) {
-                    vbox.getChildren().remove(vbox.getChildren().size() - 1);
-                    textFlow3 = Helper.getHyperLink(index);
-                    vbox.getChildren().add(textFlow3);
-                    continue;
+                try {
+                    if (index.select("a").hasAttr("href")) {
+                        vbox.getChildren().remove(vbox.getChildren().size() - 1);
+                        textFlow3 = Helper.getHyperLink(index);
+                        vbox.getChildren().add(textFlow3);
+                        continue;
+                    }
+                } catch (Exception e) {
+
                 }
                 // Bold text
                 if (index.is("h2")) {
@@ -1807,6 +1871,7 @@ public class ArticlesManager extends Application {
                     services.showDocument(article.getLinkToFullArticles());
                 });
                 Text text61 = new Text(".");
+                text61.getStyleClass().add("textReadTheOriginalPost");
                 textFlow3.getChildren().addAll(text51, articleLink1, text61);
                 textFlow3.setStyle("-fx-text-alignment: center; -fx-font-style: italic; -fx-font-size: 18;");
                 continue;
@@ -2028,7 +2093,7 @@ public class ArticlesManager extends Application {
 
     }
 
-    public static void printSortArticles(ArrayList<Article> vnexpressNewsList) {
+    public static void printShortArticles(ArrayList<Article> vnexpressNewsList) {
         int k = 0;
         for (Article i : vnexpressNewsList) {
             System.out.println(k);

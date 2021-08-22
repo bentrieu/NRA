@@ -29,7 +29,6 @@ public class Main extends Application {
         // Load the first news category
         try {
             ArticlesList.getNewsList();
-//            ArticlesManager.printSortArticles(newsTemp);
         } catch (IOException e) {
             e.printStackTrace();
         }

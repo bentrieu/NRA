@@ -15,6 +15,7 @@ import javafx.scene.CacheHint;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.shape.SVGPath;
@@ -55,9 +56,6 @@ public class HomeSceneController implements Initializable {
     private HBox categoryHbox;
 
     @FXML
-    private Pagination pagination;
-
-    @FXML
     private ScrollPane scrollPane;
 
     @FXML
@@ -69,11 +67,13 @@ public class HomeSceneController implements Initializable {
     @FXML
     private SVGPath darkModeSVGPath;
 
-    public LayoutController layoutController = new LayoutController();
+    public LayoutController layoutController;
 
     public int currentCategoryIndex = 0, currentArticleIndex = 0;
 
     public ArrayList<Article> currentCategoryList;
+
+    public Pagination currentPagination;
 
     public StackPane stackPane1 = new StackPane();
 
@@ -81,13 +81,11 @@ public class HomeSceneController implements Initializable {
 
     public VBox displayLayoutVbox = new VBox();
 
-    public AnchorPane[] anchorPaneList = new AnchorPane[10];
-    public ImageView[] imageSourceList = new ImageView[10];
-    public Text[] textSourceList = new Text[10];
-    public Text[] textTitleList = new Text[10];
-    public Button[] buttonList = new Button[10];
+    public boolean isDarkMode = true;
 
-    public boolean isDarkMode = false;
+    public ArrayList<Image> imageList = new ArrayList<>();
+    public ArrayList<Background> backgroundList = new ArrayList<>();
+    public ArrayList<BackgroundImage> backgroundImageList = new ArrayList<>();
 
     public static StopWatch stopWatch = new StopWatch("My Stop Watch");
 
@@ -118,6 +116,10 @@ public class HomeSceneController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Set initial focus
+        homeButton.setSelected(true);
+        newsButton.setSelected(true);
+
         // Set initial dark mode
         if (isDarkMode) {
             rootAnchorPane.getStylesheets().clear();
@@ -134,16 +136,13 @@ public class HomeSceneController implements Initializable {
             darkModeSVGPath.setContent("M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z");
             isDarkMode = false;
         }
-        // Set initial category
-        homeButton.setSelected(true);
-        newsButton.setSelected(true);
 
         // Set up menuPane + tempPane to be unvisible
         menuPane.setVisible(false);
         menuPane.setLayoutX(-300);
         tempPane.setVisible(false);
 
-        // Set up visible mode to 2 arrows
+        // Set up visible mode to 2 category arrows
         nextCategoryButton.setVisible(false);
         previousCategoryButton.setVisible(false);
         articlesListPane.addEventFilter(MouseEvent.MOUSE_ENTERED, e -> {
@@ -173,7 +172,7 @@ public class HomeSceneController implements Initializable {
             e.consume();
         });
         
-        // Vbox for full article
+        // Setup vbox for full article display
         displayFullArticleVbox.setMinHeight(985);
         displayFullArticleVbox.setSpacing(20);
         displayFullArticleVbox.setAlignment(Pos.TOP_CENTER);
@@ -217,7 +216,7 @@ public class HomeSceneController implements Initializable {
         stackPane2.getChildren().add(displayFullArticleVbox);
         stackPane1.getChildren().add(stackPane2);
 
-        // Responsive design
+        // Responsive design (full article vbox)
         Main.stage.widthProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
@@ -272,26 +271,33 @@ public class HomeSceneController implements Initializable {
             }
         });
 
-        // Setup back to home button
+        // Setup back to home button visibleProperty
         backToHomeButton.visibleProperty().bind(stackPane1.visibleProperty());
 
-        // Setup copy article link button
+        // Setup copy article link button visibleProperty
         copyArticleLinkButton.visibleProperty().bind(stackPane1.visibleProperty());
 
         // Setup initial category (pagination)
-        pagination.setMaxHeight(983);
-        pagination.setMinHeight(983);
         try {
-            setPaginationList(ArticlesList.newsList);
+            borderPaneUnderScrollPane.setCenter(null);
+            borderPaneUnderScrollPane.setCenter(setPaginationList(ArticlesList.newsList, new Pagination()));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        System.gc();
-        Runtime.getRuntime().gc();
+        // Setup text field action
+        searchTextField.setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                search();
+            }
+            if (e.getCode() == KeyCode.ESCAPE) {
+                exitSearch();
+            }
+        });
+
     }
 
-    public void menuPaneSetVisble(boolean a) {
+    public void menuPaneSetVisible(boolean a) {
         if (a) {
             menuPane.setVisible(true);
             TranslateTransition translateTransition1 = new TranslateTransition(Duration.seconds(0.5), menuPane);
@@ -316,13 +322,12 @@ public class HomeSceneController implements Initializable {
 
     public void menu(ActionEvent event) {
         if (!menuPane.isVisible()) {
-            menuPaneSetVisble(true);
+            menuPaneSetVisible(true);
         }
         else {
-            menuPaneSetVisble(false);
+            menuPaneSetVisible(false);
         }
     }
-
     public void home() {
         homeButton.setSelected(true);
         videoButton.setSelected(false);
@@ -352,65 +357,99 @@ public class HomeSceneController implements Initializable {
         todayLabel.setText("Settings");
     }
     public void homeInMenu() {
-        menuPaneSetVisble(false);
+        menuPaneSetVisible(false);
         home();
     }
     public void videoInMenu() {
-        menuPaneSetVisble(false);
+        menuPaneSetVisible(false);
         video();
     }
     public void articlesListInMenu() {
-        menuPaneSetVisble(false);
+        menuPaneSetVisible(false);
         articlesList();
     }
     public void settingsInMenu() {
-        menuPaneSetVisble(false);
+        menuPaneSetVisible(false);
         settings();
     }
-    public void search() {
 
+    public void search() {
+        String searchText = searchTextField.getText().trim();
+        searchText = searchText.replaceAll("[\\s]+", " ");
+        System.out.println(searchText);
     }
     public void refresh() throws IOException {
         switch (currentCategoryIndex) {
             case 0:
                 ArticlesList.getNewsList();
-                setPaginationList(ArticlesList.newsList);
+                borderPaneUnderScrollPane.setCenter(null);
+                borderPaneUnderScrollPane.setCenter(setPaginationList(ArticlesList.newsList, new Pagination()));
+                System.gc();
+                Runtime.getRuntime().gc();
                 break;
             case 1:
                 ArticlesList.getCovidList();
-                setPaginationList(ArticlesList.covidList);
+                borderPaneUnderScrollPane.setCenter(null);
+                borderPaneUnderScrollPane.setCenter(setPaginationList(ArticlesList.covidList, new Pagination()));
+                System.gc();
+                Runtime.getRuntime().gc();
                 break;
             case 2:
                 ArticlesList.getPoliticsList();
-                setPaginationList(ArticlesList.politicsList);
+                borderPaneUnderScrollPane.setCenter(null);
+                borderPaneUnderScrollPane.setCenter(setPaginationList(ArticlesList.politicsList, new Pagination()));
+                System.gc();
+                Runtime.getRuntime().gc();
                 break;
             case 3:
                 ArticlesList.getBusinessList();
-                setPaginationList(ArticlesList.businessList);
+                borderPaneUnderScrollPane.setCenter(null);
+                borderPaneUnderScrollPane.setCenter(setPaginationList(ArticlesList.businessList, new Pagination()));
+                System.gc();
+                Runtime.getRuntime().gc();
                 break;
             case 4:
                 ArticlesList.getTechnologyList();
-                setPaginationList(ArticlesList.technologyList);
+                borderPaneUnderScrollPane.setCenter(null);
+                borderPaneUnderScrollPane.setCenter(setPaginationList(ArticlesList.technologyList, new Pagination()));
+                System.gc();
+                Runtime.getRuntime().gc();
                 break;
             case 5:
                 ArticlesList.getHealthList();
-                setPaginationList(ArticlesList.healthList);
+                borderPaneUnderScrollPane.setCenter(null);
+                borderPaneUnderScrollPane.setCenter(setPaginationList(ArticlesList.healthList, new Pagination()));
+                System.gc();
+                Runtime.getRuntime().gc();
                 break;
             case 6:
                 ArticlesList.getSportsList();
-                setPaginationList(ArticlesList.sportsList);
+                borderPaneUnderScrollPane.setCenter(null);
+                borderPaneUnderScrollPane.setCenter(setPaginationList(ArticlesList.sportsList, new Pagination()));
+                System.gc();
+                Runtime.getRuntime().gc();
                 break;
             case 7:
                 ArticlesList.getEntertainmentList();
-                setPaginationList(ArticlesList.entertainmentList);
+                borderPaneUnderScrollPane.setCenter(null);
+                borderPaneUnderScrollPane.setCenter(setPaginationList(ArticlesList.entertainmentList, new Pagination()));
+                System.gc();
+                Runtime.getRuntime().gc();
                 break;
             case 8:
                 ArticlesList.getWorldList();
-                setPaginationList(ArticlesList.worldList);
+                borderPaneUnderScrollPane.setCenter(null);
+                borderPaneUnderScrollPane.setCenter(setPaginationList(ArticlesList.worldList, new Pagination()));
+                System.gc();
+                Runtime.getRuntime().gc();
                 break;
-//            case 9:
-//                setPaginationList(ArticlesList.getOtherList());
-//                break;
+            case 9:
+//                ArticlesList.getOthersList();
+//                borderPaneUnderScrollPane.setCenter(null);
+//                borderPaneUnderScrollPane.setCenter(setPaginationList(ArticlesList.othersList, new Pagination()));
+//                System.gc();
+//                Runtime.getRuntime().gc();
+                break;
             default:
                 break;
         }
@@ -429,7 +468,7 @@ public class HomeSceneController implements Initializable {
             }
             displayFullArticleVbox.getChildren().clear();
             borderPaneUnderScrollPane.setCenter(null);
-            borderPaneUnderScrollPane.setCenter(pagination);
+            borderPaneUnderScrollPane.setCenter(currentPagination);
             stackPane1.setVisible(false);
             System.gc();
             Runtime.getRuntime().gc();
@@ -448,10 +487,12 @@ public class HomeSceneController implements Initializable {
     public void takeSearchInput(MouseEvent event) {
         tempPane.setVisible(true);
     }
-    public void exitSearch(MouseEvent event) {
+    public void exitSearch() {
         tempPane.setVisible(false);
         menuButton.requestFocus();
+        searchTextField.clear();
     }
+
     public void displayNewsList() throws IOException {
         currentCategoryIndex = 0;
         movePosHbox(categoryHbox, categoryHbox.getChildren().indexOf(newsButton));
@@ -467,7 +508,10 @@ public class HomeSceneController implements Initializable {
         othersButton.setSelected(false);
         todayLabel.setText("Today");
         ArticlesList.getNewsList();
-        setPaginationList(ArticlesList.newsList);
+        borderPaneUnderScrollPane.setCenter(null);
+        borderPaneUnderScrollPane.setCenter(setPaginationList(ArticlesList.newsList, new Pagination()));
+        System.gc();
+        Runtime.getRuntime().gc();
     }
     public void displayCovidList() throws IOException {
         currentCategoryIndex = 1;
@@ -484,7 +528,10 @@ public class HomeSceneController implements Initializable {
         othersButton.setSelected(false);
         todayLabel.setText("Covid-19");
         ArticlesList.getCovidList();
-        setPaginationList(ArticlesList.covidList);
+        borderPaneUnderScrollPane.setCenter(null);
+        borderPaneUnderScrollPane.setCenter(setPaginationList(ArticlesList.covidList, new Pagination()));
+        System.gc();
+        Runtime.getRuntime().gc();
     }
     public void displayPoliticsList() throws IOException {
         currentCategoryIndex = 2;
@@ -501,7 +548,10 @@ public class HomeSceneController implements Initializable {
         othersButton.setSelected(false);
         todayLabel.setText("Politics");
         ArticlesList.getPoliticsList();
-        setPaginationList(ArticlesList.politicsList);
+        borderPaneUnderScrollPane.setCenter(null);
+        borderPaneUnderScrollPane.setCenter(setPaginationList(ArticlesList.politicsList, new Pagination()));
+        System.gc();
+        Runtime.getRuntime().gc();
     }
     public void displayBusinessList() throws IOException {
         currentCategoryIndex = 3;
@@ -518,7 +568,10 @@ public class HomeSceneController implements Initializable {
         othersButton.setSelected(false);
         todayLabel.setText("Business");
         ArticlesList.getBusinessList();
-        setPaginationList(ArticlesList.businessList);
+        borderPaneUnderScrollPane.setCenter(null);
+        borderPaneUnderScrollPane.setCenter(setPaginationList(ArticlesList.businessList, new Pagination()));
+        System.gc();
+        Runtime.getRuntime().gc();
     }
     public void displayTechnologyList() throws IOException {
         currentCategoryIndex = 4;
@@ -534,7 +587,10 @@ public class HomeSceneController implements Initializable {
         worldButton.setSelected(false);
         othersButton.setSelected(false);
         ArticlesList.getTechnologyList();
-        setPaginationList(ArticlesList.technologyList);
+        borderPaneUnderScrollPane.setCenter(null);
+        borderPaneUnderScrollPane.setCenter(setPaginationList(ArticlesList.technologyList, new Pagination()));
+        System.gc();
+        Runtime.getRuntime().gc();
     }
     public void displayHealthList() throws IOException {
         currentCategoryIndex = 5;
@@ -551,7 +607,10 @@ public class HomeSceneController implements Initializable {
         othersButton.setSelected(false);
         todayLabel.setText("Health");
         ArticlesList.getHealthList();
-        setPaginationList(ArticlesList.healthList);
+        borderPaneUnderScrollPane.setCenter(null);
+        borderPaneUnderScrollPane.setCenter(setPaginationList(ArticlesList.healthList, new Pagination()));
+        System.gc();
+        Runtime.getRuntime().gc();
     }
     public void displaySportsList() throws IOException {
         currentCategoryIndex = 6;
@@ -568,7 +627,10 @@ public class HomeSceneController implements Initializable {
         othersButton.setSelected(false);
         todayLabel.setText("Sports");
         ArticlesList.getSportsList();
-        setPaginationList(ArticlesList.sportsList);
+        borderPaneUnderScrollPane.setCenter(null);
+        borderPaneUnderScrollPane.setCenter(setPaginationList(ArticlesList.sportsList, new Pagination()));
+        System.gc();
+        Runtime.getRuntime().gc();
     }
     public void displayEntertainmentList() throws IOException {
         currentCategoryIndex = 7;
@@ -585,11 +647,14 @@ public class HomeSceneController implements Initializable {
         othersButton.setSelected(false);
         todayLabel.setText("Entertainment");
         ArticlesList.getEntertainmentList();
-        setPaginationList(ArticlesList.entertainmentList);
+        borderPaneUnderScrollPane.setCenter(null);
+        borderPaneUnderScrollPane.setCenter(setPaginationList(ArticlesList.entertainmentList, new Pagination()));
+        System.gc();
+        Runtime.getRuntime().gc();
     }
     public void displayWorldList() throws IOException {
         currentCategoryIndex = 8;
-//        movePosHbox(categoryHbox, categoryHbox.getChildren().indexOf(worldButton));
+        movePosHbox(categoryHbox, categoryHbox.getChildren().indexOf(worldButton));
         newsButton.setSelected(false);
         covidButton.setSelected(false);
         politicsButton.setSelected(false);
@@ -602,9 +667,12 @@ public class HomeSceneController implements Initializable {
         othersButton.setSelected(false);
         todayLabel.setText("World");
         ArticlesList.getWorldList();
-        setPaginationList(ArticlesList.worldList);
+        borderPaneUnderScrollPane.setCenter(null);
+        borderPaneUnderScrollPane.setCenter(setPaginationList(ArticlesList.worldList, new Pagination()));
+        System.gc();
+        Runtime.getRuntime().gc();
     }
-    public void displayOthersList() {
+    public void displayOthersList() throws IOException {
         currentCategoryIndex = 9;
         movePosHbox(categoryHbox, categoryHbox.getChildren().indexOf(othersButton));
         newsButton.setSelected(false);
@@ -618,6 +686,47 @@ public class HomeSceneController implements Initializable {
         worldButton.setSelected(false);
         othersButton.setSelected(true);
         todayLabel.setText("Others");
+        ArticlesList.getOthersList();
+        borderPaneUnderScrollPane.setCenter(null);
+        borderPaneUnderScrollPane.setCenter(setPaginationList(ArticlesList.othersList, new Pagination()));
+        System.gc();
+        Runtime.getRuntime().gc();
+    }
+
+    public void previousCategoryList() throws IOException {
+        ToggleButton b = (ToggleButton) categoryHbox.getChildren().get(categoryHbox.getChildren().size() - 1);
+        categoryHbox.getChildren().remove(categoryHbox.getChildren().size() - 1);
+        categoryHbox.getChildren().add(0, b);
+        if (newsButton.equals((ToggleButton) categoryHbox.getChildren().get(0))) {
+            displayNewsList();
+        }
+        if (covidButton.equals((ToggleButton) categoryHbox.getChildren().get(0))) {
+            displayCovidList();
+        }
+        if (politicsButton.equals((ToggleButton) categoryHbox.getChildren().get(0))) {
+            displayPoliticsList();
+        }
+        if (businessButton.equals((ToggleButton) categoryHbox.getChildren().get(0))) {
+            displayBusinessList();
+        }
+        if (technologyButton.equals((ToggleButton) categoryHbox.getChildren().get(0))) {
+            displayTechnologyList();
+        }
+        if (healthButton.equals((ToggleButton) categoryHbox.getChildren().get(0))) {
+            displayHealthList();
+        }
+        if (sportsButton.equals((ToggleButton) categoryHbox.getChildren().get(0))) {
+            displaySportsList();
+        }
+        if (entertainmentButton.equals((ToggleButton) categoryHbox.getChildren().get(0))) {
+            displayEntertainmentList();
+        }
+        if (worldButton.equals((ToggleButton) categoryHbox.getChildren().get(0))) {
+            displayWorldList();
+        }
+        if (othersButton.equals((ToggleButton) categoryHbox.getChildren().get(0))) {
+            displayOthersList();
+        }
     }
     public void nextCategoryList() throws IOException {
         ToggleButton b = (ToggleButton) categoryHbox.getChildren().get(0);
@@ -654,57 +763,27 @@ public class HomeSceneController implements Initializable {
             displayOthersList();
         }
     }
-    public void previousCategoryList() throws IOException {
-        ToggleButton b = (ToggleButton) categoryHbox.getChildren().get(categoryHbox.getChildren().size() - 1);
-        categoryHbox.getChildren().remove(categoryHbox.getChildren().size() - 1);
-        categoryHbox.getChildren().add(0, b);
-        if (newsButton.equals((ToggleButton) categoryHbox.getChildren().get(0))) {
-            displayNewsList();
-        }
-        if (covidButton.equals((ToggleButton) categoryHbox.getChildren().get(0))) {
-            displayCovidList();
-        }
-        if (politicsButton.equals((ToggleButton) categoryHbox.getChildren().get(0))) {
-            displayPoliticsList();
-        }
-        if (businessButton.equals((ToggleButton) categoryHbox.getChildren().get(0))) {
-            displayBusinessList();
-        }
-        if (technologyButton.equals((ToggleButton) categoryHbox.getChildren().get(0))) {
-            displayTechnologyList();
-        }
-        if (healthButton.equals((ToggleButton) categoryHbox.getChildren().get(0))) {
-            displayHealthList();
-        }
-        if (sportsButton.equals((ToggleButton) categoryHbox.getChildren().get(0))) {
-            displaySportsList();
-        }
-        if (entertainmentButton.equals((ToggleButton) categoryHbox.getChildren().get(0))) {
-            displayEntertainmentList();
-        }
-        if (worldButton.equals((ToggleButton) categoryHbox.getChildren().get(0))) {
-            displayWorldList();
-        }
-        if (othersButton.equals((ToggleButton) categoryHbox.getChildren().get(0))) {
-            displayOthersList();
-        }
-    }
+
     public void previousArticle() throws IOException {
-        scrollPane.setVvalue(0);
-        scrollPane.setHvalue(0);
-        for (int i = 0; i < ArticlesManager.changeListenerList.size(); i++) {
-            Main.stage.widthProperty().removeListener(ArticlesManager.changeListenerList.get(i));
-        }
-        ArticlesManager.changeListenerList.clear();
-        for (int i = 0; i < displayFullArticleVbox.getChildren().size(); i++) {
-            if (displayFullArticleVbox.getChildren().get(i) instanceof ImageView) {
-                ((ImageView) displayFullArticleVbox.getChildren().get(i)).setImage(null);
-            }
-        }
-        displayFullArticleVbox.getChildren().clear();
-        System.gc();
-        Runtime.getRuntime().gc();
+
         if (currentArticleIndex > 0) {
+            scrollPane.setVvalue(0);
+            scrollPane.setHvalue(0);
+
+            for (int i = 0; i < ArticlesManager.changeListenerList.size(); i++) {
+                Main.stage.widthProperty().removeListener(ArticlesManager.changeListenerList.get(i));
+            }
+
+            ArticlesManager.changeListenerList.clear();
+
+            for (int i = 0; i < displayFullArticleVbox.getChildren().size(); i++) {
+                if (displayFullArticleVbox.getChildren().get(i) instanceof ImageView) {
+                    ((ImageView) displayFullArticleVbox.getChildren().get(i)).setImage(null);
+                }
+            }
+
+            displayFullArticleVbox.getChildren().clear();
+
             switch (currentCategoryList.get(currentArticleIndex - 1).getSource()) {
                 case "vnexpress":
                     ArticlesManager.displayVnexpressFullArticle(currentCategoryList.get(currentArticleIndex - 1), displayFullArticleVbox);
@@ -727,26 +806,31 @@ public class HomeSceneController implements Initializable {
                     currentArticleIndex--;
                     break;
             }
+
+            System.gc();
+            Runtime.getRuntime().gc();
         }
     }
-
     public void nextArticle() throws IOException {
-        scrollPane.setVvalue(0);
-        scrollPane.setHvalue(0);
-        for (int i = 0; i < ArticlesManager.changeListenerList.size(); i++) {
-            Main.stage.widthProperty().removeListener(ArticlesManager.changeListenerList.get(i));
-        }
-        ArticlesManager.changeListenerList.clear();
-        for (int i = 0; i < displayFullArticleVbox.getChildren().size(); i++) {
-            if (displayFullArticleVbox.getChildren().get(i) instanceof ImageView) {
-                ((ImageView) displayFullArticleVbox.getChildren().get(i)).setImage(null);
-            }
-        }
-        displayFullArticleVbox.getChildren().clear();
-        System.gc();
-        Runtime.getRuntime().gc();
+
         if (currentArticleIndex < 49) {
-              switch (currentCategoryList.get(currentArticleIndex + 1).getSource()) {
+            scrollPane.setVvalue(0);
+            scrollPane.setHvalue(0);
+
+            for (int i = 0; i < ArticlesManager.changeListenerList.size(); i++) {
+                Main.stage.widthProperty().removeListener(ArticlesManager.changeListenerList.get(i));
+            }
+            ArticlesManager.changeListenerList.clear();
+
+            for (int i = 0; i < displayFullArticleVbox.getChildren().size(); i++) {
+                if (displayFullArticleVbox.getChildren().get(i) instanceof ImageView) {
+                    ((ImageView) displayFullArticleVbox.getChildren().get(i)).setImage(null);
+                }
+            }
+
+            displayFullArticleVbox.getChildren().clear();
+
+            switch (currentCategoryList.get(currentArticleIndex + 1).getSource()) {
                 case "vnexpress":
                     ArticlesManager.displayVnexpressFullArticle(currentCategoryList.get(currentArticleIndex + 1), displayFullArticleVbox);
                     currentArticleIndex++;
@@ -768,6 +852,9 @@ public class HomeSceneController implements Initializable {
                     currentArticleIndex++;
                     break;
             }
+
+            System.gc();
+            Runtime.getRuntime().gc();
         }
     }
 
@@ -787,12 +874,15 @@ public class HomeSceneController implements Initializable {
             darkModeSVGPath.setContent("M15 3L15 8L17 8L17 3 Z M 7.5 6.09375L6.09375 7.5L9.625 11.0625L11.0625 9.625 Z M 24.5 6.09375L20.9375 9.625L22.375 11.0625L25.90625 7.5 Z M 16 9C12.144531 9 9 12.144531 9 16C9 19.855469 12.144531 23 16 23C19.855469 23 23 19.855469 23 16C23 12.144531 19.855469 9 16 9 Z M 16 11C18.773438 11 21 13.226563 21 16C21 18.773438 18.773438 21 16 21C13.226563 21 11 18.773438 11 16C11 13.226563 13.226563 11 16 11 Z M 3 15L3 17L8 17L8 15 Z M 24 15L24 17L29 17L29 15 Z M 9.625 20.9375L6.09375 24.5L7.5 25.90625L11.0625 22.375 Z M 22.375 20.9375L20.9375 22.375L24.5 25.90625L25.90625 24.5 Z M 15 24L15 29L17 29L17 24Z");
             isDarkMode = true;
         }
-
     }
 
-    public void setPaginationList(ArrayList<Article> articlesList) throws IOException {
+    public Pagination setPaginationList(ArrayList<Article> articlesList, Pagination newPagination) throws IOException {
+        newPagination.setMaxHeight(983);
+        newPagination.setMinHeight(983);
+        newPagination.setPageCount(5);
 
-//        stopWatch.start("pagination setup");
+        currentPagination = newPagination;
+
         AnchorPane[] anchorPaneList = {layoutController.anchorPane1, layoutController.anchorPane2, layoutController.anchorPane3, layoutController.anchorPane4, layoutController.anchorPane5, layoutController.anchorPane6, layoutController.anchorPane7, layoutController.anchorPane8, layoutController.anchorPane9, layoutController.anchorPane10};
         ImageView[] imageSourceList = {layoutController.imageSource1, layoutController.imageSource2, layoutController.imageSource3, layoutController.imageSource4, layoutController.imageSource5, layoutController.imageSource6, layoutController.imageSource7, layoutController.imageSource8, layoutController.imageSource9, layoutController.imageSource10};
         Text[] textSourceList = {layoutController.textSource1, layoutController.textSource2, layoutController.textSource3, layoutController.textSource4, layoutController.textSource5, layoutController.textSource6, layoutController.textSource7, layoutController.textSource8, layoutController.textSource9, layoutController.textSource10};
@@ -801,7 +891,7 @@ public class HomeSceneController implements Initializable {
 
         currentCategoryList = articlesList;
 
-        pagination.setPageFactory(pageindex -> {
+        newPagination.setPageFactory(pageindex -> {
             for (int i = 10 * pageindex, k = 0; i < 10 + 10 * pageindex; i++, k++) {
                 int finalI = i;
                 // Set title text for each article
@@ -811,7 +901,7 @@ public class HomeSceneController implements Initializable {
                     case "vnexpress":
                         textSourceList[k].setText("VnExpress - " + articlesList.get(i).getTimeAgo());
                         imageSourceList[k].setImage(new Image("resource/vnexpress_small.png"));
-                        buttonList[k].addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
+                        buttonList[k].setOnAction(e -> {
                             try {
                                 displayFullArticleVbox.getChildren().clear();
                                 ArticlesManager.displayVnexpressFullArticle(articlesList.get(finalI), displayFullArticleVbox);
@@ -827,7 +917,7 @@ public class HomeSceneController implements Initializable {
                     case "zingnews":
                         textSourceList[k].setText("ZingNews - " + articlesList.get(i).getTimeAgo());
                         imageSourceList[k].setImage(new Image("resource/zingnews_small.png"));
-                        buttonList[k].addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
+                        buttonList[k].setOnAction(e -> {
                             try {
                                 displayFullArticleVbox.getChildren().clear();
                                 ArticlesManager.displayZingFullArticle(articlesList.get(finalI), displayFullArticleVbox);
@@ -843,7 +933,7 @@ public class HomeSceneController implements Initializable {
                     case "tuoitre":
                         textSourceList[k].setText("Tuổi trẻ - " + articlesList.get(i).getTimeAgo());
                         imageSourceList[k].setImage(new Image("resource/tuoitre_small.png"));
-                        buttonList[k].addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
+                        buttonList[k].setOnAction(e -> {
                             try {
                                 displayFullArticleVbox.getChildren().clear();
                                 ArticlesManager.displayTuoiTreFullArticle(articlesList.get(finalI), displayFullArticleVbox);
@@ -859,7 +949,7 @@ public class HomeSceneController implements Initializable {
                     case "nhandan":
                         textSourceList[k].setText("Nhân dân - " + articlesList.get(i).getTimeAgo());
                         imageSourceList[k].setImage(new Image("resource/nhandan_small.png"));
-                        buttonList[k].addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
+                        buttonList[k].setOnAction(e -> {
                             try {
                                 displayFullArticleVbox.getChildren().clear();
                                 ArticlesManager.displayNhanDanFullArticle(articlesList.get(finalI), displayFullArticleVbox);
@@ -875,7 +965,7 @@ public class HomeSceneController implements Initializable {
                     case "thanhnien":
                         textSourceList[k].setText("Thanh niên - " + articlesList.get(i).getTimeAgo());
                         imageSourceList[k].setImage(new Image("resource/thanhnien_small.png"));
-                        buttonList[k].addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
+                        buttonList[k].setOnAction(e -> {
                             try {
                                 displayFullArticleVbox.getChildren().clear();
                                 ArticlesManager.displayThanhNienFullArticle(articlesList.get(finalI), displayFullArticleVbox);
@@ -895,19 +985,25 @@ public class HomeSceneController implements Initializable {
                     Image image = new Image(articlesList.get(i).getThumb(), 600, 600, true, false, true);
                     BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1.0, 1.0, true, true, false, true));
                     Background background = new Background(backgroundImage);
+//                    imageList.add(image);
+//                    backgroundImageList.add(backgroundImage);
+//                    backgroundList.add(background);
                     anchorPaneList[k].setCache(true);
                     anchorPaneList[k].setCacheHint(CacheHint.SPEED);
                     anchorPaneList[k].setBackground(background);
                 } else {
                     Image image2 = new Image(articlesList.get(i).getThumb(), 600, 600, true, false, true);
-                    BackgroundImage backgroundImage = new BackgroundImage(image2, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1.0, 1.0, true, true, false, true));
-                    Background background = new Background(backgroundImage);
+                    BackgroundImage backgroundImage2 = new BackgroundImage(image2, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1.0, 1.0, true, true, false, true));
+                    Background background2 = new Background(backgroundImage2);
+//                    imageList.add(image2);
+//                    backgroundImageList.add(backgroundImage2);
+//                    backgroundList.add(background2);
                     layoutController.anchorPaneImage1.setCache(true);
                     layoutController.anchorPaneImage1.setCacheHint(CacheHint.SPEED);
                     layoutController.anchorPaneImage2.setCache(true);
                     layoutController.anchorPaneImage2.setCacheHint(CacheHint.SPEED);
-                    if (k == 3) layoutController.anchorPaneImage1.setBackground(background);
-                    else layoutController.anchorPaneImage2.setBackground(background);
+                    if (k == 3) layoutController.anchorPaneImage1.setBackground(background2);
+                    else layoutController.anchorPaneImage2.setBackground(background2);
                 }
 
             }
@@ -928,10 +1024,12 @@ public class HomeSceneController implements Initializable {
 //            }
 //            timeline.play();
 
-            System.gc();
-            Runtime.getRuntime().gc();
             return displayLayoutVbox;
         });
+
+        System.gc();
+        Runtime.getRuntime().gc();
+        return newPagination;
     }
 
     // This function will help to move the position of user's selection category node to the first node

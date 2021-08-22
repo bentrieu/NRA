@@ -189,9 +189,6 @@
 
 /*pagination*/
 /* Remove spacing */
-.pagination {
-    -fx-arrows-visible: false;
-}
 .pagination > .pagination-control > .control-box {
     -fx-spacing: 0;
 }
@@ -202,8 +199,8 @@
 .pagination > .pagination-control > .control-box > .right-arrow-button {
     -fx-background-insets: 0, 1;
     -fx-background-color: lightgray, #FAFAFA;
-    -fx-min-width: 30;
-    -fx-min-height: 30;
+    -fx-min-width: 25;
+    -fx-min-height: 25;
 }
 /* Colors on hover */
 .pagination > .pagination-control > .control-box > .number-button:hover,

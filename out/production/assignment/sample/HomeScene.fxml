@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Pagination?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
@@ -144,11 +143,7 @@
             </AnchorPane>
             <ScrollPane fx:id="scrollPane" fitToWidth="true" pannable="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0">
                <content>
-                  <BorderPane fx:id="borderPaneUnderScrollPane">
-                     <center>
-                        <Pagination fx:id="pagination" maxPageIndicatorCount="5" pageCount="5" BorderPane.alignment="CENTER" />
-                     </center>
-                  </BorderPane>
+                  <BorderPane fx:id="borderPaneUnderScrollPane" />
                </content>
             </ScrollPane>
          </children>

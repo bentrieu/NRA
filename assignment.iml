@@ -25,8 +25,6 @@
     </orderEntry>
     <orderEntry type="library" name="lib" level="project" />
     <orderEntry type="library" name="jsoup-1.14.11" level="project" />
-    <orderEntry type="library" name="jfoenix-9.0.10" level="project" />
-    <orderEntry type="library" name="fontawesomefx-8.9" level="project" />
     <orderEntry type="library" name="spring-core-5.2.16.RELEASE" level="project" />
     <orderEntry type="library" name="spring-jcl-5.2.16.RELEASE" level="project" />
   </component>
