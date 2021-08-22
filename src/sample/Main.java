@@ -21,8 +21,6 @@ public class Main extends Application {
 
     double initialX, initialY;
 
-    public static ArrayList<Article> newsTemp;
-
     @Override
     public void start(Stage primaryStage) throws Exception{
         Stage stage = new Stage();
@@ -30,7 +28,7 @@ public class Main extends Application {
 
         // Load the first news category
         try {
-            newsTemp = ArticlesList.getNewsList();
+            ArticlesList.getNewsList();
 //            ArticlesManager.printSortArticles(newsTemp);
         } catch (IOException e) {
             e.printStackTrace();

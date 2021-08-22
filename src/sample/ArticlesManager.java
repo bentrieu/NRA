@@ -257,7 +257,7 @@ public class ArticlesManager extends Application {
                     imageView.setFitWidth(800);
                 }
                 // Bind the fitwidth property of imageView with stagewidth property
-                Main.stage.widthProperty().addListener(new ChangeListener<Number>() {
+                ChangeListener<Number> changeListener = new ChangeListener<Number>() {
                     @Override
                     public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
                         if (t1.doubleValue() < 900) {
@@ -267,7 +267,9 @@ public class ArticlesManager extends Application {
                             imageView.setFitWidth(800);
                         }
                     }
-                });
+                };
+                changeListenerList.add(changeListener);
+                Main.stage.widthProperty().addListener(changeListener);
                 vbox.getChildren().remove(vbox.getChildren().size() - 1);
                 vbox.getChildren().add(imageView);
                 continue;
@@ -321,6 +323,13 @@ public class ArticlesManager extends Application {
         textFlow5.getChildren().addAll(text5, articleLink, text6);
         textFlow5.setStyle("-fx-font-style: italic; -fx-font-size: 18; -fx-alignment: left;");
         vbox.getChildren().add(textFlow5);
+
+        document = null;
+        all = null;
+        fullDate = null;
+        body = null;
+        author = null;
+        originalCategory = null;
     }
 
     /* FROM HERE WILL BE THE FUNCTION FOR VNEXPRESS.COM
@@ -495,7 +504,7 @@ public class ArticlesManager extends Application {
         vbox.getChildren().clear();
 
         // Setup jsoup for each article
-        final String fullArticlesUrl = article.getLinkToFullArticles(); // link to full article
+        String fullArticlesUrl = article.getLinkToFullArticles(); // link to full article
         Document document = Jsoup.connect(fullArticlesUrl).userAgent("Mozilla").get();
         Elements description = document.select("div.container p.description");
         Elements fck_detail = document.select("div.container article.fck_detail p, figcaption, img[data-src], source[data-src-image], p.author_mail, div.videoContainter"); //div.fig-picture == img[data-src], source[data-src-image]
@@ -613,7 +622,7 @@ public class ArticlesManager extends Application {
                     imageView.setFitWidth(800);
                 }
                 // Bind the fitwidth property of imageView with stagewidth property
-                Main.stage.widthProperty().addListener(new ChangeListener<Number>() {
+                ChangeListener<Number> changeListener = new ChangeListener<Number>() {
                     @Override
                     public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
                         if (t1.doubleValue() < 900) {
@@ -623,7 +632,9 @@ public class ArticlesManager extends Application {
                             imageView.setFitWidth(800);
                         }
                     }
-                });
+                };
+                changeListenerList.add(changeListener);
+                Main.stage.widthProperty().addListener(changeListener);
                 vbox.getChildren().remove(vbox.getChildren().size() - 1);
                 vbox.getChildren().add(imageView);
                 continue;
@@ -723,6 +734,13 @@ public class ArticlesManager extends Application {
         textFlow5.getChildren().addAll(text5, articleLink, text6);
         textFlow5.setStyle("-fx-font-style: italic; -fx-font-size: 18; -fx-alignment: left;");
         vbox.getChildren().add(textFlow5);
+
+        fullArticlesUrl = null;
+        document = null;
+        description = null;
+        fck_detail = null;
+        time = null;
+        originalCategory = null;
     }
 
     /* FROM HERE WILL BE THE FUNCTION FOR TUOITRE.VN
@@ -957,7 +975,7 @@ public class ArticlesManager extends Application {
                     imageView.setFitWidth(800);
                 }
                 // Bind the fitwidth property of imageView with stagewidth property
-                Main.stage.widthProperty().addListener(new ChangeListener<Number>() {
+                ChangeListener<Number> changeListener = new ChangeListener<Number>() {
                     @Override
                     public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
                         if (t1.doubleValue() < 900) {
@@ -967,7 +985,9 @@ public class ArticlesManager extends Application {
                             imageView.setFitWidth(800);
                         }
                     }
-                });
+                };
+                changeListenerList.add(changeListener);
+                Main.stage.widthProperty().addListener(changeListener);
                 // Add image cap
                 Text imagecap = new Text(index.select("div.PhotoCMS_Caption").text());
                 imagecap.getStyleClass().add("textimagecap");
@@ -1040,6 +1060,14 @@ public class ArticlesManager extends Application {
         textFlow5.getChildren().addAll(text5, articleLink, text6);
         textFlow5.setStyle("-fx-font-style: italic; -fx-font-size: 18; -fx-alignment: left;");
         vbox.getChildren().add(textFlow5);
+
+        fullArticlesUrl = null;
+        document = null;
+        all = null;
+        fullDate = null;
+        body = null;
+        author = null;
+        originalCategory = null;
     }
 
     /* FROM HERE WILL BE THE FUNCTION FOR THANHNIEN.VN
@@ -1162,8 +1190,8 @@ public class ArticlesManager extends Application {
         vbox.getChildren().clear();
 
         // Setup jsoup for each article
-//        String fullArticlesUrl = article.getLinkToFullArticles();
-        String fullArticlesUrl = "https://thanhnien.vn/suc-khoe/7-bi-quyet-an-uong-de-khoe-manh-va-gon-gang-sau-tuoi-50-1433140.html";
+        String fullArticlesUrl = article.getLinkToFullArticles();
+//        String fullArticlesUrl = "https://thanhnien.vn/suc-khoe/7-bi-quyet-an-uong-de-khoe-manh-va-gon-gang-sau-tuoi-50-1433140.html";
         Document document = Jsoup.connect(fullArticlesUrl).userAgent("Mozilla").get();
         Elements all = document.select("div.l-content div.pswp-content, div.l-grid, section.container");
         Elements description = all.select("div.sapo");
@@ -1199,14 +1227,14 @@ public class ArticlesManager extends Application {
         vbox.getChildren().add(textFlow);
 
         // Display image source
-//        Image imageSource = new Image("resource/thanhnien_big.png", 200, 200, true, false, true);
-//        ImageView imageViewSource = new ImageView();
-//        imageViewSource.setCache(true);
-//        imageViewSource.setCacheHint(CacheHint.SPEED);
-//        imageViewSource.setImage(imageSource);
-//        imageViewSource.setPreserveRatio(true);
-//        imageViewSource.setFitHeight(60);
-//        vbox.getChildren().add(imageViewSource);
+        Image imageSource = new Image("resource/thanhnien_big.png", 200, 200, true, false, true);
+        ImageView imageViewSource = new ImageView();
+        imageViewSource.setCache(true);
+        imageViewSource.setCacheHint(CacheHint.SPEED);
+        imageViewSource.setImage(imageSource);
+        imageViewSource.setPreserveRatio(true);
+        imageViewSource.setFitHeight(60);
+        vbox.getChildren().add(imageViewSource);
 
         // Display original category + fullDate
         Text text0 = new Text(article.getOriginalCategory() + "\n" + article.getFullDate());
@@ -1223,7 +1251,7 @@ public class ArticlesManager extends Application {
         vbox.getChildren().add(textFlow1);
 
         // Display description
-        if (/*description.select("a").hasAttr("href")*/ false) {
+        if (description.select("a").hasAttr("href")) {
             TextFlow textFlow2 = Helper.getHyperLink(description.first());
             textFlow2.getStyleClass().add("textflowjustify");
             HBox descriptionHbox = new HBox();
@@ -1311,7 +1339,7 @@ public class ArticlesManager extends Application {
             vbox.getChildren().add(textFlow31);
         }
 
-//        ArrayList<String> repeatCheck = new ArrayList<>();
+        ArrayList<String> repeatCheck = new ArrayList<>();
         // Display all content
         for (Element index : body) {
             TextFlow textFlow3 = new TextFlow();
@@ -1322,20 +1350,20 @@ public class ArticlesManager extends Application {
                 continue;
             }
             // Add video open link caption
-//            if (index.hasAttr("data-video-src") /*|| index.hasAttr("clearfix")*/) {
-//                Text text51 = new Text("Watch video on this ");
-//                text51.getStyleClass().add("textReadTheOriginalPost");
-//                Hyperlink articleLink1 = new Hyperlink("link");
-//                articleLink1.getStyleClass().add("texthyperlink");
-//                articleLink1.setOnAction(e -> {
-//                    HostServices services = Helper.getInstance().getHostServices();
-//                    services.showDocument(article.getLinkToFullArticles());
-//                });
-//                Text text61 = new Text(".");
-//                textFlow3.getChildren().addAll(text51, articleLink1, text61);
-//                textFlow3.getStyleClass().add("textflowcenteritalic");
-//                continue;
-//            }
+            if (index.hasAttr("data-video-src") /*|| index.hasAttr("clearfix")*/) {
+                Text text51 = new Text("Watch video on this ");
+                text51.getStyleClass().add("textReadTheOriginalPost");
+                Hyperlink articleLink1 = new Hyperlink("link");
+                articleLink1.getStyleClass().add("texthyperlink");
+                articleLink1.setOnAction(e -> {
+                    HostServices services = Helper.getInstance().getHostServices();
+                    services.showDocument(article.getLinkToFullArticles());
+                });
+                Text text61 = new Text(".");
+                textFlow3.getChildren().addAll(text51, articleLink1, text61);
+                textFlow3.getStyleClass().add("textflowcenteritalic");
+                continue;
+            }
             // Add imageview
             if (index.select("> img").hasAttr("data-src") /*&& !index.hasClass("cms-body")*/) {
                 // Create new imageView
@@ -1365,17 +1393,6 @@ public class ArticlesManager extends Application {
                 };
                 changeListenerList.add(changeListener);
                 Main.stage.widthProperty().addListener(changeListener);
-//                Main.stage.widthProperty().addListener(new ChangeListener<Number>() {
-//                    @Override
-//                    public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
-//                        if (t1.doubleValue() < 900) {
-//                            imageView.setFitWidth(t1.doubleValue() - 140);
-//                        }
-//                        if (t1.doubleValue() >= 900) {
-//                            imageView.setFitWidth(800);
-//                        }
-//                    }
-//                });
                 vbox.getChildren().remove(vbox.getChildren().size() - 1);
                 vbox.getChildren().addAll(imageView);
                 continue;
@@ -1390,22 +1407,22 @@ public class ArticlesManager extends Application {
             }
             // Add body
             if ((!index.ownText().isEmpty() && !index.parent().hasClass("imgcaption") && !index.parent().hasClass("source")) || index.is("h2")) {
-//                // Hyper link
-//                if (index.select("a").hasAttr("href")) {
-//                    vbox.getChildren().remove(vbox.getChildren().size() - 1);
-//                    textFlow3 = Helper.getHyperLink(index);
-//                    vbox.getChildren().add(textFlow3);
-//                    continue;
-//                }
+                // Hyper link
+                if (index.select("a").hasAttr("href")) {
+                    vbox.getChildren().remove(vbox.getChildren().size() - 1);
+                    textFlow3 = Helper.getHyperLink(index);
+                    vbox.getChildren().add(textFlow3);
+                    continue;
+                }
                 // Bold text
                 if (index.is("h2")) {
-//                    repeatCheck.add(index.select("h2").text());
-//                    if (repeatCheck.size() > 1) {
-//                        if (index.select("h2").text().equals(repeatCheck.get(repeatCheck.size() - 1 - 1))) {
-//                            vbox.getChildren().remove(vbox.getChildren().size() - 1);
-//                            continue;
-//                        }
-//                    }
+                    repeatCheck.add(index.select("h2").text());
+                    if (repeatCheck.size() > 1) {
+                        if (index.select("h2").text().equals(repeatCheck.get(repeatCheck.size() - 1 - 1))) {
+                            vbox.getChildren().remove(vbox.getChildren().size() - 1);
+                            continue;
+                        }
+                    }
                     String string = index.text().replaceAll(index.select("h2").text().replaceAll("\\*", ""), "<strong>" + index.select("h2").text().replaceAll("\\*", "") + "</strong>");
                     String[] stringSplit = string.split("<strong>");
                     if (!stringSplit[0].isEmpty()) {
@@ -1434,6 +1451,7 @@ public class ArticlesManager extends Application {
             // If not adding anything then remove the last index element (the new TextFlow)
             vbox.getChildren().remove(vbox.getChildren().size() - 1);
         }
+        repeatCheck = null;
 
         // Display author
         TextFlow textFlow4 = new TextFlow();
@@ -1444,19 +1462,19 @@ public class ArticlesManager extends Application {
         vbox.getChildren().add(textFlow4);
 
         // Link to full article (read original post here.)
-//        TextFlow textFlow5 = new TextFlow();
-//        Text text5 = new Text("Read the original post ");
-//        text5.getStyleClass().add("textReadTheOriginalPost");
-//        Hyperlink articleLink = new Hyperlink("here");
-//        articleLink.getStyleClass().add("texthyperlink");
-//        articleLink.setOnAction(e -> {
-//            HostServices services = Helper.getInstance().getHostServices();
-//            services.showDocument(article.getLinkToFullArticles());
-//        });
-//        Text text6 = new Text(".");
-//        textFlow5.getChildren().addAll(text5, articleLink, text6);
-//        textFlow5.setStyle("-fx-font-style: italic; -fx-font-size: 18; -fx-alignment: left;");
-//        vbox.getChildren().add(textFlow5);
+        TextFlow textFlow5 = new TextFlow();
+        Text text5 = new Text("Read the original post ");
+        text5.getStyleClass().add("textReadTheOriginalPost");
+        Hyperlink articleLink = new Hyperlink("here");
+        articleLink.getStyleClass().add("texthyperlink");
+        articleLink.setOnAction(e -> {
+            HostServices services = Helper.getInstance().getHostServices();
+            services.showDocument(article.getLinkToFullArticles());
+        });
+        Text text6 = new Text(".");
+        textFlow5.getChildren().addAll(text5, articleLink, text6);
+        textFlow5.setStyle("-fx-font-style: italic; -fx-font-size: 18; -fx-alignment: left;");
+        vbox.getChildren().add(textFlow5);
 
         fullArticlesUrl = null;
         document = null;
@@ -1691,7 +1709,7 @@ public class ArticlesManager extends Application {
                 imageView0.setFitWidth(800);
             }
             // Bind the fitwidth property of imageView with stagewidth property
-            Main.stage.widthProperty().addListener(new ChangeListener<Number>() {
+            ChangeListener<Number> changeListener = new ChangeListener<Number>() {
                 @Override
                 public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
                     if (t1.doubleValue() < 900) {
@@ -1701,7 +1719,9 @@ public class ArticlesManager extends Application {
                         imageView0.setFitWidth(800);
                     }
                 }
-            });
+            };
+            changeListenerList.add(changeListener);
+            Main.stage.widthProperty().addListener(changeListener);
             // Get image cap
             Text imagecap = new Text(descriptionImage.text());
             imagecap.getStyleClass().add("textimagecap");
@@ -1721,19 +1741,20 @@ public class ArticlesManager extends Application {
 //                continue;
 //            }
             // Add video open link caption
-//            if (index.hasClass("video")) {
-//                Text text51 = new Text("Watch video on this ");
-//                text51.getStyleClass().add("textReadTheOriginalPost");
-//                Hyperlink articleLink1 = new Hyperlink("link");
-//                articleLink1.getStyleClass().add("texthyperlink");
-//                articleLink1.setOnAction(e -> {
-//                    getHostServices().showDocument(article.getLinkToFullArticles());
-//                });
-//                Text text61 = new Text(".");
-//                textFlow3.getChildren().addAll(text51, articleLink1, text61);
-//                textFlow3.setStyle("-fx-text-alignment: center; -fx-font-style: italic; -fx-font-size: 18;");
-//                continue;
-//            }
+            if (index.hasClass("video")) {
+                Text text51 = new Text("Watch video on this ");
+                text51.getStyleClass().add("textReadTheOriginalPost");
+                Hyperlink articleLink1 = new Hyperlink("link");
+                articleLink1.getStyleClass().add("texthyperlink");
+                articleLink1.setOnAction(e -> {
+                    HostServices services = Helper.getInstance().getHostServices();
+                    services.showDocument(article.getLinkToFullArticles());
+                });
+                Text text61 = new Text(".");
+                textFlow3.getChildren().addAll(text51, articleLink1, text61);
+                textFlow3.setStyle("-fx-text-alignment: center; -fx-font-style: italic; -fx-font-size: 18;");
+                continue;
+            }
             // Add imageview
             if (index.select("img").hasAttr("data-src") || index.select("img").hasAttr("src")) {
                 // Create new imageView
@@ -1751,7 +1772,7 @@ public class ArticlesManager extends Application {
                     imageView.setFitWidth(800);
                 }
                 // Bind the fitwidth property of imageView with stagewidth property
-                Main.stage.widthProperty().addListener(new ChangeListener<Number>() {
+                ChangeListener<Number> changeListener = new ChangeListener<Number>() {
                     @Override
                     public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
                         if (t1.doubleValue() < 900) {
@@ -1761,7 +1782,9 @@ public class ArticlesManager extends Application {
                             imageView.setFitWidth(800);
                         }
                     }
-                });
+                };
+                changeListenerList.add(changeListener);
+                Main.stage.widthProperty().addListener(changeListener);
                 // Add image cap
                 if (index.hasText()) {
                     Text imagecap = new Text(index.text());
@@ -1833,10 +1856,20 @@ public class ArticlesManager extends Application {
         textFlow5.getChildren().addAll(text5, articleLink, text6);
         textFlow5.setStyle("-fx-font-style: italic; -fx-font-size: 18; -fx-alignment: left;");
         vbox.getChildren().add(textFlow5);
+
+        fullArticlesUrl = null; // link to full article
+        document = null;
+        all = null;
+        description = null;
+        body = null;
+        author = null;
+        originalCategory = null;
+        fullDate = null;
+        descriptionImage = null;
     }
 
     /* FROM HERE IS SORT FUNCTION
-      */
+     */
     // This function will sort the 5 article lists then return the sorted article (50 elements)
     public static ArrayList<Article> sortArticle(ArrayList<Article> list1, ArrayList<Article> list2, ArrayList<Article> list3, ArrayList<Article> list4, ArrayList<Article> list5) {
         ArrayList<Article> sortedArticles = new ArrayList<>();

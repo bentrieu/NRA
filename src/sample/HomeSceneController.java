@@ -1,8 +1,5 @@
 package sample;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.NumberBinding;
@@ -15,7 +12,6 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.CacheHint;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -23,12 +19,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import javafx.util.Duration;
 import org.springframework.util.StopWatch;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -288,7 +282,7 @@ public class HomeSceneController implements Initializable {
         pagination.setMaxHeight(983);
         pagination.setMinHeight(983);
         try {
-            setPaginationList(Main.newsTemp);
+            setPaginationList(ArticlesList.newsList);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -379,31 +373,40 @@ public class HomeSceneController implements Initializable {
     public void refresh() throws IOException {
         switch (currentCategoryIndex) {
             case 0:
-                setPaginationList(ArticlesList.getNewsList());
+                ArticlesList.getNewsList();
+                setPaginationList(ArticlesList.newsList);
                 break;
             case 1:
-                setPaginationList(ArticlesList.getCovidList());
+                ArticlesList.getCovidList();
+                setPaginationList(ArticlesList.covidList);
                 break;
             case 2:
-                setPaginationList(ArticlesList.getPoliticsList());
+                ArticlesList.getPoliticsList();
+                setPaginationList(ArticlesList.politicsList);
                 break;
             case 3:
-                setPaginationList(ArticlesList.getBusinessList());
+                ArticlesList.getBusinessList();
+                setPaginationList(ArticlesList.businessList);
                 break;
             case 4:
-                setPaginationList(ArticlesList.getTechnologyList());
+                ArticlesList.getTechnologyList();
+                setPaginationList(ArticlesList.technologyList);
                 break;
             case 5:
-                setPaginationList(ArticlesList.getHealthList());
+                ArticlesList.getHealthList();
+                setPaginationList(ArticlesList.healthList);
                 break;
             case 6:
-                setPaginationList(ArticlesList.getSportsList());
+                ArticlesList.getSportsList();
+                setPaginationList(ArticlesList.sportsList);
                 break;
             case 7:
-                setPaginationList(ArticlesList.getEntertainmentList());
+                ArticlesList.getEntertainmentList();
+                setPaginationList(ArticlesList.entertainmentList);
                 break;
             case 8:
-                setPaginationList(ArticlesList.getWorldList());
+                ArticlesList.getWorldList();
+                setPaginationList(ArticlesList.worldList);
                 break;
 //            case 9:
 //                setPaginationList(ArticlesList.getOtherList());
@@ -415,7 +418,6 @@ public class HomeSceneController implements Initializable {
     public void backToHome(ActionEvent event) {
         if (!tempPane.isVisible()) {
             scrollPane.setVvalue(0);
-            System.out.println(ArticlesManager.changeListenerList.size());
             for (int i = 0; i < ArticlesManager.changeListenerList.size(); i++) {
                 Main.stage.widthProperty().removeListener(ArticlesManager.changeListenerList.get(i));
             }
@@ -464,7 +466,8 @@ public class HomeSceneController implements Initializable {
         worldButton.setSelected(false);
         othersButton.setSelected(false);
         todayLabel.setText("Today");
-        setPaginationList(ArticlesList.getNewsList());
+        ArticlesList.getNewsList();
+        setPaginationList(ArticlesList.newsList);
     }
     public void displayCovidList() throws IOException {
         currentCategoryIndex = 1;
@@ -480,7 +483,8 @@ public class HomeSceneController implements Initializable {
         worldButton.setSelected(false);
         othersButton.setSelected(false);
         todayLabel.setText("Covid-19");
-        setPaginationList(ArticlesList.getCovidList());
+        ArticlesList.getCovidList();
+        setPaginationList(ArticlesList.covidList);
     }
     public void displayPoliticsList() throws IOException {
         currentCategoryIndex = 2;
@@ -496,7 +500,8 @@ public class HomeSceneController implements Initializable {
         worldButton.setSelected(false);
         othersButton.setSelected(false);
         todayLabel.setText("Politics");
-        setPaginationList(ArticlesList.getPoliticsList());
+        ArticlesList.getPoliticsList();
+        setPaginationList(ArticlesList.politicsList);
     }
     public void displayBusinessList() throws IOException {
         currentCategoryIndex = 3;
@@ -512,7 +517,8 @@ public class HomeSceneController implements Initializable {
         worldButton.setSelected(false);
         othersButton.setSelected(false);
         todayLabel.setText("Business");
-        setPaginationList(ArticlesList.getBusinessList());
+        ArticlesList.getBusinessList();
+        setPaginationList(ArticlesList.businessList);
     }
     public void displayTechnologyList() throws IOException {
         currentCategoryIndex = 4;
@@ -527,8 +533,8 @@ public class HomeSceneController implements Initializable {
         entertainmentButton.setSelected(false);
         worldButton.setSelected(false);
         othersButton.setSelected(false);
-        todayLabel.setText("Technology");
-        setPaginationList(ArticlesList.getTechnologyList());
+        ArticlesList.getTechnologyList();
+        setPaginationList(ArticlesList.technologyList);
     }
     public void displayHealthList() throws IOException {
         currentCategoryIndex = 5;
@@ -544,7 +550,8 @@ public class HomeSceneController implements Initializable {
         worldButton.setSelected(false);
         othersButton.setSelected(false);
         todayLabel.setText("Health");
-        setPaginationList(ArticlesList.getHealthList());
+        ArticlesList.getHealthList();
+        setPaginationList(ArticlesList.healthList);
     }
     public void displaySportsList() throws IOException {
         currentCategoryIndex = 6;
@@ -560,7 +567,8 @@ public class HomeSceneController implements Initializable {
         worldButton.setSelected(false);
         othersButton.setSelected(false);
         todayLabel.setText("Sports");
-        setPaginationList(ArticlesList.getSportsList());
+        ArticlesList.getSportsList();
+        setPaginationList(ArticlesList.sportsList);
     }
     public void displayEntertainmentList() throws IOException {
         currentCategoryIndex = 7;
@@ -575,8 +583,9 @@ public class HomeSceneController implements Initializable {
         entertainmentButton.setSelected(true);
         worldButton.setSelected(false);
         othersButton.setSelected(false);
-        setPaginationList(ArticlesList.getEntertainmentList());
         todayLabel.setText("Entertainment");
+        ArticlesList.getEntertainmentList();
+        setPaginationList(ArticlesList.entertainmentList);
     }
     public void displayWorldList() throws IOException {
         currentCategoryIndex = 8;
@@ -592,7 +601,8 @@ public class HomeSceneController implements Initializable {
         worldButton.setSelected(true);
         othersButton.setSelected(false);
         todayLabel.setText("World");
-        setPaginationList(ArticlesList.getWorldList());
+        ArticlesList.getWorldList();
+        setPaginationList(ArticlesList.worldList);
     }
     public void displayOthersList() {
         currentCategoryIndex = 9;
@@ -711,7 +721,7 @@ public class HomeSceneController implements Initializable {
     public void nextArticle() throws IOException {
         scrollPane.setVvalue(0);
         scrollPane.setHvalue(0);
-        if (currentArticleIndex < 50) {
+        if (currentArticleIndex < 49) {
             switch (currentCategoryList.get(currentArticleIndex + 1).getSource()) {
                 case "vnexpress":
                     ArticlesManager.displayVnexpressFullArticle(currentCategoryList.get(currentArticleIndex + 1), displayFullArticleVbox);
@@ -855,25 +865,27 @@ public class HomeSceneController implements Initializable {
                         });
                         break;
                 }
+
                 // Set thumb image for each object
-//                if (k != 3 && k != 7) {
-//                    Image image = new Image(articlesList.get(i).getThumb(), 600, 600, true, false, true);
-//                    BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1.0, 1.0, true, true, false, true));
-//                    Background background = new Background(backgroundImage);
-//                    anchorPaneList[k].setCache(true);
-//                    anchorPaneList[k].setCacheHint(CacheHint.SPEED);
-//                    anchorPaneList[k].setBackground(background);
-//                } else {
-//                    Image image2 = new Image(articlesList.get(i).getThumb(), 600, 600, true, false, true);
-//                    BackgroundImage backgroundImage = new BackgroundImage(image2, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1.0, 1.0, true, true, false, true));
-//                    Background background = new Background(backgroundImage);
-//                    layoutController.anchorPaneImage1.setCache(true);
-//                    layoutController.anchorPaneImage1.setCacheHint(CacheHint.SPEED);
-//                    layoutController.anchorPaneImage2.setCache(true);
-//                    layoutController.anchorPaneImage2.setCacheHint(CacheHint.SPEED);
-//                    if (k == 3) layoutController.anchorPaneImage1.setBackground(background);
-//                    else layoutController.anchorPaneImage2.setBackground(background);
-//                }
+                if (k != 3 && k != 7) {
+                    Image image = new Image(articlesList.get(i).getThumb(), 600, 600, true, false, true);
+                    BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1.0, 1.0, true, true, false, true));
+                    Background background = new Background(backgroundImage);
+                    anchorPaneList[k].setCache(true);
+                    anchorPaneList[k].setCacheHint(CacheHint.SPEED);
+                    anchorPaneList[k].setBackground(background);
+                } else {
+                    Image image2 = new Image(articlesList.get(i).getThumb(), 600, 600, true, false, true);
+                    BackgroundImage backgroundImage = new BackgroundImage(image2, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1.0, 1.0, true, true, false, true));
+                    Background background = new Background(backgroundImage);
+                    layoutController.anchorPaneImage1.setCache(true);
+                    layoutController.anchorPaneImage1.setCacheHint(CacheHint.SPEED);
+                    layoutController.anchorPaneImage2.setCache(true);
+                    layoutController.anchorPaneImage2.setCacheHint(CacheHint.SPEED);
+                    if (k == 3) layoutController.anchorPaneImage1.setBackground(background);
+                    else layoutController.anchorPaneImage2.setBackground(background);
+                }
+
             }
 
             // Animation for each transition of pagination
