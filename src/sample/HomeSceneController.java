@@ -692,6 +692,18 @@ public class HomeSceneController implements Initializable {
     public void previousArticle() throws IOException {
         scrollPane.setVvalue(0);
         scrollPane.setHvalue(0);
+        for (int i = 0; i < ArticlesManager.changeListenerList.size(); i++) {
+            Main.stage.widthProperty().removeListener(ArticlesManager.changeListenerList.get(i));
+        }
+        ArticlesManager.changeListenerList.clear();
+        for (int i = 0; i < displayFullArticleVbox.getChildren().size(); i++) {
+            if (displayFullArticleVbox.getChildren().get(i) instanceof ImageView) {
+                ((ImageView) displayFullArticleVbox.getChildren().get(i)).setImage(null);
+            }
+        }
+        displayFullArticleVbox.getChildren().clear();
+        System.gc();
+        Runtime.getRuntime().gc();
         if (currentArticleIndex > 0) {
             switch (currentCategoryList.get(currentArticleIndex - 1).getSource()) {
                 case "vnexpress":
@@ -721,8 +733,20 @@ public class HomeSceneController implements Initializable {
     public void nextArticle() throws IOException {
         scrollPane.setVvalue(0);
         scrollPane.setHvalue(0);
+        for (int i = 0; i < ArticlesManager.changeListenerList.size(); i++) {
+            Main.stage.widthProperty().removeListener(ArticlesManager.changeListenerList.get(i));
+        }
+        ArticlesManager.changeListenerList.clear();
+        for (int i = 0; i < displayFullArticleVbox.getChildren().size(); i++) {
+            if (displayFullArticleVbox.getChildren().get(i) instanceof ImageView) {
+                ((ImageView) displayFullArticleVbox.getChildren().get(i)).setImage(null);
+            }
+        }
+        displayFullArticleVbox.getChildren().clear();
+        System.gc();
+        Runtime.getRuntime().gc();
         if (currentArticleIndex < 49) {
-            switch (currentCategoryList.get(currentArticleIndex + 1).getSource()) {
+              switch (currentCategoryList.get(currentArticleIndex + 1).getSource()) {
                 case "vnexpress":
                     ArticlesManager.displayVnexpressFullArticle(currentCategoryList.get(currentArticleIndex + 1), displayFullArticleVbox);
                     currentArticleIndex++;

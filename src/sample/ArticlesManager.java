@@ -7,6 +7,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.CacheHint;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Pagination;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -162,14 +163,26 @@ public class ArticlesManager extends Application {
         Elements body = all.select("div.the-article-body").select("> p, p ~ h3, td.pic img[src], td.pCaption.caption, div#innerarticle, figure.video");
         Elements author = document.select("div.the-article-credit p.author");
         Elements originalCategory = all.select("p.the-article-category");
+        Elements videoWeb = document.select("div.video-container");
 
         // Set fullDate for each object
-        article.setFullDate(fullDate.text());
+        if (videoWeb.select("p.video-meta span").hasClass("publish")) {
+            article.setFullDate(videoWeb.select("span.publish").text());
+        } else {
+            article.setFullDate(fullDate.text());
+        }
 
         // Set author for each object
-        if (author.hasText()) article.setAuthor(author.first().text());
+        if (videoWeb.select("p.video-meta span").hasClass("video-author")) {
+            article.setAuthor(videoWeb.select("p.video-meta span.video-author").text());
+        } else {
+            if (author.hasText()) article.setAuthor(author.first().text());
+        }
 
         // Set original category
+        if (videoWeb.select("span.video-breadcrumb").hasText()) {
+            article.setOriginalCategory(videoWeb.select("span.video-breadcrumb").text());
+        }
         if (originalCategory.hasText()) article.setOriginalCategory(originalCategory.text());
 
         // Display category
@@ -211,6 +224,23 @@ public class ArticlesManager extends Application {
         descriptionHbox.getStyleClass().add("descriptionHbox");
         descriptionHbox.getChildren().add(textFlow2);
         vbox.getChildren().add(descriptionHbox);
+
+        // Add video open link caption for video web
+        if (videoWeb.select("div").hasClass("video-player")) {
+            Text text510 = new Text("Watch video on this ");
+            text510.getStyleClass().add("textReadTheOriginalPost");
+            Hyperlink articleLink10 = new Hyperlink("link");
+            articleLink10.getStyleClass().add("texthyperlink");
+            articleLink10.setOnAction(e -> {
+                HostServices services = Helper.getInstance().getHostServices();
+                services.showDocument(article.getLinkToFullArticles());
+            });
+            Text text610 = new Text(".");
+            TextFlow textFlow30 = new TextFlow();
+            textFlow30.getChildren().addAll(text510, articleLink10, text610);
+            textFlow30.getStyleClass().add("textflowcenteritalic");
+            vbox.getChildren().add(textFlow30);
+        }
 
         // Display all content
         for (Element index : body) {
@@ -895,6 +925,7 @@ public class ArticlesManager extends Application {
         Elements body = all.select("div.main-content-body div.content.fck").select("> p, div.VCSortableInPreviewMode");
         Elements author = all.select("div.author");
         Elements originalCategory = document.select("div.bread-crumbs li");
+        System.out.println(body);
 
         // Set fullDate for each object
         if (fullDate.hasText()) {
@@ -959,6 +990,21 @@ public class ArticlesManager extends Application {
         for (Element index : body) {
             TextFlow textFlow3 = new TextFlow();
             vbox.getChildren().add(textFlow3);
+            // Add video open link caption
+            if (index.attr("type").equals("insertembedcode")) {
+                Text text51 = new Text("Watch video on this ");
+                text51.getStyleClass().add("textReadTheOriginalPost");
+                Hyperlink articleLink1 = new Hyperlink("link");
+                articleLink1.getStyleClass().add("texthyperlink");
+                articleLink1.setOnAction(e -> {
+                    HostServices services = Helper.getInstance().getHostServices();
+                    services.showDocument(article.getLinkToFullArticles());
+                });
+                Text text61 = new Text(".");
+                textFlow3.getChildren().addAll(text51, articleLink1, text61);
+                textFlow3.getStyleClass().add("textflowcenteritalic");
+                continue;
+            }
             // Add imageview
             if (index.select("img").hasAttr("data-original")) {
                 // Create new imageView
@@ -1191,15 +1237,16 @@ public class ArticlesManager extends Application {
 
         // Setup jsoup for each article
         String fullArticlesUrl = article.getLinkToFullArticles();
-//        String fullArticlesUrl = "https://thanhnien.vn/suc-khoe/7-bi-quyet-an-uong-de-khoe-manh-va-gon-gang-sau-tuoi-50-1433140.html";
+//        String fullArticlesUrl = "https://thanhnien.vn/the-thao/tuong-thuat/udinese-juventus-533880.html";
         Document document = Jsoup.connect(fullArticlesUrl).userAgent("Mozilla").get();
         Elements all = document.select("div.l-content div.pswp-content, div.l-grid, section.container");
         Elements description = all.select("div.sapo");
         Elements body = all.select("div#abody").select("div, h2, p");
         Elements author = document.select("div.details__author div.left h4");
-        Elements originalCategory = document.select("div.breadcrumbs span[itemprop] a[href] span");
+        Elements originalCategory = document.select("div.breadcrumbs span[itemprop]");
         Elements fullDate = document.select("div.details__meta div.meta time");
         Elements descriptionImage = all.select("div#contentAvatar");
+        Elements originalCategory2 = document.select("div.breadcrumbs span[itemprop]");
 
         // Set fullDate for each object
         if (fullDate.hasText()) {
@@ -1212,12 +1259,21 @@ public class ArticlesManager extends Application {
         }
 
         // Set original category for each object
+        int size = 0;
+        for (Element index : originalCategory) {
+            if (index.attr("itemprop").equals("name")) {
+                size++;
+            }
+        }
         article.setOriginalCategory("");
         int k = 0;
         for (Element index : originalCategory) {
-            if (k != originalCategory.size() - 1) article.setOriginalCategory(article.getOriginalCategory() + index.text() + " - ");
-            else article.setOriginalCategory(article.getOriginalCategory() + index.text());
-            k++;
+            if (index.attr("itemprop").equals("name")) {
+                if (k != size - 1)
+                    article.setOriginalCategory(article.getOriginalCategory() + index.text() + " - ");
+                else article.setOriginalCategory(article.getOriginalCategory() + index.text());
+                k++;
+            }
         }
 
         // Display category
