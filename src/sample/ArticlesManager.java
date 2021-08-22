@@ -33,6 +33,9 @@ import java.util.*;
 /* This class will have static functions that manipulate articles*/
 
 public class ArticlesManager extends Application {
+    // This list to save the listeners that create during the process of responsive design. So this listeners need to be removed later to avoid memory leaking
+    public static ArrayList<ChangeListener<Number>> changeListenerList = new ArrayList<>();
+
     /* FROM HERE WILL BE THE FUNCTION FOR ZINGNEWS.VN
        There will be 3 function
        Get RSS list
@@ -176,8 +179,11 @@ public class ArticlesManager extends Application {
         vbox.getChildren().add(textFlow);
 
         // Display image source
-        Image imageSource = new Image("resource/zingnews_big.png");
-        ImageView imageViewSource = new ImageView(imageSource);
+        Image imageSource = new Image("resource/zingnews_big.png", 200, 200, true, false, true);
+        ImageView imageViewSource = new ImageView();
+        imageViewSource.setCache(true);
+        imageViewSource.setCacheHint(CacheHint.SPEED);
+        imageViewSource.setImage(imageSource);
         imageViewSource.setPreserveRatio(true);
         imageViewSource.setFitHeight(60);
         vbox.getChildren().add(imageViewSource);
@@ -235,11 +241,13 @@ public class ArticlesManager extends Application {
             // Add imageview
             if (!index.attr("data-src").isEmpty() || !index.attr("src").isEmpty()) {
                 ImageView imageView = new ImageView();
+                imageView.setCache(true);
+                imageView.setCacheHint(CacheHint.SPEED);
                 // Create new imageView
                 if (index.attr("data-src").isEmpty()) {
-                    imageView.setImage(new Image(index.attr("abs:src")));
+                    imageView.setImage(new Image(index.attr("abs:src"), 600, 600, true, false, true));
                 }
-                else imageView.setImage(new Image(index.attr("abs:data-src")));
+                else imageView.setImage(new Image(index.attr("abs:data-src"), 600, 600, true, false, true));
                 imageView.setPreserveRatio(true);
                 // Set the initial fitwidth for imageview
                 if (Main.stage.getWidth() < 900) {
@@ -513,8 +521,11 @@ public class ArticlesManager extends Application {
         vbox.getChildren().add(textFlow);
 
         // Display image source
-        Image imageSource = new Image("resource/vnexpress_big.png");
-        ImageView imageViewSource = new ImageView(imageSource);
+        Image imageSource = new Image("resource/vnexpress_big.png", 200, 200, true, false, true);
+        ImageView imageViewSource = new ImageView();
+        imageViewSource.setCache(true);
+        imageViewSource.setCacheHint(CacheHint.SPEED);
+        imageViewSource.setImage(imageSource);
         imageViewSource.setPreserveRatio(true);
         imageViewSource.setFitHeight(60);
         vbox.getChildren().add(imageViewSource);
@@ -586,11 +597,13 @@ public class ArticlesManager extends Application {
             }
             // Add image
             if (index.select("img").hasAttr("data-src") || index.select("source").hasAttr("data-src-image")) {
-                ImageView imageView;
+                ImageView imageView = new ImageView();
+                imageView.setCache(true);
+                imageView.setCacheHint(CacheHint.SPEED);
                 if (index.select("img").hasAttr("data-src")) {
-                    imageView = new ImageView(new Image(index.select("img").attr("data-src")));
+                    imageView.setImage(new Image(index.select("img").attr("data-src"), 600, 600, true, false, true));
                 }
-                else imageView = new ImageView(new Image(index.select("source").attr("data-src-image")));
+                else imageView.setImage(new Image(index.select("source").attr("data-src-image"), 600, 600, true, false, true));
                 imageView.setPreserveRatio(true);
                 // Set the initial fitwidth for imageview
                 if (Main.stage.getWidth() < 900) {
@@ -891,8 +904,11 @@ public class ArticlesManager extends Application {
         vbox.getChildren().add(textFlow);
 
         // Display image source
-        Image imageSource = new Image("resource/tuoitre_big.png");
-        ImageView imageViewSource = new ImageView(imageSource);
+        Image imageSource = new Image("resource/tuoitre_big.png", 200, 200, true, false, true);
+        ImageView imageViewSource = new ImageView();
+        imageViewSource.setCache(true);
+        imageViewSource.setCacheHint(CacheHint.SPEED);
+        imageViewSource.setImage(imageSource);
         imageViewSource.setPreserveRatio(true);
         imageViewSource.setFitHeight(60);
         vbox.getChildren().add(imageViewSource);
@@ -928,7 +944,10 @@ public class ArticlesManager extends Application {
             // Add imageview
             if (index.select("img").hasAttr("data-original")) {
                 // Create new imageView
-                ImageView imageView = new ImageView(new Image(index.select("img").attr("data-original")));
+                ImageView imageView = new ImageView();
+                imageView.setCache(true);
+                imageView.setCacheHint(CacheHint.SPEED);
+                imageView.setImage(new Image(index.select("img").attr("data-original"), 600, 600, true, false, true));
                 imageView.setPreserveRatio(true);
                 // Set the initial fitwidth for imageview
                 if (Main.stage.getWidth() < 900) {
@@ -1143,8 +1162,8 @@ public class ArticlesManager extends Application {
         vbox.getChildren().clear();
 
         // Setup jsoup for each article
-        String fullArticlesUrl = article.getLinkToFullArticles();
-//        String fullArticlesUrl = "https://thanhnien.vn/thoi-su/tphcm-quan-doi-se-dua-luong-thuc-thuc-pham-den-tung-nha-dan-1433485.html";
+//        String fullArticlesUrl = article.getLinkToFullArticles();
+        String fullArticlesUrl = "https://thanhnien.vn/suc-khoe/7-bi-quyet-an-uong-de-khoe-manh-va-gon-gang-sau-tuoi-50-1433140.html";
         Document document = Jsoup.connect(fullArticlesUrl).userAgent("Mozilla").get();
         Elements all = document.select("div.l-content div.pswp-content, div.l-grid, section.container");
         Elements description = all.select("div.sapo");
@@ -1153,7 +1172,6 @@ public class ArticlesManager extends Application {
         Elements originalCategory = document.select("div.breadcrumbs span[itemprop] a[href] span");
         Elements fullDate = document.select("div.details__meta div.meta time");
         Elements descriptionImage = all.select("div#contentAvatar");
-        System.out.println(all);
 
         // Set fullDate for each object
         if (fullDate.hasText()) {
@@ -1181,11 +1199,14 @@ public class ArticlesManager extends Application {
         vbox.getChildren().add(textFlow);
 
         // Display image source
-        Image imageSource = new Image("resource/thanhnien_big.png");
-        ImageView imageViewSource = new ImageView(imageSource);
-        imageViewSource.setPreserveRatio(true);
-        imageViewSource.setFitHeight(60);
-        vbox.getChildren().add(imageViewSource);
+//        Image imageSource = new Image("resource/thanhnien_big.png", 200, 200, true, false, true);
+//        ImageView imageViewSource = new ImageView();
+//        imageViewSource.setCache(true);
+//        imageViewSource.setCacheHint(CacheHint.SPEED);
+//        imageViewSource.setImage(imageSource);
+//        imageViewSource.setPreserveRatio(true);
+//        imageViewSource.setFitHeight(60);
+//        vbox.getChildren().add(imageViewSource);
 
         // Display original category + fullDate
         Text text0 = new Text(article.getOriginalCategory() + "\n" + article.getFullDate());
@@ -1202,7 +1223,7 @@ public class ArticlesManager extends Application {
         vbox.getChildren().add(textFlow1);
 
         // Display description
-        if (description.select("a").hasAttr("href")) {
+        if (/*description.select("a").hasAttr("href")*/ false) {
             TextFlow textFlow2 = Helper.getHyperLink(description.first());
             textFlow2.getStyleClass().add("textflowjustify");
             HBox descriptionHbox = new HBox();
@@ -1235,10 +1256,10 @@ public class ArticlesManager extends Application {
             imageView0.setCache(true);
             imageView0.setCacheHint(CacheHint.SPEED);
             if (descriptionImage.select("img").attr("data-src").isEmpty()) {
-                imageView0 = new ImageView(new Image(descriptionImage.select("img").attr("abs:src")));
+                imageView0.setImage(new Image(descriptionImage.select("img").attr("abs:src"), 600, 600, true, false, true));
             }
             else {
-                imageView0 = new ImageView(new Image(descriptionImage.select("img").attr("abs:data-src")));
+                imageView0.setImage(new Image(descriptionImage.select("img").attr("abs:data-src"), 600, 600, true, false, true));
             }
             imageView0.setPreserveRatio(true);
             // Set the initial fitwidth for imageview
@@ -1249,18 +1270,19 @@ public class ArticlesManager extends Application {
                 imageView0.setFitWidth(800);
             }
             // Bind the fitwidth property of imageView with stagewidth property
-            ImageView finalImageView = imageView0;
-            Main.stage.widthProperty().addListener(new ChangeListener<Number>() {
+            ChangeListener<Number> changeListener0 = new ChangeListener<Number>() {
                 @Override
                 public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
                     if (t1.doubleValue() < 900) {
-                        finalImageView.setFitWidth(t1.doubleValue() - 140);
+                        imageView0.setFitWidth(t1.doubleValue() - 140);
                     }
                     if (t1.doubleValue() >= 900) {
-                        finalImageView.setFitWidth(800);
+                        imageView0.setFitWidth(800);
                     }
                 }
-            });
+            };
+            changeListenerList.add(changeListener0);
+            Main.stage.widthProperty().addListener(changeListener0);
             // Get image cap
             if (!descriptionImage.select("div.imgcaption").text().isEmpty()) {
                 Text imagecap0 = new Text(descriptionImage.select("div.imgcaption").text());
@@ -1289,7 +1311,7 @@ public class ArticlesManager extends Application {
             vbox.getChildren().add(textFlow31);
         }
 
-        ArrayList<String> repeatCheck = new ArrayList<>();
+//        ArrayList<String> repeatCheck = new ArrayList<>();
         // Display all content
         for (Element index : body) {
             TextFlow textFlow3 = new TextFlow();
@@ -1300,24 +1322,27 @@ public class ArticlesManager extends Application {
                 continue;
             }
             // Add video open link caption
-            if (index.hasAttr("data-video-src") /*|| index.hasAttr("clearfix")*/) {
-                Text text51 = new Text("Watch video on this ");
-                text51.getStyleClass().add("textReadTheOriginalPost");
-                Hyperlink articleLink1 = new Hyperlink("link");
-                articleLink1.getStyleClass().add("texthyperlink");
-                articleLink1.setOnAction(e -> {
-                    HostServices services = Helper.getInstance().getHostServices();
-                    services.showDocument(article.getLinkToFullArticles());
-                });
-                Text text61 = new Text(".");
-                textFlow3.getChildren().addAll(text51, articleLink1, text61);
-                textFlow3.getStyleClass().add("textflowcenteritalic");
-                continue;
-            }
+//            if (index.hasAttr("data-video-src") /*|| index.hasAttr("clearfix")*/) {
+//                Text text51 = new Text("Watch video on this ");
+//                text51.getStyleClass().add("textReadTheOriginalPost");
+//                Hyperlink articleLink1 = new Hyperlink("link");
+//                articleLink1.getStyleClass().add("texthyperlink");
+//                articleLink1.setOnAction(e -> {
+//                    HostServices services = Helper.getInstance().getHostServices();
+//                    services.showDocument(article.getLinkToFullArticles());
+//                });
+//                Text text61 = new Text(".");
+//                textFlow3.getChildren().addAll(text51, articleLink1, text61);
+//                textFlow3.getStyleClass().add("textflowcenteritalic");
+//                continue;
+//            }
             // Add imageview
             if (index.select("> img").hasAttr("data-src") /*&& !index.hasClass("cms-body")*/) {
                 // Create new imageView
-                ImageView imageView = new ImageView(new Image(index.select("img").attr("data-src")));
+                ImageView imageView = new ImageView();
+                imageView.setCache(true);
+                imageView.setCacheHint(CacheHint.SPEED);
+                imageView.setImage(new Image(index.select("img").attr("data-src"), 600, 600, true, false, true));
                 imageView.setPreserveRatio(true);
                 // Set the initial fitwidth for imageview
                 if (Main.stage.getWidth() < 900) {
@@ -1327,7 +1352,7 @@ public class ArticlesManager extends Application {
                     imageView.setFitWidth(800);
                 }
                 // Bind the fitwidth property of imageView with stagewidth property
-                Main.stage.widthProperty().addListener(new ChangeListener<Number>() {
+                ChangeListener<Number> changeListener = new ChangeListener<Number>() {
                     @Override
                     public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
                         if (t1.doubleValue() < 900) {
@@ -1337,7 +1362,20 @@ public class ArticlesManager extends Application {
                             imageView.setFitWidth(800);
                         }
                     }
-                });
+                };
+                changeListenerList.add(changeListener);
+                Main.stage.widthProperty().addListener(changeListener);
+//                Main.stage.widthProperty().addListener(new ChangeListener<Number>() {
+//                    @Override
+//                    public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
+//                        if (t1.doubleValue() < 900) {
+//                            imageView.setFitWidth(t1.doubleValue() - 140);
+//                        }
+//                        if (t1.doubleValue() >= 900) {
+//                            imageView.setFitWidth(800);
+//                        }
+//                    }
+//                });
                 vbox.getChildren().remove(vbox.getChildren().size() - 1);
                 vbox.getChildren().addAll(imageView);
                 continue;
@@ -1352,13 +1390,13 @@ public class ArticlesManager extends Application {
             }
             // Add body
             if ((!index.ownText().isEmpty() && !index.parent().hasClass("imgcaption") && !index.parent().hasClass("source")) || index.is("h2")) {
-                // Hyper link
-                if (index.select("a").hasAttr("href")) {
-                    vbox.getChildren().remove(vbox.getChildren().size() - 1);
-                    textFlow3 = Helper.getHyperLink(index);
-                    vbox.getChildren().add(textFlow3);
-                    continue;
-                }
+//                // Hyper link
+//                if (index.select("a").hasAttr("href")) {
+//                    vbox.getChildren().remove(vbox.getChildren().size() - 1);
+//                    textFlow3 = Helper.getHyperLink(index);
+//                    vbox.getChildren().add(textFlow3);
+//                    continue;
+//                }
                 // Bold text
                 if (index.is("h2")) {
 //                    repeatCheck.add(index.select("h2").text());
@@ -1406,19 +1444,30 @@ public class ArticlesManager extends Application {
         vbox.getChildren().add(textFlow4);
 
         // Link to full article (read original post here.)
-        TextFlow textFlow5 = new TextFlow();
-        Text text5 = new Text("Read the original post ");
-        text5.getStyleClass().add("textReadTheOriginalPost");
-        Hyperlink articleLink = new Hyperlink("here");
-        articleLink.getStyleClass().add("texthyperlink");
-        articleLink.setOnAction(e -> {
-            HostServices services = Helper.getInstance().getHostServices();
-            services.showDocument(article.getLinkToFullArticles());
-        });
-        Text text6 = new Text(".");
-        textFlow5.getChildren().addAll(text5, articleLink, text6);
-        textFlow5.setStyle("-fx-font-style: italic; -fx-font-size: 18; -fx-alignment: left;");
-        vbox.getChildren().add(textFlow5);
+//        TextFlow textFlow5 = new TextFlow();
+//        Text text5 = new Text("Read the original post ");
+//        text5.getStyleClass().add("textReadTheOriginalPost");
+//        Hyperlink articleLink = new Hyperlink("here");
+//        articleLink.getStyleClass().add("texthyperlink");
+//        articleLink.setOnAction(e -> {
+//            HostServices services = Helper.getInstance().getHostServices();
+//            services.showDocument(article.getLinkToFullArticles());
+//        });
+//        Text text6 = new Text(".");
+//        textFlow5.getChildren().addAll(text5, articleLink, text6);
+//        textFlow5.setStyle("-fx-font-style: italic; -fx-font-size: 18; -fx-alignment: left;");
+//        vbox.getChildren().add(textFlow5);
+
+        fullArticlesUrl = null;
+        document = null;
+        all = null;
+        description = null;
+        body = null;
+        author = null;
+        originalCategory = null;
+        fullDate = null;
+        descriptionImage = null;
+
     }
 
     /* FROM HERE WILL BE THE FUNCTION FOR NHANDAN.VN
@@ -1588,8 +1637,11 @@ public class ArticlesManager extends Application {
         vbox.getChildren().add(textFlow);
 
         // Display image source
-        Image imageSource = new Image("resource/nhandan_big.png");
-        ImageView imageViewSource = new ImageView(imageSource);
+        Image imageSource = new Image("resource/nhandan_big.png", 200, 200, true, false, true);
+        ImageView imageViewSource = new ImageView();
+        imageViewSource.setCache(true);
+        imageViewSource.setCacheHint(CacheHint.SPEED);
+        imageViewSource.setImage(imageSource);
         imageViewSource.setPreserveRatio(true);
         imageViewSource.setFitHeight(60);
         vbox.getChildren().add(imageViewSource);
@@ -1622,11 +1674,13 @@ public class ArticlesManager extends Application {
         if (descriptionImage.select("img").hasAttr("data-src") || descriptionImage.select("img").hasAttr("src")) {
             // Create new imageView
             ImageView imageView0 = new ImageView();
+            imageView0.setCache(true);
+            imageView0.setCacheHint(CacheHint.SPEED);
             if (descriptionImage.select("img").attr("data-src").isEmpty()) {
-                imageView0 = new ImageView(new Image(descriptionImage.select("img").attr("abs:src")));
+                imageView0.setImage(new Image(descriptionImage.select("img").attr("abs:src"), 600, 600, true, false, true));
             }
             else {
-                imageView0 = new ImageView(new Image(descriptionImage.select("img").attr("abs:data-src")));
+                imageView0.setImage(new Image(descriptionImage.select("img").attr("abs:data-src"), 600, 600, true, false, true));
             }
             imageView0.setPreserveRatio(true);
             // Set the initial fitwidth for imageview
@@ -1637,15 +1691,14 @@ public class ArticlesManager extends Application {
                 imageView0.setFitWidth(800);
             }
             // Bind the fitwidth property of imageView with stagewidth property
-            ImageView finalImageView = imageView0;
             Main.stage.widthProperty().addListener(new ChangeListener<Number>() {
                 @Override
                 public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
                     if (t1.doubleValue() < 900) {
-                        finalImageView.setFitWidth(t1.doubleValue() - 140);
+                        imageView0.setFitWidth(t1.doubleValue() - 140);
                     }
                     if (t1.doubleValue() >= 900) {
-                        finalImageView.setFitWidth(800);
+                        imageView0.setFitWidth(800);
                     }
                 }
             });
@@ -1685,8 +1738,10 @@ public class ArticlesManager extends Application {
             if (index.select("img").hasAttr("data-src") || index.select("img").hasAttr("src")) {
                 // Create new imageView
                 ImageView imageView = new ImageView();
-                if (index.select("img").hasAttr("data-src")) imageView.setImage(new Image(index.select("img").attr("data-src")));
-                if (index.select("img").hasAttr("src")) imageView.setImage(new Image(index.select("img").attr("src")));
+                imageView.setCache(true);
+                imageView.setCacheHint(CacheHint.SPEED);
+                if (index.select("img").hasAttr("data-src")) imageView.setImage(new Image(index.select("img").attr("data-src"), 600, 600, true, false, true));
+                if (index.select("img").hasAttr("src")) imageView.setImage(new Image(index.select("img").attr("src"), 600, 600, true, false, true));
                 imageView.setPreserveRatio(true);
                 // Set the initial fitwidth for imageview
                 if (Main.stage.getWidth() < 900) {

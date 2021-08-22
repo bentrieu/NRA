@@ -91,6 +91,8 @@ public class WelcomeSceneController implements Initializable {
                 Main.stage.setScene(new Scene(nextRoot));
                 ((Stage) ((Node)event.getSource()).getScene().getWindow()).close();
                 Main.stage.show();
+                System.gc();
+                Runtime.getRuntime().gc();
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }

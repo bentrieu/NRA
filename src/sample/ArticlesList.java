@@ -87,7 +87,7 @@ public class ArticlesList {
         stopWatch.start("nhandan");
         nhanDanNewsList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/", "News");
         stopWatch.stop();
-        newsList = ArticlesManager.getSortedArticlesList(vnexpressNewsList, zingNewsList, tuoiTreNewsList, thanhNienNewsList, nhanDanNewsList);
+        newsList = ArticlesManager.sortArticle(vnexpressNewsList, zingNewsList, tuoiTreNewsList, thanhNienNewsList, nhanDanNewsList);
         System.out.println(stopWatch.prettyPrint());
         return newsList;
     }
