@@ -158,7 +158,6 @@ public class ArticlesList {
         nhanDanPoliticsList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/chinhtri", "Politics");
         stopWatch.stop();
         politicsList.addAll(ArticlesManager.getSortedArticlesList(vnexpressPoliticsList, zingPoliticsList, tuoiTrePoliticsList, thanhNienPoliticsList, nhanDanPoliticsList));
-        ArticlesManager.printShortArticles(politicsList);
         System.out.println(stopWatch.prettyPrint());
     }
 

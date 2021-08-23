@@ -223,6 +223,9 @@
 }
 
 /*Home layout start from here*/
+.stackpane {
+    -fx-background-color: -fx-primary;
+}
 .buttonhome {
     -fx-background-color: -fx-black;
     -fx-opacity: 0.3;
