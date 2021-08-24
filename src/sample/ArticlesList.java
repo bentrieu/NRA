@@ -144,6 +144,7 @@ public class ArticlesList {
         StopWatch stopWatch = new StopWatch("Politics");
         stopWatch.start("vnexpress");
         vnexpressPoliticsList = ArticlesManager.getVnexpressWebList("https://vnexpress.net/thoi-su/chinh-tri", "Politics");
+        ArticlesManager.printShortArticles(vnexpressPoliticsList);
         stopWatch.stop();
         stopWatch.start("zing");
         zingPoliticsList = ArticlesManager.getZingWebList("https://zingnews.vn/chinh-tri.html", "Politics");
@@ -342,7 +343,7 @@ public class ArticlesList {
         tuoiTreOthersList = ArticlesManager.getTuoiTreList("https://tuoitre.vn/rss/giao-duc.rss", "Others");
         stopWatch.stop();
         stopWatch.start("thanhnien");
-        thanhNienOthersList = ArticlesManager.getThanhNienWebList("https://thanhnien.vn/doi-song/gia-dinh/", "Others");
+        thanhNienOthersList = ArticlesManager.getThanhNienList("https://thanhnien.vn/game/tin-tuc-game.rss", "Others");
         stopWatch.stop();
         stopWatch.start("nhandan");
         nhanDanOthersList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/du-lich", "Others");

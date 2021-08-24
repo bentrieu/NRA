@@ -20,6 +20,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.regex.Pattern;
 
 /* This class will have static functions that manipulate articles*/
 
@@ -522,6 +523,12 @@ public class ArticlesManager extends Application {
                 if (linkThumb.indexOf(".png") > 0) getVnexpressWebList.get(i).setDate(linkThumb.substring(linkThumb.indexOf(".png") - 10, linkThumb.indexOf(".png")));
                 if (linkThumb.indexOf(".jpeg") > 0) getVnexpressWebList.get(i).setDate(linkThumb.substring(linkThumb.indexOf(".jpeg") - 10, linkThumb.indexOf(".jpeg")));
                 if (linkThumb.indexOf(".gif") > 0) getVnexpressWebList.get(i).setDate(linkThumb.substring(linkThumb.indexOf(".gif") - 10, linkThumb.indexOf(".gif")));
+            }
+            String pattern = "[0-9]{10}";
+            if (!Pattern.matches(pattern, getVnexpressWebList.get(i).getDate())) {
+                getVnexpressWebList.remove(i);
+                i--;
+                continue;
             }
             // Set time ago
             getVnexpressWebList.get(i).setTimeAgo(Helper.timeDiff(getVnexpressWebList.get(i).getDate()));
@@ -1178,7 +1185,11 @@ public class ArticlesManager extends Application {
         Elements date = all.select("pubDate");
 
         // Add data to vnexpressNewsList (Title + date + thumb + link)
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0, k = 0; i < 15; i++, k++) {
+            if (link.get(k).text().contains("tuong-thuat") || link.get(k).text().contains("thoitrangtre")) {
+                i--;
+                continue;
+            }
             // Create new article object then add the object into the ArrayList
             thanhNienList.add(new Article());
             // Set source
@@ -1186,16 +1197,16 @@ public class ArticlesManager extends Application {
             // Set category manually
             thanhNienList.get(i).setCategory(category);
             // Set title for each object
-            thanhNienList.get(i).setTitle(title.get(i).text());
+            thanhNienList.get(i).setTitle(title.get(k).text());
             // Set date for each object
-            String dateTemp = Helper.timeToUnixString2(date.get(i).text());
+            String dateTemp = Helper.timeToUnixString2(date.get(k).text());
             thanhNienList.get(i).setDate(dateTemp);
             // Set time ago for each object
             thanhNienList.get(i).setTimeAgo(Helper.timeDiff(dateTemp));
             // Set thumb for each object
-            if (thumb.size() != 0) thanhNienList.get(i).setThumb(thumb.get(i).text().replaceFirst("400x300", "2048"));
+            if (thumb.size() != 0) thanhNienList.get(i).setThumb(thumb.get(k).text().replaceFirst("400x300", "2048"));
             else {
-                String descriptionText = description.get(i).text();
+                String descriptionText = description.get(k).text();
                 int startThumb = descriptionText.indexOf("src=\"") + 5;
                 int endThumb = descriptionText.indexOf("\"", startThumb) - 1;
                 String thumbLink = descriptionText.substring(startThumb, endThumb + 1);
@@ -1204,7 +1215,7 @@ public class ArticlesManager extends Application {
                 thanhNienList.get(i).setThumb(thumbLink);
             }
             // Set link to full article for each object
-            thanhNienList.get(i).setLinkToFullArticles(link.get(i).text());
+            thanhNienList.get(i).setLinkToFullArticles(link.get(k).text());
         }
 
         return thanhNienList;
@@ -1275,11 +1286,11 @@ public class ArticlesManager extends Application {
 
         // Setup jsoup for each article
         String fullArticlesUrl = article.getLinkToFullArticles();
-//        String fullArticlesUrl = "https://thanhnien.vn/the-thao/tuong-thuat/udinese-juventus-533880.html";
+//        String fullArticlesUrl = "https://thanhnien.vn/thoi-su/nhiem-vu-cap-bach-hang-dau-la-chong-dich-thanh-cong-1420973.html";
         Document document = Jsoup.connect(fullArticlesUrl).userAgent("Mozilla").get();
         Elements all = document.select("div.l-content div.pswp-content, div.l-grid, section.container");
         Elements description = all.select("div.sapo");
-        Elements body = all.select("div#abody").select("div, h2, p");
+        Elements body = all.select("div#abody").select("div, h2, h3, p");
         Elements author = document.select("div.details__author div.left h4");
         Elements originalCategory = document.select("div.breadcrumbs span[itemprop]");
         Elements fullDate = document.select("div.details__meta div.meta time");
@@ -1543,7 +1554,33 @@ public class ArticlesManager extends Application {
                             continue;
                         }
                     }
-                    String string = index.text().replaceAll(index.select("h2").text().replaceAll("\\*", ""), "<strong>" + index.select("h2").text().replaceAll("\\*", "") + "</strong>");
+                    String string = index.text().replaceAll(index.select("h2").text().replaceAll("[\\*\\+\\^\\$]", ""), "<strong>" + index.select("h2").text().replaceAll("[\\*\\+\\^\\$]", "") + "</strong>");
+                    String[] stringSplit = string.split("<strong>");
+                    if (!stringSplit[0].isEmpty()) {
+                        Text textTemp = new Text(stringSplit[0]);
+                        textTemp.getStyleClass().add("textnormal");
+                        textFlow3.getChildren().add(textTemp);
+                        textFlow3.getStyleClass().add("textflowjustify");
+                    }
+                    for (int i = 1; i < stringSplit.length; i++) {
+                        Text textTemp0 = new Text(stringSplit[i].substring(0, stringSplit[i].indexOf("</strong>")));
+                        textTemp0.getStyleClass().add("textbold");
+                        Text textTemp1 = new Text(stringSplit[i].substring(stringSplit[i].indexOf("</strong>") + 9));
+                        textTemp1.getStyleClass().add("textnormal");
+                        textFlow3.getChildren().addAll(textTemp0, textTemp1);
+                        textFlow3.getStyleClass().add("textflowjustify");
+                    }
+                    continue;
+                }
+                if (index.is("h3")) {
+                    repeatCheck.add(index.select("h3").text());
+                    if (repeatCheck.size() > 1) {
+                        if (index.select("h3").text().equals(repeatCheck.get(repeatCheck.size() - 1 - 1))) {
+                            vbox.getChildren().remove(vbox.getChildren().size() - 1);
+                            continue;
+                        }
+                    }
+                    String string = index.text().replaceAll(index.select("h3").text().replaceAll("\\*", ""), "<strong>" + index.select("h3").text().replaceAll("\\*", "") + "</strong>");
                     String[] stringSplit = string.split("<strong>");
                     if (!stringSplit[0].isEmpty()) {
                         Text textTemp = new Text(stringSplit[0]);
@@ -1592,6 +1629,7 @@ public class ArticlesManager extends Application {
             services.showDocument(article.getLinkToFullArticles());
         });
         Text text6 = new Text(".");
+        text6.getStyleClass().add("textReadTheOriginalPost");
         textFlow5.getChildren().addAll(text5, articleLink, text6);
         textFlow5.setStyle("-fx-font-style: italic; -fx-font-size: 18; -fx-alignment: left;");
         vbox.getChildren().add(textFlow5);
