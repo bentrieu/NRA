@@ -107,6 +107,48 @@ public class ArticlesManager extends Application {
         return zingNewsList;
     }
 
+    // Zing search
+    public static ArrayList<Article> getZingSearchList(String keyWord, String category) throws IOException {
+        // Create new arraylist of article for return
+        ArrayList<Article> searchZingList = new ArrayList<>();
+
+        // Convert keyWord into link that can scrape // https://zingnews.vn/dịch-covid-tim-kiem.html?content_type=0
+        String convertedKeyWord = "https://zingnews.vn/" + keyWord.trim().replaceAll("\\s", "-").toLowerCase() + "-tim-kiem.html";
+
+        /* Bắt đầu từ đây là add dữ liệu cho sort article
+         */
+        // Setup jsoup for scraping data
+        final String url = convertedKeyWord;
+        Document document = Jsoup.connect(url).userAgent("Mozilla").get();
+        Elements all = document.select("div.article-list article.article-item:not(.type-hasvideo)");
+        // There are no date and original category when searching with tuoitre
+
+        // Add data to searchZingList
+        for (int i = 0; i < 12; i++) {
+            // Create new article object then add the object into the ArrayList
+            searchZingList.add(new Article());
+            // Set source
+            searchZingList.get(i).setSource("zingnews");
+            // Set category manually
+            searchZingList.get(i).setCategory(category);
+            // Set title for each object
+            searchZingList.get(i).setTitle(all.get(i).select("header p.article-title").text());
+            // Set thumb for each object
+            searchZingList.get(i).setThumb(all.get(i).select("p.article-thumbnail img").attr("abs:data-src"));
+            // Set description for each object
+            searchZingList.get(i).setDescription(all.get(i).select("p.article-summary").text());
+            // Set link to full article for each object
+            searchZingList.get(i).setLinkToFullArticles(all.get(i).select("header p.article-title a").attr("abs:href"));
+            // Set date for each object
+            String date = Helper.timeToUnixString3(all.get(i).select("p.article-meta span.date").text() + " " + all.get(i).select("p.article-meta span.time").text());
+            searchZingList.get(i).setDate(date);
+            // Set time ago for each object
+            searchZingList.get(i).setTimeAgo(Helper.timeDiff(date));
+        }
+
+        return searchZingList;
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
 
