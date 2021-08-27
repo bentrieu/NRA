@@ -149,6 +149,189 @@ public class ArticlesManager extends Application {
         return searchZingList;
     }
 
+    // Zing full article scrape and display
+    public static void displayZingFullArticle(Article article, VBox vbox) throws IOException {
+        // Clear vbox
+        vbox.getChildren().clear();
+
+        // Setup jsoup for each article
+        final String fullArticlesUrl = article.getLinkToFullArticles(); // link to full article
+        Document document = Jsoup.connect(fullArticlesUrl).userAgent("Mozilla").get();
+        Elements all = document.select("article[article-id]");
+        Elements fullDate = all.select("ul.the-article-meta li.the-article-publish");
+        Elements body = all.select("div.the-article-body").select("> p, p ~ h3, td.pic img[src], td.pCaption.caption, div#innerarticle, figure.video");
+        Elements author = document.select("div.the-article-credit p.author");
+        Elements originalCategory = all.select("p.the-article-category");
+
+        // Set fullDate for each object
+        article.setFullDate(fullDate.text());
+
+        // Set author for each object
+        if (author.hasText()) article.setAuthor(author.first().text());
+
+        // Set original category
+        if (originalCategory.hasText()) article.setOriginalCategory(originalCategory.text());
+
+        // Display category
+        Text text = new Text(article.getCategory());
+        text.getStyleClass().add("textcategory");
+        TextFlow textFlow = new TextFlow(text);
+        vbox.getChildren().add(textFlow);
+
+        // Display image source
+        Image imageSource = new Image("resource/zingnews_big.png", 200, 200, true, false, true);
+        ImageView imageViewSource = new ImageView();
+        imageViewSource.setCache(true);
+        imageViewSource.setCacheHint(CacheHint.SPEED);
+        imageViewSource.setImage(imageSource);
+        imageViewSource.setPreserveRatio(true);
+        imageViewSource.setFitHeight(60);
+        vbox.getChildren().add(imageViewSource);
+
+        // Display fullDate
+        Text text0 = new Text(article.getFullDate());
+        text0.getStyleClass().add("textfulldate");
+        TextFlow textFlow0 = new TextFlow(text0);
+        textFlow0.getStyleClass().add("textflowcenter");
+        vbox.getChildren().add(textFlow0);
+
+        // Display title
+        Text text1 = new Text(article.getTitle());
+        text1.getStyleClass().add("texttitle");
+        TextFlow textFlow1 = new TextFlow(text1);
+        textFlow1.getStyleClass().add("textflowjustify");
+        vbox.getChildren().add(textFlow1);
+
+        // Display description
+        Text text2 = new Text(article.getDescription());
+        text2.getStyleClass().add("textdescription");
+        TextFlow textFlow2 = new TextFlow(text2);
+        textFlow2.getStyleClass().add("textflowjustify");
+        HBox descriptionHbox = new HBox();
+        descriptionHbox.getStyleClass().add("descriptionHbox");
+        descriptionHbox.getChildren().add(textFlow2);
+        vbox.getChildren().add(descriptionHbox);
+
+        // Display all content
+        for (Element index : body) {
+            TextFlow textFlow3 = new TextFlow();
+            vbox.getChildren().add(textFlow3);
+            // Add video open link caption
+            if (index.hasClass("video")) {
+                Text text51 = new Text("Watch video on this ");
+                text51.getStyleClass().add("textReadTheOriginalPost");
+                Hyperlink articleLink1 = new Hyperlink("link");
+                articleLink1.getStyleClass().add("texthyperlink");
+                articleLink1.setOnAction(e -> {
+                    HostServices services = Helper.getInstance().getHostServices();
+                    services.showDocument(article.getLinkToFullArticles());
+                });
+                Text text61 = new Text(".");
+                textFlow3.getChildren().addAll(text51, articleLink1, text61);
+                textFlow3.getStyleClass().add("textflowcenteritalic");
+                // Add video cap
+                Text text71 = new Text(index.text());
+                text71.getStyleClass().add("textimagecap");
+                TextFlow textFlowTemp0 = new TextFlow();
+                textFlowTemp0.getChildren().add(text71);
+                textFlowTemp0.getStyleClass().add("textflowcenter");
+                vbox.getChildren().add(textFlowTemp0);
+                continue;
+            }
+            // Add imageview
+            if (!index.attr("data-src").isEmpty() || !index.attr("src").isEmpty()) {
+                ImageView imageView = new ImageView();
+                imageView.setCache(true);
+                imageView.setCacheHint(CacheHint.SPEED);
+                // Create new imageView
+                if (index.attr("data-src").isEmpty()) {
+                    imageView.setImage(new Image(index.attr("abs:src"), 600, 600, true, false, true));
+                }
+                else imageView.setImage(new Image(index.attr("abs:data-src"), 600, 600, true, false, true));
+                imageView.setPreserveRatio(true);
+                // Set the initial fitwidth for imageview
+                if (Main.stage.getWidth() < 900) {
+                    imageView.setFitWidth(Main.stage.getWidth() - 140);
+                }
+                if (Main.stage.getWidth() >= 900) {
+                    imageView.setFitWidth(800);
+                }
+                // Bind the fitwidth property of imageView with stagewidth property
+                ChangeListener<Number> changeListener = new ChangeListener<Number>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
+                        if (t1.doubleValue() < 900) {
+                            imageView.setFitWidth(t1.doubleValue() - 140);
+                        }
+                        if (t1.doubleValue() >= 900) {
+                            imageView.setFitWidth(800);
+                        }
+                    }
+                };
+                changeListenerList.add(changeListener);
+                Main.stage.widthProperty().addListener(changeListener);
+                vbox.getChildren().remove(vbox.getChildren().size() - 1);
+                vbox.getChildren().add(imageView);
+                continue;
+            }
+            // Add image cap
+            if (index.hasClass("pCaption") && index.hasText()) {
+                Text imagecap = new Text(index.select("p").text());
+                imagecap.getStyleClass().add("textimagecap");
+                textFlow3.getChildren().add(imagecap);
+                textFlow3.getStyleClass().add("textflowcenter");
+                continue;
+            }
+            // Add Body ( h3 bold + text thuong)
+            if (index.select("h3").hasText() && !index.parent().hasClass("z-corona-header")) { // h3 text bold ca dong
+                Text boldtext = new Text(index.text());
+                boldtext.getStyleClass().add("textbold");
+                textFlow3.getChildren().add(boldtext);
+                textFlow3.getStyleClass().add("textflowjustify");
+                continue;
+            }
+            if (index.select("p").hasText() && !index.parent().parent().hasClass("inner-article")) { // text thuong
+                Text normaltext = new Text(index.text());
+                normaltext.getStyleClass().add("textnormal");
+                textFlow3.getChildren().add(normaltext);
+                textFlow3.getStyleClass().add("textflowjustify");
+                continue;
+            }
+            // If not adding anything then remove the last index element (the new TextFlow)
+            vbox.getChildren().remove(vbox.getChildren().size() - 1);
+        }
+
+        // Display author
+        TextFlow textFlow4 = new TextFlow();
+        Text text4 = new Text(article.getAuthor());
+        text4.getStyleClass().add("textauthor");
+        textFlow4.getChildren().add(text4);
+        textFlow4.getStyleClass().add("textflowright");
+        vbox.getChildren().add(textFlow4);
+
+        // Link to full article (read original post here.)
+        TextFlow textFlow5 = new TextFlow();
+        Text text5 = new Text("Read the original post ");
+        text5.getStyleClass().add("textReadTheOriginalPost");
+        Hyperlink articleLink = new Hyperlink("here");
+        articleLink.getStyleClass().add("texthyperlink");
+        articleLink.setOnAction(e -> {
+            HostServices services = Helper.getInstance().getHostServices();
+            services.showDocument(article.getLinkToFullArticles());
+        });
+        Text text6 = new Text(".");
+        textFlow5.getChildren().addAll(text5, articleLink, text6);
+        textFlow5.setStyle("-fx-font-style: italic; -fx-font-size: 18; -fx-alignment: left;");
+        vbox.getChildren().add(textFlow5);
+
+        document = null;
+        all = null;
+        fullDate = null;
+        body = null;
+        author = null;
+        originalCategory = null;
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
 
