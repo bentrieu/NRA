@@ -51,6 +51,7 @@ public class Helper extends Application {
             // Set the hyperlink text
             Hyperlink hyperlink = new Hyperlink(stringSplit[i].substring(stringSplit[i].indexOf("</") + 2, stringSplit[i].indexOf("+>")));
             hyperlink.getStyleClass().add("texthyperlink");
+            hyperlink.setMaxSize(800, 800);
             int finalI = i; // create new final variables to set action of lamb (required final variable)
             // Add link into the hyperlink
             hyperlink.setOnAction(e -> {

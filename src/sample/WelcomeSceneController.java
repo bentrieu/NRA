@@ -69,15 +69,11 @@ public class WelcomeSceneController implements Initializable {
         fadeTransition.setOnFinished(e -> {
             Parent nextRoot = null;
             try {
-                Main.stage.setMinWidth(700);
-                Main.stage.setMinHeight(700);
+                Main.stage.setMinWidth(600);
+                Main.stage.setMinHeight(500);
                 Main.stage.getIcons().add(new Image("/resource/newsicon.png"));
                 Main.stage.setTitle("NRA News");
                 Main.stage.setFullScreen(true);
-//                Main.stage.setWidth(1200);
-//                Main.stage.setHeight(900);
-                Main.stage.setMinWidth(500);
-                Main.stage.setMinHeight(500);
 
                 GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
                 int width = gd.getDisplayMode().getWidth();

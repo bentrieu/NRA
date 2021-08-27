@@ -1,84 +1,84 @@
 package sample;
 
-import org.springframework.util.StopWatch;
-
 import java.io.IOException;
 import java.util.ArrayList;
-
-/*This class will have many static array list*/
+import org.springframework.util.StopWatch;
 
 public class ArticlesList {
-    public static ArrayList<Article> vnexpressNewsList = new ArrayList<>();
-    public static ArrayList<Article> vnexpressCovidList = new ArrayList<>();
-    public static ArrayList<Article> vnexpressPoliticsList = new ArrayList<>();
-    public static ArrayList<Article> vnexpressBusinessList = new ArrayList<>();
-    public static ArrayList<Article> vnexpressTechnologyList = new ArrayList<>();
-    public static ArrayList<Article> vnexpressHealthList = new ArrayList<>();
-    public static ArrayList<Article> vnexpressSportsList = new ArrayList<>();
-    public static ArrayList<Article> vnexpressEntertainmentList = new ArrayList<>();
-    public static ArrayList<Article> vnexpressWorldList = new ArrayList<>();
-    public static ArrayList<Article> vnexpressOthersList = new ArrayList<>();
-    public static ArrayList<Article> vnexpressSearchList = new ArrayList<>();
+    public static ArrayList<Article> vnexpressNewsList = new ArrayList();
+    public static ArrayList<Article> vnexpressCovidList = new ArrayList();
+    public static ArrayList<Article> vnexpressPoliticsList = new ArrayList();
+    public static ArrayList<Article> vnexpressBusinessList = new ArrayList();
+    public static ArrayList<Article> vnexpressTechnologyList = new ArrayList();
+    public static ArrayList<Article> vnexpressHealthList = new ArrayList();
+    public static ArrayList<Article> vnexpressSportsList = new ArrayList();
+    public static ArrayList<Article> vnexpressEntertainmentList = new ArrayList();
+    public static ArrayList<Article> vnexpressWorldList = new ArrayList();
+    public static ArrayList<Article> vnexpressOthersList = new ArrayList();
+    public static ArrayList<Article> vnexpressSearchList = new ArrayList();
 
-    public static ArrayList<Article> zingNewsList = new ArrayList<>();
-    public static ArrayList<Article> zingCovidList = new ArrayList<>();
-    public static ArrayList<Article> zingPoliticsList = new ArrayList<>();
-    public static ArrayList<Article> zingBusinessList = new ArrayList<>();
-    public static ArrayList<Article> zingTechnologyList = new ArrayList<>();
-    public static ArrayList<Article> zingHealthList = new ArrayList<>();
-    public static ArrayList<Article> zingSportsList = new ArrayList<>();
-    public static ArrayList<Article> zingEntertainmentList = new ArrayList<>();
-    public static ArrayList<Article> zingWorldList = new ArrayList<>();
-    public static ArrayList<Article> zingOthersList = new ArrayList<>();
-    public static ArrayList<Article> zingSearchList = new ArrayList<>();
+    public static ArrayList<Article> zingNewsList = new ArrayList();
+    public static ArrayList<Article> zingCovidList = new ArrayList();
+    public static ArrayList<Article> zingPoliticsList = new ArrayList();
+    public static ArrayList<Article> zingBusinessList = new ArrayList();
+    public static ArrayList<Article> zingTechnologyList = new ArrayList();
+    public static ArrayList<Article> zingHealthList = new ArrayList();
+    public static ArrayList<Article> zingSportsList = new ArrayList();
+    public static ArrayList<Article> zingEntertainmentList = new ArrayList();
+    public static ArrayList<Article> zingWorldList = new ArrayList();
+    public static ArrayList<Article> zingOthersList = new ArrayList();
+    public static ArrayList<Article> zingSearchList = new ArrayList();
 
-    public static ArrayList<Article> tuoiTreNewsList = new ArrayList<>();
-    public static ArrayList<Article> tuoiTreCovidList = new ArrayList<>();
-    public static ArrayList<Article> tuoiTrePoliticsList = new ArrayList<>();
-    public static ArrayList<Article> tuoiTreBusinessList = new ArrayList<>();
-    public static ArrayList<Article> tuoiTreTechnologyList = new ArrayList<>();
-    public static ArrayList<Article> tuoiTreHealthList = new ArrayList<>();
-    public static ArrayList<Article> tuoiTreSportsList = new ArrayList<>();
-    public static ArrayList<Article> tuoiTreEntertainmentList = new ArrayList<>();
-    public static ArrayList<Article> tuoiTreWorldList = new ArrayList<>();
-    public static ArrayList<Article> tuoiTreOthersList = new ArrayList<>();
-    public static ArrayList<Article> tuoiTreSearchList = new ArrayList<>();
+    public static ArrayList<Article> tuoiTreNewsList = new ArrayList();
+    public static ArrayList<Article> tuoiTreCovidList = new ArrayList();
+    public static ArrayList<Article> tuoiTrePoliticsList = new ArrayList();
+    public static ArrayList<Article> tuoiTreBusinessList = new ArrayList();
+    public static ArrayList<Article> tuoiTreTechnologyList = new ArrayList();
+    public static ArrayList<Article> tuoiTreHealthList = new ArrayList();
+    public static ArrayList<Article> tuoiTreSportsList = new ArrayList();
+    public static ArrayList<Article> tuoiTreEntertainmentList = new ArrayList();
+    public static ArrayList<Article> tuoiTreWorldList = new ArrayList();
+    public static ArrayList<Article> tuoiTreOthersList = new ArrayList();
+    public static ArrayList<Article> tuoiTreSearchList = new ArrayList();
 
-    public static ArrayList<Article> thanhNienNewsList = new ArrayList<>();
-    public static ArrayList<Article> thanhNienCovidList = new ArrayList<>();
-    public static ArrayList<Article> thanhNienPoliticsList = new ArrayList<>();
-    public static ArrayList<Article> thanhNienBusinessList = new ArrayList<>();
-    public static ArrayList<Article> thanhNienTechnologyList = new ArrayList<>();
-    public static ArrayList<Article> thanhNienHealthList = new ArrayList<>();
-    public static ArrayList<Article> thanhNienSportsList = new ArrayList<>();
-    public static ArrayList<Article> thanhNienEntertainmentList = new ArrayList<>();
-    public static ArrayList<Article> thanhNienWorldList = new ArrayList<>();
-    public static ArrayList<Article> thanhNienOthersList = new ArrayList<>();
-    public static ArrayList<Article> thanhNienSearchList = new ArrayList<>();
+    public static ArrayList<Article> thanhNienNewsList = new ArrayList();
+    public static ArrayList<Article> thanhNienCovidList = new ArrayList();
+    public static ArrayList<Article> thanhNienPoliticsList = new ArrayList();
+    public static ArrayList<Article> thanhNienBusinessList = new ArrayList();
+    public static ArrayList<Article> thanhNienTechnologyList = new ArrayList();
+    public static ArrayList<Article> thanhNienHealthList = new ArrayList();
+    public static ArrayList<Article> thanhNienSportsList = new ArrayList();
+    public static ArrayList<Article> thanhNienEntertainmentList = new ArrayList();
+    public static ArrayList<Article> thanhNienWorldList = new ArrayList();
+    public static ArrayList<Article> thanhNienOthersList = new ArrayList();
+    public static ArrayList<Article> thanhNienSearchList = new ArrayList();
 
-    public static ArrayList<Article> nhanDanNewsList = new ArrayList<>();
-    public static ArrayList<Article> nhanDanCovidList = new ArrayList<>();
-    public static ArrayList<Article> nhanDanPoliticsList = new ArrayList<>();
-    public static ArrayList<Article> nhanDanBusinessList = new ArrayList<>();
-    public static ArrayList<Article> nhanDanTechnologyList = new ArrayList<>();
-    public static ArrayList<Article> nhanDanHealthList = new ArrayList<>();
-    public static ArrayList<Article> nhanDanSportsList = new ArrayList<>();
-    public static ArrayList<Article> nhanDanEntertainmentList = new ArrayList<>();
-    public static ArrayList<Article> nhanDanWorldList = new ArrayList<>();
-    public static ArrayList<Article> nhanDanOthersList = new ArrayList<>();
-    public static ArrayList<Article> nhanDanSearchList = new ArrayList<>();
+    public static ArrayList<Article> nhanDanNewsList = new ArrayList();
+    public static ArrayList<Article> nhanDanCovidList = new ArrayList();
+    public static ArrayList<Article> nhanDanPoliticsList = new ArrayList();
+    public static ArrayList<Article> nhanDanBusinessList = new ArrayList();
+    public static ArrayList<Article> nhanDanTechnologyList = new ArrayList();
+    public static ArrayList<Article> nhanDanHealthList = new ArrayList();
+    public static ArrayList<Article> nhanDanSportsList = new ArrayList();
+    public static ArrayList<Article> nhanDanEntertainmentList = new ArrayList();
+    public static ArrayList<Article> nhanDanWorldList = new ArrayList();
+    public static ArrayList<Article> nhanDanOthersList = new ArrayList();
+    public static ArrayList<Article> nhanDanSearchList = new ArrayList();
 
-    public static ArrayList<Article> newsList = new ArrayList<>();
-    public static ArrayList<Article> covidList = new ArrayList<>();
-    public static ArrayList<Article> politicsList = new ArrayList<>();
-    public static ArrayList<Article> businessList = new ArrayList<>();
-    public static ArrayList<Article> technologyList = new ArrayList<>();
-    public static ArrayList<Article> healthList = new ArrayList<>();
-    public static ArrayList<Article> sportsList = new ArrayList<>();
-    public static ArrayList<Article> entertainmentList = new ArrayList<>();
-    public static ArrayList<Article> worldList = new ArrayList<>();
-    public static ArrayList<Article> othersList = new ArrayList<>();
-    public static ArrayList<Article> searchList = new ArrayList<>();
+    public static ArrayList<Article> newsList = new ArrayList();
+    public static ArrayList<Article> covidList = new ArrayList();
+    public static ArrayList<Article> politicsList = new ArrayList();
+    public static ArrayList<Article> businessList = new ArrayList();
+    public static ArrayList<Article> technologyList = new ArrayList();
+    public static ArrayList<Article> healthList = new ArrayList();
+    public static ArrayList<Article> sportsList = new ArrayList();
+    public static ArrayList<Article> entertainmentList = new ArrayList();
+    public static ArrayList<Article> worldList = new ArrayList();
+    public static ArrayList<Article> othersList = new ArrayList();
+    public static ArrayList<Article> searchList = new ArrayList();
+
+    public ArticlesList() {
+    }
 
     public static void getNewsList() throws IOException {
         newsList.clear();
@@ -144,7 +144,6 @@ public class ArticlesList {
         StopWatch stopWatch = new StopWatch("Politics");
         stopWatch.start("vnexpress");
         vnexpressPoliticsList = ArticlesManager.getVnexpressWebList("https://vnexpress.net/thoi-su/chinh-tri", "Politics");
-        ArticlesManager.printShortArticles(vnexpressPoliticsList);
         stopWatch.stop();
         stopWatch.start("zing");
         zingPoliticsList = ArticlesManager.getZingWebList("https://zingnews.vn/chinh-tri.html", "Politics");
@@ -225,7 +224,6 @@ public class ArticlesList {
         nhanDanHealthList.clear();
         StopWatch stopWatch = new StopWatch("Health");
         stopWatch.start("vnexpress");
-//        vnexpressHealthList = ArticlesManager.getVnexpressList("https://vnexpress.net/rss/suc-khoe.rss", "Health");
         vnexpressHealthList = ArticlesManager.getVnexpressWebList("https://vnexpress.net/suc-khoe", "Health");
         stopWatch.stop();
         stopWatch.start("zing");
@@ -349,6 +347,35 @@ public class ArticlesList {
         nhanDanOthersList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/du-lich", "Others");
         stopWatch.stop();
         othersList.addAll(ArticlesManager.getSortedArticlesList(vnexpressOthersList, zingOthersList, tuoiTreOthersList, thanhNienOthersList, nhanDanOthersList));
+        System.out.println(stopWatch.prettyPrint());
+    }
+
+    public static void getSearchList(String keyword) throws IOException {
+        searchList.clear();
+        vnexpressSearchList.clear();
+        zingSearchList.clear();
+        tuoiTreSearchList.clear();
+        nhanDanSearchList.clear();
+        StopWatch stopWatch = new StopWatch("News");
+        stopWatch.start("vnexpress");
+        vnexpressSearchList = ArticlesManager.getVnexpressSearchList(keyword, "Search");
+        stopWatch.stop();
+        stopWatch.start("zing");
+        zingSearchList = ArticlesManager.getZingSearchList(keyword, "Search");
+        stopWatch.stop();
+        stopWatch.start("tuoitre");
+        tuoiTreSearchList = ArticlesManager.getTuoiTreSearchList(keyword, "Search");
+        stopWatch.stop();
+        stopWatch.start("nhandan");
+        nhanDanSearchList = ArticlesManager.getNhanDanSearchList(keyword, "Search");
+        stopWatch.stop();
+
+        try {
+            searchList.addAll(ArticlesManager.getSortedArticlesList(vnexpressSearchList, zingSearchList, tuoiTreSearchList, thanhNienSearchList, nhanDanSearchList));
+        } catch (Exception var3) {
+            searchList.clear();
+        }
+
         System.out.println(stopWatch.prettyPrint());
     }
 }

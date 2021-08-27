@@ -115,28 +115,33 @@ public class ArticlesManager extends Application {
         Elements all = document.select("div.article-list article.article-item:not(.type-hasvideo)");
         // There are no date and original category when searching with tuoitre
 
-        // Add data to searchZingList
-        for (int i = 0; i < 12; i++) {
-            // Create new article object then add the object into the ArrayList
-            searchZingList.add(new Article());
-            // Set source
-            searchZingList.get(i).setSource("zingnews");
-            // Set category manually
-            searchZingList.get(i).setCategory(category);
-            // Set title for each object
-            searchZingList.get(i).setTitle(all.get(i).select("header p.article-title").text());
-            // Set thumb for each object
-            searchZingList.get(i).setThumb(all.get(i).select("p.article-thumbnail img").attr("abs:data-src"));
-            // Set description for each object
-            searchZingList.get(i).setDescription(all.get(i).select("p.article-summary").text());
-            // Set link to full article for each object
-            searchZingList.get(i).setLinkToFullArticles(all.get(i).select("header p.article-title a").attr("abs:href"));
-            // Set date for each object
-            String date = Helper.timeToUnixString3(all.get(i).select("p.article-meta span.date").text() + " " + all.get(i).select("p.article-meta span.time").text());
-            searchZingList.get(i).setDate(date);
-            // Set time ago for each object
-            searchZingList.get(i).setTimeAgo(Helper.timeDiff(date));
+        try {
+            // Add data to searchZingList
+            for (int i = 0; i < 12; i++) {
+                // Create new article object then add the object into the ArrayList
+                searchZingList.add(new Article());
+                // Set source
+                searchZingList.get(i).setSource("zingnews");
+                // Set category manually
+                searchZingList.get(i).setCategory(category);
+                // Set title for each object
+                searchZingList.get(i).setTitle(all.get(i).select("header p.article-title").text());
+                // Set thumb for each object
+                searchZingList.get(i).setThumb(all.get(i).select("p.article-thumbnail img").attr("abs:data-src"));
+                // Set description for each object
+                searchZingList.get(i).setDescription(all.get(i).select("p.article-summary").text());
+                // Set link to full article for each object
+                searchZingList.get(i).setLinkToFullArticles(all.get(i).select("header p.article-title a").attr("abs:href"));
+                // Set date for each object
+                String date = Helper.timeToUnixString3(all.get(i).select("p.article-meta span.date").text() + " " + all.get(i).select("p.article-meta span.time").text());
+                searchZingList.get(i).setDate(date);
+                // Set time ago for each object
+                searchZingList.get(i).setTimeAgo(Helper.timeDiff(date));
+            }
+        } catch (Exception e) {
+            return searchZingList;
         }
+
 
         return searchZingList;
     }
@@ -441,31 +446,35 @@ public class ArticlesManager extends Application {
         Elements thumbAndTitleAndLink = all.select("div.thumb-art");
         // There are no original category when searching with vnexpress
 
-        // Add data to vnexpressNewsList (Title + date + thumb + link)
-        for (int i = 0, k = 0; k < 15; i++, k++) {
-            // Create new article object then add the object into the ArrayList
-            searchVnexpressList.add(new Article());
-            // Set source
-            searchVnexpressList.get(k).setSource("vnexpress");
-            // Set category manually
-            searchVnexpressList.get(k).setCategory(category);
-            // Set title for each object
-            searchVnexpressList.get(k).setTitle(thumbAndTitleAndLink.get(i).select("a").attr("title"));
-            // Set thumb for each object
-            if (thumbAndTitleAndLink.get(i).select("picture img").hasAttr("data-src")) {
-                searchVnexpressList.get(k).setThumb(thumbAndTitleAndLink.get(i).select("picture img").attr("data-src"));
+        try {
+            // Add data to vnexpressNewsList (Title + date + thumb + link)
+            for (int i = 0, k = 0; k < 15; i++, k++) {
+                // Create new article object then add the object into the ArrayList
+                searchVnexpressList.add(new Article());
+                // Set source
+                searchVnexpressList.get(k).setSource("vnexpress");
+                // Set category manually
+                searchVnexpressList.get(k).setCategory(category);
+                // Set title for each object
+                searchVnexpressList.get(k).setTitle(thumbAndTitleAndLink.get(i).select("a").attr("title"));
+                // Set thumb for each object
+                if (thumbAndTitleAndLink.get(i).select("picture img").hasAttr("data-src")) {
+                    searchVnexpressList.get(k).setThumb(thumbAndTitleAndLink.get(i).select("picture img").attr("data-src"));
+                }
+                else {
+                    searchVnexpressList.remove(k);
+                    k--;
+                    continue;
+                }
+                // Set link to full article for each object
+                searchVnexpressList.get(k).setLinkToFullArticles(thumbAndTitleAndLink.get(i).select("a").attr("href"));
+                // Set date for each object
+                searchVnexpressList.get(k).setDate(all.get(i).attr("data-publishtime"));
+                // Set time ago for each object
+                searchVnexpressList.get(k).setTimeAgo(Helper.timeDiff(searchVnexpressList.get(k).getDate()));
             }
-            else {
-                searchVnexpressList.remove(k);
-                k--;
-                continue;
-            }
-            // Set link to full article for each object
-            searchVnexpressList.get(k).setLinkToFullArticles(thumbAndTitleAndLink.get(i).select("a").attr("href"));
-            // Set date for each object
-            searchVnexpressList.get(k).setDate(all.get(i).attr("data-publishtime"));
-            // Set time ago for each object
-            searchVnexpressList.get(k).setTimeAgo(Helper.timeDiff(searchVnexpressList.get(k).getDate()));
+        } catch (Exception e) {
+            return searchVnexpressList;
         }
 
         return searchVnexpressList;
@@ -926,28 +935,32 @@ public class ArticlesManager extends Application {
         Elements all = document.select("ul.list-news-content li.news-item");
         // There are no date and original category when searching with tuoitre
 
-        // Add data to vnexpressNewsList (Title + date + thumb + link)
-        for (int i = 0; i < 15; i++) {
-            // Create new article object then add the object into the ArrayList
-            searchTuoiTreList.add(new Article());
-            // Set source
-            searchTuoiTreList.get(i).setSource("tuoitre");
-            // Set category manually
-            searchTuoiTreList.get(i).setCategory(category);
-            // Set title for each object
-            searchTuoiTreList.get(i).setTitle(all.get(i).select("h3.title-news").text());
-            // Set thumb for each object
-            String linkThumb = all.get(i).select("img").attr("abs:data-src");
-            searchTuoiTreList.get(i).setThumb(linkThumb.replaceFirst("zoom/[_0-9]+/", "thumb_w/586/"));
-            // Set description for each object
-            searchTuoiTreList.get(i).setDescription(all.get(i).select("div.name-news p.sapo").text());
-            // Set link to full article for each object
-            searchTuoiTreList.get(i).setLinkToFullArticles(all.get(i).select("a").first().attr("abs:href"));
-            // Set date
-            String date = linkThumb.substring(linkThumb.indexOf("crop-") + 5, linkThumb.indexOf("crop-") + 15);
-            searchTuoiTreList.get(i).setDate(date);
-            // Set time ago for each object
-            searchTuoiTreList.get(i).setTimeAgo(Helper.timeDiff(date));
+        try {
+            // Add data to vnexpressNewsList (Title + date + thumb + link)
+            for (int i = 0; i < 15; i++) {
+                // Create new article object then add the object into the ArrayList
+                searchTuoiTreList.add(new Article());
+                // Set source
+                searchTuoiTreList.get(i).setSource("tuoitre");
+                // Set category manually
+                searchTuoiTreList.get(i).setCategory(category);
+                // Set title for each object
+                searchTuoiTreList.get(i).setTitle(all.get(i).select("h3.title-news").text());
+                // Set thumb for each object
+                String linkThumb = all.get(i).select("img").attr("abs:data-src");
+                searchTuoiTreList.get(i).setThumb(linkThumb.replaceFirst("zoom/[_0-9]+/", "thumb_w/586/"));
+                // Set description for each object
+                searchTuoiTreList.get(i).setDescription(all.get(i).select("div.name-news p.sapo").text());
+                // Set link to full article for each object
+                searchTuoiTreList.get(i).setLinkToFullArticles(all.get(i).select("a").first().attr("abs:href"));
+                // Set date
+                String date = linkThumb.substring(linkThumb.indexOf("crop-") + 5, linkThumb.indexOf("crop-") + 15);
+                searchTuoiTreList.get(i).setDate(date);
+                // Set time ago for each object
+                searchTuoiTreList.get(i).setTimeAgo(Helper.timeDiff(date));
+            }
+        } catch (Exception e) {
+            return searchTuoiTreList;
         }
 
         return searchTuoiTreList;
@@ -1162,9 +1175,8 @@ public class ArticlesManager extends Application {
     }
 
     /* FROM HERE WILL BE THE FUNCTION FOR THANHNIEN.VN
-       There will be 4 function
+       There will be 3 function
        Get RSS list
-       Get search keyword list
        Get list open from web
        Display the full article  */
     // Thanhnien rss
@@ -1647,8 +1659,7 @@ public class ArticlesManager extends Application {
     }
 
     /* FROM HERE WILL BE THE FUNCTION FOR NHANDAN.VN
-       There will be 4 function
-       Get RSS list
+       There will be 3 function
        Get search keyword list
        Get list open from web
        Display the full article  */
@@ -1671,7 +1682,11 @@ public class ArticlesManager extends Application {
         if (category.equals("News")) maxArticle = 9;
 
         // Add data to vnexpressNewsList (Title + date + thumb + link)
-        for (int i = 0; i < maxArticle; i++) {
+        for (int i = 0, k = 0; i < maxArticle; i++, k++) {
+            if (titleAndLink.get(k).select("a").attr("abs:href").contains("special.nhandan")) {
+                i--;
+                continue;
+            }
             // Create new article object then add the object into the ArrayList
             nhanDanWebList.add(new Article());
             // Set source
@@ -1679,15 +1694,15 @@ public class ArticlesManager extends Application {
             // Set category manually
             nhanDanWebList.get(i).setCategory(category);
             // Set title for each object
-            nhanDanWebList.get(i).setTitle(titleAndLink.get(i).text());
+            nhanDanWebList.get(i).setTitle(titleAndLink.get(k).text());
             // Set date for each object
             String dateTemp;
-            if (all.get(i).select("div.box-meta-small").hasText()) {
-                dateTemp = all.get(i).select("div.box-meta-small").text();
+            if (all.get(k).select("div.box-meta-small").hasText()) {
+                dateTemp = all.get(k).select("div.box-meta-small").text();
                 dateTemp = Helper.timeToUnixString5(dateTemp);
                 nhanDanWebList.get(i).setDate(dateTemp);
             } else {
-                dateTemp = thumb.get(i).select("img").attr("data-src").toLowerCase();
+                dateTemp = thumb.get(k).select("img").attr("data-src").toLowerCase();
                 int endLink = 0;
                 if (dateTemp.contains(".jpg")) endLink = dateTemp.indexOf(".jpg");
                 if (dateTemp.contains(".png")) endLink = dateTemp.indexOf(".png");
@@ -1699,11 +1714,11 @@ public class ArticlesManager extends Application {
             // Set time ago for each object
             nhanDanWebList.get(i).setTimeAgo(Helper.timeDiff(dateTemp));
             // Set thumb for each object
-            String thumbTemp = thumb.get(i).select("img").attr("data-src");
+            String thumbTemp = thumb.get(k).select("img").attr("data-src");
             thumbTemp = thumbTemp.replaceFirst("resize/[^/]+/", "");
             nhanDanWebList.get(i).setThumb(thumbTemp);
             // Set link to full article for each object
-            nhanDanWebList.get(i).setLinkToFullArticles(titleAndLink.get(i).select("a").attr("abs:href"));
+            nhanDanWebList.get(i).setLinkToFullArticles(titleAndLink.get(k).select("a").attr("abs:href"));
         }
 
         return nhanDanWebList;
@@ -1730,7 +1745,7 @@ public class ArticlesManager extends Application {
         // Add data to vnexpressNewsList (Title + date + thumb + link)
         for (int i = 0, k = 0; i < maxArticle; i++, k++) {
             // Eliminate elements don't have thumb
-            if (!all.select("div.box-img a").hasAttr("href")) {
+            if (!all.get(k).select("div").hasClass("box-img")) {
                 i--;
                 continue;
             }
@@ -1784,12 +1799,12 @@ public class ArticlesManager extends Application {
         Elements body = all.select("div.detail-content-body ").select("> p, figure");
         Elements author = all.select("div.box-author");
         Elements originalCategory = document.select("ul.uk-breadcrumb li");
-        Elements fullDate = document.select("div.box-date.pull-left");
+        Elements fullDate = document.select("div.box-date");
         Elements descriptionImage = document.select("div.box-detail-thumb");
 
         // Set fullDate for each object
         if (fullDate.hasText()) {
-            article.setFullDate(fullDate.first().text());
+            article.setFullDate(fullDate.text());
         }
 
         // Set author for each object

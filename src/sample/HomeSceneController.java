@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.animation.TranslateTransition;
+import javafx.application.HostServices;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.NumberBinding;
@@ -34,7 +35,7 @@ import java.util.ResourceBundle;
 public class HomeSceneController implements Initializable {
 
     @FXML
-    private Button menuButton, refreshButton, searchButton, nextCategoryButton, previousCategoryButton, backToHomeButton, copyArticleLinkButton;
+    private Button menuButton, refreshButton, searchButton, nextCategoryButton, previousCategoryButton, backToHomeButton, copyArticleLinkButton, openInBrowserButton;
 
     @FXML
     private ToggleButton homeButton, videoButton, articlesListButton, settingsButton, darkModeButton;
@@ -92,9 +93,18 @@ public class HomeSceneController implements Initializable {
 
     public boolean isDarkMode = true;
 
+    public String searchText = new String();
+    
+    // Settings layout instance
+    public SettingsLayoutController settingsLayoutController;
+    public VBox displaySettingsLayoutVbox = new VBox();
+
+    public boolean animationFinish;
+
     public static StopWatch stopWatch = new StopWatch("My Stop Watch");
 
     public HomeSceneController() {
+        // Setup for layout controller
         // Setup fxml loader
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("Layout.fxml"));
@@ -107,16 +117,88 @@ public class HomeSceneController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (isDarkMode) {
-            displayLayoutVbox.getStylesheets().clear();
-            displayLayoutVbox.getStylesheets().add("/css/cssdarkmode.css");
-        } else {
-            displayLayoutVbox.getStylesheets().clear();
-            displayLayoutVbox.getStylesheets().add("/css/css.css");
-        }
 
         // Get the LayoutController instance of layout.fxml
         layoutController = (LayoutController) loader.getController();
+        
+        
+        // Setup for setting layout controller
+        // Setup fxml loader
+        FXMLLoader loader2 = new FXMLLoader();
+        loader2.setLocation(getClass().getResource("SettingsLayout.fxml"));
+
+        // Get the vbox root of the layout.fxml
+        try {
+            displaySettingsLayoutVbox = (VBox) loader2.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Get the LayoutController instance of layout.fxml
+        settingsLayoutController = (SettingsLayoutController) loader2.getController();
+
+        // Setup display setting vbox
+        StackPane.setAlignment(displaySettingsLayoutVbox, Pos.TOP_LEFT);
+        displaySettingsLayoutVbox.setMinHeight(983);
+        displaySettingsLayoutVbox.setMaxHeight(983);
+        Main.stage.widthProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
+                displaySettingsLayoutVbox.setMaxWidth(t1.doubleValue() - 74);
+                displaySettingsLayoutVbox.setMinWidth(t1.doubleValue() - 74);
+            }
+        });
+        Main.stage.heightProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
+                displaySettingsLayoutVbox.setMaxHeight(t1.doubleValue() - 97); // 136
+                displaySettingsLayoutVbox.setMinHeight(t1.doubleValue() - 97);
+            }
+        });
+
+
+        // Setup settings layout
+        settingsLayoutController.modeToggleGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+            @Override
+            public void changed(ObservableValue<? extends Toggle> observableValue, Toggle toggle, Toggle t1) {
+                darkMode();
+            }
+        });
+        settingsLayoutController.fontToggleGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+            @Override
+            public void changed(ObservableValue<? extends Toggle> observableValue, Toggle toggle, Toggle t1) {
+
+                if (settingsLayoutController.fontToggleGroup.getSelectedToggle() == settingsLayoutController.normalFontSizeRadioButton) {
+                    rootAnchorPane.getStylesheets().remove("/css/verylargefont.css");
+                    displaySettingsLayoutVbox.getStylesheets().remove("/css/verylargefont.css");
+                    displayLayoutVbox.getStylesheets().remove("/css/verylargefont.css");
+
+                    rootAnchorPane.getStylesheets().remove("/css/largefont.css");
+                    displaySettingsLayoutVbox.getStylesheets().remove("/css/largefont.css");
+                    displayLayoutVbox.getStylesheets().remove("/css/largefont.css");
+                }
+
+                if (settingsLayoutController.fontToggleGroup.getSelectedToggle() == settingsLayoutController.largeFontSizeRadioButton) {
+                    rootAnchorPane.getStylesheets().remove("/css/verylargefont.css");
+                    displaySettingsLayoutVbox.getStylesheets().remove("/css/verylargefont.css");
+                    displayLayoutVbox.getStylesheets().remove("/css/verylargefont.css");
+
+                    rootAnchorPane.getStylesheets().add("/css/largefont.css");
+                    displaySettingsLayoutVbox.getStylesheets().add("/css/largefont.css");
+                    displayLayoutVbox.getStylesheets().add("/css/largefont.css");
+                }
+
+                if (settingsLayoutController.fontToggleGroup.getSelectedToggle() == settingsLayoutController.veryLargeFontSizeRadioButton) {
+                    rootAnchorPane.getStylesheets().remove("/css/largefont.css");
+                    displaySettingsLayoutVbox.getStylesheets().remove("/css/largefont.css");
+                    displayLayoutVbox.getStylesheets().remove("/css/largefont.css");
+
+                    rootAnchorPane.getStylesheets().add("/css/verylargefont.css");
+                    displaySettingsLayoutVbox.getStylesheets().add("/css/verylargefont.css");
+                    displayLayoutVbox.getStylesheets().add("/css/verylargefont.css");
+                }
+            }
+        });
     }
 
     @Override
@@ -158,12 +240,30 @@ public class HomeSceneController implements Initializable {
             isDarkMode = false;
         }
 
-        // Set up menuPane + tempPane to be unvisible
+        // Setup tool tip
+        Tooltip darkModeTooltip = new Tooltip("On/Off Dark Mode");
+        darkModeTooltip.setShowDelay(Duration.millis(100));
+        darkModeTooltip.setHideDelay(Duration.ZERO);
+        darkModeButton.setTooltip(darkModeTooltip);
+        Tooltip refreshTooltip = new Tooltip("Refresh Category");
+        refreshTooltip.setShowDelay(Duration.millis(100));
+        refreshTooltip.setHideDelay(Duration.ZERO);
+        refreshButton.setTooltip(refreshTooltip);
+        Tooltip copyLinkTooltip = new Tooltip("Copy Link");
+        copyLinkTooltip.setShowDelay(Duration.millis(100));
+        copyLinkTooltip.setHideDelay(Duration.ZERO);
+        copyArticleLinkButton.setTooltip(copyLinkTooltip);
+        Tooltip openInBrowserTooltip = new Tooltip("Open In Browser");
+        openInBrowserTooltip.setShowDelay(Duration.millis(100));
+        openInBrowserTooltip.setHideDelay(Duration.ZERO);
+        openInBrowserButton.setTooltip(openInBrowserTooltip);
+
+        // Setup menuPane + tempPane to be unvisible
         menuPane.setVisible(false);
         menuPane.setLayoutX(-300);
         tempPane.setVisible(false);
 
-        // Set up visible mode to 2 category arrows
+        // Setup visible mode to 2 category arrows
         nextCategoryButton.setVisible(false);
         previousCategoryButton.setVisible(false);
         articlesListPane.addEventFilter(MouseEvent.MOUSE_ENTERED, e -> {
@@ -269,12 +369,13 @@ public class HomeSceneController implements Initializable {
         nextArticleButton.setGraphic(nextSVG);
         // Set constrain layoutX and layoutY for each button
         previousArticleButton.translateXProperty().bind(stackPane2.layoutXProperty().add(1));
-        previousArticleButton.translateYProperty().bind(mainPane.heightProperty().divide(2));
+        previousArticleButton.translateYProperty().bind(mainPane.heightProperty().subtract(80).divide(2));
         NumberBinding number = Bindings.add(stackPane2.layoutXProperty(), stackPane2.widthProperty());
         nextArticleButton.translateXProperty().bind(number.subtract(30));
-        nextArticleButton.translateYProperty().bind(mainPane.heightProperty().divide(2));
-        previousArticleButton.visibleProperty().bind(stackPane1.visibleProperty());
-        nextArticleButton.visibleProperty().bind(stackPane1.visibleProperty());
+        nextArticleButton.translateYProperty().bind(mainPane.heightProperty().subtract(80).divide(2));
+        previousArticleButton.visibleProperty().bind(stackPane2.visibleProperty());
+        nextArticleButton.visibleProperty().bind(stackPane2.visibleProperty());
+        stackPane2.setVisible(false);
         // Setup action event for each button
         previousArticleButton.setOnAction(e -> {
             try {
@@ -295,10 +396,12 @@ public class HomeSceneController implements Initializable {
         backToHomeButton.visibleProperty().bind(stackPane1.visibleProperty());
 
         // Setup copy article link button visibleProperty
-        copyArticleLinkButton.visibleProperty().bind(stackPane1.visibleProperty());
+        copyArticleLinkButton.visibleProperty().bind(stackPane2.visibleProperty());
+
+        // Setup open in browser button visibleProperty
+        openInBrowserButton.visibleProperty().bind(stackPane2.visibleProperty());
 
         // Setup refresh Button visibleProperty
-//        refreshButton.visibleProperty().bind(stackPane1.visibleProperty().not());
         stackPane1.visibleProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
@@ -337,6 +440,7 @@ public class HomeSceneController implements Initializable {
             TranslateTransition translateTransition2 = new TranslateTransition(Duration.seconds(0.5), mainPane);
             translateTransition2.setByX(+212);
             translateTransition2.play();
+            translateTransition1.setOnFinished(e -> animationFinish = true);
         }
         else {
             menuPane.setVisible(false);
@@ -347,15 +451,16 @@ public class HomeSceneController implements Initializable {
             TranslateTransition translateTransition2 = new TranslateTransition(Duration.seconds(0.5), mainPane);
             translateTransition2.setByX(-212);
             translateTransition2.play();
+            translateTransition1.setOnFinished(e -> animationFinish = false);
         }
     }
 
     public void menu(ActionEvent event) {
         if (!menuPane.isVisible()) {
-            menuPaneSetVisible(true);
+            if (!animationFinish) menuPaneSetVisible(true);
         }
         else {
-            menuPaneSetVisible(false);
+            if (animationFinish) menuPaneSetVisible(false);
         }
     }
     public void home() {
@@ -364,6 +469,7 @@ public class HomeSceneController implements Initializable {
         articlesListButton.setSelected(false);
         settingsButton.setSelected(false);
         todayLabel.setText("Today");
+        backToHome();
     }
     public void video() {
         homeButton.setSelected(false);
@@ -384,7 +490,19 @@ public class HomeSceneController implements Initializable {
         videoButton.setSelected(false);
         articlesListButton.setSelected(false);
         settingsButton.setSelected(true);
-        todayLabel.setText("Settings");
+        if (!stackPane1.getChildren().contains(displaySettingsLayoutVbox)) {
+            homeButton.setSelected(false);
+            videoButton.setSelected(false);
+            articlesListButton.setSelected(false);
+            settingsButton.setSelected(true);
+            todayLabel.setText("Settings");
+            borderPaneUnderScrollPane.setCenter(null);
+            borderPaneUnderScrollPane.setCenter(stackPane1);
+            stackPane1.getChildren().remove(stackPane2);
+            stackPane1.getChildren().add(displaySettingsLayoutVbox);
+            stackPane1.setVisible(true);
+            stackPane2.setVisible(false);
+        }
     }
     public void homeInMenu() {
         menuPaneSetVisible(false);
@@ -404,9 +522,49 @@ public class HomeSceneController implements Initializable {
     }
 
     public void search() {
-        String searchText = searchTextField.getText().trim();
-        searchText = searchText.replaceAll("[\\s]+", " ");
-        System.out.println(searchText);
+        if (!searchTextField.getText().trim().equals("")) {
+            searchText = searchTextField.getText().trim();
+            searchText = searchText.replaceAll("[\\s]+", " ");
+        }
+        scrollPane.setVvalue(0);
+        scrollPane.setHvalue(0);
+        currentCategoryIndex = 10;
+        newsButton.setSelected(false);
+        covidButton.setSelected(false);
+        politicsButton.setSelected(false);
+        businessButton.setSelected(false);
+        technologyButton.setSelected(false);
+        healthButton.setSelected(false);
+        sportsButton.setSelected(false);
+        entertainmentButton.setSelected(false);
+        worldButton.setSelected(false);
+        othersButton.setSelected(false);
+        todayLabel.setText("Search");
+        stackPane1.setVisible(false);
+        borderPaneUnderScrollPane.setCenter(null);
+        borderPaneUnderScrollPane.setCenter(loadingStackPane);
+        stackPane1.setVisible(false);
+        stackPane2.setVisible(false);
+        String finalSearchText = searchText;
+        Thread t1 = new Thread(() -> {
+            try {
+                ArticlesList.getSearchList(finalSearchText);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Platform.runLater(() -> {
+                borderPaneUnderScrollPane.setCenter(null);
+                try {
+                    borderPaneUnderScrollPane.setCenter(setPaginationList(ArticlesList.searchList, new Pagination()));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                System.gc();
+                Runtime.getRuntime().gc();
+            });
+        });
+        t1.start();
+        exitSearch();
     }
     public void refresh() throws IOException {
         switch (currentCategoryIndex) {
@@ -440,11 +598,21 @@ public class HomeSceneController implements Initializable {
             case 9:
                 displayOthersList();
                 break;
+            case 10:
+                search();
+                break;
             default:
                 break;
         }
     }
-    public void backToHome(ActionEvent event) {
+    public void backToHome() {
+        // setup home
+        homeButton.setSelected(true);
+        videoButton.setSelected(false);
+        articlesListButton.setSelected(false);
+        settingsButton.setSelected(false);
+        todayLabel.setText("Today");
+
         if (!tempPane.isVisible()) {
             scrollPane.setVvalue(0);
             for (int i = 0; i < ArticlesManager.changeListenerList.size(); i++) {
@@ -459,7 +627,9 @@ public class HomeSceneController implements Initializable {
             displayFullArticleVbox.getChildren().clear();
             borderPaneUnderScrollPane.setCenter(null);
             borderPaneUnderScrollPane.setCenter(currentPagination);
+            stackPane1.getChildren().remove(displaySettingsLayoutVbox);
             stackPane1.setVisible(false);
+            stackPane2.setVisible(false);
             System.gc();
             Runtime.getRuntime().gc();
             homeButton.requestFocus();
@@ -471,8 +641,11 @@ public class HomeSceneController implements Initializable {
         final Clipboard clipboard = Clipboard.getSystemClipboard();
         final ClipboardContent content = new ClipboardContent();
         content.putString(currentCategoryList.get(currentArticleIndex).getLinkToFullArticles());
-//        content.putHtml("<b>Some</b> text");
         clipboard.setContent(content);
+    }
+    public void openInBrowser() {
+        HostServices services = Helper.getInstance().getHostServices();
+        services.showDocument(currentCategoryList.get(currentArticleIndex).getLinkToFullArticles());
     }
     public void takeSearchInput(MouseEvent event) {
         tempPane.setVisible(true);
@@ -484,6 +657,12 @@ public class HomeSceneController implements Initializable {
     }
 
     public void displayNewsList() throws IOException {
+        homeButton.setSelected(true);
+        videoButton.setSelected(false);
+        articlesListButton.setSelected(false);
+        settingsButton.setSelected(false);
+
+
         scrollPane.setVvalue(0);
         scrollPane.setHvalue(0);
         currentCategoryIndex = 0;
@@ -500,6 +679,7 @@ public class HomeSceneController implements Initializable {
         othersButton.setSelected(false);
         todayLabel.setText("Today");
         stackPane1.setVisible(false);
+        stackPane1.getChildren().remove(displaySettingsLayoutVbox);
         borderPaneUnderScrollPane.setCenter(null);
         borderPaneUnderScrollPane.setCenter(loadingStackPane);
         Thread t1 = new Thread(() -> {
@@ -512,7 +692,6 @@ public class HomeSceneController implements Initializable {
                 borderPaneUnderScrollPane.setCenter(null);
                 try {
                     borderPaneUnderScrollPane.setCenter(setPaginationList(ArticlesList.newsList, new Pagination()));
-
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -523,6 +702,12 @@ public class HomeSceneController implements Initializable {
         t1.start();
     }
     public void displayCovidList() throws IOException {
+        homeButton.setSelected(true);
+        videoButton.setSelected(false);
+        articlesListButton.setSelected(false);
+        settingsButton.setSelected(false);
+
+
         scrollPane.setVvalue(0);
         scrollPane.setHvalue(0);
         currentCategoryIndex = 1;
@@ -551,7 +736,6 @@ public class HomeSceneController implements Initializable {
                 borderPaneUnderScrollPane.setCenter(null);
                 try {
                     borderPaneUnderScrollPane.setCenter(setPaginationList(ArticlesList.covidList, new Pagination()));
-
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -562,6 +746,12 @@ public class HomeSceneController implements Initializable {
         t1.start();
     }
     public void displayPoliticsList() throws IOException {
+        homeButton.setSelected(true);
+        videoButton.setSelected(false);
+        articlesListButton.setSelected(false);
+        settingsButton.setSelected(false);
+
+
         scrollPane.setVvalue(0);
         scrollPane.setHvalue(0);
         currentCategoryIndex = 2;
@@ -601,6 +791,12 @@ public class HomeSceneController implements Initializable {
         t1.start();
     }
     public void displayBusinessList() throws IOException {
+        homeButton.setSelected(true);
+        videoButton.setSelected(false);
+        articlesListButton.setSelected(false);
+        settingsButton.setSelected(false);
+
+
         scrollPane.setVvalue(0);
         scrollPane.setHvalue(0);
         currentCategoryIndex = 3;
@@ -640,6 +836,12 @@ public class HomeSceneController implements Initializable {
         t1.start();
     }
     public void displayTechnologyList() throws IOException {
+        homeButton.setSelected(true);
+        videoButton.setSelected(false);
+        articlesListButton.setSelected(false);
+        settingsButton.setSelected(false);
+
+
         scrollPane.setVvalue(0);
         scrollPane.setHvalue(0);
         currentCategoryIndex = 4;
@@ -679,6 +881,12 @@ public class HomeSceneController implements Initializable {
         t1.start();
     }
     public void displayHealthList() throws IOException {
+        homeButton.setSelected(true);
+        videoButton.setSelected(false);
+        articlesListButton.setSelected(false);
+        settingsButton.setSelected(false);
+
+
         scrollPane.setVvalue(0);
         scrollPane.setHvalue(0);
         currentCategoryIndex = 5;
@@ -718,6 +926,12 @@ public class HomeSceneController implements Initializable {
         t1.start();
     }
     public void displaySportsList() throws IOException {
+        homeButton.setSelected(true);
+        videoButton.setSelected(false);
+        articlesListButton.setSelected(false);
+        settingsButton.setSelected(false);
+
+
         scrollPane.setVvalue(0);
         scrollPane.setHvalue(0);
         currentCategoryIndex = 6;
@@ -757,6 +971,12 @@ public class HomeSceneController implements Initializable {
         t1.start();
     }
     public void displayEntertainmentList() throws IOException {
+        homeButton.setSelected(true);
+        videoButton.setSelected(false);
+        articlesListButton.setSelected(false);
+        settingsButton.setSelected(false);
+
+
         scrollPane.setVvalue(0);
         scrollPane.setHvalue(0);
         currentCategoryIndex = 7;
@@ -796,6 +1016,12 @@ public class HomeSceneController implements Initializable {
         t1.start();
     }
     public void displayWorldList() throws IOException {
+        homeButton.setSelected(true);
+        videoButton.setSelected(false);
+        articlesListButton.setSelected(false);
+        settingsButton.setSelected(false);
+
+
         scrollPane.setVvalue(0);
         scrollPane.setHvalue(0);
         currentCategoryIndex = 8;
@@ -835,6 +1061,12 @@ public class HomeSceneController implements Initializable {
         t1.start();
     }
     public void displayOthersList() throws IOException {
+        homeButton.setSelected(true);
+        videoButton.setSelected(false);
+        articlesListButton.setSelected(false);
+        settingsButton.setSelected(false);
+
+
         scrollPane.setVvalue(0);
         scrollPane.setHvalue(0);
         currentCategoryIndex = 9;
@@ -875,6 +1107,12 @@ public class HomeSceneController implements Initializable {
     }
 
     public void previousCategoryList() throws IOException {
+        homeButton.setSelected(true);
+        videoButton.setSelected(false);
+        articlesListButton.setSelected(false);
+        settingsButton.setSelected(false);
+
+
         ToggleButton b = (ToggleButton) categoryHbox.getChildren().get(categoryHbox.getChildren().size() - 1);
         categoryHbox.getChildren().remove(categoryHbox.getChildren().size() - 1);
         categoryHbox.getChildren().add(0, b);
@@ -910,6 +1148,12 @@ public class HomeSceneController implements Initializable {
         }
     }
     public void nextCategoryList() throws IOException {
+        homeButton.setSelected(true);
+        videoButton.setSelected(false);
+        articlesListButton.setSelected(false);
+        settingsButton.setSelected(false);
+
+
         ToggleButton b = (ToggleButton) categoryHbox.getChildren().get(0);
         categoryHbox.getChildren().remove(0);
         categoryHbox.getChildren().add(b);
@@ -946,6 +1190,10 @@ public class HomeSceneController implements Initializable {
     }
 
     public void previousArticle() throws IOException {
+        homeButton.setSelected(true);
+        videoButton.setSelected(false);
+        articlesListButton.setSelected(false);
+        settingsButton.setSelected(false);
 
         if (currentArticleIndex > 0) {
             scrollPane.setVvalue(0);
@@ -1018,6 +1266,10 @@ public class HomeSceneController implements Initializable {
         }
     }
     public void nextArticle() throws IOException {
+        homeButton.setSelected(true);
+        videoButton.setSelected(false);
+        articlesListButton.setSelected(false);
+        settingsButton.setSelected(false);
 
         if (currentArticleIndex < 49) {
             scrollPane.setVvalue(0);
@@ -1089,22 +1341,30 @@ public class HomeSceneController implements Initializable {
         }
     }
 
-    public void darkMode(ActionEvent event) {
+    public void darkMode() {
         if (isDarkMode) {
+            if (settingsLayoutController.fontToggleGroup.getSelectedToggle() != settingsLayoutController.normalFontSizeRadioButton) settingsLayoutController.normalFontSizeRadioButton.setSelected(true);
+            settingsLayoutController.lightModeRadioButton.setSelected(true);
             loadingImageView.setImage(whiteLoadingImage);
             rootAnchorPane.getStylesheets().clear();
             rootAnchorPane.getStylesheets().add("/css/css.css");
             displayLayoutVbox.getStylesheets().clear();
             displayLayoutVbox.getStylesheets().add("/css/css.css");
             darkModeSVGPath.setContent("M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z");
+            displaySettingsLayoutVbox.getStylesheets().clear();
+            displaySettingsLayoutVbox.getStylesheets().add("/css/css.css");
             isDarkMode = false;
         } else {
+            if (settingsLayoutController.fontToggleGroup.getSelectedToggle() != settingsLayoutController.normalFontSizeRadioButton) settingsLayoutController.normalFontSizeRadioButton.setSelected(true);
+            settingsLayoutController.darkModeRadioButton.setSelected(true);
             loadingImageView.setImage(darkLoadingImage);
             rootAnchorPane.getStylesheets().clear();
             rootAnchorPane.getStylesheets().add("/css/cssdarkmode.css");
             displayLayoutVbox.getStylesheets().clear();
             displayLayoutVbox.getStylesheets().add("/css/cssdarkmode.css");
             darkModeSVGPath.setContent("M15 3L15 8L17 8L17 3 Z M 7.5 6.09375L6.09375 7.5L9.625 11.0625L11.0625 9.625 Z M 24.5 6.09375L20.9375 9.625L22.375 11.0625L25.90625 7.5 Z M 16 9C12.144531 9 9 12.144531 9 16C9 19.855469 12.144531 23 16 23C19.855469 23 23 19.855469 23 16C23 12.144531 19.855469 9 16 9 Z M 16 11C18.773438 11 21 13.226563 21 16C21 18.773438 18.773438 21 16 21C13.226563 21 11 18.773438 11 16C11 13.226563 13.226563 11 16 11 Z M 3 15L3 17L8 17L8 15 Z M 24 15L24 17L29 17L29 15 Z M 9.625 20.9375L6.09375 24.5L7.5 25.90625L11.0625 22.375 Z M 22.375 20.9375L20.9375 22.375L24.5 25.90625L25.90625 24.5 Z M 15 24L15 29L17 29L17 24Z");
+            displaySettingsLayoutVbox.getStylesheets().clear();
+            displaySettingsLayoutVbox.getStylesheets().add("/css/cssdarkmode.css");
             isDarkMode = true;
         }
     }
@@ -1112,7 +1372,23 @@ public class HomeSceneController implements Initializable {
     public Pagination setPaginationList(ArrayList<Article> articlesList, Pagination newPagination) throws IOException {
         newPagination.setMaxHeight(983);
         newPagination.setMinHeight(983);
-        newPagination.setPageCount(5);
+
+        currentCategoryList = articlesList;
+        int size = (int) Math.floor(currentCategoryList.size() / 10);
+        if (size >= 5) newPagination.setPageCount(5);
+        else newPagination.setPageCount(size);
+        if (size < 1) {
+            newPagination.setPageCount(1);
+            newPagination.setPageFactory(pageindex -> {
+                Text text = new Text("There is nothing to show!");
+                text.getStyleClass().add("textnormal");
+                return text;
+            });
+
+            System.gc();
+            Runtime.getRuntime().gc();
+            return newPagination;
+        }
 
         currentPagination = newPagination;
 
@@ -1121,8 +1397,6 @@ public class HomeSceneController implements Initializable {
         Text[] textSourceList = {layoutController.textSource1, layoutController.textSource2, layoutController.textSource3, layoutController.textSource4, layoutController.textSource5, layoutController.textSource6, layoutController.textSource7, layoutController.textSource8, layoutController.textSource9, layoutController.textSource10};
         Text[] textTitleList = {layoutController.textTitle1, layoutController.textTitle2, layoutController.textTitle3, layoutController.textTitle4, layoutController.textTitle5, layoutController.textTitle6, layoutController.textTitle7, layoutController.textTitle8, layoutController.textTitle9, layoutController.textTitle10};
         Button[] buttonList = {layoutController.button1, layoutController.button2, layoutController.button3, layoutController.button4, layoutController.button5, layoutController.button6, layoutController.button7, layoutController.button8, layoutController.button9, layoutController.button10};
-
-        currentCategoryList = articlesList;
 
         newPagination.setPageFactory(pageindex -> {
             for (int i = 10 * pageindex, k = 0; i < 10 + 10 * pageindex; i++, k++) {
@@ -1148,6 +1422,9 @@ public class HomeSceneController implements Initializable {
                                     borderPaneUnderScrollPane.setCenter(null);
                                     borderPaneUnderScrollPane.setCenter(stackPane1);
                                     stackPane1.setVisible(true);
+                                    stackPane2.setVisible(true);
+                                    stackPane1.getChildren().remove(displaySettingsLayoutVbox);
+                                    if (!stackPane1.getChildren().contains(stackPane2)) stackPane1.getChildren().add(stackPane2);
                                     System.gc();
                                     Runtime.getRuntime().gc();
                                 });
@@ -1173,6 +1450,9 @@ public class HomeSceneController implements Initializable {
                                     borderPaneUnderScrollPane.setCenter(null);
                                     borderPaneUnderScrollPane.setCenter(stackPane1);
                                     stackPane1.setVisible(true);
+                                    stackPane2.setVisible(true);
+                                    stackPane1.getChildren().remove(displaySettingsLayoutVbox);
+                                    if (!stackPane1.getChildren().contains(stackPane2)) stackPane1.getChildren().add(stackPane2);
                                     System.gc();
                                     Runtime.getRuntime().gc();
                                 });
@@ -1198,6 +1478,9 @@ public class HomeSceneController implements Initializable {
                                     borderPaneUnderScrollPane.setCenter(null);
                                     borderPaneUnderScrollPane.setCenter(stackPane1);
                                     stackPane1.setVisible(true);
+                                    stackPane2.setVisible(true);
+                                    stackPane1.getChildren().remove(displaySettingsLayoutVbox);
+                                    if (!stackPane1.getChildren().contains(stackPane2)) stackPane1.getChildren().add(stackPane2);
                                     System.gc();
                                     Runtime.getRuntime().gc();
                                 });
@@ -1223,6 +1506,9 @@ public class HomeSceneController implements Initializable {
                                     borderPaneUnderScrollPane.setCenter(null);
                                     borderPaneUnderScrollPane.setCenter(stackPane1);
                                     stackPane1.setVisible(true);
+                                    stackPane2.setVisible(true);
+                                    stackPane1.getChildren().remove(displaySettingsLayoutVbox);
+                                    if (!stackPane1.getChildren().contains(stackPane2)) stackPane1.getChildren().add(stackPane2);
                                     System.gc();
                                     Runtime.getRuntime().gc();
                                 });
@@ -1248,6 +1534,9 @@ public class HomeSceneController implements Initializable {
                                     borderPaneUnderScrollPane.setCenter(null);
                                     borderPaneUnderScrollPane.setCenter(stackPane1);
                                     stackPane1.setVisible(true);
+                                    stackPane2.setVisible(true);
+                                    stackPane1.getChildren().remove(displaySettingsLayoutVbox);
+                                    if (!stackPane1.getChildren().contains(stackPane2)) stackPane1.getChildren().add(stackPane2);
                                     System.gc();
                                     Runtime.getRuntime().gc();
                                 });

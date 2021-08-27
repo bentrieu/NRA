@@ -50,8 +50,13 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <HBox maxWidth="-Infinity" minWidth="-Infinity" prefWidth="144.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <HBox maxWidth="-Infinity" minWidth="-Infinity" prefWidth="192.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
+                  <Button fx:id="openInBrowserButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#openInBrowser" prefHeight="50.0" prefWidth="48.0" styleClass="button2">
+                     <graphic>
+                        <SVGPath content="M12 2C8.741068 2 5.8486894 3.5773875 4.0214844 6L4 6L4 6.0273438C2.7499527 7.6966931 2 9.7603852 2 12C2 17.511003 6.4889971 22 12 22C17.511003 22 22 17.511003 22 12C22 6.4889971 17.511003 2 12 2 z M 15 4.5839844C17.935098 5.7673596 20 8.6326468 20 12C20 14.087831 19.200587 15.978318 17.898438 17.400391C17.642583 16.590687 16.894567 16 16 16L15 16L15 13C15 12.448 14.552 12 14 12L9 12L9 10L10 10C10.552 10 11 9.552 11 9L11 7L13 7C14.105 7 15 6.105 15 5L15 4.5839844 z M 4.2070312 10.207031L6 12L9 15L9 16C9 17.105 9.895 18 11 18L11 19.931641C7.0457719 19.441154 4 16.090654 4 12C4 11.382188 4.0755245 10.784033 4.2070312 10.207031 z" styleClass="iconsvg" />
+                     </graphic>
+                  </Button>
                   <Button fx:id="copyArticleLinkButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#copyArticleLink" prefHeight="50.0" prefWidth="48.0" styleClass="button2">
                      <graphic>
                         <SVGPath content="M6.354 5.5H4a3 3 0 0 0 0 6h3a3 3 0 0 0 2.83-4H9c-.086 0-.17.01-.25.031A2 2 0 0 1 7 10.5H4a2 2 0 1 1 0-4h1.535c.218-.376.495-.714.82-1z M9 5.5a3 3 0 0 0-2.83 4h1.098A2 2 0 0 1 9 6.5h3a2 2 0 1 1 0 4h-1.535a4.02 4.02 0 0 1-.82 1H12a3 3 0 1 0 0-6H9z" styleClass="iconsvg" />
@@ -92,7 +97,7 @@
                               <Font size="16.0" />
                            </font>
                         </ToggleButton>
-                        <ToggleButton fx:id="businessButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayBusinessList" prefHeight="45.0" prefWidth="100.0" styleClass="button3" text="Business">
+                        <ToggleButton fx:id="businessButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayBusinessList" prefHeight="45.0" prefWidth="120.0" styleClass="button3" text="Business">
                            <font>
                               <Font size="16.0" />
                            </font>
@@ -112,7 +117,7 @@
                               <Font size="16.0" />
                            </font>
                         </ToggleButton>
-                        <ToggleButton fx:id="entertainmentButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayEntertainmentList" prefHeight="45.0" prefWidth="150.0" styleClass="button3" text="Entertainment">
+                        <ToggleButton fx:id="entertainmentButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayEntertainmentList" prefHeight="45.0" prefWidth="160.0" styleClass="button3" text="Entertainment">
                            <font>
                               <Font size="16.0" />
                            </font>
@@ -197,11 +202,11 @@
          </children>
       </AnchorPane>
       <AnchorPane fx:id="tempPane" onMouseClicked="#exitSearch" opacity="0.33" style="-fx-background-color: black;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <HBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" spacing="10.0" AnchorPane.leftAnchor="175.0" AnchorPane.rightAnchor="144.0" AnchorPane.topAnchor="0.0">
+      <HBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" spacing="10.0" AnchorPane.leftAnchor="192.0" AnchorPane.rightAnchor="192.0" AnchorPane.topAnchor="0.0">
          <children>
             <Button fx:id="backToHomeButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#backToHome" prefHeight="35.0" prefWidth="35.0" styleClass="buttonsearch" HBox.hgrow="NEVER">
                <graphic>
-                  <SVGPath content="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z" styleClass="iconsvg" />
+                  <SVGPath content="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" styleClass="iconsvg" />
                </graphic>
             </Button>
             <TextField fx:id="searchTextField" onMouseClicked="#takeSearchInput" prefHeight="38.0" prefWidth="426.0" promptText="Search Interests and Web" styleClass="text-field" HBox.hgrow="NEVER">

@@ -23,6 +23,30 @@
     -fx-text-fill: -fx-black;
 }
 
+/*Setting styling from here*/
+.text36 {
+    -fx-fill: -fx-black;
+    -fx-font-size: 36;
+}
+.text20 {
+    -fx-fill: -fx-black;
+    -fx-font-size: 20;
+}
+.radio-button {
+    -fx-text-fill: -fx-black;
+}
+.radio-button .radio  {
+    -fx-background-color: -fx-white;
+    -fx-background-insets: 0;
+    -fx-border-width: 0.5;
+    -fx-border-radius: 100%;
+    -fx-border-color: -fx-blue;
+}
+.radio-button:selected .radio .dot {
+    -fx-background-color: -fx-blue;
+    -fx-background-insets: 0;
+}
+
 /*Home Scene styling from here*/
 /*button*/
 .iconsvg {
@@ -232,6 +256,13 @@
 }
 
 /*Home layout start from here*/
+.tooltip {
+    -fx-background-color: -fx-primary;
+    -fx-border-radius: 0;
+    -fx-border-width: 1;
+    -fx-border-color: -fx-black;
+    -fx-text-fill: -fx-black;
+}
 .stackpane {
     -fx-background-color: -fx-primary;
 }
@@ -392,6 +423,7 @@
 .texthyperlink {
     -fx-font-size: 18;
     -fx-padding: 0;
+    -fx-wrap-text: true;
 }
 .descriptionHbox {
     -fx-background-color: -fx-descriptionHbox;
