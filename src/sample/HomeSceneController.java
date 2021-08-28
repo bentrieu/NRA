@@ -324,7 +324,82 @@ public class HomeSceneController implements Initializable {
                 exitSearch();
             }
         });
+    }
 
+    public void menuPaneSetVisible(boolean a) {
+        if (a) {
+            menuPane.setVisible(true);
+            TranslateTransition translateTransition1 = new TranslateTransition(Duration.seconds(0.5), menuPane);
+            translateTransition1.setByX(+300);
+            translateTransition1.play();
+
+            TranslateTransition translateTransition2 = new TranslateTransition(Duration.seconds(0.5), mainPane);
+            translateTransition2.setByX(+212);
+            translateTransition2.play();
+        }
+        else {
+            menuPane.setVisible(false);
+            TranslateTransition translateTransition1 = new TranslateTransition(Duration.seconds(0.5), menuPane);
+            translateTransition1.setByX(-300);
+            translateTransition1.play();
+
+            TranslateTransition translateTransition2 = new TranslateTransition(Duration.seconds(0.5), mainPane);
+            translateTransition2.setByX(-212);
+            translateTransition2.play();
+        }
+    }
+
+    public void menu(ActionEvent event) {
+        if (!menuPane.isVisible()) {
+            menuPaneSetVisible(true);
+        }
+        else {
+            menuPaneSetVisible(false);
+        }
+    }
+    public void home() {
+        homeButton.setSelected(true);
+        videoButton.setSelected(false);
+        articlesListButton.setSelected(false);
+        settingsButton.setSelected(false);
+        todayLabel.setText("Today");
+    }
+    public void video() {
+        homeButton.setSelected(false);
+        videoButton.setSelected(true);
+        articlesListButton.setSelected(false);
+        settingsButton.setSelected(false);
+        todayLabel.setText("Video Hub");
+    }
+    public void articlesList() {
+        homeButton.setSelected(false);
+        videoButton.setSelected(false);
+        articlesListButton.setSelected(true);
+        settingsButton.setSelected(false);
+        todayLabel.setText("Articles List");
+    }
+    public void settings() {
+        homeButton.setSelected(false);
+        videoButton.setSelected(false);
+        articlesListButton.setSelected(false);
+        settingsButton.setSelected(true);
+        todayLabel.setText("Settings");
+    }
+    public void homeInMenu() {
+        menuPaneSetVisible(false);
+        home();
+    }
+    public void videoInMenu() {
+        menuPaneSetVisible(false);
+        video();
+    }
+    public void articlesListInMenu() {
+        menuPaneSetVisible(false);
+        articlesList();
+    }
+    public void settingsInMenu() {
+        menuPaneSetVisible(false);
+        settings();
     }
 
 }
