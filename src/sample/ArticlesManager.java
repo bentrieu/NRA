@@ -29,6 +29,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.regex.Pattern;
 
 /* This class will have static functions that manipulate articles*/
 
@@ -436,6 +437,72 @@ public class ArticlesManager extends Application {
         }
 
         return searchVnexpressList;
+    }
+
+    // Vnexpress web link: https://vnexpress.net/thoi-su/chinh-tri
+    public static ArrayList<Article> getVnexpressWebList(String webURL, String category) throws IOException {
+        // Create new list to store data then return
+        ArrayList<Article> getVnexpressWebList = new ArrayList<>();
+
+        // Set up jsoup
+        Document document = Jsoup.connect(webURL).userAgent("mozilla").get();
+        Elements all = document.select("article:not(.off-thumb).item-news-common");
+        Elements links = all.select("div.thumb-art a[href]");
+        Elements titles = all.select("div.thumb-art a[title]");
+//        Elements descriptions = document.getElementsByClass("description");
+        Elements pictures = all.select("div.thumb-art img[itemprop]");
+
+        int maxSize = pictures.size() - all.select("ins.adsbyeclick").size();
+        if (maxSize > 15) maxSize = 15;
+
+        //Add scraped items into the class
+        for(int i = 0, k = 0; i < maxSize; i++, k++){
+            // Remove ads elements
+            if (all.get(k).select("ins").hasClass("adsbyeclick")) {
+                i--;
+                continue;
+            }
+            // Create new object
+            getVnexpressWebList.add(new Article());
+            // Set source
+            getVnexpressWebList.get(i).setSource("vnexpress");
+            // Set category
+            getVnexpressWebList.get(i).setCategory(category);
+            // Set title
+            getVnexpressWebList.get(i).setTitle(titles.get(k).attr("title"));
+            // Set link to full article
+            getVnexpressWebList.get(i).setLinkToFullArticles(links.get(k).attr("abs:href"));
+//            // Set description
+//            getVnexpressWebList.get(i).setDescription(descriptions.get(i).text());
+            // Set thumb
+            String linkThumb;
+            if(pictures.get(k).getElementsByTag("img").attr("abs:data-src").isEmpty()){
+                linkThumb = pictures.get(k).getElementsByTag("img").attr("abs:src");
+                getVnexpressWebList.get(i).setThumb(pictures.get(k).getElementsByTag("img").attr("abs:src"));
+            } else {
+                linkThumb = pictures.get(k).getElementsByTag("img").attr("abs:data-src");
+                getVnexpressWebList.get(i).setThumb(pictures.get(k).getElementsByTag("img").attr("abs:data-src"));
+            }
+            // Set date
+            if (all.hasAttr("data-publishtime")) {
+                getVnexpressWebList.get(i).setDate(all.get(k).attr("data-publishtime"));
+            } else {
+                if (linkThumb.indexOf(".jpg") > 0) getVnexpressWebList.get(i).setDate(linkThumb.substring(linkThumb.indexOf(".jpg") - 10, linkThumb.indexOf(".jpg")));
+                if (linkThumb.indexOf(".png") > 0) getVnexpressWebList.get(i).setDate(linkThumb.substring(linkThumb.indexOf(".png") - 10, linkThumb.indexOf(".png")));
+                if (linkThumb.indexOf(".jpeg") > 0) getVnexpressWebList.get(i).setDate(linkThumb.substring(linkThumb.indexOf(".jpeg") - 10, linkThumb.indexOf(".jpeg")));
+                if (linkThumb.indexOf(".gif") > 0) getVnexpressWebList.get(i).setDate(linkThumb.substring(linkThumb.indexOf(".gif") - 10, linkThumb.indexOf(".gif")));
+            }
+            String pattern = "[0-9]{10}";
+            if (!Pattern.matches(pattern, getVnexpressWebList.get(i).getDate())) {
+                getVnexpressWebList.remove(i);
+                i--;
+                continue;
+            }
+            // Set time ago
+            getVnexpressWebList.get(i).setTimeAgo(Helper.timeDiff(getVnexpressWebList.get(i).getDate()));
+        }
+
+        return getVnexpressWebList;
     }
 
     @Override
