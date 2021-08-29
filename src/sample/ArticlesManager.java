@@ -391,6 +391,53 @@ public class ArticlesManager extends Application {
         return vnexpressNewsList;
     }
 
+    // Vnexpress search
+    public static ArrayList<Article> getVnexpressSearchList(String keyWord, String category) throws IOException {
+        // Create new arraylist of article for return
+        ArrayList<Article> searchVnexpressList = new ArrayList<>();
+
+        // Convert keyWord into link that can scrape
+        String convertedKeyWord = "https://timkiem.vnexpress.net/?q=" + keyWord.trim().replaceAll("\\s", "%20").toLowerCase();
+
+        /* Bắt đầu từ đây là add dữ liệu cho sort article
+         */
+        // Setup jsoup for scraping data
+        final String url = convertedKeyWord;
+        Document document = Jsoup.connect(url).userAgent("Mozilla").get();
+        Elements all = document.select("div.width_common.list-news-subfolder article[data-publishtime]");
+        Elements thumbAndTitleAndLink = all.select("div.thumb-art");
+        // There are no original category when searching with vnexpress
+
+        // Add data to vnexpressNewsList (Title + date + thumb + link)
+        for (int i = 0, k = 0; k < 15; i++, k++) {
+            // Create new article object then add the object into the ArrayList
+            searchVnexpressList.add(new Article());
+            // Set source
+            searchVnexpressList.get(k).setSource("vnexpress");
+            // Set category manually
+            searchVnexpressList.get(k).setCategory(category);
+            // Set title for each object
+            searchVnexpressList.get(k).setTitle(thumbAndTitleAndLink.get(i).select("a").attr("title"));
+            // Set thumb for each object
+            if (thumbAndTitleAndLink.get(i).select("picture img").hasAttr("data-src")) {
+                searchVnexpressList.get(k).setThumb(thumbAndTitleAndLink.get(i).select("picture img").attr("data-src"));
+            }
+            else {
+                searchVnexpressList.remove(k);
+                k--;
+                continue;
+            }
+            // Set link to full article for each object
+            searchVnexpressList.get(k).setLinkToFullArticles(thumbAndTitleAndLink.get(i).select("a").attr("href"));
+            // Set date for each object
+            searchVnexpressList.get(k).setDate(all.get(i).attr("data-publishtime"));
+            // Set time ago for each object
+            searchVnexpressList.get(k).setTimeAgo(Helper.timeDiff(searchVnexpressList.get(k).getDate()));
+        }
+
+        return searchVnexpressList;
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
 
