@@ -332,6 +332,65 @@ public class ArticlesManager extends Application {
         originalCategory = null;
     }
 
+    /* FROM HERE WILL BE THE FUNCTION FOR VNEXPRESS.COM
+       There will be 4 function
+       Get RSS list
+       Get search keyword list
+       Get list open from web
+       Display the full article  */
+    // Vnexpress rss
+    public static ArrayList<Article> getVnexpressList(String urlToShortArticle, String category) throws IOException {
+        // Create new arraylist of article for return
+        ArrayList<Article> vnexpressNewsList = new ArrayList<>();
+
+        /* Bắt đầu từ đây là add dữ liệu cho sort article
+         */
+        // Setup jsoup for scraping data
+        final String url = urlToShortArticle;
+        Document document = Jsoup.connect(url).userAgent("Mozilla").get();
+        Elements all = document.select("item");
+
+        // Add data to vnexpressNewsList (Title + date + thumb + link + category + source)
+        for (int i = 0, k = 0; k < 15; i++, k++) {
+            // Eliminate the elements do not have thumb
+            if (!all.get(i).select("description").text().contains("img")) {
+                k--;
+                continue;
+            }
+            // Create new article object then add the object into the ArrayList
+            vnexpressNewsList.add(new Article());
+            // Get the description (link + thumb) of each object => Then cut into link + thumb
+            String description = all.get(i).select("description").text();
+            int startLink = description.indexOf("\"");
+            int endLink = description.indexOf("\"", startLink + 1);
+            int startThumb = description.indexOf("\"", endLink + 1);
+            int endThumb = description.indexOf("\"", startThumb + 1);
+            // Set thumb for object
+            if (endThumb > 2) {
+                vnexpressNewsList.get(k).setThumb(description.substring(startThumb + 1, endThumb));
+            }
+            else {
+                vnexpressNewsList.remove(k);
+                k--;
+                continue;
+            }
+            // Set title for each object
+            vnexpressNewsList.get(k).setTitle(all.get(i).select("title").text());
+            // Set date for each object
+            vnexpressNewsList.get(k).setDate(Helper.timeToUnixString2(all.get(i).select("pubdate").text()));
+            // Set timeago for each object
+            vnexpressNewsList.get(k).setTimeAgo(Helper.timeDiff(vnexpressNewsList.get(k).getDate()));
+            // Set link for object
+            vnexpressNewsList.get(k).setLinkToFullArticles(all.get(i).select("link").text());
+            // Set category
+            vnexpressNewsList.get(k).setCategory(category);
+            // Set source
+            vnexpressNewsList.get(k).setSource("vnexpress");
+        }
+
+        return vnexpressNewsList;
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
 
