@@ -505,6 +505,283 @@ public class ArticlesManager extends Application {
         return getVnexpressWebList;
     }
 
+    // Vnexpres full article scrape and display
+    public static void displayVnexpressFullArticle(Article article, VBox vbox) throws IOException {
+        // Clear vbox
+        vbox.getChildren().clear();
+
+        // Setup jsoup for each article
+        String fullArticlesUrl = article.getLinkToFullArticles(); // link to full article
+        Document document = Jsoup.connect(fullArticlesUrl).userAgent("Mozilla").get();
+        Elements description = document.select("div.container p.description");
+        Elements fck_detail = document.select("div.container article.fck_detail p, figcaption, img[data-src], source[data-src-image], p.author_mail, div.videoContainter"); //div.fig-picture == img[data-src], source[data-src-image]
+        Elements time = document.select("div.container span.date");
+        Elements originalCategory = document.select("div.container ul.breadcrumb li");
+        Elements titleFolder = document.select("div.title-folder");
+        Elements audioContainer = document.select("div.audioContainter");
+
+        // Set fullDate for each object
+        article.setFullDate(time.text());
+
+        // Set original category
+        article.setOriginalCategory("");
+        int k = 0;
+        for (Element index : originalCategory) {
+            if (k != originalCategory.size() - 1) article.setOriginalCategory(article.getOriginalCategory() + index.text() + " - ");
+            else article.setOriginalCategory(article.getOriginalCategory() + index.text());
+            k++;
+        }
+
+        // Display category
+        Text text = new Text(article.getCategory());
+        text.getStyleClass().add("textcategory");
+        TextFlow textFlow = new TextFlow(text);
+        vbox.getChildren().add(textFlow);
+
+        // Display image source
+        Image imageSource = new Image("resource/vnexpress_big.png", 200, 200, true, false, true);
+        ImageView imageViewSource = new ImageView();
+        imageViewSource.setCache(true);
+        imageViewSource.setCacheHint(CacheHint.SPEED);
+        imageViewSource.setImage(imageSource);
+        imageViewSource.setPreserveRatio(true);
+        imageViewSource.setFitHeight(60);
+        vbox.getChildren().add(imageViewSource);
+
+        // Display original category + fullDate
+        if (titleFolder.hasText()) {
+            Text text0 = new Text(titleFolder.text() + "\n" + article.getFullDate());
+            text0.getStyleClass().add("textfulldate");
+            TextFlow textFlow0 = new TextFlow(text0);
+            textFlow0.getStyleClass().add("textflowcenter");
+            vbox.getChildren().add(textFlow0);
+        } else {
+            Text text0 = new Text(article.getOriginalCategory() + "\n" + article.getFullDate());
+            text0.getStyleClass().add("textfulldate");
+            TextFlow textFlow0 = new TextFlow(text0);
+            textFlow0.getStyleClass().add("textflowcenter");
+            vbox.getChildren().add(textFlow0);
+        }
+
+        // Display title
+        Text text1 = new Text(article.getTitle());
+        text1.getStyleClass().add("texttitle");
+        TextFlow textFlow1 = new TextFlow(text1);
+        textFlow1.setStyle("-fx-text-alignment: justify");
+        vbox.getChildren().add(textFlow1);
+
+        // Display description
+        if (description.select("span.location-stamp").hasText()) {
+            article.setDescription(description.select("span.location-stamp").text() + " - " + description.text().replaceFirst(description.select("span.location-stamp").text(), ""));
+            Text text2 = new Text(article.getDescription());
+            text2.getStyleClass().add("textdescription");
+            TextFlow textFlow2 = new TextFlow(text2);
+            textFlow2.getStyleClass().add("textflowjustify");
+            HBox descriptionHbox = new HBox();
+            descriptionHbox.getStyleClass().add("descriptionHbox");
+            descriptionHbox.getChildren().add(textFlow2);
+            vbox.getChildren().add(descriptionHbox);
+        }
+        else {
+            article.setDescription(description.text());
+            Text text2 = new Text(article.getDescription());
+            text2.getStyleClass().add("textdescription");
+            TextFlow textFlow2 = new TextFlow(text2);
+            textFlow2.getStyleClass().add("textflowjustify");
+            HBox descriptionHbox = new HBox();
+            descriptionHbox.getStyleClass().add("descriptionHbox");
+            descriptionHbox.getChildren().add(textFlow2);
+            vbox.getChildren().add(descriptionHbox);
+        }
+
+        if (audioContainer.select("audio").hasAttr("src") || audioContainer.select("audio").hasAttr("data-src")) {
+            Text text510 = new Text("Listen audio on this ");
+            text510.getStyleClass().add("textReadTheOriginalPost");
+            Hyperlink articleLink10 = new Hyperlink("link");
+            articleLink10.getStyleClass().add("texthyperlink");
+            articleLink10.setOnAction(e -> {
+                HostServices services = Helper.getInstance().getHostServices();
+                services.showDocument(article.getLinkToFullArticles());
+            });
+            Text text610 = new Text(".");
+            text610.getStyleClass().add("textReadTheOriginalPost");
+            TextFlow textFlow30 = new TextFlow();
+            textFlow30.getChildren().addAll(text510, articleLink10, text610);
+            textFlow30.getStyleClass().add("textflowcenteritalic");
+            vbox.getChildren().add(textFlow30);
+        }
+
+        // Display all content
+        for (Element index : fck_detail) {
+            TextFlow textFlow3 = new TextFlow();
+            vbox.getChildren().add(textFlow3);
+            // Add video open link caption
+            if (index.hasClass("videoContainter")) {
+                Text text51 = new Text("Watch video on this ");
+                text51.getStyleClass().add("textReadTheOriginalPost");
+                Hyperlink articleLink1 = new Hyperlink("link");
+                articleLink1.getStyleClass().add("texthyperlink");
+                articleLink1.setOnAction(e -> {
+                    HostServices services = Helper.getInstance().getHostServices();
+                    services.showDocument(article.getLinkToFullArticles());
+                });
+                Text text61 = new Text(".");
+                text61.getStyleClass().add("textReadTheOriginalPost");
+                textFlow3.getChildren().addAll(text51, articleLink1, text61);
+                textFlow3.getStyleClass().add("textflowcenteritalic");
+                continue;
+            }
+            // Image cap
+            if (index.select("figcaption").hasText()) { // image_cap
+                Text imagecap = new Text(index.select("p.Image").text());
+                imagecap.getStyleClass().add("textimagecap");
+                textFlow3.getChildren().add(imagecap);
+                textFlow3.getStyleClass().add("textflowcenter");
+                continue;
+            }
+            // Add image
+            if (index.select("img").hasAttr("data-src") || index.select("source").hasAttr("data-src-image")) {
+                ImageView imageView = new ImageView();
+                imageView.setCache(true);
+                imageView.setCacheHint(CacheHint.SPEED);
+                if (index.select("img").hasAttr("data-src")) {
+                    imageView.setImage(new Image(index.select("img").attr("data-src"), 600, 600, true, false, true));
+                }
+                else imageView.setImage(new Image(index.select("source").attr("data-src-image"), 600, 600, true, false, true));
+                imageView.setPreserveRatio(true);
+                // Set the initial fitwidth for imageview
+                if (Main.stage.getWidth() < 900) {
+                    imageView.setFitWidth(Main.stage.getWidth() - 140);
+                }
+                if (Main.stage.getWidth() >= 900) {
+                    imageView.setFitWidth(800);
+                }
+                // Bind the fitwidth property of imageView with stagewidth property
+                ChangeListener<Number> changeListener = new ChangeListener<Number>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
+                        if (t1.doubleValue() < 900) {
+                            imageView.setFitWidth(t1.doubleValue() - 140);
+                        }
+                        if (t1.doubleValue() >= 900) {
+                            imageView.setFitWidth(800);
+                        }
+                    }
+                };
+                changeListenerList.add(changeListener);
+                Main.stage.widthProperty().addListener(changeListener);
+                vbox.getChildren().remove(vbox.getChildren().size() - 1);
+                vbox.getChildren().add(imageView);
+                continue;
+            }
+            // Eliminate the p.Normal tag with their parent has class "box_brief_info"
+            if (index.parent().hasClass("box_brief_info")) {
+                vbox.getChildren().remove(vbox.getChildren().size() - 1);
+                continue;
+            }
+            // Eliminate the p.Normal tag with their parent has class "item_slide_show"
+            if (index.parent().parent().parent().hasClass("item_slide_show")) {
+                vbox.getChildren().remove(vbox.getChildren().size() - 1);
+                continue;
+            }
+            // Add body (text)
+            if (index.hasText()) {
+                // Hyper link
+                try {
+                    if (index.getElementsByTag("a").hasText()) {
+                        textFlow3 = Helper.getHyperLink(index);
+                        vbox.getChildren().remove(vbox.getChildren().size() - 1);
+                        vbox.getChildren().add(textFlow3);
+                        continue;
+                    }
+                } catch (Exception e) {
+
+                }
+                // Add author
+                if (index.attr("style").contains("right") || index.hasAttr("align")) {
+                    Text author = new Text(index.text());
+                    author.getStyleClass().add("textauthor");
+                    textFlow3.getChildren().add(author);
+                    textFlow3.getStyleClass().add("textflowright");
+                    continue;
+                }
+                // Strong text
+                if (index.getElementsByTag("strong").hasText()) {
+                    if (index.hasClass("author_mail") || index.hasClass("author")) {
+                        Text author2 = new Text(index.text());
+                        author2.getStyleClass().add("textbold");
+                        textFlow3.getChildren().add(author2);
+                        textFlow3.getStyleClass().add("textflowright");
+                        continue;
+                    }
+                    else { // làm tương tự như hyper link
+                        String string = index.text().replaceAll(index.select("strong").text(), "<strong>" + index.select("strong").text() + "</strong>");
+                        String[] stringSplit = string.split("<strong>");
+                        if (!stringSplit[0].isEmpty()) {
+                            Text tempText = new Text(stringSplit[0]);
+                            tempText.getStyleClass().add("textnormal");
+                            textFlow3.getChildren().add(tempText);
+                            textFlow3.getStyleClass().add("textflowjustify");
+                        }
+                        for (int i = 1; i < stringSplit.length; i++) {
+                            Text textTemp = new Text(stringSplit[i].substring(0, stringSplit[i].indexOf("</strong>")));
+                            textTemp.getStyleClass().add("textbold");
+                            Text textTemp1 = new Text(stringSplit[i].substring(stringSplit[i].indexOf("</strong>") + 9));
+                            textTemp1.getStyleClass().add("textnormal");
+                            textFlow3.getChildren().addAll(textTemp, textTemp1);
+                            textFlow3.getStyleClass().add("textflowjustify");
+                        }
+                        continue;
+                    }
+                }
+                // normal text
+                else {
+                    if (index.parent().hasAttr("itemprop")) {
+                        vbox.getChildren().remove(vbox.getChildren().size() - 1);
+                        continue;
+                    }
+                    Text textNormal = new Text(index.text());
+                    textNormal.getStyleClass().add("textnormal");
+                    textFlow3.getChildren().add(textNormal);
+                    textFlow3.getStyleClass().add("textflowjustify");
+                }
+                continue;
+            }
+            // Add author in some special case
+            if (index.select("p.author_mail").hasText()) { // tác giả (có bài viết tác giả phải lấy kiểu này, không lấy bằng text thông thường được)
+                Text author3 = new Text(index.text());
+                author3.getStyleClass().add("textbold");
+                textFlow3.getChildren().add(author3);
+                textFlow3.getStyleClass().add("textflowright");
+                continue;
+            }
+            // If not adding anything then remove the last index element (the new TextFlow)
+            vbox.getChildren().remove(vbox.getChildren().size() - 1);
+        }
+
+        // Link to full article (read original post here.)
+        TextFlow textFlow5 = new TextFlow();
+        Text text5 = new Text("Read the original post ");
+        text5.getStyleClass().add("textReadTheOriginalPost");
+        Hyperlink articleLink = new Hyperlink("here");
+        articleLink.getStyleClass().add("texthyperlink");
+        articleLink.setOnAction(e -> {
+            HostServices services = Helper.getInstance().getHostServices();
+            services.showDocument(article.getLinkToFullArticles());
+        });
+        Text text6 = new Text(".");
+        textFlow5.getChildren().addAll(text5, articleLink, text6);
+        textFlow5.setStyle("-fx-font-style: italic; -fx-font-size: 18; -fx-alignment: left;");
+        vbox.getChildren().add(textFlow5);
+
+        fullArticlesUrl = null;
+        document = null;
+        description = null;
+        fck_detail = null;
+        time = null;
+        originalCategory = null;
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
 
