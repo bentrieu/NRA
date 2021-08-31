@@ -20,6 +20,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /* This class will have static functions that manipulate articles*/
@@ -55,17 +56,13 @@ public class ArticlesManager extends Application {
 //        else {
 //            all = document.select("section#news-latest div.article-list article.article-item.type-text, section#news-latest div.article-list article.article-item.type-picture");
 //        }
-            thumb = all.select("p.article-thumbnail img");
-            titleAndLink = all.select("p.article-title a[href]");
-            description = all.select("p.article-summary");
-            dateAndCategory = all.select("p.article-meta");
         } else {
             all = document.select("section.section-featured article, div.article-list article");
-            thumb = all.select("p.article-thumbnail img");
-            titleAndLink = all.select("p.article-title a[href]");
-            description = all.select("p.article-summary");
-            dateAndCategory = all.select("p.article-meta");
         }
+        thumb = all.select("p.article-thumbnail img");
+        titleAndLink = all.select("p.article-title a[href]");
+        description = all.select("p.article-summary");
+        dateAndCategory = all.select("p.article-meta");
 
 
         // Add data to vnexpressNewsList (Title + date + thumb + link)
@@ -291,15 +288,12 @@ public class ArticlesManager extends Application {
                     imageView.setFitWidth(800);
                 }
                 // Bind the fitwidth property of imageView with stagewidth property
-                ChangeListener<Number> changeListener = new ChangeListener<Number>() {
-                    @Override
-                    public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
-                        if (t1.doubleValue() < 900) {
-                            imageView.setFitWidth(t1.doubleValue() - 140);
-                        }
-                        if (t1.doubleValue() >= 900) {
-                            imageView.setFitWidth(800);
-                        }
+                ChangeListener<Number> changeListener = (observableValue, number, t1) -> {
+                    if (t1.doubleValue() < 900) {
+                        imageView.setFitWidth(t1.doubleValue() - 140);
+                    }
+                    if (t1.doubleValue() >= 900) {
+                        imageView.setFitWidth(800);
                     }
                 };
                 changeListenerList.add(changeListener);
@@ -705,15 +699,12 @@ public class ArticlesManager extends Application {
                     imageView.setFitWidth(800);
                 }
                 // Bind the fitwidth property of imageView with stagewidth property
-                ChangeListener<Number> changeListener = new ChangeListener<Number>() {
-                    @Override
-                    public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
-                        if (t1.doubleValue() < 900) {
-                            imageView.setFitWidth(t1.doubleValue() - 140);
-                        }
-                        if (t1.doubleValue() >= 900) {
-                            imageView.setFitWidth(800);
-                        }
+                ChangeListener<Number> changeListener = (observableValue, number, t1) -> {
+                    if (t1.doubleValue() < 900) {
+                        imageView.setFitWidth(t1.doubleValue() - 140);
+                    }
+                    if (t1.doubleValue() >= 900) {
+                        imageView.setFitWidth(800);
                     }
                 };
                 changeListenerList.add(changeListener);
@@ -743,7 +734,7 @@ public class ArticlesManager extends Application {
                         continue;
                     }
                 } catch (Exception e) {
-
+                    System.out.println("Hyper link exception");
                 }
                 // Add author
                 if (index.attr("style").contains("right") || index.hasAttr("align")) {
@@ -760,7 +751,6 @@ public class ArticlesManager extends Application {
                         author2.getStyleClass().add("textbold");
                         textFlow3.getChildren().add(author2);
                         textFlow3.getStyleClass().add("textflowright");
-                        continue;
                     }
                     else { // làm tương tự như hyper link
                         String string = index.text().replaceAll(index.select("strong").text(), "<strong>" + index.select("strong").text() + "</strong>");
@@ -779,8 +769,8 @@ public class ArticlesManager extends Application {
                             textFlow3.getChildren().addAll(textTemp, textTemp1);
                             textFlow3.getStyleClass().add("textflowjustify");
                         }
-                        continue;
                     }
+                    continue;
                 }
                 // normal text
                 else {
@@ -961,7 +951,11 @@ public class ArticlesManager extends Application {
                 // Set link to full article for each object
                 searchTuoiTreList.get(i).setLinkToFullArticles(all.get(i).select("a").first().attr("abs:href"));
                 // Set date
-                String date = linkThumb.substring(linkThumb.indexOf("crop-") + 5, linkThumb.indexOf("crop-") + 15);
+                Pattern pattern = Pattern.compile("[0-9]+\\.(jpg|jpeg|png|gif)");
+                Matcher matcher = pattern.matcher(linkThumb);
+                int startTime = 0;
+                if (matcher.find()) startTime = matcher.start();
+                String date = linkThumb.substring(startTime, startTime + 10);
                 searchTuoiTreList.get(i).setDate(date);
                 // Set time ago for each object
                 searchTuoiTreList.get(i).setTimeAgo(Helper.timeDiff(date));
@@ -1086,15 +1080,12 @@ public class ArticlesManager extends Application {
                     imageView.setFitWidth(800);
                 }
                 // Bind the fitwidth property of imageView with stagewidth property
-                ChangeListener<Number> changeListener = new ChangeListener<Number>() {
-                    @Override
-                    public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
-                        if (t1.doubleValue() < 900) {
-                            imageView.setFitWidth(t1.doubleValue() - 140);
-                        }
-                        if (t1.doubleValue() >= 900) {
-                            imageView.setFitWidth(800);
-                        }
+                ChangeListener<Number> changeListener = (observableValue, number, t1) -> {
+                    if (t1.doubleValue() < 900) {
+                        imageView.setFitWidth(t1.doubleValue() - 140);
+                    }
+                    if (t1.doubleValue() >= 900) {
+                        imageView.setFitWidth(800);
                     }
                 };
                 changeListenerList.add(changeListener);
@@ -1119,7 +1110,7 @@ public class ArticlesManager extends Application {
                         continue;
                     }
                 } catch (Exception e) {
-
+                    System.out.println("Hyperlink exception");
                 }
                 // Bold text
                 if (index.select("b").hasText()) {
@@ -1260,7 +1251,7 @@ public class ArticlesManager extends Application {
         Elements date = all.select("time[rel]");
 
         int maxSize = 15;
-        if (category.equals("Sports")) maxSize = 10;
+        if (category.equals("Sports")) maxSize = 8;
 
         // Add data to vnexpressNewsList (Title + date + thumb + link)
         for (int i = 0, k = 0; k < maxSize; i++, k++) {
@@ -1446,15 +1437,12 @@ public class ArticlesManager extends Application {
                 imageView0.setFitWidth(800);
             }
             // Bind the fitwidth property of imageView with stagewidth property
-            ChangeListener<Number> changeListener0 = new ChangeListener<Number>() {
-                @Override
-                public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
-                    if (t1.doubleValue() < 900) {
-                        imageView0.setFitWidth(t1.doubleValue() - 140);
-                    }
-                    if (t1.doubleValue() >= 900) {
-                        imageView0.setFitWidth(800);
-                    }
+            ChangeListener<Number> changeListener0 = (observableValue, number, t1) -> {
+                if (t1.doubleValue() < 900) {
+                    imageView0.setFitWidth(t1.doubleValue() - 140);
+                }
+                if (t1.doubleValue() >= 900) {
+                    imageView0.setFitWidth(800);
                 }
             };
             changeListenerList.add(changeListener0);
@@ -1530,15 +1518,12 @@ public class ArticlesManager extends Application {
                     imageView.setFitWidth(800);
                 }
                 // Bind the fitwidth property of imageView with stagewidth property
-                ChangeListener<Number> changeListener = new ChangeListener<Number>() {
-                    @Override
-                    public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
-                        if (t1.doubleValue() < 900) {
-                            imageView.setFitWidth(t1.doubleValue() - 140);
-                        }
-                        if (t1.doubleValue() >= 900) {
-                            imageView.setFitWidth(800);
-                        }
+                ChangeListener<Number> changeListener = (observableValue, number, t1) -> {
+                    if (t1.doubleValue() < 900) {
+                        imageView.setFitWidth(t1.doubleValue() - 140);
+                    }
+                    if (t1.doubleValue() >= 900) {
+                        imageView.setFitWidth(800);
                     }
                 };
                 changeListenerList.add(changeListener);
@@ -1566,7 +1551,7 @@ public class ArticlesManager extends Application {
                         continue;
                     }
                 } catch (Exception e) {
-
+                    System.out.println("Hyperlink exception");
                 }
                 // Bold text
                 if (index.is("h2")) {
@@ -1711,7 +1696,6 @@ public class ArticlesManager extends Application {
             if (all.get(k).select("div.box-meta-small").hasText()) {
                 dateTemp = all.get(k).select("div.box-meta-small").text();
                 dateTemp = Helper.timeToUnixString5(dateTemp);
-                nhanDanWebList.get(i).setDate(dateTemp);
             } else {
                 dateTemp = thumb.get(k).select("img").attr("data-src").toLowerCase();
                 int endLink = 0;
@@ -1720,8 +1704,8 @@ public class ArticlesManager extends Application {
                 if (dateTemp.contains(".jpeg")) endLink = dateTemp.indexOf(".jpeg");
                 if (dateTemp.contains(".gif")) endLink = dateTemp.indexOf(".gif");
                 dateTemp = dateTemp.substring(endLink - 13, endLink - 3);
-                nhanDanWebList.get(i).setDate(dateTemp);
             }
+            nhanDanWebList.get(i).setDate(dateTemp);
             // Set time ago for each object
             nhanDanWebList.get(i).setTimeAgo(Helper.timeDiff(dateTemp));
             // Set thumb for each object
@@ -1774,7 +1758,6 @@ public class ArticlesManager extends Application {
                 if (all.get(i).select("div.box-meta-small").hasText()) {
                     dateTemp = all.get(k).select("div.box-meta-small").text();
                     dateTemp = Helper.timeToUnixString5(dateTemp);
-                    nhanDanWebList.get(i).setDate(dateTemp);
                 } else {
                     dateTemp = all.get(k).select("div.box-img img").attr("abs:data-src").toLowerCase();
                     int endLink = 0;
@@ -1783,8 +1766,8 @@ public class ArticlesManager extends Application {
                     if (dateTemp.contains(".jpeg")) endLink = dateTemp.indexOf(".jpeg");
                     if (dateTemp.contains(".gif")) endLink = dateTemp.indexOf(".gif");
                     dateTemp = dateTemp.substring(endLink - 13, endLink - 3);
-                    nhanDanWebList.get(i).setDate(dateTemp);
                 }
+                nhanDanWebList.get(i).setDate(dateTemp);
                 // Set time ago for each object
                 nhanDanWebList.get(i).setTimeAgo(Helper.timeDiff(dateTemp));
                 // Set thumb for each object
@@ -1901,15 +1884,12 @@ public class ArticlesManager extends Application {
                 imageView0.setFitWidth(800);
             }
             // Bind the fitwidth property of imageView with stagewidth property
-            ChangeListener<Number> changeListener = new ChangeListener<Number>() {
-                @Override
-                public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
-                    if (t1.doubleValue() < 900) {
-                        imageView0.setFitWidth(t1.doubleValue() - 140);
-                    }
-                    if (t1.doubleValue() >= 900) {
-                        imageView0.setFitWidth(800);
-                    }
+            ChangeListener<Number> changeListener = (observableValue, number, t1) -> {
+                if (t1.doubleValue() < 900) {
+                    imageView0.setFitWidth(t1.doubleValue() - 140);
+                }
+                if (t1.doubleValue() >= 900) {
+                    imageView0.setFitWidth(800);
                 }
             };
             changeListenerList.add(changeListener);
@@ -1965,15 +1945,12 @@ public class ArticlesManager extends Application {
                     imageView.setFitWidth(800);
                 }
                 // Bind the fitwidth property of imageView with stagewidth property
-                ChangeListener<Number> changeListener = new ChangeListener<Number>() {
-                    @Override
-                    public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
-                        if (t1.doubleValue() < 900) {
-                            imageView.setFitWidth(t1.doubleValue() - 140);
-                        }
-                        if (t1.doubleValue() >= 900) {
-                            imageView.setFitWidth(800);
-                        }
+                ChangeListener<Number> changeListener = (observableValue, number, t1) -> {
+                    if (t1.doubleValue() < 900) {
+                        imageView.setFitWidth(t1.doubleValue() - 140);
+                    }
+                    if (t1.doubleValue() >= 900) {
+                        imageView.setFitWidth(800);
                     }
                 };
                 changeListenerList.add(changeListener);
@@ -2067,33 +2044,11 @@ public class ArticlesManager extends Application {
     public static ArrayList<Article> sortArticle(ArrayList<Article> list1, ArrayList<Article> list2, ArrayList<Article> list3, ArrayList<Article> list4, ArrayList<Article> list5) {
         ArrayList<Article> sortedArticles = new ArrayList<>();
         //sort each list
-        Collections.sort(list1, new Comparator<Article>() {
-            @Override
-            public int compare(Article o1, Article o2) {
-                return o2.getDate().compareTo(o1.getDate());
-            }
-        });
-        Collections.sort(list2, new Comparator<Article>() {
-            @Override
-            public int compare(Article o1, Article o2) {
-                return o2.getDate().compareTo(o1.getDate());
-            }
-        });Collections.sort(list3, new Comparator<Article>() {
-            @Override
-            public int compare(Article o1, Article o2) {
-                return o2.getDate().compareTo(o1.getDate());
-            }
-        });Collections.sort(list4, new Comparator<Article>() {
-            @Override
-            public int compare(Article o1, Article o2) {
-                return o2.getDate().compareTo(o1.getDate());
-            }
-        });Collections.sort(list5, new Comparator<Article>() {
-            @Override
-            public int compare(Article o1, Article o2) {
-                return o2.getDate().compareTo(o1.getDate());
-            }
-        });
+        list1.sort((o1, o2) -> o2.getDate().compareTo(o1.getDate()));
+        list2.sort((o1, o2) -> o2.getDate().compareTo(o1.getDate()));
+        list3.sort((o1, o2) -> o2.getDate().compareTo(o1.getDate()));
+        list4.sort((o1, o2) -> o2.getDate().compareTo(o1.getDate()));
+        list5.sort((o1, o2) -> o2.getDate().compareTo(o1.getDate()));
 
         //sort 5 list
         int a = 0;  //index của list1
@@ -2141,7 +2096,7 @@ public class ArticlesManager extends Application {
         return Math.max(date1, Math.max(date2, Math.max(date3, Math.max(date4, date5))));
     }
 
-    //
+    // Sort 2
     public static ArrayList<Article> getSortedArticlesList(ArrayList<Article> list1, ArrayList<Article> list2, ArrayList<Article> list3, ArrayList<Article> list4, ArrayList<Article> list5) {
         ArrayList<Article> sortedArticles = new ArrayList<>();
         sortedArticles.addAll(list1);
@@ -2149,22 +2104,15 @@ public class ArticlesManager extends Application {
         sortedArticles.addAll(list3);
         sortedArticles.addAll(list4);
         sortedArticles.addAll(list5);
-        Collections.sort(sortedArticles, new Comparator<Article>() {
-            @Override
-            public int compare(Article o1, Article o2) {
-                if (Long.parseLong(o1.getDate()) - Long.parseLong(o2.getDate()) == 0) return -1;
-                return Long.parseLong(o1.getDate()) - Long.parseLong(o2.getDate()) > 0 ? -1 : 1;
-            }
+        sortedArticles.sort((o1, o2) -> {
+            if (Long.parseLong(o1.getDate()) - Long.parseLong(o2.getDate()) == 0) return -1;
+            return Long.parseLong(o1.getDate()) - Long.parseLong(o2.getDate()) > 0 ? -1 : 1;
         });
         return sortedArticles;
     }
 
     /* FROM HERE IS PRINT FUNCTION
      */
-    public static void printFullArticles(ArrayList<Article> vnexpressNewsList) {
-
-    }
-
     public static void printShortArticles(ArrayList<Article> vnexpressNewsList) {
         int k = 0;
         for (Article i : vnexpressNewsList) {

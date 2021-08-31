@@ -1,15 +1,16 @@
 .label {
     -fx-font-size: 20;
-    -fx-font-weight: bold;
 }
 .text36 {
-    -fx-fill: -fx-black;
     -fx-font-size: 44;
 }
 .text20 {
-    -fx-fill: -fx-black;
     -fx-font-size: 25;
 }
+.radio-button {
+    -fx-font-size: 20;
+}
+
 .button3 {
     -fx-font-size: 20;
 }
@@ -38,9 +39,6 @@
 }
 .texttitle {
     -fx-font-size: 46;
-    -fx-font-weight: bold;
-    -fx-text-alignment: justify;
-    -fx-fill: -fx-black;
 }
 .textdescription {
     -fx-font-size: 22;

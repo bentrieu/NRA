@@ -13,12 +13,9 @@ import java.io.IOException;
 public class Main extends Application {
     public static Stage stage;
 
-    double initialX, initialY;
-
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Stage stage = new Stage();
-        Main.stage = stage;
+        Main.stage = new Stage();
 
         // Load the first news category
         try {
