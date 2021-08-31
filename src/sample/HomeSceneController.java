@@ -401,5 +401,83 @@ public class HomeSceneController implements Initializable {
         menuPaneSetVisible(false);
         settings();
     }
-
+    public void search() {
+        String searchText = searchTextField.getText().trim();
+        searchText = searchText.replaceAll("[\\s]+", " ");
+        System.out.println(searchText);
+    }
+    public void refresh() throws IOException {
+        switch (currentCategoryIndex) {
+            case 0:
+                displayNewsList();
+                break;
+            case 1:
+                displayCovidList();
+                break;
+            case 2:
+                displayPoliticsList();
+                break;
+            case 3:
+                displayBusinessList();
+                break;
+            case 4:
+                displayTechnologyList();
+                break;
+            case 5:
+                displayHealthList();
+                break;
+            case 6:
+                displaySportsList();
+                break;
+            case 7:
+                displayEntertainmentList();
+                break;
+            case 8:
+                displayWorldList();
+                break;
+            case 9:
+                displayOthersList();
+                break;
+            default:
+                break;
+        }
+    }
+    public void backToHome(ActionEvent event) {
+        if (!tempPane.isVisible()) {
+            scrollPane.setVvalue(0);
+            for (int i = 0; i < ArticlesManager.changeListenerList.size(); i++) {
+                Main.stage.widthProperty().removeListener(ArticlesManager.changeListenerList.get(i));
+            }
+            ArticlesManager.changeListenerList.clear();
+            for (int i = 0; i < displayFullArticleVbox.getChildren().size(); i++) {
+                if (displayFullArticleVbox.getChildren().get(i) instanceof ImageView) {
+                    ((ImageView) displayFullArticleVbox.getChildren().get(i)).setImage(null);
+                }
+            }
+            displayFullArticleVbox.getChildren().clear();
+            borderPaneUnderScrollPane.setCenter(null);
+            borderPaneUnderScrollPane.setCenter(currentPagination);
+            stackPane1.setVisible(false);
+            System.gc();
+            Runtime.getRuntime().gc();
+            homeButton.requestFocus();
+        } else {
+            tempPane.setVisible(false);
+        }
+    }
+    public void copyArticleLink() {
+        final Clipboard clipboard = Clipboard.getSystemClipboard();
+        final ClipboardContent content = new ClipboardContent();
+        content.putString(currentCategoryList.get(currentArticleIndex).getLinkToFullArticles());
+//        content.putHtml("<b>Some</b> text");
+        clipboard.setContent(content);
+    }
+    public void takeSearchInput(MouseEvent event) {
+        tempPane.setVisible(true);
+    }
+    public void exitSearch() {
+        tempPane.setVisible(false);
+        menuButton.requestFocus();
+        searchTextField.clear();
+    }
 }
