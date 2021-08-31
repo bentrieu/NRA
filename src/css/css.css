@@ -49,6 +49,10 @@
 
 /*Home Scene styling from here*/
 /*button*/
+.temppane {
+    -fx-background-color: black;
+    -fx-opacity: 0.33;
+}
 .iconsvg {
     -fx-fill: -fx-black;
 }

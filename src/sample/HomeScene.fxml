@@ -201,7 +201,7 @@
             </Button>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="tempPane" onMouseClicked="#exitSearch" opacity="0.33" style="-fx-background-color: black;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <AnchorPane fx:id="tempPane" onMouseClicked="#exitSearch" styleClass="temppane" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <HBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" spacing="10.0" AnchorPane.leftAnchor="192.0" AnchorPane.rightAnchor="192.0" AnchorPane.topAnchor="0.0">
          <children>
             <Button fx:id="backToHomeButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#backToHome" prefHeight="35.0" prefWidth="35.0" styleClass="buttonsearch" HBox.hgrow="NEVER">

@@ -138,10 +138,13 @@ public class ArticlesManager extends Application {
                 // Set time ago for each object
                 searchZingList.get(i).setTimeAgo(Helper.timeDiff(date));
             }
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Index out of bounds: ZING SEARCH LIST");
+            return searchZingList;
         } catch (Exception e) {
+            e.printStackTrace();
             return searchZingList;
         }
-
 
         return searchZingList;
     }
@@ -473,7 +476,11 @@ public class ArticlesManager extends Application {
                 // Set time ago for each object
                 searchVnexpressList.get(k).setTimeAgo(Helper.timeDiff(searchVnexpressList.get(k).getDate()));
             }
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Index out of bounds: VNEXPRESS SEARCH LIST");
+            return searchVnexpressList;
         } catch (Exception e) {
+            e.printStackTrace();
             return searchVnexpressList;
         }
 
@@ -959,7 +966,11 @@ public class ArticlesManager extends Application {
                 // Set time ago for each object
                 searchTuoiTreList.get(i).setTimeAgo(Helper.timeDiff(date));
             }
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Index out of bounds: TUOITRE SEARCH LIST");
+            return searchTuoiTreList;
         } catch (Exception e) {
+            e.printStackTrace();
             return searchTuoiTreList;
         }
 
@@ -1742,45 +1753,53 @@ public class ArticlesManager extends Application {
         int maxArticle = 15;
         if (thumb.size() < 15) maxArticle = thumb.size();
 
-        // Add data to vnexpressNewsList (Title + date + thumb + link)
-        for (int i = 0, k = 0; i < maxArticle; i++, k++) {
-            // Eliminate elements don't have thumb
-            if (!all.get(k).select("div").hasClass("box-img")) {
-                i--;
-                continue;
+        try {
+            // Add data to vnexpressNewsList (Title + date + thumb + link)
+            for (int i = 0, k = 0; i < maxArticle; i++, k++) {
+                // Eliminate elements don't have thumb
+                if (!all.get(k).select("div").hasClass("box-img")) {
+                    i--;
+                    continue;
+                }
+                // Create new article object then add the object into the ArrayList
+                nhanDanWebList.add(new Article());
+                // Set source
+                nhanDanWebList.get(i).setSource("nhandan");
+                // Set category manually
+                nhanDanWebList.get(i).setCategory(category);
+                // Set title for each object
+                nhanDanWebList.get(i).setTitle(titleAndLink.get(k).text());
+                // Set date for each object
+                String dateTemp;
+                if (all.get(i).select("div.box-meta-small").hasText()) {
+                    dateTemp = all.get(k).select("div.box-meta-small").text();
+                    dateTemp = Helper.timeToUnixString5(dateTemp);
+                    nhanDanWebList.get(i).setDate(dateTemp);
+                } else {
+                    dateTemp = all.get(k).select("div.box-img img").attr("abs:data-src").toLowerCase();
+                    int endLink = 0;
+                    if (dateTemp.contains(".jpg")) endLink = dateTemp.indexOf(".jpg");
+                    if (dateTemp.contains(".png")) endLink = dateTemp.indexOf(".png");
+                    if (dateTemp.contains(".jpeg")) endLink = dateTemp.indexOf(".jpeg");
+                    if (dateTemp.contains(".gif")) endLink = dateTemp.indexOf(".gif");
+                    dateTemp = dateTemp.substring(endLink - 13, endLink - 3);
+                    nhanDanWebList.get(i).setDate(dateTemp);
+                }
+                // Set time ago for each object
+                nhanDanWebList.get(i).setTimeAgo(Helper.timeDiff(dateTemp));
+                // Set thumb for each object
+                String thumbTemp = all.get(k).select("div.box-img img").attr("abs:data-src");
+                thumbTemp = thumbTemp.replaceFirst("resize/[^/]+/", "");
+                nhanDanWebList.get(i).setThumb(thumbTemp);
+                // Set link to full article for each object
+                nhanDanWebList.get(i).setLinkToFullArticles(all.get(k).select("div.box-title a").attr("abs:href"));
             }
-            // Create new article object then add the object into the ArrayList
-            nhanDanWebList.add(new Article());
-            // Set source
-            nhanDanWebList.get(i).setSource("nhandan");
-            // Set category manually
-            nhanDanWebList.get(i).setCategory(category);
-            // Set title for each object
-            nhanDanWebList.get(i).setTitle(titleAndLink.get(k).text());
-            // Set date for each object
-            String dateTemp;
-            if (all.get(i).select("div.box-meta-small").hasText()) {
-                dateTemp = all.get(k).select("div.box-meta-small").text();
-                dateTemp = Helper.timeToUnixString5(dateTemp);
-                nhanDanWebList.get(i).setDate(dateTemp);
-            } else {
-                dateTemp = all.get(k).select("div.box-img img").attr("abs:data-src").toLowerCase();
-                int endLink = 0;
-                if (dateTemp.contains(".jpg")) endLink = dateTemp.indexOf(".jpg");
-                if (dateTemp.contains(".png")) endLink = dateTemp.indexOf(".png");
-                if (dateTemp.contains(".jpeg")) endLink = dateTemp.indexOf(".jpeg");
-                if (dateTemp.contains(".gif")) endLink = dateTemp.indexOf(".gif");
-                dateTemp = dateTemp.substring(endLink - 13, endLink - 3);
-                nhanDanWebList.get(i).setDate(dateTemp);
-            }
-            // Set time ago for each object
-            nhanDanWebList.get(i).setTimeAgo(Helper.timeDiff(dateTemp));
-            // Set thumb for each object
-            String thumbTemp = all.get(k).select("div.box-img img").attr("abs:data-src");
-            thumbTemp = thumbTemp.replaceFirst("resize/[^/]+/", "");
-            nhanDanWebList.get(i).setThumb(thumbTemp);
-            // Set link to full article for each object
-            nhanDanWebList.get(i).setLinkToFullArticles(all.get(k).select("div.box-title a").attr("abs:href"));
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Index out of bounds: NHANDAN SEARCH LIST");
+            return nhanDanWebList;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return nhanDanWebList;
         }
 
         return nhanDanWebList;
