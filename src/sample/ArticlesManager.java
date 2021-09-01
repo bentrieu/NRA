@@ -878,7 +878,48 @@ public class ArticlesManager extends Application {
         return tuoiTreWebList;
     }
 
+    // Tuoitre search
+    public static ArrayList<Article> getTuoiTreSearchList(String keyWord, String category) throws IOException {
+        // Create new arraylist of article for return
+        ArrayList<Article> searchTuoiTreList = new ArrayList<>();
 
+        // Convert keyWord into link that can scrape
+        String convertedKeyWord = "https://tuoitre.vn/tim-kiem.htm?keywords=" + keyWord.trim().replaceAll("\\s", "%20").toLowerCase();
+
+        /* Bắt đầu từ đây là add dữ liệu cho sort article
+         */
+        // Setup jsoup for scraping data
+        final String url = convertedKeyWord;
+        Document document = Jsoup.connect(url).userAgent("Mozilla").get();
+        Elements all = document.select("ul.list-news-content li.news-item");
+        // There are no date and original category when searching with tuoitre
+
+        // Add data to vnexpressNewsList (Title + date + thumb + link)
+        for (int i = 0; i < 15; i++) {
+            // Create new article object then add the object into the ArrayList
+            searchTuoiTreList.add(new Article());
+            // Set source
+            searchTuoiTreList.get(i).setSource("tuoitre");
+            // Set category manually
+            searchTuoiTreList.get(i).setCategory(category);
+            // Set title for each object
+            searchTuoiTreList.get(i).setTitle(all.get(i).select("h3.title-news").text());
+            // Set thumb for each object
+            String linkThumb = all.get(i).select("img").attr("abs:data-src");
+            searchTuoiTreList.get(i).setThumb(linkThumb.replaceFirst("zoom/[_0-9]+/", "thumb_w/586/"));
+            // Set description for each object
+            searchTuoiTreList.get(i).setDescription(all.get(i).select("div.name-news p.sapo").text());
+            // Set link to full article for each object
+            searchTuoiTreList.get(i).setLinkToFullArticles(all.get(i).select("a").first().attr("abs:href"));
+            // Set date
+            String date = linkThumb.substring(linkThumb.indexOf("crop-") + 5, linkThumb.indexOf("crop-") + 15);
+            searchTuoiTreList.get(i).setDate(date);
+            // Set time ago for each object
+            searchTuoiTreList.get(i).setTimeAgo(Helper.timeDiff(date));
+        }
+
+        return searchTuoiTreList;
+    }
 
     @Override
     public void start(Stage stage) throws Exception {
