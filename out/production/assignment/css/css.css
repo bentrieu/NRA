@@ -84,14 +84,17 @@
 .button1 {
     -fx-background-color : -fx-primary;
     -fx-background-radius :  0;
+    -fx-border-width: 0 0 0 0;
 }
 .button1:hover {
     -fx-background-color : -fx-button-hover;
     -fx-background-radius :  0;
+    -fx-border-width: 0 0 0 0;
 }
 .button1:pressed {
     -fx-background-color : -fx-primary;
     -fx-background-radius :  0;
+    -fx-border-width: 0 0 0 0;
 }
 .button1:selected {
     -fx-border-color: -fx-blue;
@@ -116,14 +119,17 @@
     -fx-background-radius :  0;
     -fx-text-fill: -fx-black;
     -fx-font-size: 18;
+    -fx-border-width: 0 0 0 0;
 }
 .button3:hover {
     -fx-font-weight : bold;
     -fx-background-radius :  0;
+    -fx-border-width: 0 0 0 0;
 }
 .button3:pressed {
     -fx-background-color : -fx-button-hover;
     -fx-background-radius :  0;
+    -fx-border-width: 0 0 0 0;
 }
 .button3:selected {
     -fx-font-weight : bold;

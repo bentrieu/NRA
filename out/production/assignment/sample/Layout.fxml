@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<VBox fx:id="displayLayoutVbox" cache="true" cacheHint="SPEED" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="17.0" styleClass="root" stylesheets="@../css/css.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.LayoutController">
+<VBox fx:id="displayLayoutVbox" cache="true" cacheHint="SPEED" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="17.0" styleClass="root" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.LayoutController">
    <children>
       <HBox alignment="CENTER" spacing="10.0">
          <children>
@@ -38,7 +38,7 @@
                            <children>
                               <Text fx:id="textTitle1" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="textTitleBig" text="Biden hứng chỉ trích vì đi nghỉ giữa xung đột Afghanistan">
                                  <font>
-                                    <Font name="System Bold" size="28.0" />
+                                    <Font size="28.0" />
                                  </font>
                               </Text>
                            </children>

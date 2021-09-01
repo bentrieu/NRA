@@ -34,10 +34,10 @@ import java.util.ResourceBundle;
 public class HomeSceneController implements Initializable {
 
     @FXML
-    private Button menuButton, refreshButton, nextCategoryButton, previousCategoryButton, backToHomeButton, copyArticleLinkButton, openInBrowserButton;
+    private Button menuButton, refreshButton, nextCategoryButton, previousCategoryButton, backToHomeButton, copyArticleLinkButton, openInBrowserButton, darkModeButton;
 
     @FXML
-    private ToggleButton homeButton, videoButton, articlesListButton, settingsButton, darkModeButton;
+    private ToggleButton homeButton, videoButton, articlesListButton, settingsButton;
 
     @FXML
     private ToggleButton newsButton, covidButton, politicsButton, businessButton, technologyButton,
@@ -103,7 +103,7 @@ public class HomeSceneController implements Initializable {
     Image darkLoadingImage;
 
     // Initial Mode
-    public boolean isDarkMode = true;
+    public boolean isDarkMode = false;
 
     // Check animation
     public boolean animationFinish;
@@ -139,6 +139,7 @@ public class HomeSceneController implements Initializable {
         whiteLoadingImage = new Image("/resource/book_loadinganimation_white.gif");
         darkLoadingImage = new Image("/resource/book_loadinganimation_dark.gif");
         loadingImageView = new ImageView();
+        loadingImageView.setImage(whiteLoadingImage);
         loadingStackPane.getChildren().add(loadingImageView);
         Main.stage.heightProperty().addListener((observableValue, number, t1) -> {
             loadingStackPane.setMinHeight(t1.doubleValue() - 95);
@@ -150,19 +151,9 @@ public class HomeSceneController implements Initializable {
         if (isDarkMode) {
             loadingImageView.setImage(darkLoadingImage);
             rootAnchorPane.getStylesheets().clear();
-            displayLayoutVbox.getStylesheets().clear();
-            rootAnchorPane.getStylesheets().add( "/css/cssdarkmode.css");
-            displayLayoutVbox.getStylesheets().add( "/css/cssdarkmode.css");
+            rootAnchorPane.getStylesheets().add("/css/cssdarkmode.css");
             darkModeSVGPath.setContent("M15 3L15 8L17 8L17 3 Z M 7.5 6.09375L6.09375 7.5L9.625 11.0625L11.0625 9.625 Z M 24.5 6.09375L20.9375 9.625L22.375 11.0625L25.90625 7.5 Z M 16 9C12.144531 9 9 12.144531 9 16C9 19.855469 12.144531 23 16 23C19.855469 23 23 19.855469 23 16C23 12.144531 19.855469 9 16 9 Z M 16 11C18.773438 11 21 13.226563 21 16C21 18.773438 18.773438 21 16 21C13.226563 21 11 18.773438 11 16C11 13.226563 13.226563 11 16 11 Z M 3 15L3 17L8 17L8 15 Z M 24 15L24 17L29 17L29 15 Z M 9.625 20.9375L6.09375 24.5L7.5 25.90625L11.0625 22.375 Z M 22.375 20.9375L20.9375 22.375L24.5 25.90625L25.90625 24.5 Z M 15 24L15 29L17 29L17 24Z");
             isDarkMode = true;
-        } else {
-            loadingImageView.setImage(whiteLoadingImage);
-            rootAnchorPane.getStylesheets().clear();
-            displayLayoutVbox.getStylesheets().clear();
-            rootAnchorPane.getStylesheets().add("/css/css.css");
-            displayLayoutVbox.getStylesheets().add("/css/css.css");
-            darkModeSVGPath.setContent("M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z");
-            isDarkMode = false;
         }
 
         // Setup tool tip
@@ -351,58 +342,40 @@ public class HomeSceneController implements Initializable {
         });
 
         // Setup toggle group for button 1 and 3
-        button1ToggleGroup.getToggles().addAll(homeButton, videoButton, articlesListButton, settingsButton, darkModeButton);
-        button3ToggleGroup.getToggles().addAll(newsButton, covidButton, politicsButton, businessButton, technologyButton,
-                healthButton, sportsButton, entertainmentButton, worldButton, othersButton);
+        button1ToggleGroup.getToggles().addAll(homeButton, videoButton, articlesListButton, settingsButton);
+        button3ToggleGroup.getToggles().addAll(newsButton, covidButton, politicsButton, businessButton,
+                technologyButton, healthButton, sportsButton, entertainmentButton, worldButton, othersButton);
         button1ToggleGroup.selectedToggleProperty().addListener((obsVal, oldVal, newVal) -> {
-            if (newVal == null)
-                oldVal.setSelected(true);
+            if (newVal == null) oldVal.setSelected(true); // always choose 1 toggle to be selected
         });
         button3ToggleGroup.selectedToggleProperty().addListener((obsVal, oldVal, newVal) -> {
-            if (newVal == null)
-                oldVal.setSelected(true);
+            if (newVal == null) oldVal.setSelected(true); // always choose 1 toggle to be selected
         });
 
-        // Setup toggle group for setting layout
+        // Setup toggle group for mode and font
+        modeToggleGroup.getToggles().addAll(darkModeRadioButton, lightModeRadioButton);
+        fontToggleGroup.getToggles().addAll(normalFontSizeRadioButton, largeFontSizeRadioButton, veryLargeFontSizeRadioButton);
         if (isDarkMode) darkModeRadioButton.setSelected(true);
         else lightModeRadioButton.setSelected(true);
         normalFontSizeRadioButton.setSelected(true);
 
-        darkModeRadioButton.setToggleGroup(modeToggleGroup);
-        lightModeRadioButton.setToggleGroup(modeToggleGroup);
-
-        normalFontSizeRadioButton.setToggleGroup(fontToggleGroup);
-        largeFontSizeRadioButton.setToggleGroup(fontToggleGroup);
-        veryLargeFontSizeRadioButton.setToggleGroup(fontToggleGroup);
-
         // Setup listener for toggle group
         fontToggleGroup.selectedToggleProperty().addListener((observableValue, toggle, t1) -> {
             if (fontToggleGroup.getSelectedToggle() == normalFontSizeRadioButton) {
-                rootAnchorPane.getStylesheets().remove("/css/verylargefont.css");
-                displayLayoutVbox.getStylesheets().remove("/css/verylargefont.css");
-
                 rootAnchorPane.getStylesheets().remove("/css/largefont.css");
-                displayLayoutVbox.getStylesheets().remove("/css/largefont.css");
+                rootAnchorPane.getStylesheets().remove("/css/verylargefont.css");
             }
-
             if (fontToggleGroup.getSelectedToggle() == largeFontSizeRadioButton) {
                 rootAnchorPane.getStylesheets().remove("/css/verylargefont.css");
-                displayLayoutVbox.getStylesheets().remove("/css/verylargefont.css");
-
                 rootAnchorPane.getStylesheets().add("/css/largefont.css");
-                displayLayoutVbox.getStylesheets().add("/css/largefont.css");
             }
-
             if (fontToggleGroup.getSelectedToggle() == veryLargeFontSizeRadioButton) {
                 rootAnchorPane.getStylesheets().remove("/css/largefont.css");
-                displayLayoutVbox.getStylesheets().remove("/css/largefont.css");
-
                 rootAnchorPane.getStylesheets().add("/css/verylargefont.css");
-                displayLayoutVbox.getStylesheets().add( "/css/verylargefont.css");
             }
         });
 
-        modeToggleGroup.selectedToggleProperty().addListener((observableValue, toggle, t1) -> darkMode());
+        modeToggleGroup.selectedToggleProperty().addListener((observableValue, toggle, t1) -> darkMode(new ActionEvent()));
     }
 
     public void menuPaneSetVisible(boolean a) {
@@ -614,6 +587,7 @@ public class HomeSceneController implements Initializable {
 
     public void displayNewsList() {
         homeButton.setSelected(true);
+        newsButton.setSelected(true);
 
         scrollPane.setVvalue(0);
         scrollPane.setHvalue(0);
@@ -621,6 +595,7 @@ public class HomeSceneController implements Initializable {
         movePosHbox(categoryHbox, categoryHbox.getChildren().indexOf(newsButton));
         todayLabel.setText("Today");
         displaySettingsLayoutVbox.setVisible(false);
+        stackPane2.setVisible(false);
         borderPaneUnderScrollPane.setCenter(null);
         borderPaneUnderScrollPane.setCenter(loadingStackPane);
         Thread t1 = new Thread(() -> {
@@ -644,6 +619,7 @@ public class HomeSceneController implements Initializable {
     }
     public void displayCovidList() {
         homeButton.setSelected(true);
+        covidButton.setSelected(true);
 
         scrollPane.setVvalue(0);
         scrollPane.setHvalue(0);
@@ -651,6 +627,7 @@ public class HomeSceneController implements Initializable {
         movePosHbox(categoryHbox, categoryHbox.getChildren().indexOf(covidButton));
         todayLabel.setText("Covid-19");
         displaySettingsLayoutVbox.setVisible(false);
+        stackPane2.setVisible(false);
         borderPaneUnderScrollPane.setCenter(null);
         borderPaneUnderScrollPane.setCenter(loadingStackPane);
         Thread t1 = new Thread(() -> {
@@ -674,6 +651,7 @@ public class HomeSceneController implements Initializable {
     }
     public void displayPoliticsList() {
         homeButton.setSelected(true);
+        politicsButton.setSelected(true);
 
         scrollPane.setVvalue(0);
         scrollPane.setHvalue(0);
@@ -681,6 +659,7 @@ public class HomeSceneController implements Initializable {
         movePosHbox(categoryHbox, categoryHbox.getChildren().indexOf(politicsButton));
         todayLabel.setText("Politics");
         displaySettingsLayoutVbox.setVisible(false);
+        stackPane2.setVisible(false);
         borderPaneUnderScrollPane.setCenter(null);
         borderPaneUnderScrollPane.setCenter(loadingStackPane);
         Thread t1 = new Thread(() -> {
@@ -693,7 +672,6 @@ public class HomeSceneController implements Initializable {
                 borderPaneUnderScrollPane.setCenter(null);
                 try {
                     borderPaneUnderScrollPane.setCenter(setPaginationList(ArticlesList.politicsList, new Pagination()));
-
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -705,6 +683,7 @@ public class HomeSceneController implements Initializable {
     }
     public void displayBusinessList() {
         homeButton.setSelected(true);
+        businessButton.setSelected(true);
 
         scrollPane.setVvalue(0);
         scrollPane.setHvalue(0);
@@ -712,6 +691,7 @@ public class HomeSceneController implements Initializable {
         movePosHbox(categoryHbox, categoryHbox.getChildren().indexOf(businessButton));
         todayLabel.setText("Business");
         displaySettingsLayoutVbox.setVisible(false);
+        stackPane2.setVisible(false);
         borderPaneUnderScrollPane.setCenter(null);
         borderPaneUnderScrollPane.setCenter(loadingStackPane);
         Thread t1 = new Thread(() -> {
@@ -724,7 +704,6 @@ public class HomeSceneController implements Initializable {
                 borderPaneUnderScrollPane.setCenter(null);
                 try {
                     borderPaneUnderScrollPane.setCenter(setPaginationList(ArticlesList.businessList, new Pagination()));
-
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -736,6 +715,7 @@ public class HomeSceneController implements Initializable {
     }
     public void displayTechnologyList() {
         homeButton.setSelected(true);
+        technologyButton.setSelected(true);
 
         scrollPane.setVvalue(0);
         scrollPane.setHvalue(0);
@@ -743,6 +723,7 @@ public class HomeSceneController implements Initializable {
         movePosHbox(categoryHbox, categoryHbox.getChildren().indexOf(technologyButton));
         todayLabel.setText("Technology");
         displaySettingsLayoutVbox.setVisible(false);
+        stackPane2.setVisible(false);
         borderPaneUnderScrollPane.setCenter(null);
         borderPaneUnderScrollPane.setCenter(loadingStackPane);
         Thread t1 = new Thread(() -> {
@@ -755,7 +736,6 @@ public class HomeSceneController implements Initializable {
                 borderPaneUnderScrollPane.setCenter(null);
                 try {
                     borderPaneUnderScrollPane.setCenter(setPaginationList(ArticlesList.technologyList, new Pagination()));
-
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -767,6 +747,7 @@ public class HomeSceneController implements Initializable {
     }
     public void displayHealthList() {
         homeButton.setSelected(true);
+        healthButton.setSelected(true);
 
         scrollPane.setVvalue(0);
         scrollPane.setHvalue(0);
@@ -774,6 +755,7 @@ public class HomeSceneController implements Initializable {
         movePosHbox(categoryHbox, categoryHbox.getChildren().indexOf(healthButton));
         todayLabel.setText("Health");
         displaySettingsLayoutVbox.setVisible(false);
+        stackPane2.setVisible(false);
         borderPaneUnderScrollPane.setCenter(null);
         borderPaneUnderScrollPane.setCenter(loadingStackPane);
         Thread t1 = new Thread(() -> {
@@ -786,7 +768,6 @@ public class HomeSceneController implements Initializable {
                 borderPaneUnderScrollPane.setCenter(null);
                 try {
                     borderPaneUnderScrollPane.setCenter(setPaginationList(ArticlesList.healthList, new Pagination()));
-
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -798,6 +779,7 @@ public class HomeSceneController implements Initializable {
     }
     public void displaySportsList() {
         homeButton.setSelected(true);
+        sportsButton.setSelected(true);
 
         scrollPane.setVvalue(0);
         scrollPane.setHvalue(0);
@@ -805,6 +787,7 @@ public class HomeSceneController implements Initializable {
         movePosHbox(categoryHbox, categoryHbox.getChildren().indexOf(sportsButton));
         todayLabel.setText("Sports");
         displaySettingsLayoutVbox.setVisible(false);
+        stackPane2.setVisible(false);
         borderPaneUnderScrollPane.setCenter(null);
         borderPaneUnderScrollPane.setCenter(loadingStackPane);
         Thread t1 = new Thread(() -> {
@@ -817,7 +800,6 @@ public class HomeSceneController implements Initializable {
                 borderPaneUnderScrollPane.setCenter(null);
                 try {
                     borderPaneUnderScrollPane.setCenter(setPaginationList(ArticlesList.sportsList, new Pagination()));
-
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -829,6 +811,7 @@ public class HomeSceneController implements Initializable {
     }
     public void displayEntertainmentList() {
         homeButton.setSelected(true);
+        entertainmentButton.setSelected(true);
 
         scrollPane.setVvalue(0);
         scrollPane.setHvalue(0);
@@ -836,6 +819,7 @@ public class HomeSceneController implements Initializable {
         movePosHbox(categoryHbox, categoryHbox.getChildren().indexOf(entertainmentButton));
         todayLabel.setText("Entertainment");
         displaySettingsLayoutVbox.setVisible(false);
+        stackPane2.setVisible(false);
         borderPaneUnderScrollPane.setCenter(null);
         borderPaneUnderScrollPane.setCenter(loadingStackPane);
         Thread t1 = new Thread(() -> {
@@ -848,7 +832,6 @@ public class HomeSceneController implements Initializable {
                 borderPaneUnderScrollPane.setCenter(null);
                 try {
                     borderPaneUnderScrollPane.setCenter(setPaginationList(ArticlesList.entertainmentList, new Pagination()));
-
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -860,6 +843,7 @@ public class HomeSceneController implements Initializable {
     }
     public void displayWorldList() {
         homeButton.setSelected(true);
+        worldButton.setSelected(true);
 
         scrollPane.setVvalue(0);
         scrollPane.setHvalue(0);
@@ -867,6 +851,7 @@ public class HomeSceneController implements Initializable {
         movePosHbox(categoryHbox, categoryHbox.getChildren().indexOf(worldButton));
         todayLabel.setText("World");
         displaySettingsLayoutVbox.setVisible(false);
+        stackPane2.setVisible(false);
         borderPaneUnderScrollPane.setCenter(null);
         borderPaneUnderScrollPane.setCenter(loadingStackPane);
         Thread t1 = new Thread(() -> {
@@ -879,7 +864,6 @@ public class HomeSceneController implements Initializable {
                 borderPaneUnderScrollPane.setCenter(null);
                 try {
                     borderPaneUnderScrollPane.setCenter(setPaginationList(ArticlesList.worldList, new Pagination()));
-
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -891,6 +875,7 @@ public class HomeSceneController implements Initializable {
     }
     public void displayOthersList() {
         homeButton.setSelected(true);
+        othersButton.setSelected(true);
 
         scrollPane.setVvalue(0);
         scrollPane.setHvalue(0);
@@ -898,6 +883,7 @@ public class HomeSceneController implements Initializable {
         movePosHbox(categoryHbox, categoryHbox.getChildren().indexOf(othersButton));
         todayLabel.setText("Others");
         displaySettingsLayoutVbox.setVisible(false);
+        stackPane2.setVisible(false);
         borderPaneUnderScrollPane.setCenter(null);
         borderPaneUnderScrollPane.setCenter(loadingStackPane);
         Thread t1 = new Thread(() -> {
@@ -910,7 +896,6 @@ public class HomeSceneController implements Initializable {
                 borderPaneUnderScrollPane.setCenter(null);
                 try {
                     borderPaneUnderScrollPane.setCenter(setPaginationList(ArticlesList.othersList, new Pagination()));
-
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -929,43 +914,33 @@ public class HomeSceneController implements Initializable {
 
         // Display previousCategoryList
         if (newsButton.equals(categoryHbox.getChildren().get(0))) {
-            newsButton.setSelected(true);
             displayNewsList();
         }
         if (covidButton.equals(categoryHbox.getChildren().get(0))) {
-            covidButton.setSelected(true);
             displayCovidList();
         }
         if (politicsButton.equals(categoryHbox.getChildren().get(0))) {
-            politicsButton.setSelected(true);
             displayPoliticsList();
         }
         if (businessButton.equals(categoryHbox.getChildren().get(0))) {
-            businessButton.setSelected(true);
             displayBusinessList();
         }
         if (technologyButton.equals(categoryHbox.getChildren().get(0))) {
-            technologyButton.setSelected(true);
             displayTechnologyList();
         }
         if (healthButton.equals(categoryHbox.getChildren().get(0))) {
-            healthButton.setSelected(true);
             displayHealthList();
         }
         if (sportsButton.equals(categoryHbox.getChildren().get(0))) {
-            sportsButton.setSelected(true);
             displaySportsList();
         }
         if (entertainmentButton.equals(categoryHbox.getChildren().get(0))) {
-            entertainmentButton.setSelected(true);
             displayEntertainmentList();
         }
         if (worldButton.equals(categoryHbox.getChildren().get(0))) {
-            worldButton.setSelected(true);
             displayWorldList();
         }
         if (othersButton.equals(categoryHbox.getChildren().get(0))) {
-            othersButton.setSelected(true);
             displayOthersList();
         }
     }
@@ -977,43 +952,33 @@ public class HomeSceneController implements Initializable {
 
         // Display nextCategoryList
         if (newsButton.equals(categoryHbox.getChildren().get(0))) {
-            newsButton.setSelected(true);
             displayNewsList();
         }
         if (covidButton.equals(categoryHbox.getChildren().get(0))) {
-            covidButton.setSelected(true);
             displayCovidList();
         }
         if (politicsButton.equals(categoryHbox.getChildren().get(0))) {
-            politicsButton.setSelected(true);
             displayPoliticsList();
         }
         if (businessButton.equals(categoryHbox.getChildren().get(0))) {
-            businessButton.setSelected(true);
             displayBusinessList();
         }
         if (technologyButton.equals(categoryHbox.getChildren().get(0))) {
-            technologyButton.setSelected(true);
             displayTechnologyList();
         }
         if (healthButton.equals(categoryHbox.getChildren().get(0))) {
-            healthButton.setSelected(true);
             displayHealthList();
         }
         if (sportsButton.equals(categoryHbox.getChildren().get(0))) {
-            sportsButton.setSelected(true);
             displaySportsList();
         }
         if (entertainmentButton.equals(categoryHbox.getChildren().get(0))) {
-            entertainmentButton.setSelected(true);
             displayEntertainmentList();
         }
         if (worldButton.equals(categoryHbox.getChildren().get(0))) {
-            worldButton.setSelected(true);
             displayWorldList();
         }
         if (othersButton.equals(categoryHbox.getChildren().get(0))) {
-            othersButton.setSelected(true);
             displayOthersList();
         }
     }
@@ -1094,7 +1059,7 @@ public class HomeSceneController implements Initializable {
     public void nextArticle() throws IOException {
         homeButton.setSelected(true);
 
-        if (currentArticleIndex < 49) {
+        if (currentArticleIndex < currentCategoryList.size() - 1) {
             scrollPane.setVvalue(0);
             scrollPane.setHvalue(0);
 
@@ -1164,7 +1129,7 @@ public class HomeSceneController implements Initializable {
         }
     }
 
-    public void darkMode() {
+    public void darkMode(ActionEvent e) {
         String currentStyleSheet = "";
         if (rootAnchorPane.getStylesheets().size() > 1) currentStyleSheet = rootAnchorPane.getStylesheets().get(1);
 
@@ -1172,12 +1137,9 @@ public class HomeSceneController implements Initializable {
             lightModeRadioButton.setSelected(true);
             loadingImageView.setImage(whiteLoadingImage);
             rootAnchorPane.getStylesheets().clear();
-            displayLayoutVbox.getStylesheets().clear();
             rootAnchorPane.getStylesheets().add("/css/css.css");
-            displayLayoutVbox.getStylesheets().add("/css/css.css");
             if (!currentStyleSheet.isEmpty()) {
                 rootAnchorPane.getStylesheets().add(currentStyleSheet);
-                displayLayoutVbox.getStylesheets().add(currentStyleSheet);
             }
             darkModeSVGPath.setContent("M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z");
             isDarkMode = false;
@@ -1185,16 +1147,15 @@ public class HomeSceneController implements Initializable {
             darkModeRadioButton.setSelected(true);
             loadingImageView.setImage(darkLoadingImage);
             rootAnchorPane.getStylesheets().clear();
-            displayLayoutVbox.getStylesheets().clear();
             rootAnchorPane.getStylesheets().add("/css/cssdarkmode.css");
-            displayLayoutVbox.getStylesheets().add("/css/cssdarkmode.css");
             if (!currentStyleSheet.isEmpty()) {
                 rootAnchorPane.getStylesheets().add(currentStyleSheet);
-                displayLayoutVbox.getStylesheets().add(currentStyleSheet);
             }
             darkModeSVGPath.setContent("M15 3L15 8L17 8L17 3 Z M 7.5 6.09375L6.09375 7.5L9.625 11.0625L11.0625 9.625 Z M 24.5 6.09375L20.9375 9.625L22.375 11.0625L25.90625 7.5 Z M 16 9C12.144531 9 9 12.144531 9 16C9 19.855469 12.144531 23 16 23C19.855469 23 23 19.855469 23 16C23 12.144531 19.855469 9 16 9 Z M 16 11C18.773438 11 21 13.226563 21 16C21 18.773438 18.773438 21 16 21C13.226563 21 11 18.773438 11 16C11 13.226563 13.226563 11 16 11 Z M 3 15L3 17L8 17L8 15 Z M 24 15L24 17L29 17L29 15 Z M 9.625 20.9375L6.09375 24.5L7.5 25.90625L11.0625 22.375 Z M 22.375 20.9375L20.9375 22.375L24.5 25.90625L25.90625 24.5 Z M 15 24L15 29L17 29L17 24Z");
             isDarkMode = true;
         }
+
+        e.consume();
     }
 
     public Pagination setPaginationList(ArrayList<Article> articlesList, Pagination newPagination) throws IOException {
@@ -1423,5 +1384,4 @@ public class HomeSceneController implements Initializable {
         timeline.getKeyFrames().addAll(keyFrame0, keyFrame1);
         timeline.play();
     }
-
 }

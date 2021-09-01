@@ -1,5 +1,6 @@
 .label {
     -fx-font-size: 20;
+    -fx-font-weight: bold;
 }
 .text36 {
     -fx-font-size: 44;
@@ -8,10 +9,6 @@
     -fx-font-size: 25;
 }
 .radio-button {
-    -fx-font-size: 20;
-}
-
-.button3 {
     -fx-font-size: 20;
 }
 

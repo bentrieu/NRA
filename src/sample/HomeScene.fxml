@@ -70,11 +70,11 @@
                         <SVGPath content="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" styleClass="iconsvg" />
                      </graphic>
                   </Button>
-                  <ToggleButton fx:id="darkModeButton" accessibleRole="TOGGLE_BUTTON" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#darkMode" prefHeight="50.0" prefWidth="48.0" styleClass="button2">
+                  <Button fx:id="darkModeButton" accessibleRole="BUTTON" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#darkMode" prefHeight="50.0" prefWidth="48.0" styleClass="button2">
                      <graphic>
                         <SVGPath fx:id="darkModeSVGPath" content="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z" styleClass="iconsvg" />
                      </graphic>
-                  </ToggleButton>
+                  </Button>
                </children>
             </HBox>
          </children>
@@ -85,12 +85,12 @@
                <children>
                   <HBox fx:id="categoryHbox" alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="45.0" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <ToggleButton fx:id="newsButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayNewsList" prefHeight="45.0" prefWidth="100.0" styleClass="button3" text="News">
+                        <ToggleButton fx:id="newsButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayNewsList" prefHeight="45.0" prefWidth="95.0" styleClass="button3" text="News">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </ToggleButton>
-                        <ToggleButton fx:id="covidButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayCovidList" prefHeight="45.0" prefWidth="100.0" styleClass="button3" text="Covid">
+                        <ToggleButton fx:id="covidButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayCovidList" prefHeight="45.0" prefWidth="95.0" styleClass="button3" text="Covid">
                            <font>
                               <Font size="16.0" />
                            </font>
@@ -120,7 +120,7 @@
                               <Font size="16.0" />
                            </font>
                         </ToggleButton>
-                        <ToggleButton fx:id="entertainmentButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayEntertainmentList" prefHeight="45.0" prefWidth="160.0" styleClass="button3" text="Entertainment">
+                        <ToggleButton fx:id="entertainmentButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayEntertainmentList" prefHeight="45.0" prefWidth="170.0" styleClass="button3" text="Entertainment">
                            <font>
                               <Font size="16.0" />
                            </font>
