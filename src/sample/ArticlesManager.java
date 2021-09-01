@@ -782,6 +782,59 @@ public class ArticlesManager extends Application {
         originalCategory = null;
     }
 
+    /* FROM HERE WILL BE THE FUNCTION FOR TUOITRE.VN
+       There will be 4 function
+       Get RSS list
+       Get search keyword list
+       Get list open from web
+       Display the full article  */
+    // Tuoitre rss
+    public static ArrayList<Article> getTuoiTreList(String urlToShortArticle, String category) throws IOException {
+        // Create new arraylist of article for return
+        ArrayList<Article> tuoiTreList = new ArrayList<>();
+
+        /* Bắt đầu từ đây là add dữ liệu cho sort article
+         */
+        // Setup jsoup for scraping data
+        final String url = urlToShortArticle;
+        Document document = Jsoup.connect(url).userAgent("Mozilla").get();
+        Elements all = document.select("item");
+        Elements thumbAndDescription = all.select("description");
+        Elements title = all.select("title");
+        Elements link = all.select("link");
+        Elements date = all.select("pubDate");
+
+        // Add data to vnexpressNewsList (Title + date + thumb + link)
+        for (int i = 0; i < 15; i++) {
+            // Create new article object then add the object into the ArrayList
+            tuoiTreList.add(new Article());
+            // Set source
+            tuoiTreList.get(i).setSource("tuoitre");
+            // Set category manually
+            tuoiTreList.get(i).setCategory(category);
+            // Set title for each object
+            tuoiTreList.get(i).setTitle(title.get(i).text());
+            // Set date for each object
+            String dateTemp = Helper.timeToUnixString4(date.get(i).text());
+            tuoiTreList.get(i).setDate(dateTemp);
+            // Set time ago for each object
+            tuoiTreList.get(i).setTimeAgo(Helper.timeDiff(dateTemp));
+            // Set thumb and description for each object
+            String string = thumbAndDescription.get(i).text();
+            int startLink = string.indexOf("src=\"") + 5;
+            int endLink = string.indexOf("\"", startLink) - 1;
+            int startDescription = string.indexOf("</a>") + 4;
+            tuoiTreList.get(i).setThumb(string.substring(startLink, endLink + 1).replaceFirst("zoom/[_0-9]+/", "thumb_w/586/"));
+            tuoiTreList.get(i).setDescription(string.substring(startDescription));
+            // Set link to full article for each object
+            tuoiTreList.get(i).setLinkToFullArticles(link.get(i).text());
+        }
+
+        return tuoiTreList;
+    }
+
+
+
     @Override
     public void start(Stage stage) throws Exception {
 
