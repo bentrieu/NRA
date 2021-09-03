@@ -782,6 +782,353 @@ public class ArticlesManager extends Application {
         originalCategory = null;
     }
 
+    /* FROM HERE WILL BE THE FUNCTION FOR TUOITRE.VN
+       There will be 4 function
+       Get RSS list
+       Get search keyword list
+       Get list open from web
+       Display the full article  */
+    // Tuoitre rss
+    public static ArrayList<Article> getTuoiTreList(String urlToShortArticle, String category) throws IOException {
+        // Create new arraylist of article for return
+        ArrayList<Article> tuoiTreList = new ArrayList<>();
+
+        /* Bắt đầu từ đây là add dữ liệu cho sort article
+         */
+        // Setup jsoup for scraping data
+        final String url = urlToShortArticle;
+        Document document = Jsoup.connect(url).userAgent("Mozilla").get();
+        Elements all = document.select("item");
+        Elements thumbAndDescription = all.select("description");
+        Elements title = all.select("title");
+        Elements link = all.select("link");
+        Elements date = all.select("pubDate");
+
+        // Add data to vnexpressNewsList (Title + date + thumb + link)
+        for (int i = 0; i < 15; i++) {
+            // Create new article object then add the object into the ArrayList
+            tuoiTreList.add(new Article());
+            // Set source
+            tuoiTreList.get(i).setSource("tuoitre");
+            // Set category manually
+            tuoiTreList.get(i).setCategory(category);
+            // Set title for each object
+            tuoiTreList.get(i).setTitle(title.get(i).text());
+            // Set date for each object
+            String dateTemp = Helper.timeToUnixString4(date.get(i).text());
+            tuoiTreList.get(i).setDate(dateTemp);
+            // Set time ago for each object
+            tuoiTreList.get(i).setTimeAgo(Helper.timeDiff(dateTemp));
+            // Set thumb and description for each object
+            String string = thumbAndDescription.get(i).text();
+            int startLink = string.indexOf("src=\"") + 5;
+            int endLink = string.indexOf("\"", startLink) - 1;
+            int startDescription = string.indexOf("</a>") + 4;
+            tuoiTreList.get(i).setThumb(string.substring(startLink, endLink + 1).replaceFirst("zoom/[_0-9]+/", "thumb_w/586/"));
+            tuoiTreList.get(i).setDescription(string.substring(startDescription));
+            // Set link to full article for each object
+            tuoiTreList.get(i).setLinkToFullArticles(link.get(i).text());
+        }
+
+        return tuoiTreList;
+    }
+
+    // Tuoitre web list: https://tuoitre.vn/thoi-su.htm (not yet done)
+    public static ArrayList<Article> getTuoiTreWebList(String urlToShortArticle, String category) throws IOException {
+        // Create new arraylist of article for return
+        ArrayList<Article> tuoiTreWebList = new ArrayList<>();
+
+        /* Bắt đầu từ đây là add dữ liệu cho sort article
+         */
+        // Setup jsoup for scraping data
+        final String url = urlToShortArticle;
+        Document document = Jsoup.connect(url).userAgent("Mozilla").get();
+        Elements all = document.select("item");
+        Elements thumbAndDescription = all.select("description");
+        Elements title = all.select("title");
+        Elements link = all.select("link");
+        Elements date = all.select("pubDate");
+
+        // Add data to vnexpressNewsList (Title + date + thumb + link)
+        for (int i = 0; i < 15; i++) {
+            // Create new article object then add the object into the ArrayList
+            tuoiTreWebList.add(new Article());
+            // Set source
+            tuoiTreWebList.get(i).setSource("tuoitre");
+            // Set category manually
+            tuoiTreWebList.get(i).setCategory(category);
+            // Set title for each object
+            tuoiTreWebList.get(i).setTitle(title.get(i).text());
+            // Set date for each object
+            String dateTemp = Helper.timeToUnixString4(date.get(i).text());
+            tuoiTreWebList.get(i).setDate(dateTemp);
+            // Set time ago for each object
+            tuoiTreWebList.get(i).setTimeAgo(Helper.timeDiff(dateTemp));
+            // Set thumb and description for each object
+            String string = thumbAndDescription.get(i).text();
+            int startLink = string.indexOf("src=\"") + 5;
+            int endLink = string.indexOf("\"", startLink) - 1;
+            int startDescription = string.indexOf("</a>") + 4;
+            tuoiTreWebList.get(i).setThumb(string.substring(startLink, endLink + 1).replaceFirst("zoom/[_0-9]+/", "thumb_w/586/"));
+            tuoiTreWebList.get(i).setDescription(string.substring(startDescription));
+            // Set link to full article for each object
+            tuoiTreWebList.get(i).setLinkToFullArticles(link.get(i).text());
+        }
+
+        return tuoiTreWebList;
+    }
+
+    // Tuoitre search
+    public static ArrayList<Article> getTuoiTreSearchList(String keyWord, String category) throws IOException {
+        // Create new arraylist of article for return
+        ArrayList<Article> searchTuoiTreList = new ArrayList<>();
+
+        // Convert keyWord into link that can scrape
+        String convertedKeyWord = "https://tuoitre.vn/tim-kiem.htm?keywords=" + keyWord.trim().replaceAll("\\s", "%20").toLowerCase();
+
+        /* Bắt đầu từ đây là add dữ liệu cho sort article
+         */
+        // Setup jsoup for scraping data
+        final String url = convertedKeyWord;
+        Document document = Jsoup.connect(url).userAgent("Mozilla").get();
+        Elements all = document.select("ul.list-news-content li.news-item");
+        // There are no date and original category when searching with tuoitre
+
+        // Add data to vnexpressNewsList (Title + date + thumb + link)
+        for (int i = 0; i < 15; i++) {
+            // Create new article object then add the object into the ArrayList
+            searchTuoiTreList.add(new Article());
+            // Set source
+            searchTuoiTreList.get(i).setSource("tuoitre");
+            // Set category manually
+            searchTuoiTreList.get(i).setCategory(category);
+            // Set title for each object
+            searchTuoiTreList.get(i).setTitle(all.get(i).select("h3.title-news").text());
+            // Set thumb for each object
+            String linkThumb = all.get(i).select("img").attr("abs:data-src");
+            searchTuoiTreList.get(i).setThumb(linkThumb.replaceFirst("zoom/[_0-9]+/", "thumb_w/586/"));
+            // Set description for each object
+            searchTuoiTreList.get(i).setDescription(all.get(i).select("div.name-news p.sapo").text());
+            // Set link to full article for each object
+            searchTuoiTreList.get(i).setLinkToFullArticles(all.get(i).select("a").first().attr("abs:href"));
+            // Set date
+            String date = linkThumb.substring(linkThumb.indexOf("crop-") + 5, linkThumb.indexOf("crop-") + 15);
+            searchTuoiTreList.get(i).setDate(date);
+            // Set time ago for each object
+            searchTuoiTreList.get(i).setTimeAgo(Helper.timeDiff(date));
+        }
+
+        return searchTuoiTreList;
+    }
+
+    // Tuoitre full article scrape and display
+    public static void displayTuoiTreFullArticle(Article article, VBox vbox) throws IOException {
+        // Clear vbox
+        vbox.getChildren().clear();
+
+        // Setup jsoup for each article
+        String fullArticlesUrl = article.getLinkToFullArticles(); // link to full article
+        Document document = Jsoup.connect(fullArticlesUrl).userAgent("Mozilla").get();
+        Elements all = document.select("div.content-detail");
+        Elements fullDate = document.select("div.date-time");
+        Elements body = all.select("div.main-content-body div.content.fck").select("> p, div.VCSortableInPreviewMode");
+        Elements author = all.select("div.author");
+        Elements originalCategory = document.select("div.bread-crumbs li");
+
+        // Set fullDate for each object
+        if (fullDate.hasText()) {
+            article.setFullDate(fullDate.first().text());
+        }
+
+        // Set author for each object
+        if (author.hasText()) {
+            article.setAuthor(author.first().text());
+        }
+
+        // Set original category for each object
+        article.setOriginalCategory("");
+        int k = 0;
+        for (Element index : originalCategory) {
+            if (k != originalCategory.size() - 1) article.setOriginalCategory(article.getOriginalCategory() + index.text() + " - ");
+            else article.setOriginalCategory(article.getOriginalCategory() + index.text());
+            k++;
+        }
+
+        // Display category
+        Text text = new Text(article.getCategory());
+        text.getStyleClass().add("textcategory");
+        TextFlow textFlow = new TextFlow(text);
+        vbox.getChildren().add(textFlow);
+
+        // Display image source
+        Image imageSource = new Image("resource/tuoitre_big.png", 200, 200, true, false, true);
+        ImageView imageViewSource = new ImageView();
+        imageViewSource.setCache(true);
+        imageViewSource.setCacheHint(CacheHint.SPEED);
+        imageViewSource.setImage(imageSource);
+        imageViewSource.setPreserveRatio(true);
+        imageViewSource.setFitHeight(60);
+        vbox.getChildren().add(imageViewSource);
+
+        // Display original category + fullDate
+        Text text0 = new Text(article.getOriginalCategory() + "\n" + article.getFullDate());
+        text0.getStyleClass().add("textfulldate");
+        TextFlow textFlow0 = new TextFlow(text0);
+        textFlow0.getStyleClass().add("textflowcenter");
+        vbox.getChildren().add(textFlow0);
+
+        // Display title
+        Text text1 = new Text(article.getTitle());
+        text1.getStyleClass().add("texttitle");
+        TextFlow textFlow1 = new TextFlow(text1);
+        textFlow1.getStyleClass().add("textflowjustify");
+        vbox.getChildren().add(textFlow1);
+
+        // Display description
+        Text text2 = new Text(article.getDescription());
+        text2.getStyleClass().add("textdescription");
+        TextFlow textFlow2 = new TextFlow(text2);
+        textFlow2.getStyleClass().add("textflowjustify");
+        HBox descriptionHbox = new HBox();
+        descriptionHbox.getStyleClass().add("descriptionHbox");
+        descriptionHbox.getChildren().add(textFlow2);
+        vbox.getChildren().add(descriptionHbox);
+
+        // Display all content
+        for (Element index : body) {
+            TextFlow textFlow3 = new TextFlow();
+            vbox.getChildren().add(textFlow3);
+            // Add video open link caption
+            if (index.attr("type").equals("insertembedcode") || index.attr("type").equals("videostream")) {
+                Text text51 = new Text("Watch video on this ");
+                text51.getStyleClass().add("textReadTheOriginalPost");
+                Hyperlink articleLink1 = new Hyperlink("link");
+                articleLink1.getStyleClass().add("texthyperlink");
+                articleLink1.setOnAction(e -> {
+                    HostServices services = Helper.getInstance().getHostServices();
+                    services.showDocument(article.getLinkToFullArticles());
+                });
+                Text text61 = new Text(".");
+                text61.getStyleClass().add("textReadTheOriginalPost");
+                textFlow3.getChildren().addAll(text51, articleLink1, text61);
+                textFlow3.getStyleClass().add("textflowcenteritalic");
+                continue;
+            }
+            // Add imageview
+            if (index.select("img").hasAttr("data-original")) {
+                // Create new imageView
+                ImageView imageView = new ImageView();
+                imageView.setCache(true);
+                imageView.setCacheHint(CacheHint.SPEED);
+                imageView.setImage(new Image(index.select("img").attr("data-original"), 600, 600, true, false, true));
+                imageView.setPreserveRatio(true);
+                // Set the initial fitwidth for imageview
+                if (Main.stage.getWidth() < 900) {
+                    imageView.setFitWidth(Main.stage.getWidth() - 140);
+                }
+                if (Main.stage.getWidth() >= 900) {
+                    imageView.setFitWidth(800);
+                }
+                // Bind the fitwidth property of imageView with stagewidth property
+                ChangeListener<Number> changeListener = new ChangeListener<Number>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
+                        if (t1.doubleValue() < 900) {
+                            imageView.setFitWidth(t1.doubleValue() - 140);
+                        }
+                        if (t1.doubleValue() >= 900) {
+                            imageView.setFitWidth(800);
+                        }
+                    }
+                };
+                changeListenerList.add(changeListener);
+                Main.stage.widthProperty().addListener(changeListener);
+                // Add image cap
+                Text imagecap = new Text(index.select("div.PhotoCMS_Caption").text());
+                imagecap.getStyleClass().add("textimagecap");
+                textFlow3.getChildren().add(imagecap);
+                textFlow3.getStyleClass().add("textflowcenter");
+                vbox.getChildren().remove(vbox.getChildren().size() - 1);
+                vbox.getChildren().addAll(imageView, textFlow3);
+                continue;
+            }
+            // Add Body ( hyper link + bold + text normal text)
+            if (index.hasText() && !index.attr("type").equals("RelatedOneNews") && !index.attr("type").equals("RelatedNews")) {
+                // Hyper link
+                try {
+                    if (index.select("a").hasAttr("href")) {
+                        textFlow3 = Helper.getHyperLink(index);
+                        vbox.getChildren().remove(vbox.getChildren().size() - 1);
+                        vbox.getChildren().add(textFlow3);
+                        continue;
+                    }
+                } catch (Exception e) {
+
+                }
+                // Bold text
+                if (index.select("b").hasText()) {
+                    String string = index.text().replaceAll(index.select("b").text().replaceAll("\\*", ""), "<strong>" + index.select("b").text().replaceAll("\\*", "") + "</strong>");
+                    String[] stringSplit = string.split("<strong>");
+                    if (!stringSplit[0].isEmpty()) {
+                        Text textTemp = new Text(stringSplit[0]);
+                        textTemp.getStyleClass().add("textnormal");
+                        textFlow3.getChildren().add(textTemp);
+                        textFlow3.getStyleClass().add("textflowjustify");
+                    }
+                    for (int i = 1; i < stringSplit.length; i++) {
+                        Text textTemp0 = new Text(stringSplit[i].substring(0, stringSplit[i].indexOf("</strong>")));
+                        textTemp0.getStyleClass().add("textbold");
+                        Text textTemp1 = new Text(stringSplit[i].substring(stringSplit[i].indexOf("</strong>") + 9));
+                        textTemp1.getStyleClass().add("textnormal");
+                        textFlow3.getChildren().addAll(textTemp0, textTemp1);
+                        textFlow3.getStyleClass().add("textflowjustify");
+                    }
+                    continue;
+                }
+                else  {
+                    Text textTemp3 = new Text(index.text());
+                    textTemp3.getStyleClass().add("textnormal");
+                    textFlow3.getChildren().add(textTemp3);
+                    textFlow3.getStyleClass().add("textflowjustify");
+                }
+                continue;
+            }
+            // If not adding anything then remove the last index element (the new TextFlow)
+            vbox.getChildren().remove(vbox.getChildren().size() - 1);
+        }
+
+        // Display author
+        TextFlow textFlow4 = new TextFlow();
+        Text author1 = new Text(article.getAuthor());
+        author1.getStyleClass().add("textauthor");
+        textFlow4.getChildren().add(author1);
+        textFlow4.getStyleClass().add("textflowright");
+        vbox.getChildren().add(textFlow4);
+
+        // Link to full article (read original post here.)
+        TextFlow textFlow5 = new TextFlow();
+        Text text5 = new Text("Read the original post ");
+        text5.getStyleClass().add("textReadTheOriginalPost");
+        Hyperlink articleLink = new Hyperlink("here");
+        articleLink.getStyleClass().add("texthyperlink");
+        articleLink.setOnAction(e -> {
+            HostServices services = Helper.getInstance().getHostServices();
+            services.showDocument(article.getLinkToFullArticles());
+        });
+        Text text6 = new Text(".");
+        textFlow5.getChildren().addAll(text5, articleLink, text6);
+        textFlow5.setStyle("-fx-font-style: italic; -fx-font-size: 18; -fx-alignment: left;");
+        vbox.getChildren().add(textFlow5);
+
+        fullArticlesUrl = null;
+        document = null;
+        all = null;
+        fullDate = null;
+        body = null;
+        author = null;
+        originalCategory = null;
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
 
