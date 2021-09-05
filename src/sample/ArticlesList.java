@@ -501,7 +501,7 @@ public class ArticlesList {
         es.execute(() -> {
             vnexpressEntertainmentList.clear();
             try {
-                vnexpressEntertainmentList = ArticlesManager.getVnexpressList("https://vnexpress.net/rss/cuoi.rss", "Entertainment");
+                vnexpressEntertainmentList = ArticlesManager.getVnexpressWebList("https://vnexpress.net/giai-tri", "Entertainment");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -620,6 +620,10 @@ public class ArticlesList {
             vnexpressOthersList.clear();
             try {
                 vnexpressOthersList = ArticlesManager.getVnexpressList("https://vnexpress.net/rss/phap-luat.rss", "Others");
+                vnexpressOthersList.addAll(ArticlesManager.getVnexpressList("https://vnexpress.net/rss/tam-su.rss", "Others"));
+                vnexpressOthersList.addAll(ArticlesManager.getVnexpressList("https://vnexpress.net/rss/oto-xe-may.rss", "Others"));
+                vnexpressOthersList.addAll(ArticlesManager.getVnexpressList("https://vnexpress.net/rss/du-lich.rss", "Others"));
+                vnexpressOthersList.addAll(ArticlesManager.getVnexpressList("https://vnexpress.net/rss/gia-dinh.rss", "Others"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -628,6 +632,9 @@ public class ArticlesList {
             zingOthersList.clear();
             try {
                 zingOthersList = ArticlesManager.getZingWebList("https://zingnews.vn/du-hoc.html", "Others");
+                zingOthersList.addAll(ArticlesManager.getZingWebList("https://zingnews.vn/oto.html", "Others"));
+                zingOthersList.addAll(ArticlesManager.getZingWebList("https://zingnews.vn/xu-huong.html", "Others"));
+                zingOthersList.addAll(ArticlesManager.getZingWebList("https://zingnews.vn/am-thuc.html", "Others"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -635,7 +642,9 @@ public class ArticlesList {
         es.execute(() -> {
             tuoiTreOthersList.clear();
             try {
-                tuoiTreOthersList = ArticlesManager.getTuoiTreList("https://tuoitre.vn/rss/giao-duc.rss", "Others");
+                tuoiTreOthersList = ArticlesManager.getTuoiTreList("https://tuoitre.vn/rss/du-lich.rss", "Others");
+                tuoiTreOthersList.addAll(ArticlesManager.getTuoiTreList("https://tuoitre.vn/rss/xe.rss", "Others"));
+                tuoiTreOthersList.addAll(ArticlesManager.getTuoiTreList("https://tuoitre.vn/rss/nhip-song-tre.rss", "Others"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -644,6 +653,9 @@ public class ArticlesList {
             thanhNienOthersList.clear();
             try {
                 thanhNienOthersList = ArticlesManager.getThanhNienList("https://thanhnien.vn/game/tin-tuc-game.rss", "Others");
+                thanhNienOthersList.addAll(ArticlesManager.getThanhNienList("https://thanhnien.vn/rss/doi-song/am-thuc.rss", "Others"));
+                thanhNienOthersList.addAll(ArticlesManager.getThanhNienList("https://thanhnien.vn/rss/du-lich.rss", "Others"));
+                thanhNienOthersList.addAll(ArticlesManager.getThanhNienList("https://thanhnien.vn/rss/giao-duc/du-hoc.rss", "Others"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -652,6 +664,7 @@ public class ArticlesList {
             nhanDanOthersList.clear();
             try {
                 nhanDanOthersList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/du-lich", "Others");
+                nhanDanOthersList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/bandoc", "Others"));
             } catch (IOException e) {
                 e.printStackTrace();
             }

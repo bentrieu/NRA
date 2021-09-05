@@ -103,7 +103,7 @@ public class HomeSceneController implements Initializable {
     Image darkLoadingImage;
 
     // Initial Mode
-    public boolean isDarkMode = false;
+    public boolean isDarkMode = true;
 
     // Check animation
     public boolean animationFinish;
@@ -1161,11 +1161,13 @@ public class HomeSceneController implements Initializable {
     public Pagination setPaginationList(ArrayList<Article> articlesList, Pagination newPagination) throws IOException {
         newPagination.setMaxHeight(983);
         newPagination.setMinHeight(983);
+        newPagination.setMaxPageIndicatorCount(10);
 
         currentCategoryList = articlesList;
         int size = (int) Math.floor((double) currentCategoryList.size() / 10.0);
-        if (size >= 5) newPagination.setPageCount(5);
-        else newPagination.setPageCount(size);
+        newPagination.setPageCount(size);
+//        if (size >= 5) newPagination.setPageCount(5);
+//        else newPagination.setPageCount(size);
         if (size < 1) {
             newPagination.setPageCount(1);
             newPagination.setPageFactory(pageindex -> {
