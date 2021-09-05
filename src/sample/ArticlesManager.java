@@ -199,7 +199,7 @@ public class ArticlesManager extends Application {
             vbox.getChildren().add(textFlow);
 
             // Display image source
-            Image imageSource = new Image("resource/zingnews_big.png", 200, 200, true, false, true);
+            Image imageSource = new Image("resource/zingnews_big.png", 200, 200, true, true, true);
             ImageView imageViewSource = new ImageView();
             imageViewSource.setCache(true);
             imageViewSource.setCacheHint(CacheHint.SPEED);
@@ -284,9 +284,9 @@ public class ArticlesManager extends Application {
                     imageView.setCacheHint(CacheHint.SPEED);
                     // Create new imageView
                     if (index.attr("data-src").isEmpty()) {
-                        imageView.setImage(new Image(index.attr("abs:src"), 800, 0, true, false, true));
+                        imageView.setImage(new Image(index.attr("abs:src"), 800, 0, true, true, true));
                     }
-                    else imageView.setImage(new Image(index.attr("abs:data-src"), 800, 0, true, false, true));
+                    else imageView.setImage(new Image(index.attr("abs:data-src"), 800, 0, true, true, true));
                     imageView.setPreserveRatio(true);
                     // Set the initial fitwidth for imageview
                     if (Main.stage.getWidth() < 900) {
@@ -621,7 +621,7 @@ public class ArticlesManager extends Application {
             vbox.getChildren().add(textFlow);
 
             // Display image source
-            Image imageSource = new Image("resource/vnexpress_big.png", 200, 200, true, false, true);
+            Image imageSource = new Image("resource/vnexpress_big.png", 200, 200, true, true, true);
             ImageView imageViewSource = new ImageView();
             imageViewSource.setCache(true);
             imageViewSource.setCacheHint(CacheHint.SPEED);
@@ -727,9 +727,9 @@ public class ArticlesManager extends Application {
                     imageView.setCache(true);
                     imageView.setCacheHint(CacheHint.SPEED);
                     if (index.select("img").hasAttr("data-src")) {
-                        imageView.setImage(new Image(index.select("img").attr("data-src"), 800, 0, true, false, true));
+                        imageView.setImage(new Image(index.select("img").attr("data-src"), 800, 0, true, true, true));
                     }
-                    else imageView.setImage(new Image(index.select("source").attr("data-src-image"), 800, 0, true, false, true));
+                    else imageView.setImage(new Image(index.select("source").attr("data-src-image"), 800, 0, true, true, true));
                     imageView.setPreserveRatio(true);
                     // Set the initial fitwidth for imageview
                     if (Main.stage.getWidth() < 900) {
@@ -1069,7 +1069,7 @@ public class ArticlesManager extends Application {
             vbox.getChildren().add(textFlow);
 
             // Display image source
-            Image imageSource = new Image("resource/tuoitre_big.png", 200, 200, true, false, true);
+            Image imageSource = new Image("resource/tuoitre_big.png", 200, 200, true, true, true);
             ImageView imageViewSource = new ImageView();
             imageViewSource.setCache(true);
             imageViewSource.setCacheHint(CacheHint.SPEED);
@@ -1128,7 +1128,7 @@ public class ArticlesManager extends Application {
                     ImageView imageView = new ImageView();
                     imageView.setCache(true);
                     imageView.setCacheHint(CacheHint.SPEED);
-                    imageView.setImage(new Image(index.select("img").attr("data-original"), 800, 0, true, false, true));
+                    imageView.setImage(new Image(index.select("img").attr("data-original"), 800, 0, true, true, true));
                     imageView.setPreserveRatio(true);
                     // Set the initial fitwidth for imageview
                     if (Main.stage.getWidth() < 900) {
@@ -1419,7 +1419,7 @@ public class ArticlesManager extends Application {
             vbox.getChildren().add(textFlow);
 
             // Display image source
-            Image imageSource = new Image("resource/thanhnien_big.png", 200, 200, true, false, true);
+            Image imageSource = new Image("resource/thanhnien_big.png", 200, 200, true, true, true);
             ImageView imageViewSource = new ImageView();
             imageViewSource.setCache(true);
             imageViewSource.setCacheHint(CacheHint.SPEED);
@@ -1496,10 +1496,10 @@ public class ArticlesManager extends Application {
                 imageView0.setCache(true);
                 imageView0.setCacheHint(CacheHint.SPEED);
                 if (descriptionImage.select("img").attr("data-src").isEmpty()) {
-                    imageView0.setImage(new Image(descriptionImage.select("img").attr("abs:src"), 800, 0, true, false, true));
+                    imageView0.setImage(new Image(descriptionImage.select("img").attr("abs:src"), 800, 0, true, true, true));
                 }
                 else {
-                    imageView0.setImage(new Image(descriptionImage.select("img").attr("abs:data-src"), 800, 0, true, false, true));
+                    imageView0.setImage(new Image(descriptionImage.select("img").attr("abs:data-src"), 800, 0, true, true, true));
                 }
                 imageView0.setPreserveRatio(true);
                 // Set the initial fitwidth for imageview
@@ -1581,7 +1581,7 @@ public class ArticlesManager extends Application {
                     ImageView imageView = new ImageView();
                     imageView.setCache(true);
                     imageView.setCacheHint(CacheHint.SPEED);
-                    imageView.setImage(new Image(index.select("img").attr("data-src"), 800, 0, true, false, true));
+                    imageView.setImage(new Image(index.select("img").attr("data-src"), 800, 0, true, true, true));
                     imageView.setPreserveRatio(true);
                     // Set the initial fitwidth for imageview
                     if (Main.stage.getWidth() < 900) {
@@ -1911,7 +1911,7 @@ public class ArticlesManager extends Application {
             vbox.getChildren().add(textFlow);
 
             // Display image source
-            Image imageSource = new Image("resource/nhandan_big.png", 200, 200, true, false, true);
+            Image imageSource = new Image("resource/nhandan_big.png", 200, 200, true, true, true);
             ImageView imageViewSource = new ImageView();
             imageViewSource.setCache(true);
             imageViewSource.setCacheHint(CacheHint.SPEED);
@@ -1951,10 +1951,10 @@ public class ArticlesManager extends Application {
                 imageView0.setCache(true);
                 imageView0.setCacheHint(CacheHint.SPEED);
                 if (descriptionImage.select("img").attr("data-src").isEmpty()) {
-                    imageView0.setImage(new Image(descriptionImage.select("img").attr("abs:src"), 800, 0, true, false, true));
+                    imageView0.setImage(new Image(descriptionImage.select("img").attr("abs:src"), 800, 0, true, true, true));
                 }
                 else {
-                    imageView0.setImage(new Image(descriptionImage.select("img").attr("abs:data-src"), 800, 0, true, false, true));
+                    imageView0.setImage(new Image(descriptionImage.select("img").attr("abs:data-src"), 800, 0, true, true, true));
                 }
                 imageView0.setPreserveRatio(true);
                 // Set the initial fitwidth for imageview
@@ -2015,8 +2015,8 @@ public class ArticlesManager extends Application {
                     ImageView imageView = new ImageView();
                     imageView.setCache(true);
                     imageView.setCacheHint(CacheHint.SPEED);
-                    if (index.select("img").hasAttr("data-src")) imageView.setImage(new Image(index.select("img").attr("data-src"), 800, 0, true, false, true));
-                    if (index.select("img").hasAttr("src")) imageView.setImage(new Image(index.select("img").attr("src"), 800, 0, true, false, true));
+                    if (index.select("img").hasAttr("data-src")) imageView.setImage(new Image(index.select("img").attr("data-src"), 800, 0, true, true, true));
+                    if (index.select("img").hasAttr("src")) imageView.setImage(new Image(index.select("img").attr("src"), 800, 0, true, true, true));
                     imageView.setPreserveRatio(true);
                     // Set the initial fitwidth for imageview
                     if (Main.stage.getWidth() < 900) {
