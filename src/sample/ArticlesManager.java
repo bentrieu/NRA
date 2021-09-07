@@ -1189,6 +1189,64 @@ public class ArticlesManager extends Application {
         return thanhNienList;
     }
 
+    // Thanhnien web list (https://thanhnien.vn/the-gioi/)
+    public static ArrayList<Article> getThanhNienWebList(String urlToShortArticle, String category) throws IOException {
+        // Create new arraylist of article for return
+        ArrayList<Article> thanhNienWebList = new ArrayList<>();
+
+        /* Bắt đầu từ đây là add dữ liệu cho sort article
+         */
+        // Setup jsoup for scraping data
+        final String url = urlToShortArticle;
+        Document document = Jsoup.connect(url).userAgent("Mozilla").get();
+        Elements all = document.select("article.story.story--primary, div.l-grid div.relative article.story, div.highlight article.story, div#timeline article.story");
+        Elements thumb = all.select("img");
+        Elements titleAndLink = all.select("a.story__title");
+        Elements date = all.select("time[rel]");
+
+        int maxSize = 15;
+        if (category.equals("Sports")) maxSize = 10;
+
+        // Add data to vnexpressNewsList (Title + date + thumb + link)
+        for (int i = 0, k = 0; k < maxSize; i++, k++) {
+            if (all.get(i).hasClass("story--video") || all.get(i).parent().hasClass("feature")) {
+                k--;
+                continue;
+            }
+            // Create new article object then add the object into the ArrayList
+            thanhNienWebList.add(new Article());
+            // Set source
+            thanhNienWebList.get(k).setSource("thanhnien");
+            // Set category manually
+            thanhNienWebList.get(k).setCategory(category);
+            // Set title for each object
+            thanhNienWebList.get(k).setTitle(titleAndLink.get(i).text());
+            // Set date for each object
+            String dateTemp = date.get(i).attr("rel").substring(0, 10);
+            long dateTemp0 = Long.valueOf(dateTemp) - 25200;
+            dateTemp = String.valueOf(dateTemp0);
+            thanhNienWebList.get(k).setDate(dateTemp);
+            // Set time ago for each object
+            thanhNienWebList.get(k).setTimeAgo(Helper.timeDiff(dateTemp));
+            // Set thumb for each object
+            String thumbTemp;
+            if (thumb.get(i).attr("data-src").isEmpty()) {
+                thumbTemp = thumb.get(i).attr("src");
+            } else {
+                thumbTemp = thumb.get(i).attr("data-src");
+            }
+            if (thumbTemp.contains("c150x100")) thumbTemp = thumbTemp.replaceFirst("c150x100/[,0-9]+/", "2048/"); // c150x100/8,0,92,0
+            else {
+                if (thumbTemp.contains("150x100")) thumbTemp = thumbTemp.replaceFirst("150x100", "2048"); // 150x100
+            }
+            thanhNienWebList.get(k).setThumb(thumbTemp);
+            // Set link to full article for each object
+            thanhNienWebList.get(k).setLinkToFullArticles(titleAndLink.get(i).attr("abs:href"));
+        }
+
+        return thanhNienWebList;
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
 
