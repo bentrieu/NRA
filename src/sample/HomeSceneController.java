@@ -401,5 +401,544 @@ public class HomeSceneController implements Initializable {
         menuPaneSetVisible(false);
         settings();
     }
+    public void search() {
+        String searchText = searchTextField.getText().trim();
+        searchText = searchText.replaceAll("[\\s]+", " ");
+        System.out.println(searchText);
+    }
+    public void refresh() throws IOException {
+        switch (currentCategoryIndex) {
+            case 0:
+                displayNewsList();
+                break;
+            case 1:
+                displayCovidList();
+                break;
+            case 2:
+                displayPoliticsList();
+                break;
+            case 3:
+                displayBusinessList();
+                break;
+            case 4:
+                displayTechnologyList();
+                break;
+            case 5:
+                displayHealthList();
+                break;
+            case 6:
+                displaySportsList();
+                break;
+            case 7:
+                displayEntertainmentList();
+                break;
+            case 8:
+                displayWorldList();
+                break;
+            case 9:
+                displayOthersList();
+                break;
+            default:
+                break;
+        }
+    }
+    public void backToHome(ActionEvent event) {
+        if (!tempPane.isVisible()) {
+            scrollPane.setVvalue(0);
+            for (int i = 0; i < ArticlesManager.changeListenerList.size(); i++) {
+                Main.stage.widthProperty().removeListener(ArticlesManager.changeListenerList.get(i));
+            }
+            ArticlesManager.changeListenerList.clear();
+            for (int i = 0; i < displayFullArticleVbox.getChildren().size(); i++) {
+                if (displayFullArticleVbox.getChildren().get(i) instanceof ImageView) {
+                    ((ImageView) displayFullArticleVbox.getChildren().get(i)).setImage(null);
+                }
+            }
+            displayFullArticleVbox.getChildren().clear();
+            borderPaneUnderScrollPane.setCenter(null);
+            borderPaneUnderScrollPane.setCenter(currentPagination);
+            stackPane1.setVisible(false);
+            System.gc();
+            Runtime.getRuntime().gc();
+            homeButton.requestFocus();
+        } else {
+            tempPane.setVisible(false);
+        }
+    }
+    public void copyArticleLink() {
+        final Clipboard clipboard = Clipboard.getSystemClipboard();
+        final ClipboardContent content = new ClipboardContent();
+        content.putString(currentCategoryList.get(currentArticleIndex).getLinkToFullArticles());
+//        content.putHtml("<b>Some</b> text");
+        clipboard.setContent(content);
+    }
+    public void takeSearchInput(MouseEvent event) {
+        tempPane.setVisible(true);
+    }
+    public void exitSearch() {
+        tempPane.setVisible(false);
+        menuButton.requestFocus();
+        searchTextField.clear();
+    }
+    public void displayNewsList() throws IOException {
+        scrollPane.setVvalue(0);
+        scrollPane.setHvalue(0);
+        currentCategoryIndex = 0;
+        movePosHbox(categoryHbox, categoryHbox.getChildren().indexOf(newsButton));
+        newsButton.setSelected(true);
+        covidButton.setSelected(false);
+        politicsButton.setSelected(false);
+        businessButton.setSelected(false);
+        technologyButton.setSelected(false);
+        healthButton.setSelected(false);
+        sportsButton.setSelected(false);
+        entertainmentButton.setSelected(false);
+        worldButton.setSelected(false);
+        othersButton.setSelected(false);
+        todayLabel.setText("Today");
+        stackPane1.setVisible(false);
+        borderPaneUnderScrollPane.setCenter(null);
+        borderPaneUnderScrollPane.setCenter(loadingStackPane);
+        Thread t1 = new Thread(() -> {
+            try {
+                ArticlesList.getNewsList();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Platform.runLater(() -> {
+                borderPaneUnderScrollPane.setCenter(null);
+                try {
+                    borderPaneUnderScrollPane.setCenter(setPaginationList(ArticlesList.newsList, new Pagination()));
 
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                System.gc();
+                Runtime.getRuntime().gc();
+            });
+        });
+        t1.start();
+    }
+    public void displayCovidList() throws IOException {
+        scrollPane.setVvalue(0);
+        scrollPane.setHvalue(0);
+        currentCategoryIndex = 1;
+        movePosHbox(categoryHbox, categoryHbox.getChildren().indexOf(covidButton));
+        newsButton.setSelected(false);
+        covidButton.setSelected(true);
+        politicsButton.setSelected(false);
+        businessButton.setSelected(false);
+        technologyButton.setSelected(false);
+        healthButton.setSelected(false);
+        sportsButton.setSelected(false);
+        entertainmentButton.setSelected(false);
+        worldButton.setSelected(false);
+        othersButton.setSelected(false);
+        todayLabel.setText("Covid-19");
+        stackPane1.setVisible(false);
+        borderPaneUnderScrollPane.setCenter(null);
+        borderPaneUnderScrollPane.setCenter(loadingStackPane);
+        Thread t1 = new Thread(() -> {
+            try {
+                ArticlesList.getCovidList();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Platform.runLater(() -> {
+                borderPaneUnderScrollPane.setCenter(null);
+                try {
+                    borderPaneUnderScrollPane.setCenter(setPaginationList(ArticlesList.covidList, new Pagination()));
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                System.gc();
+                Runtime.getRuntime().gc();
+            });
+        });
+        t1.start();
+    }
+    public void displayPoliticsList() throws IOException {
+        scrollPane.setVvalue(0);
+        scrollPane.setHvalue(0);
+        currentCategoryIndex = 2;
+        movePosHbox(categoryHbox, categoryHbox.getChildren().indexOf(politicsButton));
+        newsButton.setSelected(false);
+        covidButton.setSelected(false);
+        politicsButton.setSelected(true);
+        businessButton.setSelected(false);
+        technologyButton.setSelected(false);
+        healthButton.setSelected(false);
+        sportsButton.setSelected(false);
+        entertainmentButton.setSelected(false);
+        worldButton.setSelected(false);
+        othersButton.setSelected(false);
+        todayLabel.setText("Politics");
+        stackPane1.setVisible(false);
+        borderPaneUnderScrollPane.setCenter(null);
+        borderPaneUnderScrollPane.setCenter(loadingStackPane);
+        Thread t1 = new Thread(() -> {
+            try {
+                ArticlesList.getPoliticsList();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Platform.runLater(() -> {
+                borderPaneUnderScrollPane.setCenter(null);
+                try {
+                    borderPaneUnderScrollPane.setCenter(setPaginationList(ArticlesList.politicsList, new Pagination()));
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                System.gc();
+                Runtime.getRuntime().gc();
+            });
+        });
+        t1.start();
+    }
+    public void displayBusinessList() throws IOException {
+        scrollPane.setVvalue(0);
+        scrollPane.setHvalue(0);
+        currentCategoryIndex = 3;
+        movePosHbox(categoryHbox, categoryHbox.getChildren().indexOf(businessButton));
+        newsButton.setSelected(false);
+        covidButton.setSelected(false);
+        politicsButton.setSelected(false);
+        businessButton.setSelected(true);
+        technologyButton.setSelected(false);
+        healthButton.setSelected(false);
+        sportsButton.setSelected(false);
+        entertainmentButton.setSelected(false);
+        worldButton.setSelected(false);
+        othersButton.setSelected(false);
+        todayLabel.setText("Business");
+        stackPane1.setVisible(false);
+        borderPaneUnderScrollPane.setCenter(null);
+        borderPaneUnderScrollPane.setCenter(loadingStackPane);
+        Thread t1 = new Thread(() -> {
+            try {
+                ArticlesList.getBusinessList();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Platform.runLater(() -> {
+                borderPaneUnderScrollPane.setCenter(null);
+                try {
+                    borderPaneUnderScrollPane.setCenter(setPaginationList(ArticlesList.businessList, new Pagination()));
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                System.gc();
+                Runtime.getRuntime().gc();
+            });
+        });
+        t1.start();
+    }
+    public void displayTechnologyList() throws IOException {
+        scrollPane.setVvalue(0);
+        scrollPane.setHvalue(0);
+        currentCategoryIndex = 4;
+        movePosHbox(categoryHbox, categoryHbox.getChildren().indexOf(technologyButton));
+        newsButton.setSelected(false);
+        covidButton.setSelected(false);
+        politicsButton.setSelected(false);
+        businessButton.setSelected(false);
+        technologyButton.setSelected(true);
+        healthButton.setSelected(false);
+        sportsButton.setSelected(false);
+        entertainmentButton.setSelected(false);
+        worldButton.setSelected(false);
+        othersButton.setSelected(false);
+        todayLabel.setText("Technology");
+        stackPane1.setVisible(false);
+        borderPaneUnderScrollPane.setCenter(null);
+        borderPaneUnderScrollPane.setCenter(loadingStackPane);
+        Thread t1 = new Thread(() -> {
+            try {
+                ArticlesList.getTechnologyList();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Platform.runLater(() -> {
+                borderPaneUnderScrollPane.setCenter(null);
+                try {
+                    borderPaneUnderScrollPane.setCenter(setPaginationList(ArticlesList.technologyList, new Pagination()));
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                System.gc();
+                Runtime.getRuntime().gc();
+            });
+        });
+        t1.start();
+    }
+    public void displayHealthList() throws IOException {
+        scrollPane.setVvalue(0);
+        scrollPane.setHvalue(0);
+        currentCategoryIndex = 5;
+        movePosHbox(categoryHbox, categoryHbox.getChildren().indexOf(healthButton));
+        newsButton.setSelected(false);
+        covidButton.setSelected(false);
+        politicsButton.setSelected(false);
+        businessButton.setSelected(false);
+        technologyButton.setSelected(false);
+        healthButton.setSelected(true);
+        sportsButton.setSelected(false);
+        entertainmentButton.setSelected(false);
+        worldButton.setSelected(false);
+        othersButton.setSelected(false);
+        todayLabel.setText("Health");
+        stackPane1.setVisible(false);
+        borderPaneUnderScrollPane.setCenter(null);
+        borderPaneUnderScrollPane.setCenter(loadingStackPane);
+        Thread t1 = new Thread(() -> {
+            try {
+                ArticlesList.getHealthList();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Platform.runLater(() -> {
+                borderPaneUnderScrollPane.setCenter(null);
+                try {
+                    borderPaneUnderScrollPane.setCenter(setPaginationList(ArticlesList.healthList, new Pagination()));
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                System.gc();
+                Runtime.getRuntime().gc();
+            });
+        });
+        t1.start();
+    }
+    public void displaySportsList() throws IOException {
+        scrollPane.setVvalue(0);
+        scrollPane.setHvalue(0);
+        currentCategoryIndex = 6;
+        movePosHbox(categoryHbox, categoryHbox.getChildren().indexOf(sportsButton));
+        newsButton.setSelected(false);
+        covidButton.setSelected(false);
+        politicsButton.setSelected(false);
+        businessButton.setSelected(false);
+        technologyButton.setSelected(false);
+        healthButton.setSelected(false);
+        sportsButton.setSelected(true);
+        entertainmentButton.setSelected(false);
+        worldButton.setSelected(false);
+        othersButton.setSelected(false);
+        todayLabel.setText("Sports");
+        stackPane1.setVisible(false);
+        borderPaneUnderScrollPane.setCenter(null);
+        borderPaneUnderScrollPane.setCenter(loadingStackPane);
+        Thread t1 = new Thread(() -> {
+            try {
+                ArticlesList.getSportsList();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Platform.runLater(() -> {
+                borderPaneUnderScrollPane.setCenter(null);
+                try {
+                    borderPaneUnderScrollPane.setCenter(setPaginationList(ArticlesList.sportsList, new Pagination()));
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                System.gc();
+                Runtime.getRuntime().gc();
+            });
+        });
+        t1.start();
+    }
+    public void displayEntertainmentList() throws IOException {
+        scrollPane.setVvalue(0);
+        scrollPane.setHvalue(0);
+        currentCategoryIndex = 7;
+        movePosHbox(categoryHbox, categoryHbox.getChildren().indexOf(entertainmentButton));
+        newsButton.setSelected(false);
+        covidButton.setSelected(false);
+        politicsButton.setSelected(false);
+        businessButton.setSelected(false);
+        technologyButton.setSelected(false);
+        healthButton.setSelected(false);
+        sportsButton.setSelected(false);
+        entertainmentButton.setSelected(true);
+        worldButton.setSelected(false);
+        othersButton.setSelected(false);
+        todayLabel.setText("Entertainment");
+        stackPane1.setVisible(false);
+        borderPaneUnderScrollPane.setCenter(null);
+        borderPaneUnderScrollPane.setCenter(loadingStackPane);
+        Thread t1 = new Thread(() -> {
+            try {
+                ArticlesList.getEntertainmentList();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Platform.runLater(() -> {
+                borderPaneUnderScrollPane.setCenter(null);
+                try {
+                    borderPaneUnderScrollPane.setCenter(setPaginationList(ArticlesList.entertainmentList, new Pagination()));
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                System.gc();
+                Runtime.getRuntime().gc();
+            });
+        });
+        t1.start();
+    }
+    public void displayWorldList() throws IOException {
+        scrollPane.setVvalue(0);
+        scrollPane.setHvalue(0);
+        currentCategoryIndex = 8;
+        movePosHbox(categoryHbox, categoryHbox.getChildren().indexOf(worldButton));
+        newsButton.setSelected(false);
+        covidButton.setSelected(false);
+        politicsButton.setSelected(false);
+        businessButton.setSelected(false);
+        technologyButton.setSelected(false);
+        healthButton.setSelected(false);
+        sportsButton.setSelected(false);
+        entertainmentButton.setSelected(false);
+        worldButton.setSelected(true);
+        othersButton.setSelected(false);
+        todayLabel.setText("World");
+        stackPane1.setVisible(false);
+        borderPaneUnderScrollPane.setCenter(null);
+        borderPaneUnderScrollPane.setCenter(loadingStackPane);
+        Thread t1 = new Thread(() -> {
+            try {
+                ArticlesList.getWorldList();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Platform.runLater(() -> {
+                borderPaneUnderScrollPane.setCenter(null);
+                try {
+                    borderPaneUnderScrollPane.setCenter(setPaginationList(ArticlesList.worldList, new Pagination()));
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                System.gc();
+                Runtime.getRuntime().gc();
+            });
+        });
+        t1.start();
+    }
+    public void displayOthersList() throws IOException {
+        scrollPane.setVvalue(0);
+        scrollPane.setHvalue(0);
+        currentCategoryIndex = 9;
+        movePosHbox(categoryHbox, categoryHbox.getChildren().indexOf(othersButton));
+        newsButton.setSelected(false);
+        covidButton.setSelected(false);
+        politicsButton.setSelected(false);
+        businessButton.setSelected(false);
+        technologyButton.setSelected(false);
+        healthButton.setSelected(false);
+        sportsButton.setSelected(false);
+        entertainmentButton.setSelected(false);
+        worldButton.setSelected(false);
+        othersButton.setSelected(true);
+        todayLabel.setText("Others");
+        stackPane1.setVisible(false);
+        borderPaneUnderScrollPane.setCenter(null);
+        borderPaneUnderScrollPane.setCenter(loadingStackPane);
+        Thread t1 = new Thread(() -> {
+            try {
+                ArticlesList.getOthersList();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Platform.runLater(() -> {
+                borderPaneUnderScrollPane.setCenter(null);
+                try {
+                    borderPaneUnderScrollPane.setCenter(setPaginationList(ArticlesList.othersList, new Pagination()));
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                System.gc();
+                Runtime.getRuntime().gc();
+            });
+        });
+        t1.start();
+    }
+
+    public void previousCategoryList() throws IOException {
+        ToggleButton b = (ToggleButton) categoryHbox.getChildren().get(categoryHbox.getChildren().size() - 1);
+        categoryHbox.getChildren().remove(categoryHbox.getChildren().size() - 1);
+        categoryHbox.getChildren().add(0, b);
+        if (newsButton.equals((ToggleButton) categoryHbox.getChildren().get(0))) {
+            displayNewsList();
+        }
+        if (covidButton.equals((ToggleButton) categoryHbox.getChildren().get(0))) {
+            displayCovidList();
+        }
+        if (politicsButton.equals((ToggleButton) categoryHbox.getChildren().get(0))) {
+            displayPoliticsList();
+        }
+        if (businessButton.equals((ToggleButton) categoryHbox.getChildren().get(0))) {
+            displayBusinessList();
+        }
+        if (technologyButton.equals((ToggleButton) categoryHbox.getChildren().get(0))) {
+            displayTechnologyList();
+        }
+        if (healthButton.equals((ToggleButton) categoryHbox.getChildren().get(0))) {
+            displayHealthList();
+        }
+        if (sportsButton.equals((ToggleButton) categoryHbox.getChildren().get(0))) {
+            displaySportsList();
+        }
+        if (entertainmentButton.equals((ToggleButton) categoryHbox.getChildren().get(0))) {
+            displayEntertainmentList();
+        }
+        if (worldButton.equals((ToggleButton) categoryHbox.getChildren().get(0))) {
+            displayWorldList();
+        }
+        if (othersButton.equals((ToggleButton) categoryHbox.getChildren().get(0))) {
+            displayOthersList();
+        }
+    }
+    public void nextCategoryList() throws IOException {
+        ToggleButton b = (ToggleButton) categoryHbox.getChildren().get(0);
+        categoryHbox.getChildren().remove(0);
+        categoryHbox.getChildren().add(b);
+        if (newsButton.equals((ToggleButton) categoryHbox.getChildren().get(0))) {
+            displayNewsList();
+        }
+        if (covidButton.equals((ToggleButton) categoryHbox.getChildren().get(0))) {
+            displayCovidList();
+        }
+        if (politicsButton.equals((ToggleButton) categoryHbox.getChildren().get(0))) {
+            displayPoliticsList();
+        }
+        if (businessButton.equals((ToggleButton) categoryHbox.getChildren().get(0))) {
+            displayBusinessList();
+        }
+        if (technologyButton.equals((ToggleButton) categoryHbox.getChildren().get(0))) {
+            displayTechnologyList();
+        }
+        if (healthButton.equals((ToggleButton) categoryHbox.getChildren().get(0))) {
+            displayHealthList();
+        }
+        if (sportsButton.equals((ToggleButton) categoryHbox.getChildren().get(0))) {
+            displaySportsList();
+        }
+        if (entertainmentButton.equals((ToggleButton) categoryHbox.getChildren().get(0))) {
+            displayEntertainmentList();
+        }
+        if (worldButton.equals((ToggleButton) categoryHbox.getChildren().get(0))) {
+            displayWorldList();
+        }
+        if (othersButton.equals((ToggleButton) categoryHbox.getChildren().get(0))) {
+            displayOthersList();
+        }
+    }
 }
