@@ -929,16 +929,25 @@ public class ArticlesManager extends Application {
         Document document = retryConnect(url);
 
         if (document != null) {
-            Elements all = document.select("item");
-            Elements thumbAndDescription = all.select("description");
-            Elements title = all.select("title");
-            Elements link = all.select("link");
-            Elements date = all.select("pubDate");
+            Elements all = document.select("li[data-boxtype]:not(news-item), li[data-id], li.news-item");
 
-            int maxSize = Math.min(all.size(), 50);
+            // Eliminate the elements do not have description (remove from all)
+            ArrayList<Element> toRemove = new ArrayList<>();
+            for (Element index : all) {
+                // Set thumb for each object
+                if (!index.select("p").hasClass("sapo")) {
+                    toRemove.add(index);
+                }
+            }
+            all.removeAll(toRemove);
+            toRemove.clear();
+
+            Elements thumb = all.select("img");
+            Elements description = all.select("p.sapo");
+            Elements titleAndLink = all.select("> a[title]");
 
             // Add data to vnexpressNewsList (Title + date + thumb + link)
-            for (int i = 0; i < maxSize; i++) {
+            for (int i = 0; i < all.size(); i++) {
                 // Create new article object then add the object into the ArrayList
                 tuoiTreWebList.add(new Article());
                 // Set source
@@ -946,21 +955,23 @@ public class ArticlesManager extends Application {
                 // Set category manually
                 tuoiTreWebList.get(i).setCategory(category);
                 // Set title for each object
-                tuoiTreWebList.get(i).setTitle(title.get(i).text());
-                // Set date for each object
-                String dateTemp = Helper.timeToUnixString4(date.get(i).text());
-                tuoiTreWebList.get(i).setDate(dateTemp);
-                // Set time ago for each object
-                tuoiTreWebList.get(i).setTimeAgo(Helper.timeDiff(dateTemp));
+                tuoiTreWebList.get(i).setTitle(titleAndLink.get(i).attr("title"));
+                // Set description for each object
+                tuoiTreWebList.get(i).setDescription(description.get(i).text());
                 // Set thumb and description for each object
-                String string = thumbAndDescription.get(i).text();
-                int startLink = string.indexOf("src=\"") + 5;
-                int endLink = string.indexOf("\"", startLink) - 1;
-                int startDescription = string.indexOf("</a>") + 4;
-                tuoiTreWebList.get(i).setThumb(string.substring(startLink, endLink + 1).replaceFirst("zoom/[_0-9]+/", "thumb_w/586/"));
-                tuoiTreWebList.get(i).setDescription(string.substring(startDescription));
+                String linkThumb = thumb.get(i).attr("data-src");
+                tuoiTreWebList.get(i).setThumb(linkThumb);
+                // Set date
+                Pattern pattern = Pattern.compile("[0-9]+\\.(jpg|jpeg|png|gif)");
+                Matcher matcher = pattern.matcher(linkThumb);
+                int startTime = 0;
+                if (matcher.find()) startTime = matcher.start();
+                String date = linkThumb.substring(startTime, startTime + 10);
+                tuoiTreWebList.get(i).setDate(date);
+                // Set time ago for each object
+                tuoiTreWebList.get(i).setTimeAgo(Helper.timeDiff(date));
                 // Set link to full article for each object
-                tuoiTreWebList.get(i).setLinkToFullArticles(link.get(i).text());
+                tuoiTreWebList.get(i).setLinkToFullArticles(titleAndLink.get(i).attr("abs:href"));
             }
         }
 
@@ -1039,7 +1050,7 @@ public class ArticlesManager extends Application {
         if (document != null) {
             Elements all = document.select("div.content-detail");
             Elements fullDate = document.select("div.date-time");
-            Elements body = all.select("div.main-content-body div.content.fck").select("> p, div.VCSortableInPreviewMode");
+            Elements body = all.select("div.main-content-body div.content.fck").select("> p, div.VCSortableInPreviewMode, div p:not(.VCObjectBoxRelatedNewsItemSapo):not([data-placeholder])");
             Elements author = all.select("div.author");
             Elements originalCategory = document.select("div.bread-crumbs li");
 
@@ -1744,7 +1755,7 @@ public class ArticlesManager extends Application {
         Document document = retryConnect(url);
 
         if (document != null) {
-            Elements all = document.select("div.uk-grid-site article, div.featured-bottom article, div.uk-width-1-1 article");
+            Elements all = document.select("div.uk-grid-site article, div.featured-bottom article, div.uk-width-1-1 article, body > article");
             Elements thumb = all.select("div.box-img");
             Elements titleAndLink = all.select("div.box-title");
 
@@ -1879,7 +1890,7 @@ public class ArticlesManager extends Application {
         if (document != null) {
             Elements all = document.select("div.box-content-detail");
             Elements description = all.select("div.box-des-detail");
-            Elements body = all.select("div.detail-content-body ").select("> p, figure");
+            Elements body = all.select("div.detail-content-body, div.detail-content-body div.WordSection1").select("> p, figure");
             Elements author = all.select("div.box-author");
             Elements originalCategory = document.select("ul.uk-breadcrumb li");
             Elements fullDate = document.select("div.box-date");
@@ -2225,23 +2236,34 @@ public class ArticlesManager extends Application {
      */
     public static Document retryConnect(String url) {
         Document document = null;
-        int maxRetryTimes = 5;
+        int maxRetryTimes = 5, count = 0;
+        boolean isComplete = false;
 
         // Retry 2 times if connect fail
-        try {
-            document = Jsoup.connect(url).userAgent("Mozilla").get();
-        } catch (IOException e1) {
-            System.out.println("Jsoup: Re-try to connect first time");
+//        try {
+//            document = Jsoup.connect(url).timeout(2000).userAgent("Mozilla").get();
+//        } catch (IOException e1) {
+//            System.out.println("Jsoup: Re-try to connect first time");
+//
+//            try {
+//                document = Jsoup.connect(url).timeout(2000).userAgent("Mozilla").get();
+//            } catch (IOException e2) {
+//                System.out.println("Jsoup: Re-try to connect second time");
+//
+//                try {
+//                    document = Jsoup.connect(url).timeout(2000).userAgent("Mozilla").get();
+//                } catch (IOException e3) {
+//                }
+//            }
+//        }
 
+        while (!isComplete && count < maxRetryTimes) {
             try {
-                document = Jsoup.connect(url).userAgent("Mozilla").get();
-            } catch (IOException e2) {
-                System.out.println("Jsoup: Re-try to connect second time");
-
-                try {
-                    document = Jsoup.connect(url).userAgent("Mozilla").get();
-                } catch (IOException e3) {
-                }
+                document = Jsoup.connect(url).timeout(3000).userAgent("Mozilla").get();
+                isComplete = true;
+            } catch (IOException e) {
+                System.out.println("Jsoup: " + (count + 1) + "th time re-try to connect to url: " + url);
+                count++;
             }
         }
 

@@ -148,6 +148,8 @@ public class ArticlesList {
             vnexpressCovidList.clear();
             try {
                 vnexpressCovidList = ArticlesManager.getVnexpressWebList("https://vnexpress.net/covid-19/tin-tuc", "Covid");
+                vnexpressCovidList.addAll(ArticlesManager.getVnexpressWebList("https://vnexpress.net/covid-19/tin-tuc-p2", "Covid"));
+                vnexpressCovidList.addAll(ArticlesManager.getVnexpressWebList("https://vnexpress.net/covid-19/tin-tuc-p3", "Covid"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -179,7 +181,8 @@ public class ArticlesList {
         es.execute(() -> {
             nhanDanCovidList.clear();
             try {
-                nhanDanCovidList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/tag/Covid19-53", "Covid");
+//                nhanDanCovidList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/tag/Covid19-53", "Covid");
+                nhanDanCovidList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/Article/PagingByTag?tagId=53&pageSize=50&pageIndex=1&displayView=PagingPartial", "Covid");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -207,6 +210,7 @@ public class ArticlesList {
             vnexpressPoliticsList.clear();
             try {
                 vnexpressPoliticsList = ArticlesManager.getVnexpressWebList("https://vnexpress.net/thoi-su/chinh-tri", "Politics");
+                vnexpressPoliticsList.addAll(ArticlesManager.getVnexpressWebList("https://vnexpress.net/thoi-su/chinh-tri-p2", "Politics"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -214,7 +218,8 @@ public class ArticlesList {
         es.execute(() -> {
             zingPoliticsList.clear();
             try {
-                zingPoliticsList = ArticlesManager.getZingWebList("https://zingnews.vn/chinh-tri.html", "Politics");
+                zingPoliticsList = ArticlesManager.getZingWebList("https://zingnews.vn/chinh-tri.html/?page=1", "Politics");
+                zingPoliticsList.addAll(ArticlesManager.getZingWebList("https://zingnews.vn/chinh-tri.html/?page=2", "Politics"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -230,7 +235,7 @@ public class ArticlesList {
         es.execute(() -> {
             thanhNienPoliticsList.clear();
             try {
-                thanhNienPoliticsList = ArticlesManager.getThanhNienWebList("https://thanhnien.vn/thoi-su/chinh-tri/", "Politics");
+                thanhNienPoliticsList = ArticlesManager.getThanhNienList("https://thanhnien.vn/rss/thoi-su/chinh-tri.rss", "Politics");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -238,7 +243,11 @@ public class ArticlesList {
         es.execute(() -> {
             nhanDanPoliticsList.clear();
             try {
-                nhanDanPoliticsList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/chinhtri", "Politics");
+//                nhanDanPoliticsList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/chinhtri", "Politics");
+                nhanDanPoliticsList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1171&pageIndex=1", "Politics");
+                nhanDanPoliticsList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1171&pageIndex=2", "Politics"));
+                nhanDanPoliticsList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1171&pageIndex=3", "Politics"));
+                nhanDanPoliticsList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1171&pageIndex=4", "Politics"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -265,7 +274,9 @@ public class ArticlesList {
         es.execute(() -> {
             vnexpressBusinessList.clear();
             try {
-                vnexpressBusinessList = ArticlesManager.getVnexpressList("https://vnexpress.net/rss/kinh-doanh.rss", "Business");
+                vnexpressBusinessList = ArticlesManager.getVnexpressWebList("https://vnexpress.net/kinh-doanh", "Business");
+                vnexpressBusinessList.addAll(ArticlesManager.getVnexpressWebList("https://vnexpress.net/kinh-doanh-p2", "Business"));
+                vnexpressBusinessList.addAll(ArticlesManager.getVnexpressWebList("https://vnexpress.net/kinh-doanh-p3", "Business"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -274,6 +285,8 @@ public class ArticlesList {
             zingBusinessList.clear();
             try {
                 zingBusinessList = ArticlesManager.getZingWebList("https://zingnews.vn/kinh-doanh-tai-chinh.html", "Business");
+                zingBusinessList.addAll(ArticlesManager.getZingWebList("https://zingnews.vn/kinh-doanh-tai-chinh.html/?page=2", "Business"));
+                zingBusinessList.addAll(ArticlesManager.getZingWebList("https://zingnews.vn/kinh-doanh-tai-chinh.html/?page=3", "Business"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -297,7 +310,8 @@ public class ArticlesList {
         es.execute(() -> {
             nhanDanBusinessList.clear();
             try {
-                nhanDanBusinessList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/kinhte", "Business");
+//                nhanDanBusinessList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/kinhte", "Business");
+                nhanDanBusinessList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1185&pageIndex=1&pageSize=50&displayView=PagingPartial", "Business");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -324,7 +338,10 @@ public class ArticlesList {
         es.execute(() -> {
             vnexpressTechnologyList.clear();
             try {
-                vnexpressTechnologyList = ArticlesManager.getVnexpressList("https://vnexpress.net/rss/so-hoa.rss", "Technology");
+//                vnexpressTechnologyList = ArticlesManager.getVnexpressList("https://vnexpress.net/rss/so-hoa.rss", "Technology");
+                vnexpressTechnologyList = ArticlesManager.getVnexpressWebList("https://vnexpress.net/so-hoa/cong-nghe", "Technology");
+                vnexpressTechnologyList.addAll(ArticlesManager.getVnexpressWebList("https://vnexpress.net/so-hoa/cong-nghe-p2", "Technology"));
+                vnexpressTechnologyList.addAll(ArticlesManager.getVnexpressWebList("https://vnexpress.net/so-hoa/cong-nghe-p3", "Technology"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -332,7 +349,10 @@ public class ArticlesList {
         es.execute(() -> {
             zingTechnologyList.clear();
             try {
-                zingTechnologyList = ArticlesManager.getZingWebList("https://zingnews.vn/cong-nghe.html", "Technology");
+//                zingTechnologyList = ArticlesManager.getZingWebList("https://zingnews.vn/cong-nghe.html", "Technology");
+                zingTechnologyList = ArticlesManager.getZingWebList("https://zingnews.vn/cong-nghe.html/?page=1", "Technology");
+                zingTechnologyList.addAll(ArticlesManager.getZingWebList("https://zingnews.vn/cong-nghe.html/?page=2", "Technology"));
+                zingTechnologyList.addAll(ArticlesManager.getZingWebList("https://zingnews.vn/cong-nghe.html/?page=3", "Technology"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -340,7 +360,8 @@ public class ArticlesList {
         es.execute(() -> {
             tuoiTreTechnologyList.clear();
             try {
-                tuoiTreTechnologyList = ArticlesManager.getTuoiTreList("https://tuoitre.vn/rss/nhip-song-so.rss", "Technology");
+//                tuoiTreTechnologyList = ArticlesManager.getTuoiTreList("https://tuoitre.vn/rss/nhip-song-so.rss", "Technology");
+                tuoiTreTechnologyList.addAll(ArticlesManager.getTuoiTreWebList("https://congnghe.tuoitre.vn/", "Technology"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -356,7 +377,10 @@ public class ArticlesList {
         es.execute(() -> {
             nhanDanTechnologyList.clear();
             try {
-                nhanDanTechnologyList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/khoahoc-congnghe", "Technology");
+//                nhanDanTechnologyList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/khoahoc-congnghe", "Technology");
+                nhanDanTechnologyList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1292&pageIndex=1", "Technology");
+                nhanDanTechnologyList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1292&pageIndex=2", "Technology"));
+                nhanDanTechnologyList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1292&pageIndex=3", "Technology"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -384,6 +408,8 @@ public class ArticlesList {
             vnexpressHealthList.clear();
             try {
                 vnexpressHealthList = ArticlesManager.getVnexpressWebList("https://vnexpress.net/suc-khoe", "Health");
+                vnexpressHealthList.addAll(ArticlesManager.getVnexpressWebList("https://vnexpress.net/suc-khoe-p2", "Health"));
+                vnexpressHealthList.addAll(ArticlesManager.getVnexpressWebList("https://vnexpress.net/suc-khoe-p3", "Health"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -392,6 +418,8 @@ public class ArticlesList {
             zingHealthList.clear();
             try {
                 zingHealthList = ArticlesManager.getZingWebList("https://zingnews.vn/suc-khoe.html", "Health");
+                zingHealthList.addAll(ArticlesManager.getZingWebList("https://zingnews.vn/suc-khoe.html/?page=2", "Health"));
+                zingHealthList.addAll(ArticlesManager.getZingWebList("https://zingnews.vn/suc-khoe.html/?page=3", "Health"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -415,7 +443,10 @@ public class ArticlesList {
         es.execute(() -> {
             nhanDanHealthList.clear();
             try {
-                nhanDanHealthList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/y-te", "Health");
+//                nhanDanHealthList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/y-te", "Health");
+                nhanDanHealthList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1309&pageIndex=1", "Health");
+                nhanDanHealthList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1309&pageIndex=2", "Health"));
+                nhanDanHealthList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1309&pageIndex=3", "Health"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -451,6 +482,8 @@ public class ArticlesList {
             zingSportsList.clear();
             try {
                 zingSportsList = ArticlesManager.getZingWebList("https://zingnews.vn/the-thao.html", "Sports");
+                zingSportsList.addAll(ArticlesManager.getZingWebList("https://zingnews.vn/the-thao.html/?page=2", "Sports"));
+                zingSportsList.addAll(ArticlesManager.getZingWebList("https://zingnews.vn/the-thao.html/?page=3", "Sports"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -474,7 +507,10 @@ public class ArticlesList {
         es.execute(() -> {
             nhanDanSportsList.clear();
             try {
-                nhanDanSportsList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/thethao", "Sports");
+//                nhanDanSportsList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/thethao", "Sports");
+                nhanDanSportsList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1224&pageIndex=1", "Sports");
+                nhanDanSportsList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1224&pageIndex=2", "Sports"));
+                nhanDanSportsList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1224&pageIndex=3", "Sports"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -502,6 +538,8 @@ public class ArticlesList {
             vnexpressEntertainmentList.clear();
             try {
                 vnexpressEntertainmentList = ArticlesManager.getVnexpressWebList("https://vnexpress.net/giai-tri", "Entertainment");
+                vnexpressEntertainmentList.addAll(ArticlesManager.getVnexpressWebList("https://vnexpress.net/giai-tri-p2", "Entertainment"));
+                vnexpressEntertainmentList.addAll(ArticlesManager.getVnexpressWebList("https://vnexpress.net/giai-tri-p3", "Entertainment"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -510,6 +548,8 @@ public class ArticlesList {
             zingEntertainmentList.clear();
             try {
                 zingEntertainmentList = ArticlesManager.getZingWebList("https://zingnews.vn/giai-tri.html", "Entertainment");
+                zingEntertainmentList.addAll(ArticlesManager.getZingWebList("https://zingnews.vn/giai-tri.html/?page=2", "Entertainment"));
+                zingEntertainmentList.addAll(ArticlesManager.getZingWebList("https://zingnews.vn/giai-tri.html/?page=3", "Entertainment"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -533,7 +573,10 @@ public class ArticlesList {
         es.execute(() -> {
             nhanDanEntertainmentList.clear();
             try {
-                nhanDanEntertainmentList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/vanhoa", "Entertainment");
+//                nhanDanEntertainmentList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/vanhoa", "Entertainment");
+                nhanDanEntertainmentList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1251&pageIndex=1", "Entertainment");
+                nhanDanEntertainmentList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1251&pageIndex=2", "Entertainment"));
+                nhanDanEntertainmentList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1251&pageIndex=3", "Entertainment"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -569,6 +612,8 @@ public class ArticlesList {
             zingWorldList.clear();
             try {
                 zingWorldList = ArticlesManager.getZingWebList("https://zingnews.vn/the-gioi.html", "World");
+                zingWorldList.addAll(ArticlesManager.getZingWebList("https://zingnews.vn/the-gioi.html/?page=2", "World"));
+                zingWorldList.addAll(ArticlesManager.getZingWebList("https://zingnews.vn/the-gioi.html/?page=3", "World"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -592,7 +637,10 @@ public class ArticlesList {
         es.execute(() -> {
             nhanDanWorldList.clear();
             try {
-                nhanDanWorldList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/thegioi", "World");
+//                nhanDanWorldList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/thegioi", "World");
+                nhanDanWorldList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1231&pageIndex=1", "World");
+                nhanDanWorldList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1231&pageIndex=2", "World"));
+                nhanDanWorldList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1231&pageIndex=3", "World"));
             } catch (IOException e) {
                 e.printStackTrace();
             }

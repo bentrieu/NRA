@@ -1004,56 +1004,66 @@ public class HomeSceneController implements Initializable {
 
             displayFullArticleVbox.getChildren().clear();
 
-            switch (currentCategoryList.get(currentArticleIndex - 1).getSource()) {
-                case "vnexpress":
-                    try {
-                        ArticlesManager.displayVnexpressFullArticle(currentCategoryList.get(currentArticleIndex - 1), displayFullArticleVbox);
-                        currentArticleIndex--;
-                        break;
-                    } catch (Exception e) {
-                        currentCategoryIndex--;
-                        break;
-                    }
-                case "zingnews":
-                    try {
-                        ArticlesManager.displayZingFullArticle(currentCategoryList.get(currentArticleIndex - 1), displayFullArticleVbox);
-                        currentArticleIndex--;
-                        break;
-                    } catch (Exception e) {
-                        currentCategoryIndex--;
-                        break;
-                    }
-                case "tuoitre":
-                    try {
-                        ArticlesManager.displayTuoiTreFullArticle(currentCategoryList.get(currentArticleIndex - 1), displayFullArticleVbox);
-                        currentArticleIndex--;
-                        break;
-                    } catch (Exception e) {
-                        currentCategoryIndex--;
-                        break;
-                    }
-                case "nhandan":
-                    try {
-                        ArticlesManager.displayNhanDanFullArticle(currentCategoryList.get(currentArticleIndex - 1), displayFullArticleVbox);
-                        currentArticleIndex--;
-                        break;
-                    } catch (Exception e) {
-                        currentCategoryIndex--;
-                        break;
-                    }
-                case "thanhnien":
-                    try {
-                        ArticlesManager.displayThanhNienFullArticle(currentCategoryList.get(currentArticleIndex - 1), displayFullArticleVbox);
-                        currentArticleIndex--;
-                        break;
-                    } catch (Exception e) {
-                        currentCategoryIndex--;
-                        break;
-                    }
-            }
+            borderPaneUnderScrollPane.setCenter(null);
+            borderPaneUnderScrollPane.setCenter(loadingStackPane);
+            Thread t1 = new Thread(() -> {
+                // Load new article
+                switch (currentCategoryList.get(currentArticleIndex - 1).getSource()) {
+                    case "vnexpress":
+                        try {
+                            ArticlesManager.displayVnexpressFullArticle(currentCategoryList.get(currentArticleIndex - 1), displayFullArticleVbox);
+                            currentArticleIndex--;
+                            break;
+                        } catch (Exception e) {
+                            currentCategoryIndex--;
+                            break;
+                        }
+                    case "zingnews":
+                        try {
+                            ArticlesManager.displayZingFullArticle(currentCategoryList.get(currentArticleIndex - 1), displayFullArticleVbox);
+                            currentArticleIndex--;
+                            break;
+                        } catch (Exception e) {
+                            currentCategoryIndex--;
+                            break;
+                        }
+                    case "tuoitre":
+                        try {
+                            ArticlesManager.displayTuoiTreFullArticle(currentCategoryList.get(currentArticleIndex - 1), displayFullArticleVbox);
+                            currentArticleIndex--;
+                            break;
+                        } catch (Exception e) {
+                            currentCategoryIndex--;
+                            break;
+                        }
+                    case "nhandan":
+                        try {
+                            ArticlesManager.displayNhanDanFullArticle(currentCategoryList.get(currentArticleIndex - 1), displayFullArticleVbox);
+                            currentArticleIndex--;
+                            break;
+                        } catch (Exception e) {
+                            currentCategoryIndex--;
+                            break;
+                        }
+                    case "thanhnien":
+                        try {
+                            ArticlesManager.displayThanhNienFullArticle(currentCategoryList.get(currentArticleIndex - 1), displayFullArticleVbox);
+                            currentArticleIndex--;
+                            break;
+                        } catch (Exception e) {
+                            currentCategoryIndex--;
+                            break;
+                        }
+                }
 
-            System.gc();
-            Runtime.getRuntime().gc();
+                Platform.runLater(() -> {
+                    borderPaneUnderScrollPane.setCenter(null);
+                    borderPaneUnderScrollPane.setCenter(stackPane1);
+                    System.gc();
+                    Runtime.getRuntime().gc();
+                });
+            });
+            t1.start();
         }
     }
     public void nextArticle() throws IOException {
@@ -1076,56 +1086,66 @@ public class HomeSceneController implements Initializable {
 
             displayFullArticleVbox.getChildren().clear();
 
-            switch (currentCategoryList.get(currentArticleIndex + 1).getSource()) {
-                case "vnexpress":
-                    try {
-                        ArticlesManager.displayVnexpressFullArticle(currentCategoryList.get(currentArticleIndex + 1), displayFullArticleVbox);
-                        currentArticleIndex++;
-                        break;
-                    } catch (Exception e) {
-                        currentArticleIndex++;
-                        break;
-                    }
-                case "zingnews":
-                    try {
-                        ArticlesManager.displayZingFullArticle(currentCategoryList.get(currentArticleIndex + 1), displayFullArticleVbox);
-                        currentArticleIndex++;
-                        break;
-                    } catch (Exception e) {
-                        currentArticleIndex++;
-                        break;
-                    }
-                case "tuoitre":
-                    try {
-                        ArticlesManager.displayTuoiTreFullArticle(currentCategoryList.get(currentArticleIndex + 1), displayFullArticleVbox);
-                        currentArticleIndex++;
-                        break;
-                    } catch (Exception e) {
-                        currentArticleIndex++;
-                        break;
-                    }
-                case "nhandan":
-                    try {
-                        ArticlesManager.displayNhanDanFullArticle(currentCategoryList.get(currentArticleIndex + 1), displayFullArticleVbox);
-                        currentArticleIndex++;
-                        break;
-                    } catch (Exception e) {
-                        currentArticleIndex++;
-                        break;
-                    }
-                case "thanhnien":
-                    try {
-                        ArticlesManager.displayThanhNienFullArticle(currentCategoryList.get(currentArticleIndex + 1), displayFullArticleVbox);
-                        currentArticleIndex++;
-                        break;
-                    } catch (Exception e) {
-                        currentArticleIndex++;
-                        break;
-                    }
-            }
+            borderPaneUnderScrollPane.setCenter(null);
+            borderPaneUnderScrollPane.setCenter(loadingStackPane);
+            Thread t1 = new Thread(() -> {
+                // Load new article
+                switch (currentCategoryList.get(currentArticleIndex + 1).getSource()) {
+                    case "vnexpress":
+                        try {
+                            ArticlesManager.displayVnexpressFullArticle(currentCategoryList.get(currentArticleIndex + 1), displayFullArticleVbox);
+                            currentArticleIndex++;
+                            break;
+                        } catch (Exception e) {
+                            currentArticleIndex++;
+                            break;
+                        }
+                    case "zingnews":
+                        try {
+                            ArticlesManager.displayZingFullArticle(currentCategoryList.get(currentArticleIndex + 1), displayFullArticleVbox);
+                            currentArticleIndex++;
+                            break;
+                        } catch (Exception e) {
+                            currentArticleIndex++;
+                            break;
+                        }
+                    case "tuoitre":
+                        try {
+                            ArticlesManager.displayTuoiTreFullArticle(currentCategoryList.get(currentArticleIndex + 1), displayFullArticleVbox);
+                            currentArticleIndex++;
+                            break;
+                        } catch (Exception e) {
+                            currentArticleIndex++;
+                            break;
+                        }
+                    case "nhandan":
+                        try {
+                            ArticlesManager.displayNhanDanFullArticle(currentCategoryList.get(currentArticleIndex + 1), displayFullArticleVbox);
+                            currentArticleIndex++;
+                            break;
+                        } catch (Exception e) {
+                            currentArticleIndex++;
+                            break;
+                        }
+                    case "thanhnien":
+                        try {
+                            ArticlesManager.displayThanhNienFullArticle(currentCategoryList.get(currentArticleIndex + 1), displayFullArticleVbox);
+                            currentArticleIndex++;
+                            break;
+                        } catch (Exception e) {
+                            currentArticleIndex++;
+                            break;
+                        }
+                }
 
-            System.gc();
-            Runtime.getRuntime().gc();
+                Platform.runLater(() -> {
+                    borderPaneUnderScrollPane.setCenter(null);
+                    borderPaneUnderScrollPane.setCenter(stackPane1);
+                    System.gc();
+                    Runtime.getRuntime().gc();
+                });
+            });
+            t1.start();
         }
     }
 
@@ -1161,7 +1181,7 @@ public class HomeSceneController implements Initializable {
     public Pagination setPaginationList(ArrayList<Article> articlesList, Pagination newPagination) throws IOException {
         newPagination.setMaxHeight(983);
         newPagination.setMinHeight(983);
-        newPagination.setMaxPageIndicatorCount(10);
+        newPagination.setMaxPageIndicatorCount(5);
 
         currentCategoryList = articlesList;
         int size = (int) Math.floor((double) currentCategoryList.size() / 10.0);
@@ -1325,14 +1345,14 @@ public class HomeSceneController implements Initializable {
 
                 // Set thumb image for each object
                 if (k != 3 && k != 7) {
-                    Image image = new Image(articlesList.get(i).getThumb(), 600, 600, true, false, true);
+                    Image image = new Image(articlesList.get(i).getThumb(), 600, 0, true, true, true);
                     BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1.0, 1.0, true, true, false, true));
                     Background background = new Background(backgroundImage);
                     anchorPaneList[k].setCache(true);
                     anchorPaneList[k].setCacheHint(CacheHint.SPEED);
                     anchorPaneList[k].setBackground(background);
                 } else {
-                    Image image2 = new Image(articlesList.get(i).getThumb(), 600, 600, true, false, true);
+                    Image image2 = new Image(articlesList.get(i).getThumb(), 600, 0, true, true, true);
                     BackgroundImage backgroundImage2 = new BackgroundImage(image2, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1.0, 1.0, true, true, false, true));
                     Background background2 = new Background(backgroundImage2);
                     layoutController.anchorPaneImage1.setCache(true);
