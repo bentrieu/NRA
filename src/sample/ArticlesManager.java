@@ -1129,6 +1129,66 @@ public class ArticlesManager extends Application {
         originalCategory = null;
     }
 
+    /* FROM HERE WILL BE THE FUNCTION FOR THANHNIEN.VN
+       There will be 4 function
+       Get RSS list
+       Get search keyword list
+       Get list open from web
+       Display the full article  */
+    // Thanhnien rss
+    public static ArrayList<Article> getThanhNienList(String urlToShortArticle, String category) throws IOException {
+        // Create new arraylist of article for return
+        ArrayList<Article> thanhNienList = new ArrayList<>();
+
+        /* Bắt đầu từ đây là add dữ liệu cho sort article
+         */
+        // Setup jsoup for scraping data
+        final String url = urlToShortArticle;
+        Document document = Jsoup.connect(url).userAgent("Mozilla").get();
+        Elements all = document.select("item");
+        Elements description = all.select("description");
+        Elements thumb = all.select("image");
+        Elements title = all.select("title");
+        Elements link = all.select("link");
+        Elements date = all.select("pubDate");
+
+        // Add data to vnexpressNewsList (Title + date + thumb + link)
+        for (int i = 0, k = 0; i < 15; i++, k++) {
+            if (link.get(k).text().contains("tuong-thuat") || link.get(k).text().contains("thoitrangtre")) {
+                i--;
+                continue;
+            }
+            // Create new article object then add the object into the ArrayList
+            thanhNienList.add(new Article());
+            // Set source
+            thanhNienList.get(i).setSource("thanhnien");
+            // Set category manually
+            thanhNienList.get(i).setCategory(category);
+            // Set title for each object
+            thanhNienList.get(i).setTitle(title.get(k).text());
+            // Set date for each object
+            String dateTemp = Helper.timeToUnixString2(date.get(k).text());
+            thanhNienList.get(i).setDate(dateTemp);
+            // Set time ago for each object
+            thanhNienList.get(i).setTimeAgo(Helper.timeDiff(dateTemp));
+            // Set thumb for each object
+            if (thumb.size() != 0) thanhNienList.get(i).setThumb(thumb.get(k).text().replaceFirst("400x300", "2048"));
+            else {
+                String descriptionText = description.get(k).text();
+                int startThumb = descriptionText.indexOf("src=\"") + 5;
+                int endThumb = descriptionText.indexOf("\"", startThumb) - 1;
+                String thumbLink = descriptionText.substring(startThumb, endThumb + 1);
+                if (thumbLink.contains("180")) thumbLink = thumbLink.replaceFirst("/180/", "/2048/");
+                if (thumbLink.contains("400x300")) thumbLink = thumbLink.replaceFirst("/400x300/", "/2048/");
+                thanhNienList.get(i).setThumb(thumbLink);
+            }
+            // Set link to full article for each object
+            thanhNienList.get(i).setLinkToFullArticles(link.get(k).text());
+        }
+
+        return thanhNienList;
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
 
