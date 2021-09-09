@@ -2070,6 +2070,11 @@ public class ArticlesManager extends Application {
         return sortedArticles;
     }
 
+    // This function will help the sort function: Find max number among 5 numbers
+    public static long maxNum(long date1, long date2, long date3, long date4, long date5) {
+        return Math.max(date1, Math.max(date2, Math.max(date3, Math.max(date4, date5))));
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
 
