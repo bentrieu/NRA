@@ -1085,4 +1085,24 @@ public class HomeSceneController implements Initializable {
 
         }
     }
+
+    public void darkMode(ActionEvent event) {
+        if (isDarkMode) {
+            loadingImageView.setImage(whiteLoadingImage);
+            rootAnchorPane.getStylesheets().clear();
+            rootAnchorPane.getStylesheets().add("/css/css.css");
+            displayLayoutVbox.getStylesheets().clear();
+            displayLayoutVbox.getStylesheets().add("/css/css.css");
+            darkModeSVGPath.setContent("M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z");
+            isDarkMode = false;
+        } else {
+            loadingImageView.setImage(darkLoadingImage);
+            rootAnchorPane.getStylesheets().clear();
+            rootAnchorPane.getStylesheets().add("/css/cssdarkmode.css");
+            displayLayoutVbox.getStylesheets().clear();
+            displayLayoutVbox.getStylesheets().add("/css/cssdarkmode.css");
+            darkModeSVGPath.setContent("M15 3L15 8L17 8L17 3 Z M 7.5 6.09375L6.09375 7.5L9.625 11.0625L11.0625 9.625 Z M 24.5 6.09375L20.9375 9.625L22.375 11.0625L25.90625 7.5 Z M 16 9C12.144531 9 9 12.144531 9 16C9 19.855469 12.144531 23 16 23C19.855469 23 23 19.855469 23 16C23 12.144531 19.855469 9 16 9 Z M 16 11C18.773438 11 21 13.226563 21 16C21 18.773438 18.773438 21 16 21C13.226563 21 11 18.773438 11 16C11 13.226563 13.226563 11 16 11 Z M 3 15L3 17L8 17L8 15 Z M 24 15L24 17L29 17L29 15 Z M 9.625 20.9375L6.09375 24.5L7.5 25.90625L11.0625 22.375 Z M 22.375 20.9375L20.9375 22.375L24.5 25.90625L25.90625 24.5 Z M 15 24L15 29L17 29L17 24Z");
+            isDarkMode = true;
+        }
+    }
 }
