@@ -1759,7 +1759,7 @@ public class ArticlesManager extends Application {
             Elements thumb = all.select("div.box-img");
             Elements titleAndLink = all.select("div.box-title");
 
-            int maxArticle = 15;
+            int maxArticle = Math.min(titleAndLink.size(), 15);
             if (category.equals("Covid")) maxArticle = 10;
             if (category.equals("News")) maxArticle = 9;
 
