@@ -2075,6 +2075,24 @@ public class ArticlesManager extends Application {
         return Math.max(date1, Math.max(date2, Math.max(date3, Math.max(date4, date5))));
     }
 
+    //
+    public static ArrayList<Article> getSortedArticlesList(ArrayList<Article> list1, ArrayList<Article> list2, ArrayList<Article> list3, ArrayList<Article> list4, ArrayList<Article> list5) {
+        ArrayList<Article> sortedArticles = new ArrayList<>();
+        sortedArticles.addAll(list1);
+        sortedArticles.addAll(list2);
+        sortedArticles.addAll(list3);
+        sortedArticles.addAll(list4);
+        sortedArticles.addAll(list5);
+        Collections.sort(sortedArticles, new Comparator<Article>() {
+            @Override
+            public int compare(Article o1, Article o2) {
+                if (Long.parseLong(o1.getDate()) - Long.parseLong(o2.getDate()) == 0) return -1;
+                return Long.parseLong(o1.getDate()) - Long.parseLong(o2.getDate()) > 0 ? -1 : 1;
+            }
+        });
+        return sortedArticles;
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
 
