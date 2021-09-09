@@ -941,4 +941,148 @@ public class HomeSceneController implements Initializable {
             displayOthersList();
         }
     }
+
+    public void previousArticle() throws IOException {
+
+        if (currentArticleIndex > 0) {
+            scrollPane.setVvalue(0);
+            scrollPane.setHvalue(0);
+
+            for (int i = 0; i < ArticlesManager.changeListenerList.size(); i++) {
+                Main.stage.widthProperty().removeListener(ArticlesManager.changeListenerList.get(i));
+            }
+
+            ArticlesManager.changeListenerList.clear();
+
+            for (int i = 0; i < displayFullArticleVbox.getChildren().size(); i++) {
+                if (displayFullArticleVbox.getChildren().get(i) instanceof ImageView) {
+                    ((ImageView) displayFullArticleVbox.getChildren().get(i)).setImage(null);
+                }
+            }
+
+            displayFullArticleVbox.getChildren().clear();
+
+            switch (currentCategoryList.get(currentArticleIndex - 1).getSource()) {
+                case "vnexpress":
+                    try {
+                        ArticlesManager.displayVnexpressFullArticle(currentCategoryList.get(currentArticleIndex - 1), displayFullArticleVbox);
+                        currentArticleIndex--;
+                        break;
+                    } catch (Exception e) {
+                        currentCategoryIndex--;
+                        break;
+                    }
+                case "zingnews":
+                    try {
+                        ArticlesManager.displayZingFullArticle(currentCategoryList.get(currentArticleIndex - 1), displayFullArticleVbox);
+                        currentArticleIndex--;
+                        break;
+                    } catch (Exception e) {
+                        currentCategoryIndex--;
+                        break;
+                    }
+                case "tuoitre":
+                    try {
+                        ArticlesManager.displayTuoiTreFullArticle(currentCategoryList.get(currentArticleIndex - 1), displayFullArticleVbox);
+                        currentArticleIndex--;
+                        break;
+                    } catch (Exception e) {
+                        currentCategoryIndex--;
+                        break;
+                    }
+                case "nhandan":
+                    try {
+                        ArticlesManager.displayNhanDanFullArticle(currentCategoryList.get(currentArticleIndex - 1), displayFullArticleVbox);
+                        currentArticleIndex--;
+                        break;
+                    } catch (Exception e) {
+                        currentCategoryIndex--;
+                        break;
+                    }
+                case "thanhnien":
+                    try {
+                        ArticlesManager.displayThanhNienFullArticle(currentCategoryList.get(currentArticleIndex - 1), displayFullArticleVbox);
+                        currentArticleIndex--;
+                        break;
+                    } catch (Exception e) {
+                        currentCategoryIndex--;
+                        break;
+                    }
+            }
+
+            System.gc();
+            Runtime.getRuntime().gc();
+        }
+    }
+    public void nextArticle() throws IOException {
+
+        if (currentArticleIndex < 49) {
+            scrollPane.setVvalue(0);
+            scrollPane.setHvalue(0);
+
+            for (int i = 0; i < ArticlesManager.changeListenerList.size(); i++) {
+                Main.stage.widthProperty().removeListener(ArticlesManager.changeListenerList.get(i));
+            }
+            ArticlesManager.changeListenerList.clear();
+
+            for (int i = 0; i < displayFullArticleVbox.getChildren().size(); i++) {
+                if (displayFullArticleVbox.getChildren().get(i) instanceof ImageView) {
+                    ((ImageView) displayFullArticleVbox.getChildren().get(i)).setImage(null);
+                }
+            }
+
+            displayFullArticleVbox.getChildren().clear();
+            System.gc();
+            Runtime.getRuntime().gc();
+
+            switch (currentCategoryList.get(currentArticleIndex + 1).getSource()) {
+                case "vnexpress":
+                    try {
+                        ArticlesManager.displayVnexpressFullArticle(currentCategoryList.get(currentArticleIndex + 1), displayFullArticleVbox);
+                        currentArticleIndex++;
+                        break;
+                    } catch (Exception e) {
+                        currentArticleIndex++;
+                        break;
+                    }
+                case "zingnews":
+                    try {
+                        ArticlesManager.displayZingFullArticle(currentCategoryList.get(currentArticleIndex + 1), displayFullArticleVbox);
+                        currentArticleIndex++;
+                        break;
+                    } catch (Exception e) {
+                        currentArticleIndex++;
+                        break;
+                    }
+                case "tuoitre":
+                    try {
+                        ArticlesManager.displayTuoiTreFullArticle(currentCategoryList.get(currentArticleIndex + 1), displayFullArticleVbox);
+                        currentArticleIndex++;
+                        break;
+                    } catch (Exception e) {
+                        currentArticleIndex++;
+                        break;
+                    }
+                case "nhandan":
+                    try {
+                        ArticlesManager.displayNhanDanFullArticle(currentCategoryList.get(currentArticleIndex + 1), displayFullArticleVbox);
+                        currentArticleIndex++;
+                        break;
+                    } catch (Exception e) {
+                        currentArticleIndex++;
+                        break;
+                    }
+                case "thanhnien":
+                    try {
+                        ArticlesManager.displayThanhNienFullArticle(currentCategoryList.get(currentArticleIndex + 1), displayFullArticleVbox);
+                        currentArticleIndex++;
+                        break;
+                    } catch (Exception e) {
+                        currentArticleIndex++;
+                        break;
+                    }
+            }
+
+        }
+    }
 }
