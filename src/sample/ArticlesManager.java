@@ -1614,6 +1614,69 @@ public class ArticlesManager extends Application {
 
     }
 
+    /* FROM HERE WILL BE THE FUNCTION FOR NHANDAN.VN
+       There will be 4 function
+       Get RSS list
+       Get search keyword list
+       Get list open from web
+       Display the full article  */
+    // Nhandan web list (https://nhandan.vn/chinhtri)
+    public static ArrayList<Article> getNhanDanWebList(String urlToShortArticle, String category) throws IOException {
+        // Create new arraylist of article for return
+        ArrayList<Article> nhanDanWebList = new ArrayList<>();
+
+        /* Bắt đầu từ đây là add dữ liệu cho sort article
+         */
+        // Setup jsoup for scraping data
+        final String url = urlToShortArticle;
+        Document document = Jsoup.connect(url).userAgent("Mozilla").get();
+        Elements all = document.select("div.uk-grid-site article, div.featured-bottom article, div.uk-width-1-1 article");
+        Elements thumb = all.select("div.box-img");
+        Elements titleAndLink = all.select("div.box-title");
+
+        int maxArticle = 15;
+        if (category.equals("Covid")) maxArticle = 10;
+        if (category.equals("News")) maxArticle = 9;
+
+        // Add data to vnexpressNewsList (Title + date + thumb + link)
+        for (int i = 0; i < maxArticle; i++) {
+            // Create new article object then add the object into the ArrayList
+            nhanDanWebList.add(new Article());
+            // Set source
+            nhanDanWebList.get(i).setSource("nhandan");
+            // Set category manually
+            nhanDanWebList.get(i).setCategory(category);
+            // Set title for each object
+            nhanDanWebList.get(i).setTitle(titleAndLink.get(i).text());
+            // Set date for each object
+            String dateTemp;
+            if (all.get(i).select("div.box-meta-small").hasText()) {
+                dateTemp = all.get(i).select("div.box-meta-small").text();
+                dateTemp = Helper.timeToUnixString5(dateTemp);
+                nhanDanWebList.get(i).setDate(dateTemp);
+            } else {
+                dateTemp = thumb.get(i).select("img").attr("data-src").toLowerCase();
+                int endLink = 0;
+                if (dateTemp.contains(".jpg")) endLink = dateTemp.indexOf(".jpg");
+                if (dateTemp.contains(".png")) endLink = dateTemp.indexOf(".png");
+                if (dateTemp.contains(".jpeg")) endLink = dateTemp.indexOf(".jpeg");
+                if (dateTemp.contains(".gif")) endLink = dateTemp.indexOf(".gif");
+                dateTemp = dateTemp.substring(endLink - 13, endLink - 3);
+                nhanDanWebList.get(i).setDate(dateTemp);
+            }
+            // Set time ago for each object
+            nhanDanWebList.get(i).setTimeAgo(Helper.timeDiff(dateTemp));
+            // Set thumb for each object
+            String thumbTemp = thumb.get(i).select("img").attr("data-src");
+            thumbTemp = thumbTemp.replaceFirst("resize/[^/]+/", "");
+            nhanDanWebList.get(i).setThumb(thumbTemp);
+            // Set link to full article for each object
+            nhanDanWebList.get(i).setLinkToFullArticles(titleAndLink.get(i).select("a").attr("abs:href"));
+        }
+
+        return nhanDanWebList;
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
 
