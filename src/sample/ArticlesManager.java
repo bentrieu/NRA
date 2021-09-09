@@ -1995,6 +1995,81 @@ public class ArticlesManager extends Application {
         descriptionImage = null;
     }
 
+    /* FROM HERE IS SORT FUNCTION
+     */
+    // This function will sort the 5 article lists then return the sorted article (50 elements)
+    public static ArrayList<Article> sortArticle(ArrayList<Article> list1, ArrayList<Article> list2, ArrayList<Article> list3, ArrayList<Article> list4, ArrayList<Article> list5) {
+        ArrayList<Article> sortedArticles = new ArrayList<>();
+        //sort each list
+        Collections.sort(list1, new Comparator<Article>() {
+            @Override
+            public int compare(Article o1, Article o2) {
+                return o2.getDate().compareTo(o1.getDate());
+            }
+        });
+        Collections.sort(list2, new Comparator<Article>() {
+            @Override
+            public int compare(Article o1, Article o2) {
+                return o2.getDate().compareTo(o1.getDate());
+            }
+        });Collections.sort(list3, new Comparator<Article>() {
+            @Override
+            public int compare(Article o1, Article o2) {
+                return o2.getDate().compareTo(o1.getDate());
+            }
+        });Collections.sort(list4, new Comparator<Article>() {
+            @Override
+            public int compare(Article o1, Article o2) {
+                return o2.getDate().compareTo(o1.getDate());
+            }
+        });Collections.sort(list5, new Comparator<Article>() {
+            @Override
+            public int compare(Article o1, Article o2) {
+                return o2.getDate().compareTo(o1.getDate());
+            }
+        });
+
+        //sort 5 list
+        int a = 0;  //index của list1
+        int b = 0;  //  index của list2
+        int c = 0;  //          list3
+        int d = 0;  //          list4
+        int e = 0;  //          list5
+
+        while (sortedArticles.size() < 50) {
+            long date1 = 0;
+            long date2 = 0;
+            long date3 = 0;
+            long date4 = 0;
+            long date5 = 0;
+            if (a < list1.size()) date1 = Long.parseLong(list1.get(a).getDate());
+            if (b < list2.size()) date2 = Long.parseLong(list2.get(b).getDate());
+            if (c < list3.size()) date3 = Long.parseLong(list3.get(c).getDate());
+            if (d < list4.size()) date4 = Long.parseLong(list4.get(d).getDate());
+            if (e < list5.size()) date5 = Long.parseLong(list5.get(e).getDate());
+
+            //sort + chuyển vào arraylist theo unit time
+            long maxUnitTime = maxNum(date1, date2, date3, date4, date5);
+            if (date1 == maxUnitTime) {
+                sortedArticles.add(list1.get(a));
+                a++;
+            } else if (date2 == maxUnitTime) {
+                sortedArticles.add(list2.get(b));
+                b++;
+            } else if (date3 == maxUnitTime) {
+                sortedArticles.add(list3.get(c));
+                c++;
+            } else if (date4 == maxUnitTime) {
+                sortedArticles.add(list4.get(d));
+                d++;
+            } else if (date5 == maxUnitTime) {
+                sortedArticles.add(list5.get(e));
+                e++;
+            }
+        }
+        return sortedArticles;
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
 
