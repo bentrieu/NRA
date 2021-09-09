@@ -2093,6 +2093,33 @@ public class ArticlesManager extends Application {
         return sortedArticles;
     }
 
+    /* FROM HERE IS PRINT FUNCTION
+     */
+    public static void printFullArticles(ArrayList<Article> vnexpressNewsList) {
+
+    }
+
+    public static void printShortArticles(ArrayList<Article> vnexpressNewsList) {
+        int k = 0;
+        for (Article i : vnexpressNewsList) {
+            System.out.println(k);
+            System.out.println("Date: " + i.getDate());
+            System.out.println("fullDate: " + i.getFullDate());
+            System.out.println("Time ago: " + i.getTimeAgo());
+            System.out.println("Thumb link: " + i.getThumb());
+            System.out.println("Title: " + i.getTitle());
+            System.out.println("Link to full article: " + i.getLinkToFullArticles());
+            System.out.println("Category: " + i.getCategory());
+            System.out.println("Original category: " + i.getOriginalCategory());
+            System.out.println("Descripton: " + i.getDescription());
+            System.out.println("Soure: " + i.getSource());
+            System.out.println("Author: " + i.getAuthor());
+            System.out.println("---------------------------------------");
+            System.out.println();
+            k++;
+        }
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
 
