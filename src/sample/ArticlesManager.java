@@ -51,15 +51,12 @@ public class ArticlesManager extends Application {
             Elements description;
             Elements dateAndCategory;
             if (!category.equals("News")) {
-//        if (category.equals("Sports")) {
                 all = document.select("section#news-latest div.article-list article.article-item.type-text, section#news-latest div.article-list article.article-item.type-picture, section#news-latest div.article-list article.article-item.type-hasvideo");
-//        }
-//        else {
-//            all = document.select("section#news-latest div.article-list article.article-item.type-text, section#news-latest div.article-list article.article-item.type-picture");
-//        }
             } else {
-                all = document.select("section.section-featured article, div.article-list article");
+//                all = document.select("section.section-featured article, div.article-list article");
+                all = document.select("article");
             }
+
             thumb = all.select("p.article-thumbnail img");
             titleAndLink = all.select("p.article-title a[href]");
             description = all.select("p.article-summary");
@@ -1756,19 +1753,36 @@ public class ArticlesManager extends Application {
 
         if (document != null) {
             Elements all = document.select("div.uk-grid-site article, div.featured-bottom article, div.uk-width-1-1 article, body > article");
+
+            // Eliminate special.nhandan article
+            ArrayList<Element> toRemove = new ArrayList<>();
+            for (int i = 0; i < all.size(); i++) {
+                if (all.get(i).select("div.box-title").select("a").attr("abs:href").contains("special.nhandan")) {
+                    toRemove.add(all.get(i));
+                }
+
+                String dateTemp;
+                if (all.get(i).select("div.box-meta-small").hasText()) {
+                    continue;
+                } else {
+                    dateTemp = all.get(i).select("div.box-img").select("img").attr("data-src").toLowerCase();
+                    int endLink = 0;
+                    if (dateTemp.contains(".jpg") || dateTemp.contains(".png") || dateTemp.contains(".jpeg") || dateTemp.contains(".gif")) endLink = dateTemp.indexOf(".jpg");
+                    else {
+                        toRemove.add(all.get(i));
+                    }
+                }
+            }
+            all.removeAll(toRemove);
+
             Elements thumb = all.select("div.box-img");
             Elements titleAndLink = all.select("div.box-title");
 
-            int maxArticle = Math.min(titleAndLink.size(), 15);
-            if (category.equals("Covid")) maxArticle = 10;
-            if (category.equals("News")) maxArticle = 9;
+            int maxArticle = titleAndLink.size();
+//            if (category.equals("News")) maxArticle = 9;
 
             // Add data to vnexpressNewsList (Title + date + thumb + link)
             for (int i = 0, k = 0; i < maxArticle; i++, k++) {
-                if (titleAndLink.get(k).select("a").attr("abs:href").contains("special.nhandan")) {
-                    i--;
-                    continue;
-                }
                 // Create new article object then add the object into the ArrayList
                 nhanDanWebList.add(new Article());
                 // Set source
