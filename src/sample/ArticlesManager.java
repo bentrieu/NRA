@@ -2254,6 +2254,8 @@ public class ArticlesManager extends Application {
 
         // If can not connect then change the status text
         if (!isComplete) {
+            System.out.println("Jsoup: Fail to connect to url: " + url);
+
             Text text = new Text("Failed to connect..");
             text.getStyleClass().add("textnormal");
             Platform.runLater(() -> {

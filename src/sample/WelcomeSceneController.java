@@ -2,7 +2,6 @@ package sample;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
-import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,13 +9,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import java.awt.*;
@@ -37,19 +33,11 @@ public class WelcomeSceneController implements Initializable {
         loadingLabel.setVisible(false);
     }
 
-    public void close(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("EXIT");
-        alert.setHeaderText("You are about to exit this program!");
-        alert.setContentText("Are you sure?");
-
-        if (alert.showAndWait().get() == ButtonType.OK) {
-            System.exit(0);
-        }
-
+    public void close() {
+        System.exit(1);
     }
 
-    public void gettingStarted(ActionEvent event) throws IOException {
+    public void gettingStarted(ActionEvent event) {
         FadeTransition fadeTransition = new FadeTransition(Duration.millis(500), gettingStartedButton);
         fadeTransition.setFromValue(1);
         fadeTransition.setToValue(0);
@@ -67,7 +55,7 @@ public class WelcomeSceneController implements Initializable {
 
         // Translate current scene to home scene
         fadeTransition.setOnFinished(e -> {
-            Parent nextRoot = null;
+            Parent nextRoot;
             try {
                 Main.stage.setMinWidth(600);
                 Main.stage.setMinHeight(500);
