@@ -558,7 +558,7 @@ public class HomeSceneController implements Initializable {
         HostServices services = Helper.getInstance().getHostServices();
         services.showDocument(currentCategoryList.get(currentArticleIndex).getLinkToFullArticles());
     }
-    public void takeSearchInput(MouseEvent event) {
+    public void takeSearchInput() {
         tempPane.setVisible(true);
     }
     public void exitSearch() {

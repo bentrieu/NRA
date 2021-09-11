@@ -35,7 +35,7 @@ public class Helper extends Application {
         TextFlow textFlow3 = new TextFlow();
         // Get all the text
         String string = index.text();
-        string.replaceAll("[\\(\\)\\*\\~\\+\\^\\.\\$]+", "");
+        string = string.replaceAll("[\\(\\)\\*\\~\\+\\^\\.\\$]+", "");
         // Add <hyper> before any text with a hyperlink (type: <Hyper>link<Text>)
         for (int i = 0; i < index.select("a[href]").size(); i++) {
             string = replacFirstFromIndex(index.select("a[href]").get(i).text(), "<Hyper>" + index.select("a[href]").get(i).attr("href") + "</" + index.select("a[href]").get(i).text() + "+>", string, i <= 0 ? 0 : string.indexOf("+>") + 2);

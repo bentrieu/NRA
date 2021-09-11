@@ -2226,7 +2226,7 @@ public class ArticlesManager extends Application {
         resetLoadingStatus();
         while (!isComplete && count < maxRetryTimes) {
             try {
-                document = Jsoup.connect(url).timeout(3000).userAgent("Mozilla").get();
+                document = Jsoup.connect(url).timeout(2000).userAgent("Mozilla").get();
                 isComplete = true;
             } catch (IOException e) {
                 // Notify to the console

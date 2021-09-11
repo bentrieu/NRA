@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class Main extends Application {
     public static Stage stage;
@@ -24,7 +25,7 @@ public class Main extends Application {
             e.printStackTrace();
         }
 
-        Parent root = FXMLLoader.load(getClass().getResource("WelcomeScene.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("WelcomeScene.fxml")));
         Scene scene = new Scene(root);
         primaryStage.setTitle("Hello World");
         primaryStage.initStyle(StageStyle.TRANSPARENT);
