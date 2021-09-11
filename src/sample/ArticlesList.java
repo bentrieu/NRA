@@ -182,7 +182,7 @@ public class ArticlesList {
             nhanDanCovidList.clear();
             try {
 //                nhanDanCovidList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/tag/Covid19-53", "Covid");
-                nhanDanCovidList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/Article/PagingByTag?tagId=53&pageSize=50&pageIndex=1&displayView=PagingPartial", "Covid");
+                nhanDanCovidList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/Article/PagingByTag?tagId=53&pageSize=50&pageIndex=1&fromDate=&toDate=&displayView=PagingPartial", "Covid");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -244,10 +244,10 @@ public class ArticlesList {
             nhanDanPoliticsList.clear();
             try {
 //                nhanDanPoliticsList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/chinhtri", "Politics");
-                nhanDanPoliticsList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1171&pageIndex=1&pageSize=15&displayView=PagingPartial", "Politics");
-                nhanDanPoliticsList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1171&pageIndex=2&pageSize=15&displayView=PagingPartial", "Politics"));
-                nhanDanPoliticsList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1171&pageIndex=3&pageSize=15&displayView=PagingPartial", "Politics"));
-                nhanDanPoliticsList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1171&pageIndex=4&pageSize=15&displayView=PagingPartial", "Politics"));
+                nhanDanPoliticsList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1171&pageIndex=1&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "Politics");
+                nhanDanPoliticsList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1171&pageIndex=2&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "Politics"));
+                nhanDanPoliticsList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1171&pageIndex=3&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "Politics"));
+                nhanDanPoliticsList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1171&pageIndex=4&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "Politics"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -311,10 +311,10 @@ public class ArticlesList {
             nhanDanBusinessList.clear();
             try {
 //                nhanDanBusinessList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/kinhte", "Business");
-                nhanDanBusinessList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1185&pageIndex=1&pageSize=15&displayView=PagingPartial", "Business");
-                nhanDanBusinessList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1185&pageIndex=2&pageSize=15&displayView=PagingPartial", "Business"));
-                nhanDanBusinessList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1185&pageIndex=3&pageSize=15&displayView=PagingPartial", "Business"));
-                nhanDanBusinessList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1185&pageIndex=4&pageSize=15&displayView=PagingPartial", "Business"));
+                nhanDanBusinessList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1185&pageIndex=1&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "Business");
+                nhanDanBusinessList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1185&pageIndex=2&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "Business"));
+                nhanDanBusinessList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1185&pageIndex=3&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "Business"));
+                nhanDanBusinessList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1185&pageIndex=4&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "Business"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -381,9 +381,9 @@ public class ArticlesList {
             nhanDanTechnologyList.clear();
             try {
 //                nhanDanTechnologyList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/khoahoc-congnghe", "Technology");
-                nhanDanTechnologyList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1292&pageIndex=1&pageSize=15&displayView=PagingPartial", "Technology");
-                nhanDanTechnologyList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1292&pageIndex=2&pageSize=15&displayView=PagingPartial", "Technology"));
-                nhanDanTechnologyList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1292&pageIndex=3&pageSize=15&displayView=PagingPartial", "Technology"));
+                nhanDanTechnologyList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1292&pageIndex=1&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "Technology");
+                nhanDanTechnologyList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1292&pageIndex=2&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "Technology"));
+                nhanDanTechnologyList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1292&pageIndex=3&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "Technology"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -447,9 +447,9 @@ public class ArticlesList {
             nhanDanHealthList.clear();
             try {
 //                nhanDanHealthList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/y-te", "Health");
-                nhanDanHealthList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1309&pageIndex=1&pageSize=15&displayView=PagingPartial", "Health");
-                nhanDanHealthList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1309&pageIndex=2&pageSize=15&displayView=PagingPartial", "Health"));
-                nhanDanHealthList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1309&pageIndex=3&pageSize=15&displayView=PagingPartial", "Health"));
+                nhanDanHealthList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1309&pageIndex=1&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "Health");
+                nhanDanHealthList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1309&pageIndex=2&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "Health"));
+                nhanDanHealthList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1309&pageIndex=3&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "Health"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -511,9 +511,9 @@ public class ArticlesList {
             nhanDanSportsList.clear();
             try {
 //                nhanDanSportsList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/thethao", "Sports");
-                nhanDanSportsList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1224&pageIndex=1&pageSize=15&displayView=PagingPartial", "Sports");
-                nhanDanSportsList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1224&pageIndex=2&pageSize=15&displayView=PagingPartial", "Sports"));
-                nhanDanSportsList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1224&pageIndex=3&pageSize=15&displayView=PagingPartial", "Sports"));
+                nhanDanSportsList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1224&pageIndex=1&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "Sports");
+                nhanDanSportsList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1224&pageIndex=2&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "Sports"));
+                nhanDanSportsList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1224&pageIndex=3&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "Sports"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -577,9 +577,9 @@ public class ArticlesList {
             nhanDanEntertainmentList.clear();
             try {
 //                nhanDanEntertainmentList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/vanhoa", "Entertainment");
-                nhanDanEntertainmentList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1251&pageIndex=1&pageSize=15&displayView=PagingPartial", "Entertainment");
-                nhanDanEntertainmentList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1251&pageIndex=2&pageSize=15&displayView=PagingPartial", "Entertainment"));
-                nhanDanEntertainmentList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1251&pageIndex=3&pageSize=15&displayView=PagingPartial", "Entertainment"));
+                nhanDanEntertainmentList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1251&pageIndex=1&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "Entertainment");
+                nhanDanEntertainmentList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1251&pageIndex=2&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "Entertainment"));
+                nhanDanEntertainmentList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1251&pageIndex=3&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "Entertainment"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -641,9 +641,9 @@ public class ArticlesList {
             nhanDanWorldList.clear();
             try {
 //                nhanDanWorldList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/thegioi", "World");
-                nhanDanWorldList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1231&pageIndex=1&pageSize=15&displayView=PagingPartial", "World");
-                nhanDanWorldList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1231&pageIndex=2&pageSize=15&displayView=PagingPartial", "World"));
-                nhanDanWorldList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1231&pageIndex=3&pageSize=15&displayView=PagingPartial", "World"));
+                nhanDanWorldList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1231&pageIndex=1&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "World");
+                nhanDanWorldList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1231&pageIndex=2&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "World"));
+                nhanDanWorldList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1231&pageIndex=3&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "World"));
             } catch (IOException e) {
                 e.printStackTrace();
             }

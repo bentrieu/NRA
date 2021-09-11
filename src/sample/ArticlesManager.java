@@ -2206,15 +2206,15 @@ public class ArticlesManager extends Application {
     // Sort 2
     public static ArrayList<Article> getSortedArticlesList(ArrayList<Article> list1, ArrayList<Article> list2, ArrayList<Article> list3, ArrayList<Article> list4, ArrayList<Article> list5) {
         ArrayList<Article> sortedArticles = new ArrayList<>();
+
         sortedArticles.addAll(list1);
         sortedArticles.addAll(list2);
         sortedArticles.addAll(list3);
         sortedArticles.addAll(list4);
         sortedArticles.addAll(list5);
-        sortedArticles.sort((o1, o2) -> {
-            if (Long.parseLong(o1.getDate()) - Long.parseLong(o2.getDate()) == 0) return -1;
-            return Long.parseLong(o1.getDate()) - Long.parseLong(o2.getDate()) > 0 ? -1 : 1;
-        });
+
+        sortedArticles.sort((o1, o2) -> o2.getDate().compareTo(o1.getDate()));
+
         return sortedArticles;
     }
 
