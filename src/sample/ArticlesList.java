@@ -672,9 +672,9 @@ public class ArticlesList {
             try {
                 vnexpressOthersList = ArticlesManager.getVnexpressList("https://vnexpress.net/rss/phap-luat.rss", "Others");
                 vnexpressOthersList.addAll(ArticlesManager.getVnexpressList("https://vnexpress.net/rss/tam-su.rss", "Others"));
-                vnexpressOthersList.addAll(ArticlesManager.getVnexpressList("https://vnexpress.net/rss/oto-xe-may.rss", "Others"));
+//                vnexpressOthersList.addAll(ArticlesManager.getVnexpressList("https://vnexpress.net/rss/oto-xe-may.rss", "Others"));
                 vnexpressOthersList.addAll(ArticlesManager.getVnexpressList("https://vnexpress.net/rss/du-lich.rss", "Others"));
-                vnexpressOthersList.addAll(ArticlesManager.getVnexpressList("https://vnexpress.net/rss/gia-dinh.rss", "Others"));
+//                vnexpressOthersList.addAll(ArticlesManager.getVnexpressList("https://vnexpress.net/rss/gia-dinh.rss", "Others"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
