@@ -2,6 +2,7 @@ package sample;
 
 import javafx.application.Application;
 import javafx.application.HostServices;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.CacheHint;
 import javafx.scene.control.Hyperlink;
@@ -25,6 +26,8 @@ import java.util.regex.Pattern;
 /** This class will have static functions that manipulate articles **/
 
 public class ArticlesManager extends Application {
+    public static TextFlow connectStatusTextFlow = new TextFlow();
+
     // This list to save the listeners that create during the process of responsive design. So this listeners need to be removed later to avoid memory leaking
     public static ArrayList<ChangeListener<Number>> changeListenerList = new ArrayList<>();
 
@@ -2253,32 +2256,39 @@ public class ArticlesManager extends Application {
         int maxRetryTimes = 5, count = 0;
         boolean isComplete = false;
 
-        // Retry 2 times if connect fail
-//        try {
-//            document = Jsoup.connect(url).timeout(2000).userAgent("Mozilla").get();
-//        } catch (IOException e1) {
-//            System.out.println("Jsoup: Re-try to connect first time");
-//
-//            try {
-//                document = Jsoup.connect(url).timeout(2000).userAgent("Mozilla").get();
-//            } catch (IOException e2) {
-//                System.out.println("Jsoup: Re-try to connect second time");
-//
-//                try {
-//                    document = Jsoup.connect(url).timeout(2000).userAgent("Mozilla").get();
-//                } catch (IOException e3) {
-//                }
-//            }
-//        }
-
         while (!isComplete && count < maxRetryTimes) {
             try {
                 document = Jsoup.connect(url).timeout(3000).userAgent("Mozilla").get();
                 isComplete = true;
             } catch (IOException e) {
                 System.out.println("Jsoup: " + (count + 1) + "th time re-try to connect to url: " + url);
+                // Change the connect status text flow
+                Text text = new Text((count + 1) + "th time re-try to connect: ");
+                text.getStyleClass().add("textnormal");
+
+                Hyperlink hyperlink = new Hyperlink(url);
+                hyperlink.getStyleClass().add("texthyperlink");
+                hyperlink.setOnAction(e1 -> {
+                    HostServices services = Helper.getInstance().getHostServices();
+                    services.showDocument(url);
+                });
+
+                Platform.runLater(() -> {
+                    connectStatusTextFlow.getChildren().clear();
+                    connectStatusTextFlow.getChildren().addAll(text, hyperlink);
+                });
+
                 count++;
             }
+        }
+
+        if (!isComplete) {
+            Text text = new Text("Failed to connect..");
+            text.getStyleClass().add("textnormal");
+            Platform.runLater(() -> {
+                connectStatusTextFlow.getChildren().clear();
+                connectStatusTextFlow.getChildren().add(text);
+            });
         }
 
         return document;

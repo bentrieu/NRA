@@ -140,7 +140,15 @@ public class HomeSceneController implements Initializable {
         darkLoadingImage = new Image("/resource/book_loadinganimation_dark.gif");
         loadingImageView = new ImageView();
         loadingImageView.setImage(whiteLoadingImage);
-        loadingStackPane.getChildren().add(loadingImageView);
+        VBox loadingVbox = new VBox();
+        loadingVbox.setSpacing(10);
+        loadingVbox.setAlignment(Pos.CENTER);
+        ArticlesManager.connectStatusTextFlow.getStyleClass().add("textflowcenter");
+//        loadingVbox.setPrefWidth(Region.USE_COMPUTED_SIZE);
+//        loadingVbox.setPrefHeight(Region.USE_COMPUTED_SIZE);
+//        ArticlesManager.connectStatusTextFlow.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
+        loadingVbox.getChildren().addAll(loadingImageView, ArticlesManager.connectStatusTextFlow);
+        loadingStackPane.getChildren().add(loadingVbox);
         Main.stage.heightProperty().addListener((observableValue, number, t1) -> {
             loadingStackPane.setMinHeight(t1.doubleValue() - 95);
             loadingStackPane.setMaxHeight(t1.doubleValue() - 95);

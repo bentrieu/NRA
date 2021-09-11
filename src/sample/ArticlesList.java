@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import javafx.application.Platform;
+import javafx.scene.text.Text;
 import org.springframework.util.StopWatch;
 
 public class ArticlesList {
@@ -84,6 +86,7 @@ public class ArticlesList {
     }
 
     public static void getNewsList() throws IOException {
+        resetLoadingStatus();
         ExecutorService es = Executors.newCachedThreadPool();
         es.execute(() -> {
             vnexpressNewsList.clear();
@@ -143,6 +146,7 @@ public class ArticlesList {
     }
 
     public static void getCovidList() throws IOException {
+        resetLoadingStatus();
         ExecutorService es = Executors.newCachedThreadPool();
         es.execute(() -> {
             vnexpressCovidList.clear();
@@ -205,6 +209,7 @@ public class ArticlesList {
     }
 
     public static void getPoliticsList() throws IOException {
+        resetLoadingStatus();
         ExecutorService es = Executors.newCachedThreadPool();
         es.execute(() -> {
             vnexpressPoliticsList.clear();
@@ -270,6 +275,7 @@ public class ArticlesList {
     }
 
     public static void getBusinessList() throws IOException {
+        resetLoadingStatus();
         ExecutorService es = Executors.newCachedThreadPool();
         es.execute(() -> {
             vnexpressBusinessList.clear();
@@ -337,6 +343,7 @@ public class ArticlesList {
     }
 
     public static void getTechnologyList() throws IOException {
+        resetLoadingStatus();
         ExecutorService es = Executors.newCachedThreadPool();
         es.execute(() -> {
             vnexpressTechnologyList.clear();
@@ -406,6 +413,7 @@ public class ArticlesList {
     }
 
     public static void getHealthList() throws IOException {
+        resetLoadingStatus();
         ExecutorService es = Executors.newCachedThreadPool();
         es.execute(() -> {
             vnexpressHealthList.clear();
@@ -472,6 +480,7 @@ public class ArticlesList {
     }
 
     public static void getSportsList() throws IOException {
+        resetLoadingStatus();
         ExecutorService es = Executors.newCachedThreadPool();
         es.execute(() -> {
             vnexpressSportsList.clear();
@@ -536,6 +545,7 @@ public class ArticlesList {
     }
 
     public static void getEntertainmentList() throws IOException {
+        resetLoadingStatus();
         ExecutorService es = Executors.newCachedThreadPool();
         es.execute(() -> {
             vnexpressEntertainmentList.clear();
@@ -602,6 +612,7 @@ public class ArticlesList {
     }
 
     public static void getWorldList() throws IOException {
+        resetLoadingStatus();
         ExecutorService es = Executors.newCachedThreadPool();
         es.execute(() -> {
             vnexpressWorldList.clear();
@@ -666,6 +677,7 @@ public class ArticlesList {
     }
 
     public static void getOthersList() throws IOException {
+        resetLoadingStatus();
         ExecutorService es = Executors.newCachedThreadPool();
         es.execute(() -> {
             vnexpressOthersList.clear();
@@ -738,6 +750,7 @@ public class ArticlesList {
     }
 
     public static void getSearchList(String keyword) throws IOException {
+        resetLoadingStatus();
         ExecutorService es = Executors.newCachedThreadPool();
         es.execute(() -> {
             vnexpressSearchList.clear();
@@ -791,5 +804,14 @@ public class ArticlesList {
         stopWatch.stop();
 
         System.out.println(stopWatch.prettyPrint());
+    }
+
+    public static void resetLoadingStatus() {
+        Platform.runLater(() -> {
+            ArticlesManager.connectStatusTextFlow.getChildren().clear();
+            Text text = new Text("Loading...");
+            text.getStyleClass().add("textnormal");
+            ArticlesManager.connectStatusTextFlow.getChildren().add(text);
+        });
     }
 }
