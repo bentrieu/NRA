@@ -31,11 +31,11 @@ public class ArticlesManager extends Application {
     // This list to save the listeners that create during the process of responsive design. So this listeners need to be removed later to avoid memory leaking
     public static ArrayList<ChangeListener<Number>> changeListenerList = new ArrayList<>();
 
-    /* FROM HERE WILL BE THE FUNCTION FOR ZINGNEWS.VN
+    /** FROM HERE WILL BE THE FUNCTION FOR ZINGNEWS.VN
        There will be 3 function
-       Get RSS list
+       Get list open from web
        Get search keyword list
-       Display the full article  */
+       Display the full article  **/
     // Zing web list: https://zingnews.vn/the-gioi.html
     public static ArrayList<Article> getZingWebList(String urlToShortArticle, String category) throws IOException {
         // Create new arraylist of article for return
@@ -67,33 +67,40 @@ public class ArticlesManager extends Application {
 
             int size = Math.min(all.size(), 50);
 
-            // Add data to zingNewsList (Title + date + thumb + link) 50 articles
-            for (int i = 0; i < size; i++) {
-                // Create new article object then add the object into the ArrayList
-                zingNewsList.add(new Article());
-                // Set source
-                zingNewsList.get(i).setSource("zingnews");
-                // Set category manually
-                zingNewsList.get(i).setCategory(category);
-                // Set orginalCategory for each object
-                zingNewsList.get(i).setOriginalCategory(dateAndCategory.get(i).select("span.category").text());
-                // Set title for each object
-                zingNewsList.get(i).setTitle(titleAndLink.get(i).text());
-                // Set date for each object
-                String date = Helper.timeToUnixString3(dateAndCategory.get(i).select("span.date").text() + " " + dateAndCategory.get(i).select("span.time").text());
-                zingNewsList.get(i).setDate(date);
-                // Set time ago for each object
-                zingNewsList.get(i).setTimeAgo(Helper.timeDiff(date));
-                // Set thumb for each object
-                if (thumb.get(i).hasAttr("data-src")) zingNewsList.get(i).setThumb(thumb.get(i).attr("abs:data-src"));
-                else {
-                    if (thumb.get(i).hasAttr("src")) zingNewsList.get(i).setThumb(thumb.get(i).attr("abs:src"));
+            try {
+                // Add data to zingNewsList (Title + date + thumb + link) 50 articles
+                for (int i = 0; i < size; i++) {
+                    // Create new article object then add the object into the ArrayList
+                    zingNewsList.add(new Article());
+                    // Set source
+                    zingNewsList.get(i).setSource("zingnews");
+                    // Set category manually
+                    zingNewsList.get(i).setCategory(category);
+                    // Set orginalCategory for each object
+                    zingNewsList.get(i).setOriginalCategory(dateAndCategory.get(i).select("span.category").text());
+                    // Set title for each object
+                    zingNewsList.get(i).setTitle(titleAndLink.get(i).text());
+                    // Set date for each object
+                    String date = Helper.timeToUnixString3(dateAndCategory.get(i).select("span.date").text() + " " + dateAndCategory.get(i).select("span.time").text());
+                    zingNewsList.get(i).setDate(date);
+                    // Set time ago for each object
+                    zingNewsList.get(i).setTimeAgo(Helper.timeDiff(date));
+                    // Set thumb for each object
+                    if (thumb.get(i).hasAttr("data-src")) zingNewsList.get(i).setThumb(thumb.get(i).attr("abs:data-src"));
+                    else {
+                        if (thumb.get(i).hasAttr("src")) zingNewsList.get(i).setThumb(thumb.get(i).attr("abs:src"));
+                    }
+                    // Set description (summarise) for each object
+                    zingNewsList.get(i).setDescription(description.get(i).text());
+                    // Set link to full article for each object
+                    zingNewsList.get(i).setLinkToFullArticles(titleAndLink.get(i).attr("abs:href"));
                 }
-                // Set description (summarise) for each object
-                zingNewsList.get(i).setDescription(description.get(i).text());
-                // Set link to full article for each object
-                zingNewsList.get(i).setLinkToFullArticles(titleAndLink.get(i).attr("abs:href"));
+            } catch (Exception e) {
+                System.out.println("Index out of bounds: ZingNews WEB LIST");
+                zingNewsList.remove(zingNewsList.size() - 1);
+                return zingNewsList;
             }
+
         }
 
         return zingNewsList;
@@ -140,11 +147,9 @@ public class ArticlesManager extends Application {
                     // Set time ago for each object
                     searchZingList.get(i).setTimeAgo(Helper.timeDiff(date));
                 }
-            } catch (IndexOutOfBoundsException e) {
-                System.out.println("Index out of bounds: ZING SEARCH LIST");
-                return searchZingList;
             } catch (Exception e) {
-                e.printStackTrace();
+                System.out.println("Index out of bounds: ZING SEARCH LIST");
+                searchZingList.remove(searchZingList.size() - 1);
                 return searchZingList;
             }
         }
@@ -376,12 +381,12 @@ public class ArticlesManager extends Application {
         }
     }
 
-    /* FROM HERE WILL BE THE FUNCTION FOR VNEXPRESS.COM
+    /** FROM HERE WILL BE THE FUNCTION FOR VNEXPRESS.COM
        There will be 4 function
        Get RSS list
        Get search keyword list
        Get list open from web
-       Display the full article  */
+       Display the full article  **/
     // Vnexpress rss
     public static ArrayList<Article> getVnexpressList(String urlToShortArticle, String category) throws IOException {
         // Create new arraylist of article for return
@@ -419,30 +424,36 @@ public class ArticlesManager extends Application {
 
             int size = Math.min(all.size(), 50);
 
-            // Add data to vnexpressNewsList (Title + date + thumb + link + category + source)
-            for (int k = 0; k < size; k++) {
-                // Create new article object then add the object into the ArrayList
-                vnexpressNewsList.add(new Article());
-                // Get the description (link + thumb) of each object => Then cut into link + thumb
-                String description = all.get(k).select("description").text();
-                int startLink = description.indexOf("\"");
-                int endLink = description.indexOf("\"", startLink + 1);
-                int startThumb = description.indexOf("\"", endLink + 1);
-                int endThumb = description.indexOf("\"", startThumb + 1);
-                // Set thumb for object
-                vnexpressNewsList.get(k).setThumb(description.substring(startThumb + 1, endThumb));
-                // Set title for each object
-                vnexpressNewsList.get(k).setTitle(all.get(k).select("title").text());
-                // Set date for each object
-                vnexpressNewsList.get(k).setDate(Helper.timeToUnixString2(all.get(k).select("pubdate").text()));
-                // Set timeago for each object
-                vnexpressNewsList.get(k).setTimeAgo(Helper.timeDiff(vnexpressNewsList.get(k).getDate()));
-                // Set link for object
-                vnexpressNewsList.get(k).setLinkToFullArticles(all.get(k).select("link").text());
-                // Set category
-                vnexpressNewsList.get(k).setCategory(category);
-                // Set source
-                vnexpressNewsList.get(k).setSource("vnexpress");
+            try {
+                // Add data to vnexpressNewsList (Title + date + thumb + link + category + source)
+                for (int k = 0; k < size; k++) {
+                    // Create new article object then add the object into the ArrayList
+                    vnexpressNewsList.add(new Article());
+                    // Get the description (link + thumb) of each object => Then cut into link + thumb
+                    String description = all.get(k).select("description").text();
+                    int startLink = description.indexOf("\"");
+                    int endLink = description.indexOf("\"", startLink + 1);
+                    int startThumb = description.indexOf("\"", endLink + 1);
+                    int endThumb = description.indexOf("\"", startThumb + 1);
+                    // Set thumb for object
+                    vnexpressNewsList.get(k).setThumb(description.substring(startThumb + 1, endThumb));
+                    // Set title for each object
+                    vnexpressNewsList.get(k).setTitle(all.get(k).select("title").text());
+                    // Set date for each object
+                    vnexpressNewsList.get(k).setDate(Helper.timeToUnixString2(all.get(k).select("pubdate").text()));
+                    // Set timeago for each object
+                    vnexpressNewsList.get(k).setTimeAgo(Helper.timeDiff(vnexpressNewsList.get(k).getDate()));
+                    // Set link for object
+                    vnexpressNewsList.get(k).setLinkToFullArticles(all.get(k).select("link").text());
+                    // Set category
+                    vnexpressNewsList.get(k).setCategory(category);
+                    // Set source
+                    vnexpressNewsList.get(k).setSource("vnexpress");
+                }
+            } catch (Exception e) {
+                System.out.println("Index out of bounds: VNEXPRESS RSS LIST");
+                vnexpressNewsList.remove(vnexpressNewsList.size() - 1);
+                return vnexpressNewsList;
             }
         }
 
@@ -502,11 +513,9 @@ public class ArticlesManager extends Application {
                     // Set time ago for each object
                     searchVnexpressList.get(k).setTimeAgo(Helper.timeDiff(searchVnexpressList.get(k).getDate()));
                 }
-            } catch (IndexOutOfBoundsException e) {
-                System.out.println("Index out of bounds: VNEXPRESS SEARCH LIST");
-                return searchVnexpressList;
             } catch (Exception e) {
-                e.printStackTrace();
+                System.out.println("Index out of bounds: VNEXPRESS SEARCH LIST");
+                searchVnexpressList.remove(searchVnexpressList.size() - 1);
                 return searchVnexpressList;
             }
         }
@@ -532,53 +541,58 @@ public class ArticlesManager extends Application {
 
             int maxSize = pictures.size() - all.select("ins.adsbyeclick").size();
             maxSize = Math.min(maxSize, 50);
-//        if (maxSize > 15) maxSize = 15;
 
-            //Add scraped items into the class
-            for(int i = 0, k = 0; k < maxSize; i++, k++){
-                // Remove ads elements
-                if (all.get(k).select("ins").hasClass("adsbyeclick")) {
-                    i--;
-                    continue;
-                }
-                // Create new object
-                getVnexpressWebList.add(new Article());
-                // Set source
-                getVnexpressWebList.get(i).setSource("vnexpress");
-                // Set category
-                getVnexpressWebList.get(i).setCategory(category);
-                // Set title
-                getVnexpressWebList.get(i).setTitle(titles.get(k).attr("title"));
-                // Set link to full article
-                getVnexpressWebList.get(i).setLinkToFullArticles(links.get(k).attr("abs:href"));
+            try {
+                //Add scraped items into the class
+                for(int i = 0, k = 0; k < maxSize; i++, k++){
+                    // Remove ads elements
+                    if (all.get(k).select("ins").hasClass("adsbyeclick")) {
+                        i--;
+                        continue;
+                    }
+                    // Create new object
+                    getVnexpressWebList.add(new Article());
+                    // Set source
+                    getVnexpressWebList.get(i).setSource("vnexpress");
+                    // Set category
+                    getVnexpressWebList.get(i).setCategory(category);
+                    // Set title
+                    getVnexpressWebList.get(i).setTitle(titles.get(k).attr("title"));
+                    // Set link to full article
+                    getVnexpressWebList.get(i).setLinkToFullArticles(links.get(k).attr("abs:href"));
 //            // Set description
 //            getVnexpressWebList.get(i).setDescription(descriptions.get(i).text());
-                // Set thumb
-                String linkThumb;
-                if(pictures.get(k).getElementsByTag("img").attr("abs:data-src").isEmpty()){
-                    linkThumb = pictures.get(k).getElementsByTag("img").attr("abs:src");
-                    getVnexpressWebList.get(i).setThumb(pictures.get(k).getElementsByTag("img").attr("abs:src"));
-                } else {
-                    linkThumb = pictures.get(k).getElementsByTag("img").attr("abs:data-src");
-                    getVnexpressWebList.get(i).setThumb(pictures.get(k).getElementsByTag("img").attr("abs:data-src"));
+                    // Set thumb
+                    String linkThumb;
+                    if(pictures.get(k).getElementsByTag("img").attr("abs:data-src").isEmpty()){
+                        linkThumb = pictures.get(k).getElementsByTag("img").attr("abs:src");
+                        getVnexpressWebList.get(i).setThumb(pictures.get(k).getElementsByTag("img").attr("abs:src"));
+                    } else {
+                        linkThumb = pictures.get(k).getElementsByTag("img").attr("abs:data-src");
+                        getVnexpressWebList.get(i).setThumb(pictures.get(k).getElementsByTag("img").attr("abs:data-src"));
+                    }
+                    // Set date
+                    if (all.hasAttr("data-publishtime")) {
+                        getVnexpressWebList.get(i).setDate(all.get(k).attr("data-publishtime"));
+                    } else {
+                        if (linkThumb.indexOf(".jpg") > 0) getVnexpressWebList.get(i).setDate(linkThumb.substring(linkThumb.indexOf(".jpg") - 10, linkThumb.indexOf(".jpg")));
+                        if (linkThumb.indexOf(".png") > 0) getVnexpressWebList.get(i).setDate(linkThumb.substring(linkThumb.indexOf(".png") - 10, linkThumb.indexOf(".png")));
+                        if (linkThumb.indexOf(".jpeg") > 0) getVnexpressWebList.get(i).setDate(linkThumb.substring(linkThumb.indexOf(".jpeg") - 10, linkThumb.indexOf(".jpeg")));
+                        if (linkThumb.indexOf(".gif") > 0) getVnexpressWebList.get(i).setDate(linkThumb.substring(linkThumb.indexOf(".gif") - 10, linkThumb.indexOf(".gif")));
+                    }
+                    String pattern = "[0-9]{10}";
+                    if (!Pattern.matches(pattern, getVnexpressWebList.get(i).getDate())) {
+                        getVnexpressWebList.remove(i);
+                        i--;
+                        continue;
+                    }
+                    // Set time ago
+                    getVnexpressWebList.get(i).setTimeAgo(Helper.timeDiff(getVnexpressWebList.get(i).getDate()));
                 }
-                // Set date
-                if (all.hasAttr("data-publishtime")) {
-                    getVnexpressWebList.get(i).setDate(all.get(k).attr("data-publishtime"));
-                } else {
-                    if (linkThumb.indexOf(".jpg") > 0) getVnexpressWebList.get(i).setDate(linkThumb.substring(linkThumb.indexOf(".jpg") - 10, linkThumb.indexOf(".jpg")));
-                    if (linkThumb.indexOf(".png") > 0) getVnexpressWebList.get(i).setDate(linkThumb.substring(linkThumb.indexOf(".png") - 10, linkThumb.indexOf(".png")));
-                    if (linkThumb.indexOf(".jpeg") > 0) getVnexpressWebList.get(i).setDate(linkThumb.substring(linkThumb.indexOf(".jpeg") - 10, linkThumb.indexOf(".jpeg")));
-                    if (linkThumb.indexOf(".gif") > 0) getVnexpressWebList.get(i).setDate(linkThumb.substring(linkThumb.indexOf(".gif") - 10, linkThumb.indexOf(".gif")));
-                }
-                String pattern = "[0-9]{10}";
-                if (!Pattern.matches(pattern, getVnexpressWebList.get(i).getDate())) {
-                    getVnexpressWebList.remove(i);
-                    i--;
-                    continue;
-                }
-                // Set time ago
-                getVnexpressWebList.get(i).setTimeAgo(Helper.timeDiff(getVnexpressWebList.get(i).getDate()));
+            } catch (Exception e) {
+                System.out.println("Index out of bounds: VNEXPRESS WEB LIST");
+                getVnexpressWebList.remove(getVnexpressWebList.size() - 1);
+                return getVnexpressWebList;
             }
         }
 
@@ -861,12 +875,12 @@ public class ArticlesManager extends Application {
         }
     }
 
-    /* FROM HERE WILL BE THE FUNCTION FOR TUOITRE.VN
+    /** FROM HERE WILL BE THE FUNCTION FOR TUOITRE.VN
        There will be 4 function
        Get RSS list
        Get search keyword list
        Get list open from web
-       Display the full article  */
+       Display the full article  **/
     // Tuoitre rss
     public static ArrayList<Article> getTuoiTreList(String urlToShortArticle, String category) throws IOException {
         // Create new arraylist of article for return
@@ -887,37 +901,43 @@ public class ArticlesManager extends Application {
 
             int maxSize = Math.min(all.size(), 50);
 
-            // Add data to vnexpressNewsList (Title + date + thumb + link)
-            for (int i = 0; i < maxSize; i++) {
-                // Create new article object then add the object into the ArrayList
-                tuoiTreList.add(new Article());
-                // Set source
-                tuoiTreList.get(i).setSource("tuoitre");
-                // Set category manually
-                tuoiTreList.get(i).setCategory(category);
-                // Set title for each object
-                tuoiTreList.get(i).setTitle(title.get(i).text());
-                // Set date for each object
-                String dateTemp = Helper.timeToUnixString4(date.get(i).text());
-                tuoiTreList.get(i).setDate(dateTemp);
-                // Set time ago for each object
-                tuoiTreList.get(i).setTimeAgo(Helper.timeDiff(dateTemp));
-                // Set thumb and description for each object
-                String string = thumbAndDescription.get(i).text();
-                int startLink = string.indexOf("src=\"") + 5;
-                int endLink = string.indexOf("\"", startLink) - 1;
-                int startDescription = string.indexOf("</a>") + 4;
-                tuoiTreList.get(i).setThumb(string.substring(startLink, endLink + 1).replaceFirst("zoom/[_0-9]+/", "thumb_w/586/"));
-                tuoiTreList.get(i).setDescription(string.substring(startDescription));
-                // Set link to full article for each object
-                tuoiTreList.get(i).setLinkToFullArticles(link.get(i).text());
+            try {
+                // Add data to vnexpressNewsList (Title + date + thumb + link)
+                for (int i = 0; i < maxSize; i++) {
+                    // Create new article object then add the object into the ArrayList
+                    tuoiTreList.add(new Article());
+                    // Set source
+                    tuoiTreList.get(i).setSource("tuoitre");
+                    // Set category manually
+                    tuoiTreList.get(i).setCategory(category);
+                    // Set title for each object
+                    tuoiTreList.get(i).setTitle(title.get(i).text());
+                    // Set date for each object
+                    String dateTemp = Helper.timeToUnixString4(date.get(i).text());
+                    tuoiTreList.get(i).setDate(dateTemp);
+                    // Set time ago for each object
+                    tuoiTreList.get(i).setTimeAgo(Helper.timeDiff(dateTemp));
+                    // Set thumb and description for each object
+                    String string = thumbAndDescription.get(i).text();
+                    int startLink = string.indexOf("src=\"") + 5;
+                    int endLink = string.indexOf("\"", startLink) - 1;
+                    int startDescription = string.indexOf("</a>") + 4;
+                    tuoiTreList.get(i).setThumb(string.substring(startLink, endLink + 1).replaceFirst("zoom/[_0-9]+/", "thumb_w/586/"));
+                    tuoiTreList.get(i).setDescription(string.substring(startDescription));
+                    // Set link to full article for each object
+                    tuoiTreList.get(i).setLinkToFullArticles(link.get(i).text());
+                }
+            } catch (Exception e) {
+                System.out.println("Index out of bounds: Tuoitre RSS LIST");
+                tuoiTreList.remove(tuoiTreList.size() - 1);
+                return tuoiTreList;
             }
         }
 
         return tuoiTreList;
     }
 
-    // Tuoitre web list: https://tuoitre.vn/thoi-su.htm (not yet done)
+    // Tuoitre web list: https://tuoitre.vn/thoi-su.htm
     public static ArrayList<Article> getTuoiTreWebList(String urlToShortArticle, String category) throws IOException {
         // Create new arraylist of article for return
         ArrayList<Article> tuoiTreWebList = new ArrayList<>();
@@ -946,32 +966,38 @@ public class ArticlesManager extends Application {
             Elements description = all.select("p.sapo");
             Elements titleAndLink = all.select("> a[title]");
 
-            // Add data to vnexpressNewsList (Title + date + thumb + link)
-            for (int i = 0; i < all.size(); i++) {
-                // Create new article object then add the object into the ArrayList
-                tuoiTreWebList.add(new Article());
-                // Set source
-                tuoiTreWebList.get(i).setSource("tuoitre");
-                // Set category manually
-                tuoiTreWebList.get(i).setCategory(category);
-                // Set title for each object
-                tuoiTreWebList.get(i).setTitle(titleAndLink.get(i).attr("title"));
-                // Set description for each object
-                tuoiTreWebList.get(i).setDescription(description.get(i).text());
-                // Set thumb and description for each object
-                String linkThumb = thumb.get(i).attr("data-src");
-                tuoiTreWebList.get(i).setThumb(linkThumb);
-                // Set date
-                Pattern pattern = Pattern.compile("[0-9]+\\.(jpg|jpeg|png|gif)");
-                Matcher matcher = pattern.matcher(linkThumb);
-                int startTime = 0;
-                if (matcher.find()) startTime = matcher.start();
-                String date = linkThumb.substring(startTime, startTime + 10);
-                tuoiTreWebList.get(i).setDate(date);
-                // Set time ago for each object
-                tuoiTreWebList.get(i).setTimeAgo(Helper.timeDiff(date));
-                // Set link to full article for each object
-                tuoiTreWebList.get(i).setLinkToFullArticles(titleAndLink.get(i).attr("abs:href"));
+            try {
+                // Add data to vnexpressNewsList (Title + date + thumb + link)
+                for (int i = 0; i < all.size(); i++) {
+                    // Create new article object then add the object into the ArrayList
+                    tuoiTreWebList.add(new Article());
+                    // Set source
+                    tuoiTreWebList.get(i).setSource("tuoitre");
+                    // Set category manually
+                    tuoiTreWebList.get(i).setCategory(category);
+                    // Set title for each object
+                    tuoiTreWebList.get(i).setTitle(titleAndLink.get(i).attr("title"));
+                    // Set description for each object
+                    tuoiTreWebList.get(i).setDescription(description.get(i).text());
+                    // Set thumb and description for each object
+                    String linkThumb = thumb.get(i).attr("data-src");
+                    tuoiTreWebList.get(i).setThumb(linkThumb);
+                    // Set date
+                    Pattern pattern = Pattern.compile("[0-9]+\\.(jpg|jpeg|png|gif)");
+                    Matcher matcher = pattern.matcher(linkThumb);
+                    int startTime = 0;
+                    if (matcher.find()) startTime = matcher.start();
+                    String date = linkThumb.substring(startTime, startTime + 10);
+                    tuoiTreWebList.get(i).setDate(date);
+                    // Set time ago for each object
+                    tuoiTreWebList.get(i).setTimeAgo(Helper.timeDiff(date));
+                    // Set link to full article for each object
+                    tuoiTreWebList.get(i).setLinkToFullArticles(titleAndLink.get(i).attr("abs:href"));
+                }
+            } catch (Exception e) {
+                System.out.println("Index out of bounds: Tuoitre WEB LIST");
+                tuoiTreWebList.remove(tuoiTreWebList.size() - 1);
+                return tuoiTreWebList;
             }
         }
 
@@ -1026,11 +1052,9 @@ public class ArticlesManager extends Application {
                     // Set time ago for each object
                     searchTuoiTreList.get(i).setTimeAgo(Helper.timeDiff(date));
                 }
-            } catch (IndexOutOfBoundsException e) {
-                System.out.println("Index out of bounds: TUOITRE SEARCH LIST");
-                return searchTuoiTreList;
             } catch (Exception e) {
-                e.printStackTrace();
+                System.out.println("Index out of bounds: Tuoitre SEARCH LIST");
+                searchTuoiTreList.remove(searchTuoiTreList.size() - 1);
                 return searchTuoiTreList;
             }
         }
@@ -1246,11 +1270,11 @@ public class ArticlesManager extends Application {
         }
     }
 
-    /* FROM HERE WILL BE THE FUNCTION FOR THANHNIEN.VN
+    /** FROM HERE WILL BE THE FUNCTION FOR THANHNIEN.VN
        There will be 3 function
        Get RSS list
        Get list open from web
-       Display the full article  */
+       Display the full article  **/
     // Thanhnien rss
     public static ArrayList<Article> getThanhNienList(String urlToShortArticle, String category) throws IOException {
         // Create new arraylist of article for return
@@ -1270,39 +1294,45 @@ public class ArticlesManager extends Application {
             Elements link = all.select("link");
             Elements date = all.select("pubDate");
 
-            // Add data to vnexpressNewsList (Title + date + thumb + link)
-            for (int i = 0, k = 0; k < all.size(); i++, k++) {
-                // Eliminate all tuong-thuat and thoitrangtre element
-                if (link.get(k).text().contains("tuong-thuat") || link.get(k).text().contains("thoitrangtre")) {
-                    i--;
-                    continue;
+            try {
+                // Add data to vnexpressNewsList (Title + date + thumb + link)
+                for (int i = 0, k = 0; k < all.size(); i++, k++) {
+                    // Eliminate all tuong-thuat and thoitrangtre element
+                    if (link.get(k).text().contains("tuong-thuat") || link.get(k).text().contains("thoitrangtre")) {
+                        i--;
+                        continue;
+                    }
+                    // Create new article object then add the object into the ArrayList
+                    thanhNienList.add(new Article());
+                    // Set source
+                    thanhNienList.get(i).setSource("thanhnien");
+                    // Set category manually
+                    thanhNienList.get(i).setCategory(category);
+                    // Set title for each object
+                    thanhNienList.get(i).setTitle(title.get(k).text());
+                    // Set date for each object
+                    String dateTemp = Helper.timeToUnixString2(date.get(k).text());
+                    thanhNienList.get(i).setDate(dateTemp);
+                    // Set time ago for each object
+                    thanhNienList.get(i).setTimeAgo(Helper.timeDiff(dateTemp));
+                    // Set thumb for each object
+                    if (thumb.size() != 0) thanhNienList.get(i).setThumb(thumb.get(k).text().replaceFirst("400x300", "2048"));
+                    else {
+                        String descriptionText = description.get(k).text();
+                        int startThumb = descriptionText.indexOf("src=\"") + 5;
+                        int endThumb = descriptionText.indexOf("\"", startThumb) - 1;
+                        String thumbLink = descriptionText.substring(startThumb, endThumb + 1);
+                        if (thumbLink.contains("180")) thumbLink = thumbLink.replaceFirst("/180/", "/2048/");
+                        if (thumbLink.contains("400x300")) thumbLink = thumbLink.replaceFirst("/400x300/", "/2048/");
+                        thanhNienList.get(i).setThumb(thumbLink);
+                    }
+                    // Set link to full article for each object
+                    thanhNienList.get(i).setLinkToFullArticles(link.get(k).text());
                 }
-                // Create new article object then add the object into the ArrayList
-                thanhNienList.add(new Article());
-                // Set source
-                thanhNienList.get(i).setSource("thanhnien");
-                // Set category manually
-                thanhNienList.get(i).setCategory(category);
-                // Set title for each object
-                thanhNienList.get(i).setTitle(title.get(k).text());
-                // Set date for each object
-                String dateTemp = Helper.timeToUnixString2(date.get(k).text());
-                thanhNienList.get(i).setDate(dateTemp);
-                // Set time ago for each object
-                thanhNienList.get(i).setTimeAgo(Helper.timeDiff(dateTemp));
-                // Set thumb for each object
-                if (thumb.size() != 0) thanhNienList.get(i).setThumb(thumb.get(k).text().replaceFirst("400x300", "2048"));
-                else {
-                    String descriptionText = description.get(k).text();
-                    int startThumb = descriptionText.indexOf("src=\"") + 5;
-                    int endThumb = descriptionText.indexOf("\"", startThumb) - 1;
-                    String thumbLink = descriptionText.substring(startThumb, endThumb + 1);
-                    if (thumbLink.contains("180")) thumbLink = thumbLink.replaceFirst("/180/", "/2048/");
-                    if (thumbLink.contains("400x300")) thumbLink = thumbLink.replaceFirst("/400x300/", "/2048/");
-                    thanhNienList.get(i).setThumb(thumbLink);
-                }
-                // Set link to full article for each object
-                thanhNienList.get(i).setLinkToFullArticles(link.get(k).text());
+            } catch (Exception e) {
+                System.out.println("Index out of bounds: thanhNien RSS LIST");
+                thanhNienList.remove(thanhNienList.size() - 1);
+                return thanhNienList;
             }
         }
 
@@ -1329,46 +1359,52 @@ public class ArticlesManager extends Application {
             int maxSize = all.size();
             if (category.equals("Sports")) maxSize = 8;
 
-            // Add data to vnexpressNewsList (Title + date + thumb + link)
-            for (int i = 0, k = 0; i < maxSize; i++, k++) {
-                if (all.get(i).hasClass("story--video") || all.get(i).parent().hasClass("feature")) {
-                    k--;
-                    continue;
+            try {
+                // Add data to vnexpressNewsList (Title + date + thumb + link)
+                for (int i = 0, k = 0; i < maxSize; i++, k++) {
+                    if (all.get(i).hasClass("story--video") || all.get(i).parent().hasClass("feature")) {
+                        k--;
+                        continue;
+                    }
+                    // Eliminate all tuong-thuat and thoitrangtre element
+                    if (titleAndLink.get(i).attr("href").contains("tuong-thuat") || titleAndLink.get(i).attr("href").contains("thoitrangtre")) {
+                        k--;
+                        continue;
+                    }
+                    // Create new article object then add the object into the ArrayList
+                    thanhNienWebList.add(new Article());
+                    // Set source
+                    thanhNienWebList.get(k).setSource("thanhnien");
+                    // Set category manually
+                    thanhNienWebList.get(k).setCategory(category);
+                    // Set title for each object
+                    thanhNienWebList.get(k).setTitle(titleAndLink.get(i).text());
+                    // Set date for each object
+                    String dateTemp = date.get(i).attr("rel").substring(0, 10);
+                    long dateTemp0 = Long.valueOf(dateTemp) - 25200;
+                    dateTemp = String.valueOf(dateTemp0);
+                    thanhNienWebList.get(k).setDate(dateTemp);
+                    // Set time ago for each object
+                    thanhNienWebList.get(k).setTimeAgo(Helper.timeDiff(dateTemp));
+                    // Set thumb for each object
+                    String thumbTemp;
+                    if (thumb.get(i).attr("data-src").isEmpty()) {
+                        thumbTemp = thumb.get(i).attr("src");
+                    } else {
+                        thumbTemp = thumb.get(i).attr("data-src");
+                    }
+                    if (thumbTemp.contains("c150x100")) thumbTemp = thumbTemp.replaceFirst("c150x100/[,0-9]+/", "2048/"); // c150x100/8,0,92,0
+                    else {
+                        if (thumbTemp.contains("150x100")) thumbTemp = thumbTemp.replaceFirst("150x100", "2048"); // 150x100
+                    }
+                    thanhNienWebList.get(k).setThumb(thumbTemp);
+                    // Set link to full article for each object
+                    thanhNienWebList.get(k).setLinkToFullArticles(titleAndLink.get(i).attr("abs:href"));
                 }
-                // Eliminate all tuong-thuat and thoitrangtre element
-                if (titleAndLink.get(i).attr("href").contains("tuong-thuat") || titleAndLink.get(i).attr("href").contains("thoitrangtre")) {
-                    k--;
-                    continue;
-                }
-                // Create new article object then add the object into the ArrayList
-                thanhNienWebList.add(new Article());
-                // Set source
-                thanhNienWebList.get(k).setSource("thanhnien");
-                // Set category manually
-                thanhNienWebList.get(k).setCategory(category);
-                // Set title for each object
-                thanhNienWebList.get(k).setTitle(titleAndLink.get(i).text());
-                // Set date for each object
-                String dateTemp = date.get(i).attr("rel").substring(0, 10);
-                long dateTemp0 = Long.valueOf(dateTemp) - 25200;
-                dateTemp = String.valueOf(dateTemp0);
-                thanhNienWebList.get(k).setDate(dateTemp);
-                // Set time ago for each object
-                thanhNienWebList.get(k).setTimeAgo(Helper.timeDiff(dateTemp));
-                // Set thumb for each object
-                String thumbTemp;
-                if (thumb.get(i).attr("data-src").isEmpty()) {
-                    thumbTemp = thumb.get(i).attr("src");
-                } else {
-                    thumbTemp = thumb.get(i).attr("data-src");
-                }
-                if (thumbTemp.contains("c150x100")) thumbTemp = thumbTemp.replaceFirst("c150x100/[,0-9]+/", "2048/"); // c150x100/8,0,92,0
-                else {
-                    if (thumbTemp.contains("150x100")) thumbTemp = thumbTemp.replaceFirst("150x100", "2048"); // 150x100
-                }
-                thanhNienWebList.get(k).setThumb(thumbTemp);
-                // Set link to full article for each object
-                thanhNienWebList.get(k).setLinkToFullArticles(titleAndLink.get(i).attr("abs:href"));
+            } catch (Exception e) {
+                System.out.println("Index out of bounds: thanhNien WEB LIST");
+                thanhNienWebList.remove(thanhNienWebList.size() - 1);
+                return thanhNienWebList;
             }
         }
 
@@ -1738,11 +1774,11 @@ public class ArticlesManager extends Application {
         }
     }
 
-    /* FROM HERE WILL BE THE FUNCTION FOR NHANDAN.VN
+    /** FROM HERE WILL BE THE FUNCTION FOR NHANDAN.VN
        There will be 3 function
        Get search keyword list
        Get list open from web
-       Display the full article  */
+       Display the full article  **/
     // Nhandan web list (https://nhandan.vn/chinhtri)
     public static ArrayList<Article> getNhanDanWebList(String urlToShortArticle, String category) throws IOException {
         // Create new arraylist of article for return
@@ -1784,39 +1820,45 @@ public class ArticlesManager extends Application {
             int maxArticle = titleAndLink.size();
 //            if (category.equals("News")) maxArticle = 9;
 
-            // Add data to vnexpressNewsList (Title + date + thumb + link)
-            for (int i = 0, k = 0; i < maxArticle; i++, k++) {
-                // Create new article object then add the object into the ArrayList
-                nhanDanWebList.add(new Article());
-                // Set source
-                nhanDanWebList.get(i).setSource("nhandan");
-                // Set category manually
-                nhanDanWebList.get(i).setCategory(category);
-                // Set title for each object
-                nhanDanWebList.get(i).setTitle(titleAndLink.get(k).text());
-                // Set date for each object
-                String dateTemp;
-                if (all.get(k).select("div.box-meta-small").hasText()) {
-                    dateTemp = all.get(k).select("div.box-meta-small").text();
-                    dateTemp = Helper.timeToUnixString5(dateTemp);
-                } else {
-                    dateTemp = thumb.get(k).select("img").attr("data-src").toLowerCase();
-                    int endLink = 0;
-                    if (dateTemp.contains(".jpg")) endLink = dateTemp.indexOf(".jpg");
-                    if (dateTemp.contains(".png")) endLink = dateTemp.indexOf(".png");
-                    if (dateTemp.contains(".jpeg")) endLink = dateTemp.indexOf(".jpeg");
-                    if (dateTemp.contains(".gif")) endLink = dateTemp.indexOf(".gif");
-                    dateTemp = dateTemp.substring(endLink - 13, endLink - 3);
+            try {
+                // Add data to vnexpressNewsList (Title + date + thumb + link)
+                for (int i = 0, k = 0; i < maxArticle; i++, k++) {
+                    // Create new article object then add the object into the ArrayList
+                    nhanDanWebList.add(new Article());
+                    // Set source
+                    nhanDanWebList.get(i).setSource("nhandan");
+                    // Set category manually
+                    nhanDanWebList.get(i).setCategory(category);
+                    // Set title for each object
+                    nhanDanWebList.get(i).setTitle(titleAndLink.get(k).text());
+                    // Set date for each object
+                    String dateTemp;
+                    if (all.get(k).select("div.box-meta-small").hasText()) {
+                        dateTemp = all.get(k).select("div.box-meta-small").text();
+                        dateTemp = Helper.timeToUnixString5(dateTemp);
+                    } else {
+                        dateTemp = thumb.get(k).select("img").attr("data-src").toLowerCase();
+                        int endLink = 0;
+                        if (dateTemp.contains(".jpg")) endLink = dateTemp.indexOf(".jpg");
+                        if (dateTemp.contains(".png")) endLink = dateTemp.indexOf(".png");
+                        if (dateTemp.contains(".jpeg")) endLink = dateTemp.indexOf(".jpeg");
+                        if (dateTemp.contains(".gif")) endLink = dateTemp.indexOf(".gif");
+                        dateTemp = dateTemp.substring(endLink - 13, endLink - 3);
+                    }
+                    nhanDanWebList.get(i).setDate(dateTemp);
+                    // Set time ago for each object
+                    nhanDanWebList.get(i).setTimeAgo(Helper.timeDiff(dateTemp));
+                    // Set thumb for each object
+                    String thumbTemp = thumb.get(k).select("img").attr("data-src");
+                    thumbTemp = thumbTemp.replaceFirst("resize/[^/]+/", "");
+                    nhanDanWebList.get(i).setThumb(thumbTemp);
+                    // Set link to full article for each object
+                    nhanDanWebList.get(i).setLinkToFullArticles(titleAndLink.get(k).select("a").attr("abs:href"));
                 }
-                nhanDanWebList.get(i).setDate(dateTemp);
-                // Set time ago for each object
-                nhanDanWebList.get(i).setTimeAgo(Helper.timeDiff(dateTemp));
-                // Set thumb for each object
-                String thumbTemp = thumb.get(k).select("img").attr("data-src");
-                thumbTemp = thumbTemp.replaceFirst("resize/[^/]+/", "");
-                nhanDanWebList.get(i).setThumb(thumbTemp);
-                // Set link to full article for each object
-                nhanDanWebList.get(i).setLinkToFullArticles(titleAndLink.get(k).select("a").attr("abs:href"));
+            } catch (Exception e) {
+                System.out.println("Index out of bounds: NHANDAN WEB LIST");
+                nhanDanWebList.remove(nhanDanWebList.size() - 1);
+                return nhanDanWebList;
             }
         }
 
@@ -1826,7 +1868,7 @@ public class ArticlesManager extends Application {
     // Nhandan seach list https://nhandan.vn/Search/%22h%E1%BB%8Dc%20vi%E1%BB%87n%22
     public static ArrayList<Article> getNhanDanSearchList(String keyword, String category) throws IOException {
         // Create new arraylist of article for return
-        ArrayList<Article> nhanDanWebList = new ArrayList<>();
+        ArrayList<Article> nhanDanSearchList = new ArrayList<>();
 
         // Bắt đầu từ đây là add dữ liệu cho sort article
         // Setup jsoup for scraping data
@@ -1852,13 +1894,13 @@ public class ArticlesManager extends Application {
                         continue;
                     }
                     // Create new article object then add the object into the ArrayList
-                    nhanDanWebList.add(new Article());
+                    nhanDanSearchList.add(new Article());
                     // Set source
-                    nhanDanWebList.get(i).setSource("nhandan");
+                    nhanDanSearchList.get(i).setSource("nhandan");
                     // Set category manually
-                    nhanDanWebList.get(i).setCategory(category);
+                    nhanDanSearchList.get(i).setCategory(category);
                     // Set title for each object
-                    nhanDanWebList.get(i).setTitle(titleAndLink.get(k).text());
+                    nhanDanSearchList.get(i).setTitle(titleAndLink.get(k).text());
                     // Set date for each object
                     String dateTemp;
                     if (all.get(i).select("div.box-meta-small").hasText()) {
@@ -1873,26 +1915,24 @@ public class ArticlesManager extends Application {
                         if (dateTemp.contains(".gif")) endLink = dateTemp.indexOf(".gif");
                         dateTemp = dateTemp.substring(endLink - 13, endLink - 3);
                     }
-                    nhanDanWebList.get(i).setDate(dateTemp);
+                    nhanDanSearchList.get(i).setDate(dateTemp);
                     // Set time ago for each object
-                    nhanDanWebList.get(i).setTimeAgo(Helper.timeDiff(dateTemp));
+                    nhanDanSearchList.get(i).setTimeAgo(Helper.timeDiff(dateTemp));
                     // Set thumb for each object
                     String thumbTemp = all.get(k).select("div.box-img img").attr("abs:data-src");
                     thumbTemp = thumbTemp.replaceFirst("resize/[^/]+/", "");
-                    nhanDanWebList.get(i).setThumb(thumbTemp);
+                    nhanDanSearchList.get(i).setThumb(thumbTemp);
                     // Set link to full article for each object
-                    nhanDanWebList.get(i).setLinkToFullArticles(all.get(k).select("div.box-title a").attr("abs:href"));
+                    nhanDanSearchList.get(i).setLinkToFullArticles(all.get(k).select("div.box-title a").attr("abs:href"));
                 }
-            } catch (IndexOutOfBoundsException e) {
-                System.out.println("Index out of bounds: NHANDAN SEARCH LIST");
-                return nhanDanWebList;
             } catch (Exception e) {
-                e.printStackTrace();
-                return nhanDanWebList;
+                System.out.println("Index out of bounds: NHANDAN SEARCH LIST");
+                nhanDanSearchList.remove(nhanDanSearchList.size() - 1);
+                return nhanDanSearchList;
             }
         }
 
-        return nhanDanWebList;
+        return nhanDanSearchList;
     }
 
     // Nhandan full article scrape and display
@@ -2148,81 +2188,8 @@ public class ArticlesManager extends Application {
         }
     }
 
-    /* FROM HERE IS SORT FUNCTION
-     */
-    // This function will sort the 5 article lists then return the sorted article (50 elements)
-    public static ArrayList<Article> sortArticle(ArrayList<Article> list1, ArrayList<Article> list2, ArrayList<Article> list3, ArrayList<Article> list4, ArrayList<Article> list5) {
-        ArrayList<Article> sortedArticles = new ArrayList<>();
-        //sort each list
-        list1.sort((o1, o2) -> o2.getDate().compareTo(o1.getDate()));
-        list2.sort((o1, o2) -> o2.getDate().compareTo(o1.getDate()));
-        list3.sort((o1, o2) -> o2.getDate().compareTo(o1.getDate()));
-        list4.sort((o1, o2) -> o2.getDate().compareTo(o1.getDate()));
-        list5.sort((o1, o2) -> o2.getDate().compareTo(o1.getDate()));
-
-        //sort 5 list
-        int a = 0;  //index của list1
-        int b = 0;  //  index của list2
-        int c = 0;  //          list3
-        int d = 0;  //          list4
-        int e = 0;  //          list5
-
-        while (sortedArticles.size() < 50) {
-            long date1 = 0;
-            long date2 = 0;
-            long date3 = 0;
-            long date4 = 0;
-            long date5 = 0;
-            if (a < list1.size()) date1 = Long.parseLong(list1.get(a).getDate());
-            if (b < list2.size()) date2 = Long.parseLong(list2.get(b).getDate());
-            if (c < list3.size()) date3 = Long.parseLong(list3.get(c).getDate());
-            if (d < list4.size()) date4 = Long.parseLong(list4.get(d).getDate());
-            if (e < list5.size()) date5 = Long.parseLong(list5.get(e).getDate());
-
-            //sort + chuyển vào arraylist theo unit time
-            long maxUnitTime = maxNum(date1, date2, date3, date4, date5);
-            if (date1 == maxUnitTime) {
-                sortedArticles.add(list1.get(a));
-                a++;
-            } else if (date2 == maxUnitTime) {
-                sortedArticles.add(list2.get(b));
-                b++;
-            } else if (date3 == maxUnitTime) {
-                sortedArticles.add(list3.get(c));
-                c++;
-            } else if (date4 == maxUnitTime) {
-                sortedArticles.add(list4.get(d));
-                d++;
-            } else if (date5 == maxUnitTime) {
-                sortedArticles.add(list5.get(e));
-                e++;
-            }
-        }
-        return sortedArticles;
-    }
-
-    // This function will help the sort function: Find max number among 5 numbers
-    public static long maxNum(long date1, long date2, long date3, long date4, long date5) {
-        return Math.max(date1, Math.max(date2, Math.max(date3, Math.max(date4, date5))));
-    }
-
-    // Sort 2
-    public static ArrayList<Article> getSortedArticlesList(ArrayList<Article> list1, ArrayList<Article> list2, ArrayList<Article> list3, ArrayList<Article> list4, ArrayList<Article> list5) {
-        ArrayList<Article> sortedArticles = new ArrayList<>();
-
-        sortedArticles.addAll(list1);
-        sortedArticles.addAll(list2);
-        sortedArticles.addAll(list3);
-        sortedArticles.addAll(list4);
-        sortedArticles.addAll(list5);
-
-        sortedArticles.sort((o1, o2) -> o2.getDate().compareTo(o1.getDate()));
-
-        return sortedArticles;
-    }
-
-    /* FROM HERE IS PRINT FUNCTION
-     */
+    /** FROM HERE IS PRINT FUNCTION
+     **/
     public static void printShortArticles(ArrayList<Article> vnexpressNewsList) {
         int k = 0;
         for (Article i : vnexpressNewsList) {
@@ -2249,19 +2216,22 @@ public class ArticlesManager extends Application {
 
     }
 
-    /* Retry connect function
-     */
+    /** Retry connect function
+     **/
     public static Document retryConnect(String url) {
         Document document = null;
         int maxRetryTimes = 5, count = 0;
         boolean isComplete = false;
 
+        resetLoadingStatus();
         while (!isComplete && count < maxRetryTimes) {
             try {
                 document = Jsoup.connect(url).timeout(3000).userAgent("Mozilla").get();
                 isComplete = true;
             } catch (IOException e) {
+                // Notify to the console
                 System.out.println("Jsoup: " + (count + 1) + "th time re-try to connect to url: " + url);
+
                 // Change the connect status text flow
                 Text text = new Text((count + 1) + "th time re-try to connect: ");
                 text.getStyleClass().add("textnormal");
@@ -2282,6 +2252,7 @@ public class ArticlesManager extends Application {
             }
         }
 
+        // If can not connect then change the status text
         if (!isComplete) {
             Text text = new Text("Failed to connect..");
             text.getStyleClass().add("textnormal");
@@ -2292,5 +2263,14 @@ public class ArticlesManager extends Application {
         }
 
         return document;
+    }
+
+    public static void resetLoadingStatus() {
+        Platform.runLater(() -> {
+            ArticlesManager.connectStatusTextFlow.getChildren().clear();
+            Text text = new Text("Loading...");
+            text.getStyleClass().add("textnormal");
+            ArticlesManager.connectStatusTextFlow.getChildren().add(text);
+        });
     }
 }

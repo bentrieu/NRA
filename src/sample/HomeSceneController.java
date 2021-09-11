@@ -37,14 +37,11 @@ public class HomeSceneController implements Initializable {
     private Button menuButton, refreshButton, nextCategoryButton, previousCategoryButton, backToHomeButton, copyArticleLinkButton, openInBrowserButton, darkModeButton;
 
     @FXML
-    private ToggleButton homeButton, videoButton, articlesListButton, settingsButton;
+    private ToggleButton homeButton, settingsButton;
 
     @FXML
     private ToggleButton newsButton, covidButton, politicsButton, businessButton, technologyButton,
             healthButton, sportsButton, entertainmentButton, worldButton, othersButton;
-
-    @FXML
-    private Button homeInMenuButton, videoInMenuButton, articlesListInMenuButton, settingsInMenuButton;
 
     @FXML
     private RadioButton darkModeRadioButton, lightModeRadioButton, normalFontSizeRadioButton, largeFontSizeRadioButton, veryLargeFontSizeRadioButton;
@@ -144,9 +141,6 @@ public class HomeSceneController implements Initializable {
         loadingVbox.setSpacing(10);
         loadingVbox.setAlignment(Pos.CENTER);
         ArticlesManager.connectStatusTextFlow.getStyleClass().add("textflowcenter");
-//        loadingVbox.setPrefWidth(Region.USE_COMPUTED_SIZE);
-//        loadingVbox.setPrefHeight(Region.USE_COMPUTED_SIZE);
-//        ArticlesManager.connectStatusTextFlow.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
         loadingVbox.getChildren().addAll(loadingImageView, ArticlesManager.connectStatusTextFlow);
         loadingStackPane.getChildren().add(loadingVbox);
         Main.stage.heightProperty().addListener((observableValue, number, t1) -> {
@@ -350,7 +344,7 @@ public class HomeSceneController implements Initializable {
         });
 
         // Setup toggle group for button 1 and 3
-        button1ToggleGroup.getToggles().addAll(homeButton, videoButton, articlesListButton, settingsButton);
+        button1ToggleGroup.getToggles().addAll(homeButton, settingsButton);
         button3ToggleGroup.getToggles().addAll(newsButton, covidButton, politicsButton, businessButton,
                 technologyButton, healthButton, sportsButton, entertainmentButton, worldButton, othersButton);
         button1ToggleGroup.selectedToggleProperty().addListener((obsVal, oldVal, newVal) -> {
@@ -411,7 +405,7 @@ public class HomeSceneController implements Initializable {
         }
     }
 
-    public void menu(ActionEvent event) {
+    public void menu() {
         if (!menuPane.isVisible()) {
             if (!animationFinish) menuPaneSetVisible(true);
         }
@@ -424,14 +418,6 @@ public class HomeSceneController implements Initializable {
         todayLabel.setText("Today");
         backToHome();
     }
-    public void video() {
-        videoButton.setSelected(true);
-        todayLabel.setText("Video Hub");
-    }
-    public void articlesList() {
-        articlesListButton.setSelected(true);
-        todayLabel.setText("Articles List");
-    }
     public void settings() {
         settingsButton.setSelected(true);
         todayLabel.setText("Settings");
@@ -443,18 +429,6 @@ public class HomeSceneController implements Initializable {
         if (animationFinish) {
             menuPaneSetVisible(false);
             home();
-        }
-    }
-    public void videoInMenu() {
-        if (animationFinish) {
-            menuPaneSetVisible(false);
-            video();
-        }
-    }
-    public void articlesListInMenu() {
-        if (animationFinish) {
-            menuPaneSetVisible(false);
-            articlesList();
         }
     }
     public void settingsInMenu() {
@@ -1372,22 +1346,6 @@ public class HomeSceneController implements Initializable {
                 }
 
             }
-
-            // Animation for each transition of pagination
-//            Timeline timeline = new Timeline();
-//            timeline.getKeyFrames().add(
-//                    new KeyFrame(Duration.ZERO,
-//                            new KeyValue(displayLayoutVbox.opacityProperty(), 0)
-//                    )
-//            );
-//            for (int i = 1; i < 10; i++) {
-//                timeline.getKeyFrames().add(
-//                        new KeyFrame(new Duration(i * 60),
-//                                new KeyValue(displayLayoutVbox.opacityProperty(), i / 10.0)
-//                        )
-//                );
-//            }
-//            timeline.play();
 
             return displayLayoutVbox;
         });

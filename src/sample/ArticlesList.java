@@ -7,7 +7,6 @@ import java.util.concurrent.Executors;
 
 import javafx.application.Platform;
 import javafx.scene.text.Text;
-import org.springframework.util.StopWatch;
 
 public class ArticlesList {
     public static ArrayList<Article> vnexpressNewsList = new ArrayList();
@@ -86,7 +85,6 @@ public class ArticlesList {
     }
 
     public static void getNewsList() throws IOException {
-        resetLoadingStatus();
         ExecutorService es = Executors.newCachedThreadPool();
         es.execute(() -> {
             vnexpressNewsList.clear();
@@ -131,22 +129,14 @@ public class ArticlesList {
 
         es.shutdown();
 
-        StopWatch stopWatch = new StopWatch("total");
-        stopWatch.start("Scrape");
         while (!es.isTerminated()) {
         }
-        stopWatch.stop();
 
-        stopWatch.start("Sort");
         newsList.clear();
-        newsList.addAll(ArticlesManager.getSortedArticlesList(vnexpressNewsList, zingNewsList, tuoiTreNewsList, thanhNienNewsList, nhanDanNewsList));
-        stopWatch.stop();
-
-        System.out.println(stopWatch.prettyPrint());
+        newsList.addAll(getSortedArticlesList(vnexpressNewsList, zingNewsList, tuoiTreNewsList, thanhNienNewsList, nhanDanNewsList));
     }
 
     public static void getCovidList() throws IOException {
-        resetLoadingStatus();
         ExecutorService es = Executors.newCachedThreadPool();
         es.execute(() -> {
             vnexpressCovidList.clear();
@@ -194,22 +184,14 @@ public class ArticlesList {
 
         es.shutdown();
 
-        StopWatch stopWatch = new StopWatch("total");
-        stopWatch.start("Scrape");
         while (!es.isTerminated()) {
         }
-        stopWatch.stop();
 
-        stopWatch.start("Sort");
         covidList.clear();
-        covidList.addAll(ArticlesManager.getSortedArticlesList(vnexpressCovidList, zingCovidList, tuoiTreCovidList, thanhNienCovidList, nhanDanCovidList));
-        stopWatch.stop();
-
-        System.out.println(stopWatch.prettyPrint());
+        covidList.addAll(getSortedArticlesList(vnexpressCovidList, zingCovidList, tuoiTreCovidList, thanhNienCovidList, nhanDanCovidList));
     }
 
     public static void getPoliticsList() throws IOException {
-        resetLoadingStatus();
         ExecutorService es = Executors.newCachedThreadPool();
         es.execute(() -> {
             vnexpressPoliticsList.clear();
@@ -260,22 +242,14 @@ public class ArticlesList {
 
         es.shutdown();
 
-        StopWatch stopWatch = new StopWatch("total");
-        stopWatch.start("Scrape");
         while (!es.isTerminated()) {
         }
-        stopWatch.stop();
 
-        stopWatch.start("Sort");
         politicsList.clear();
-        politicsList.addAll(ArticlesManager.getSortedArticlesList(vnexpressPoliticsList, zingPoliticsList, tuoiTrePoliticsList, thanhNienPoliticsList, nhanDanPoliticsList));
-        stopWatch.stop();
-
-        System.out.println(stopWatch.prettyPrint());
+        politicsList.addAll(getSortedArticlesList(vnexpressPoliticsList, zingPoliticsList, tuoiTrePoliticsList, thanhNienPoliticsList, nhanDanPoliticsList));
     }
 
     public static void getBusinessList() throws IOException {
-        resetLoadingStatus();
         ExecutorService es = Executors.newCachedThreadPool();
         es.execute(() -> {
             vnexpressBusinessList.clear();
@@ -328,22 +302,14 @@ public class ArticlesList {
 
         es.shutdown();
 
-        StopWatch stopWatch = new StopWatch("total");
-        stopWatch.start("Scrape");
         while (!es.isTerminated()) {
         }
-        stopWatch.stop();
 
-        stopWatch.start("Sort");
         businessList.clear();
-        businessList.addAll(ArticlesManager.getSortedArticlesList(vnexpressBusinessList, zingBusinessList, tuoiTreBusinessList, thanhNienBusinessList, nhanDanBusinessList));
-        stopWatch.stop();
-
-        System.out.println(stopWatch.prettyPrint());
+        businessList.addAll(getSortedArticlesList(vnexpressBusinessList, zingBusinessList, tuoiTreBusinessList, thanhNienBusinessList, nhanDanBusinessList));
     }
 
     public static void getTechnologyList() throws IOException {
-        resetLoadingStatus();
         ExecutorService es = Executors.newCachedThreadPool();
         es.execute(() -> {
             vnexpressTechnologyList.clear();
@@ -398,22 +364,14 @@ public class ArticlesList {
 
         es.shutdown();
 
-        StopWatch stopWatch = new StopWatch("total");
-        stopWatch.start("Scrape");
         while (!es.isTerminated()) {
         }
-        stopWatch.stop();
 
-        stopWatch.start("Sort");
         technologyList.clear();
-        technologyList.addAll(ArticlesManager.getSortedArticlesList(vnexpressTechnologyList, zingTechnologyList, tuoiTreTechnologyList, thanhNienTechnologyList, nhanDanTechnologyList));
-        stopWatch.stop();
-
-        System.out.println(stopWatch.prettyPrint());
+        technologyList.addAll(getSortedArticlesList(vnexpressTechnologyList, zingTechnologyList, tuoiTreTechnologyList, thanhNienTechnologyList, nhanDanTechnologyList));
     }
 
     public static void getHealthList() throws IOException {
-        resetLoadingStatus();
         ExecutorService es = Executors.newCachedThreadPool();
         es.execute(() -> {
             vnexpressHealthList.clear();
@@ -465,22 +423,14 @@ public class ArticlesList {
 
         es.shutdown();
 
-        StopWatch stopWatch = new StopWatch("total");
-        stopWatch.start("Scrape");
         while (!es.isTerminated()) {
         }
-        stopWatch.stop();
 
-        stopWatch.start("Sort");
         healthList.clear();
-        healthList.addAll(ArticlesManager.getSortedArticlesList(vnexpressHealthList, zingHealthList, tuoiTreHealthList, thanhNienHealthList, nhanDanHealthList));
-        stopWatch.stop();
-
-        System.out.println(stopWatch.prettyPrint());
+        healthList.addAll(getSortedArticlesList(vnexpressHealthList, zingHealthList, tuoiTreHealthList, thanhNienHealthList, nhanDanHealthList));
     }
 
     public static void getSportsList() throws IOException {
-        resetLoadingStatus();
         ExecutorService es = Executors.newCachedThreadPool();
         es.execute(() -> {
             vnexpressSportsList.clear();
@@ -530,22 +480,14 @@ public class ArticlesList {
 
         es.shutdown();
 
-        StopWatch stopWatch = new StopWatch("total");
-        stopWatch.start("Scrape");
         while (!es.isTerminated()) {
         }
-        stopWatch.stop();
 
-        stopWatch.start("Sort");
         sportsList.clear();
-        sportsList.addAll(ArticlesManager.getSortedArticlesList(vnexpressSportsList, zingSportsList, tuoiTreSportsList, thanhNienSportsList, nhanDanSportsList));
-        stopWatch.stop();
-
-        System.out.println(stopWatch.prettyPrint());
+        sportsList.addAll(getSortedArticlesList(vnexpressSportsList, zingSportsList, tuoiTreSportsList, thanhNienSportsList, nhanDanSportsList));
     }
 
     public static void getEntertainmentList() throws IOException {
-        resetLoadingStatus();
         ExecutorService es = Executors.newCachedThreadPool();
         es.execute(() -> {
             vnexpressEntertainmentList.clear();
@@ -597,22 +539,14 @@ public class ArticlesList {
 
         es.shutdown();
 
-        StopWatch stopWatch = new StopWatch("total");
-        stopWatch.start("Scrape");
         while (!es.isTerminated()) {
         }
-        stopWatch.stop();
 
-        stopWatch.start("Sort");
         entertainmentList.clear();
-        entertainmentList.addAll(ArticlesManager.getSortedArticlesList(vnexpressEntertainmentList, zingEntertainmentList, tuoiTreEntertainmentList, thanhNienEntertainmentList, nhanDanEntertainmentList));
-        stopWatch.stop();
-
-        System.out.println(stopWatch.prettyPrint());
+        entertainmentList.addAll(getSortedArticlesList(vnexpressEntertainmentList, zingEntertainmentList, tuoiTreEntertainmentList, thanhNienEntertainmentList, nhanDanEntertainmentList));
     }
 
     public static void getWorldList() throws IOException {
-        resetLoadingStatus();
         ExecutorService es = Executors.newCachedThreadPool();
         es.execute(() -> {
             vnexpressWorldList.clear();
@@ -662,22 +596,14 @@ public class ArticlesList {
 
         es.shutdown();
 
-        StopWatch stopWatch = new StopWatch("total");
-        stopWatch.start("Scrape");
         while (!es.isTerminated()) {
         }
-        stopWatch.stop();
 
-        stopWatch.start("Sort");
         worldList.clear();
-        worldList.addAll(ArticlesManager.getSortedArticlesList(vnexpressWorldList, zingWorldList, tuoiTreWorldList, thanhNienWorldList, nhanDanWorldList));
-        stopWatch.stop();
-
-        System.out.println(stopWatch.prettyPrint());
+        worldList.addAll(getSortedArticlesList(vnexpressWorldList, zingWorldList, tuoiTreWorldList, thanhNienWorldList, nhanDanWorldList));
     }
 
     public static void getOthersList() throws IOException {
-        resetLoadingStatus();
         ExecutorService es = Executors.newCachedThreadPool();
         es.execute(() -> {
             vnexpressOthersList.clear();
@@ -735,22 +661,14 @@ public class ArticlesList {
 
         es.shutdown();
 
-        StopWatch stopWatch = new StopWatch("total");
-        stopWatch.start("Scrape");
         while (!es.isTerminated()) {
         }
-        stopWatch.stop();
 
-        stopWatch.start("Sort");
         othersList.clear();
-        othersList.addAll(ArticlesManager.getSortedArticlesList(vnexpressOthersList, zingOthersList, tuoiTreOthersList, thanhNienOthersList, nhanDanOthersList));
-        stopWatch.stop();
-
-        System.out.println(stopWatch.prettyPrint());
+        othersList.addAll(getSortedArticlesList(vnexpressOthersList, zingOthersList, tuoiTreOthersList, thanhNienOthersList, nhanDanOthersList));
     }
 
     public static void getSearchList(String keyword) throws IOException {
-        resetLoadingStatus();
         ExecutorService es = Executors.newCachedThreadPool();
         es.execute(() -> {
             vnexpressSearchList.clear();
@@ -787,31 +705,28 @@ public class ArticlesList {
 
         es.shutdown();
 
-        StopWatch stopWatch = new StopWatch("total");
-        stopWatch.start("Scrape");
         while (!es.isTerminated()) {
         }
-        stopWatch.stop();
 
-        stopWatch.start("Sort");
         try {
             searchList.clear();
-            searchList.addAll(ArticlesManager.getSortedArticlesList(vnexpressSearchList, zingSearchList, tuoiTreSearchList, thanhNienSearchList, nhanDanSearchList));
+            searchList.addAll(getSortedArticlesList(vnexpressSearchList, zingSearchList, tuoiTreSearchList, thanhNienSearchList, nhanDanSearchList));
         } catch (Exception e) {
             System.out.println("There is nothing to show try-catch (search list: zero element)");
         }
-
-        stopWatch.stop();
-
-        System.out.println(stopWatch.prettyPrint());
     }
 
-    public static void resetLoadingStatus() {
-        Platform.runLater(() -> {
-            ArticlesManager.connectStatusTextFlow.getChildren().clear();
-            Text text = new Text("Loading...");
-            text.getStyleClass().add("textnormal");
-            ArticlesManager.connectStatusTextFlow.getChildren().add(text);
-        });
+    public static ArrayList<Article> getSortedArticlesList(ArrayList<Article> list1, ArrayList<Article> list2, ArrayList<Article> list3, ArrayList<Article> list4, ArrayList<Article> list5) {
+        ArrayList<Article> sortedArticles = new ArrayList<>();
+
+        sortedArticles.addAll(list1);
+        sortedArticles.addAll(list2);
+        sortedArticles.addAll(list3);
+        sortedArticles.addAll(list4);
+        sortedArticles.addAll(list5);
+
+        sortedArticles.sort((o1, o2) -> o2.getDate().compareTo(o1.getDate()));
+
+        return sortedArticles;
     }
 }
