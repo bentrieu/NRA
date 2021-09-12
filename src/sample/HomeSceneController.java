@@ -1105,4 +1105,210 @@ public class HomeSceneController implements Initializable {
             isDarkMode = true;
         }
     }
+    public Pagination setPaginationList(ArrayList<Article> articlesList, Pagination newPagination) throws IOException {
+        newPagination.setMaxHeight(983);
+        newPagination.setMinHeight(983);
+        newPagination.setPageCount(5);
+
+        currentPagination = newPagination;
+
+        AnchorPane[] anchorPaneList = {layoutController.anchorPane1, layoutController.anchorPane2, layoutController.anchorPane3, layoutController.anchorPane4, layoutController.anchorPane5, layoutController.anchorPane6, layoutController.anchorPane7, layoutController.anchorPane8, layoutController.anchorPane9, layoutController.anchorPane10};
+        ImageView[] imageSourceList = {layoutController.imageSource1, layoutController.imageSource2, layoutController.imageSource3, layoutController.imageSource4, layoutController.imageSource5, layoutController.imageSource6, layoutController.imageSource7, layoutController.imageSource8, layoutController.imageSource9, layoutController.imageSource10};
+        Text[] textSourceList = {layoutController.textSource1, layoutController.textSource2, layoutController.textSource3, layoutController.textSource4, layoutController.textSource5, layoutController.textSource6, layoutController.textSource7, layoutController.textSource8, layoutController.textSource9, layoutController.textSource10};
+        Text[] textTitleList = {layoutController.textTitle1, layoutController.textTitle2, layoutController.textTitle3, layoutController.textTitle4, layoutController.textTitle5, layoutController.textTitle6, layoutController.textTitle7, layoutController.textTitle8, layoutController.textTitle9, layoutController.textTitle10};
+        Button[] buttonList = {layoutController.button1, layoutController.button2, layoutController.button3, layoutController.button4, layoutController.button5, layoutController.button6, layoutController.button7, layoutController.button8, layoutController.button9, layoutController.button10};
+
+        currentCategoryList = articlesList;
+
+        newPagination.setPageFactory(pageindex -> {
+            for (int i = 10 * pageindex, k = 0; i < 10 + 10 * pageindex; i++, k++) {
+                int finalI = i;
+                // Set title text for each article
+                textTitleList[k].setText(articlesList.get(i).getTitle());
+                // Set source text + time ago + source image + action event for each button for each article
+                switch (articlesList.get(i).getSource()) {
+                    case "vnexpress":
+                        textSourceList[k].setText("VnExpress - " + articlesList.get(i).getTimeAgo());
+                        imageSourceList[k].setImage(new Image("resource/vnexpress_small.png"));
+                        buttonList[k].setOnAction(e -> {
+                            displayFullArticleVbox.getChildren().clear();
+                            borderPaneUnderScrollPane.setCenter(null);
+                            borderPaneUnderScrollPane.setCenter(loadingStackPane);
+                            Thread t1 = new Thread(() -> {
+                                try {
+                                    ArticlesManager.displayVnexpressFullArticle(articlesList.get(finalI), displayFullArticleVbox);
+                                } catch (IOException e1) {
+                                    e1.printStackTrace();
+                                }
+                                Platform.runLater(() -> {
+                                    borderPaneUnderScrollPane.setCenter(null);
+                                    borderPaneUnderScrollPane.setCenter(stackPane1);
+                                    stackPane1.setVisible(true);
+                                    System.gc();
+                                    Runtime.getRuntime().gc();
+                                });
+                            });
+                            t1.start();
+                            currentArticleIndex = finalI;
+                        });
+                        break;
+                    case "zingnews":
+                        textSourceList[k].setText("ZingNews - " + articlesList.get(i).getTimeAgo());
+                        imageSourceList[k].setImage(new Image("resource/zingnews_small.png"));
+                        buttonList[k].setOnAction(e -> {
+                            displayFullArticleVbox.getChildren().clear();
+                            borderPaneUnderScrollPane.setCenter(null);
+                            borderPaneUnderScrollPane.setCenter(loadingStackPane);
+                            Thread t1 = new Thread(() -> {
+                                try {
+                                    ArticlesManager.displayZingFullArticle(articlesList.get(finalI), displayFullArticleVbox);
+                                } catch (IOException e1) {
+                                    e1.printStackTrace();
+                                }
+                                Platform.runLater(() -> {
+                                    borderPaneUnderScrollPane.setCenter(null);
+                                    borderPaneUnderScrollPane.setCenter(stackPane1);
+                                    stackPane1.setVisible(true);
+                                    System.gc();
+                                    Runtime.getRuntime().gc();
+                                });
+                            });
+                            t1.start();
+                            currentArticleIndex = finalI;
+                        });
+                        break;
+                    case "tuoitre":
+                        textSourceList[k].setText("Tuổi trẻ - " + articlesList.get(i).getTimeAgo());
+                        imageSourceList[k].setImage(new Image("resource/tuoitre_small.png"));
+                        buttonList[k].setOnAction(e -> {
+                            displayFullArticleVbox.getChildren().clear();
+                            borderPaneUnderScrollPane.setCenter(null);
+                            borderPaneUnderScrollPane.setCenter(loadingStackPane);
+                            Thread t1 = new Thread(() -> {
+                                try {
+                                    ArticlesManager.displayTuoiTreFullArticle(articlesList.get(finalI), displayFullArticleVbox);
+                                } catch (IOException e1) {
+                                    e1.printStackTrace();
+                                }
+                                Platform.runLater(() -> {
+                                    borderPaneUnderScrollPane.setCenter(null);
+                                    borderPaneUnderScrollPane.setCenter(stackPane1);
+                                    stackPane1.setVisible(true);
+                                    System.gc();
+                                    Runtime.getRuntime().gc();
+                                });
+                            });
+                            t1.start();
+                            currentArticleIndex = finalI;
+                        });
+                        break;
+                    case "nhandan":
+                        textSourceList[k].setText("Nhân dân - " + articlesList.get(i).getTimeAgo());
+                        imageSourceList[k].setImage(new Image("resource/nhandan_small.png"));
+                        buttonList[k].setOnAction(e -> {
+                            displayFullArticleVbox.getChildren().clear();
+                            borderPaneUnderScrollPane.setCenter(null);
+                            borderPaneUnderScrollPane.setCenter(loadingStackPane);
+                            Thread t1 = new Thread(() -> {
+                                try {
+                                    ArticlesManager.displayNhanDanFullArticle(articlesList.get(finalI), displayFullArticleVbox);
+                                } catch (IOException e1) {
+                                    e1.printStackTrace();
+                                }
+                                Platform.runLater(() -> {
+                                    borderPaneUnderScrollPane.setCenter(null);
+                                    borderPaneUnderScrollPane.setCenter(stackPane1);
+                                    stackPane1.setVisible(true);
+                                    System.gc();
+                                    Runtime.getRuntime().gc();
+                                });
+                            });
+                            t1.start();
+                            currentArticleIndex = finalI;
+                        });
+                        break;
+                    case "thanhnien":
+                        textSourceList[k].setText("Thanh niên - " + articlesList.get(i).getTimeAgo());
+                        imageSourceList[k].setImage(new Image("resource/thanhnien_small.png"));
+                        buttonList[k].setOnAction(e -> {
+                            displayFullArticleVbox.getChildren().clear();
+                            borderPaneUnderScrollPane.setCenter(null);
+                            borderPaneUnderScrollPane.setCenter(loadingStackPane);
+                            Thread t1 = new Thread(() -> {
+                                try {
+                                    ArticlesManager.displayThanhNienFullArticle(articlesList.get(finalI), displayFullArticleVbox);
+                                } catch (IOException e1) {
+                                    e1.printStackTrace();
+                                }
+                                Platform.runLater(() -> {
+                                    borderPaneUnderScrollPane.setCenter(null);
+                                    borderPaneUnderScrollPane.setCenter(stackPane1);
+                                    stackPane1.setVisible(true);
+                                    System.gc();
+                                    Runtime.getRuntime().gc();
+                                });
+                            });
+                            t1.start();
+                            currentArticleIndex = finalI;
+                        });
+                        break;
+                }
+
+                // Set thumb image for each object
+                if (k != 3 && k != 7) {
+                    Image image = new Image(articlesList.get(i).getThumb(), 600, 600, true, false, true);
+                    BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1.0, 1.0, true, true, false, true));
+                    Background background = new Background(backgroundImage);
+                    anchorPaneList[k].setCache(true);
+                    anchorPaneList[k].setCacheHint(CacheHint.SPEED);
+                    anchorPaneList[k].setBackground(background);
+                } else {
+                    Image image2 = new Image(articlesList.get(i).getThumb(), 600, 600, true, false, true);
+                    BackgroundImage backgroundImage2 = new BackgroundImage(image2, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1.0, 1.0, true, true, false, true));
+                    Background background2 = new Background(backgroundImage2);
+                    layoutController.anchorPaneImage1.setCache(true);
+                    layoutController.anchorPaneImage1.setCacheHint(CacheHint.SPEED);
+                    layoutController.anchorPaneImage2.setCache(true);
+                    layoutController.anchorPaneImage2.setCacheHint(CacheHint.SPEED);
+                    if (k == 3) layoutController.anchorPaneImage1.setBackground(background2);
+                    else layoutController.anchorPaneImage2.setBackground(background2);
+                }
+
+            }
+
+            // Animation for each transition of pagination
+//            Timeline timeline = new Timeline();
+//            timeline.getKeyFrames().add(
+//                    new KeyFrame(Duration.ZERO,
+//                            new KeyValue(displayLayoutVbox.opacityProperty(), 0)
+//                    )
+//            );
+//            for (int i = 1; i < 10; i++) {
+//                timeline.getKeyFrames().add(
+//                        new KeyFrame(new Duration(i * 60),
+//                                new KeyValue(displayLayoutVbox.opacityProperty(), i / 10.0)
+//                        )
+//                );
+//            }
+//            timeline.play();
+
+            return displayLayoutVbox;
+        });
+
+        System.gc();
+        Runtime.getRuntime().gc();
+        return newPagination;
+    }
+
+    // This function will help to move the position of user's selection category node to the first node
+    public void movePosHbox(HBox categoryHbox, int currentPosition) {
+        int initialSize = categoryHbox.getChildren().size();
+        if (currentPosition != 0) {
+            for (int i = 0; i < initialSize - currentPosition; i++) {
+                ToggleButton b = (ToggleButton) categoryHbox.getChildren().get(categoryHbox.getChildren().size() - 1);
+                categoryHbox.getChildren().remove(categoryHbox.getChildren().size() - 1);
+                categoryHbox.getChildren().add(0, b);
+            }
+        }
+    }
 }
