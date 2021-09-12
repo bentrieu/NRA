@@ -26,7 +26,7 @@ public class Main extends Application {
         Main.stage = new Stage();
 
         // Load the first news category
-        es = Executors.newCachedThreadPool();
+        es = Executors.newFixedThreadPool(1);
         es.execute(() -> {
             try {
                 ArticlesList.getNewsList();
