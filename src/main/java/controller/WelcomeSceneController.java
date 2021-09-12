@@ -12,6 +12,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import main.Main;
@@ -73,13 +75,22 @@ public class WelcomeSceneController implements Initializable {
                     Main.stage.setHeight(height - 100);
                 }
 
+                // Wait for scraping news list
                 while (!Main.es.isTerminated()) {
                 }
 
+                // Change the stage
                 nextRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("layouts/HomeScene.fxml")));
                 Main.stage.setScene(new Scene(nextRoot));
                 ((Stage) ((Node)event.getSource()).getScene().getWindow()).close();
                 Main.stage.show();
+
+                // Set full screen using F11
+                Main.stage.addEventHandler(KeyEvent.KEY_PRESSED, e1 -> {
+                    if (KeyCode.F11.equals(e1.getCode())) {
+                        Main.stage.setFullScreen(!Main.stage.isFullScreen());
+                    }
+                });
                 System.gc();
                 Runtime.getRuntime().gc();
             } catch (IOException ioException) {

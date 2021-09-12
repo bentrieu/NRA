@@ -3,9 +3,10 @@ package main;
 import article.ArticlesList;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
+import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -16,6 +17,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Main extends Application {
+    private static double initialX, initialY;
     public static Stage stage;
     public static ExecutorService es;
 
@@ -38,7 +40,7 @@ public class Main extends Application {
         Scene scene = new Scene(root);
         primaryStage.setTitle("Hello World");
         primaryStage.initStyle(StageStyle.TRANSPARENT);
-        DraggableHelper.addDraggableNode(root);
+        addDraggableNode(root);
         scene.setFill(Color.TRANSPARENT);
 
         primaryStage.setScene(scene);
@@ -47,5 +49,24 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    static void addDraggableNode(final Node node) {
+        node.setOnMousePressed(me -> {
+            if (me.getButton() != MouseButton.MIDDLE) {
+                ((Node)me.getSource()).getScene().getWindow().setOpacity(0.5);
+                initialX = me.getSceneX();
+                initialY = me.getSceneY();
+            }
+        });
+
+        node.setOnMouseDragged(me -> {
+            if (me.getButton() != MouseButton.MIDDLE) {
+                node.getScene().getWindow().setX(me.getScreenX() - initialX);
+                node.getScene().getWindow().setY(me.getScreenY() - initialY);
+            }
+        });
+
+        node.setOnMouseReleased(me -> ((Node)me.getSource()).getScene().getWindow().setOpacity(1));
     }
 }
