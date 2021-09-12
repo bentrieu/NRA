@@ -73,6 +73,9 @@ public class WelcomeSceneController implements Initializable {
                     Main.stage.setHeight(height - 100);
                 }
 
+                while (!Main.es.isTerminated()) {
+                }
+
                 nextRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("layouts/HomeScene.fxml")));
                 Main.stage.setScene(new Scene(nextRoot));
                 ((Stage) ((Node)event.getSource()).getScene().getWindow()).close();
