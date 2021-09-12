@@ -1,7 +1,5 @@
 package article;
 
-
-
 import javafx.application.Application;
 import javafx.application.HostServices;
 import javafx.scene.control.Hyperlink;
@@ -17,6 +15,8 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+
+/** This class will have some static functions that do some subtasks of ArticlesManager's functions **/
 
 public class Helper extends Application {
 

@@ -2,8 +2,11 @@ package article;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+/** This class will have some static functions that combine all the lists get from ArticlesManager **/
 
 public class ArticlesList {
     public static ArrayList<Article> vnexpressNewsList = new ArrayList();
@@ -87,6 +90,7 @@ public class ArticlesList {
             vnexpressNewsList.clear();
             try {
                 vnexpressNewsList = ArticlesManager.getVnexpressList("https://vnexpress.net/rss/tin-moi-nhat.rss", "News");
+                getCovidList(); getPoliticsList();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -95,6 +99,7 @@ public class ArticlesList {
             zingNewsList.clear();
             try {
                 zingNewsList = ArticlesManager.getZingWebList("https://zingnews.vn/", "News");
+                getBusinessList(); getTechnologyList();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -103,6 +108,7 @@ public class ArticlesList {
             tuoiTreNewsList.clear();
             try {
                 tuoiTreNewsList = ArticlesManager.getTuoiTreList("https://tuoitre.vn/rss/tin-moi-nhat.rss", "News");
+                getHealthList(); getSportsList();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -111,6 +117,7 @@ public class ArticlesList {
             thanhNienNewsList.clear();
             try {
                 thanhNienNewsList = ArticlesManager.getThanhNienList("https://thanhnien.vn/rss/home.rss", "News");
+                getEntertainmentList(); getWorldList();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -119,6 +126,7 @@ public class ArticlesList {
             nhanDanNewsList.clear();
             try {
                 nhanDanNewsList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/", "News");
+                getOthersList();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -130,7 +138,23 @@ public class ArticlesList {
         }
 
         newsList.clear();
-        newsList.addAll(getSortedArticlesList(vnexpressNewsList, zingNewsList, tuoiTreNewsList, thanhNienNewsList, nhanDanNewsList));
+//        newsList.addAll(getSortedArticlesList(vnexpressNewsList, zingNewsList, tuoiTreNewsList, thanhNienNewsList, nhanDanNewsList));
+        newsList.addAll(vnexpressNewsList);
+        newsList.addAll(zingNewsList);
+        newsList.addAll(tuoiTreNewsList);
+        newsList.addAll(thanhNienNewsList);
+        newsList.addAll(nhanDanNewsList);
+        newsList.addAll(covidList);
+        newsList.addAll(politicsList);
+        newsList.addAll(businessList);
+        newsList.addAll(technologyList);
+        newsList.addAll(healthList);
+        newsList.addAll(sportsList);
+        newsList.addAll(worldList);
+        newsList.addAll(entertainmentList);
+        newsList.addAll(othersList);
+        sortList(newsList);
+        removeDuplicateArticle(newsList);
     }
 
     public static void getCovidList() throws IOException {
@@ -711,6 +735,23 @@ public class ArticlesList {
         } catch (Exception e) {
             System.out.println("There is nothing to show try-catch (search list: zero element)");
         }
+    }
+
+    public static void sortList(ArrayList<Article> list) {
+        list.sort((o1, o2) -> o2.getDate().compareTo(o1.getDate()));
+    }
+
+    public static void removeDuplicateArticle(ArrayList<Article> list) {
+        HashSet<String> hashSet = new HashSet<>();
+        ArrayList<Article> toRemove = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            if (hashSet.contains(list.get(i).getLinkToFullArticles())) {
+                toRemove.add(list.get(i));
+            } else {
+                hashSet.add(list.get(i).getLinkToFullArticles());
+            }
+        }
+        list.removeAll(toRemove);
     }
 
     public static ArrayList<Article> getSortedArticlesList(ArrayList<Article> list1, ArrayList<Article> list2, ArrayList<Article> list3, ArrayList<Article> list4, ArrayList<Article> list5) {

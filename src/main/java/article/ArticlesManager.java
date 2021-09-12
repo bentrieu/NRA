@@ -24,7 +24,7 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/** This class will have static functions that manipulate articles **/
+/** This class will have some static functions that get article lists from different sources **/
 
 public class ArticlesManager extends Application {
     public static TextFlow connectStatusTextFlow = new TextFlow();
