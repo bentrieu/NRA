@@ -26,8 +26,6 @@ import java.util.ResourceBundle;
 
 public class WelcomeSceneController implements Initializable {
     @FXML
-    private Button closeButton;
-    @FXML
     private Button gettingStartedButton;
     @FXML
     private Label loadingLabel;
