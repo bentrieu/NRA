@@ -38,7 +38,7 @@ public class Helper extends Application {
         string = string.replaceAll("[\\(\\)\\*\\~\\+\\^\\.\\$]+", "");
         // Add <hyper> before any text with a hyperlink (type: <Hyper>link<Text>)
         for (int i = 0; i < index.select("a[href]").size(); i++) {
-            string = replacFirstFromIndex(index.select("a[href]").get(i).text(), "<Hyper>" + index.select("a[href]").get(i).attr("href") + "</" + index.select("a[href]").get(i).text() + "+>", string, i <= 0 ? 0 : string.indexOf("+>") + 2);
+            string = replaceFirstFromIndex(index.select("a[href]").get(i).text(), "<Hyper>" + index.select("a[href]").get(i).attr("href") + "</" + index.select("a[href]").get(i).text() + "+>", string, i <= 0 ? 0 : string.indexOf("+>") + 2);
         }
         // Split string into sub string, delimiter <Hyper>
         String[] stringSplit = string.split("<Hyper>");
@@ -70,7 +70,7 @@ public class Helper extends Application {
     }
 
     // This function help to get hyperlink + bold text
-    public static String replacFirstFromIndex(String regex, String replacement, String currentString, int fromIndex) {
+    public static String replaceFirstFromIndex(String regex, String replacement, String currentString, int fromIndex) {
         String temp = currentString.substring(fromIndex);
         temp = temp.replaceFirst(regex, replacement);
         String temp2 = currentString.substring(0, fromIndex);
@@ -135,77 +135,6 @@ public class Helper extends Application {
             e.printStackTrace();
         }
         return res.toString();
-    }
-    public static String timeDiffThanhNien(String date)  {
-        StringBuilder res = new StringBuilder();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        try {
-            Date startDate = sdf.parse(unixToTime(date));
-            Date endDate = new Date();
-            long difference_In_Time = endDate.getTime() - (startDate.getTime() - 25200000);
-
-            long difference_In_Seconds = (difference_In_Time / 1000) % 60;
-            long difference_In_Minutes = (difference_In_Time / (1000 * 60)) % 60;
-            long difference_In_Hours = (difference_In_Time / (1000 * 60 * 60)) % 24;
-            long difference_In_Years = (difference_In_Time / (1000l * 60 * 60 * 24 * 365));
-            long difference_In_Days = (difference_In_Time / (1000 * 60 * 60 * 24)) % 365;
-            long difference_In_Months = (difference_In_Time / (1000L * 60 * 60 * 24 * 30));
-
-            if(difference_In_Years != 0){
-                if(difference_In_Years != 1){
-                    res.append(difference_In_Years + " years ago");
-                } else {
-                    res.append(difference_In_Years + " year ago");
-                }
-            } else if(difference_In_Months != 0) {
-                if(difference_In_Months != 1){
-                    res.append(difference_In_Months + " months ago");
-                } else {
-                    res.append(difference_In_Months + " month ago");
-                }
-            } else if(difference_In_Days != 0){
-                if(difference_In_Days != 1){
-                    res.append(difference_In_Days + " days ago");
-                } else {
-                    res.append(difference_In_Days + " day ago");
-                }
-            } else if(difference_In_Hours != 0){
-                if(difference_In_Hours != 1){
-                    res.append(difference_In_Hours + " hours ago");
-                } else {
-                    res.append(difference_In_Hours + " hour ago");
-                }
-            } else if(difference_In_Minutes != 0){
-                if(difference_In_Minutes != 1){
-                    res.append(difference_In_Minutes + " minutes ago");
-                } else {
-                    res.append(difference_In_Minutes + " minute ago");
-                }
-            } else if(difference_In_Seconds != 0){
-                if(difference_In_Seconds != 1){
-                    res.append(difference_In_Seconds + " seconds ago");
-                } else {
-                    res.append(difference_In_Seconds + " second ago");
-                }
-            }
-        } catch (ParseException e){
-            e.printStackTrace();
-        }
-        return res.toString();
-    }
-
-    // This function will convert from readable date (dd/mm/yyyy hh:mm:ss) to unix time long integer
-    public static long timeToUnixLong(String time){
-        long unixTime = 0;
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-            Date date = sdf.parse(time);
-            unixTime = date.getTime() / 1000;
-
-        } catch (ParseException e){
-            e.printStackTrace();
-        }
-        return unixTime;
     }
 
     // This function will convert unix time to readable date (dd/mm/yyyy hh:mm:ss)
