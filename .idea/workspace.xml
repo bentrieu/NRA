@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="newsaggregator:jar" />
+    </artifacts-to-build>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="1fc20fdf-c41c-4917-b80a-51ee7ac5045b" name="Default Changelist" comment="restructure all the project">
+      <change beforePath="$PROJECT_DIR$/target/classes/article/Article.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/article/ArticlesList.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/article/ArticlesManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/article/Helper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/HomeSceneController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/LayoutController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/WelcomeSceneController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/css/css.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/css/cssdarkmode.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/css/largefont.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/css/loadingscreen.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/css/verylargefont.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/images/book_loadinganimation_dark.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/images/book_loadinganimation_white.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/images/loadinggif.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/images/newsicon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/images/nhandan_big.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/images/nhandan_small.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/images/rightarrow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/images/shutdownicon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/images/thanhnien_big.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/images/thanhnien_small.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/images/tuoitre_big.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/images/tuoitre_small.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/images/vnexpress_big.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/images/vnexpress_small.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/images/zingnews_big.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/images/zingnews_small.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/layouts/HomeScene.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/layouts/Layout.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/layouts/WelcomeScene.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/Main.class" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="thinh" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="ProjectId" id="1y01Yut222qlJKzFLQeNIfuqPqm" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.19409762" />
+    <property name="project.structure.side.proportion" value="0.331384" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Administrator\Documents\NRA\src\main\resources\layouts" />
+      <recent name="C:\Users\Administrator\Documents\NRA\src\main\resources" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="liberica-16" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="main.Main" />
+      <module name="newsaggregator" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task id="LOCAL-00001" summary="finalize 1&#10;adding Jsoup: Fail to connect to url message">
+      <created>1631372293025</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1631372293025</updated>
+    </task>
+    <task id="LOCAL-00002" summary="adding maven to project&#10;re-structure all project">
+      <created>1631372937229</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1631372937229</updated>
+    </task>
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1fc20fdf-c41c-4917-b80a-51ee7ac5045b" name="Default Changelist" comment="adding maven to project&#10;re-structure all project" />
+      <created>1631373745315</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1631373745315</updated>
+    </task>
+    <task id="LOCAL-00003" summary="all of list to news list">
+      <created>1631423493871</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1631423493871</updated>
+    </task>
+    <task id="LOCAL-00004" summary="adding scraping in background of home scene">
+      <created>1631425912760</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1631425912760</updated>
+    </task>
+    <task id="LOCAL-00005" summary="adding F11 key listener&#10;re-structure the draggable helper">
+      <created>1631449496659</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1631449496659</updated>
+    </task>
+    <task id="LOCAL-00006" summary="delete close button welcome scene">
+      <created>1631449860196</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1631449860196</updated>
+    </task>
+    <task id="LOCAL-00007" summary="delete close button welcome scene">
+      <created>1631461419681</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1631461419681</updated>
+    </task>
+    <task id="LOCAL-00008" summary="delete thanhniendiff and timetounixlong function">
+      <created>1631561011818</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1631561011818</updated>
+    </task>
+    <task id="LOCAL-00009" summary="restructure all the project">
+      <created>1631588998631</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1631588998631</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+        <entry key="c0993856-4e35-4ad7-b903-90bffed26fe0">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="finalize 1&#10;adding Jsoup: Fail to connect to url message" />
+    <MESSAGE value="adding maven to project&#10;re-structure all project" />
+    <MESSAGE value="all of list to news list" />
+    <MESSAGE value="adding scraping in background of home scene" />
+    <MESSAGE value="adding F11 key listener&#10;re-structure the draggable helper" />
+    <MESSAGE value="delete close button welcome scene" />
+    <MESSAGE value="delete thanhniendiff and timetounixlong function" />
+    <MESSAGE value="restructure all the project" />
+    <option name="LAST_COMMIT_MESSAGE" value="restructure all the project" />
+  </component>
+</project>
