@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="rootAnchorPane" prefHeight="900.0" prefWidth="1200.0" styleClass="root" stylesheets="@../css/css.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.HomeSceneController">
+   <children>
+      <AnchorPane layoutY="32.0" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="48.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Button fx:id="menuButton" accessibleRole="BUTTON" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="2.0" layoutY="62.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#menu" prefHeight="50.0" styleClass="button2" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <graphic>
+                  <SVGPath content="M0 1.5A1.5 1.5 0 0 1 1.5 0h2A1.5 1.5 0 0 1 5 1.5v2A1.5 1.5 0 0 1 3.5 5h-2A1.5 1.5 0 0 1 0 3.5v-2zM1.5 1a.5.5 0 0 0-.5.5v2a.5.5 0 0 0 .5.5h2a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 0-.5-.5h-2zM0 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V8zm1 3v2a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2H1zm14-1V8a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v2h14zM2 8.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0 4a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z" styleClass="iconsvg" />
+               </graphic>
+            </Button>
+            <ToggleButton fx:id="homeButton" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="11.0" layoutY="73.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#home" prefHeight="45.0" prefWidth="48.0" styleClass="button1" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+               <graphic>
+                  <SVGPath content="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5z" styleClass="iconsvg" />
+               </graphic>
+            </ToggleButton>
+            <ToggleButton fx:id="settingsButton" accessibleRole="TOGGLE_BUTTON" layoutX="6.0" layoutY="289.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#settings" prefHeight="45.0" styleClass="button1" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <graphic>
+                  <SVGPath content="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z" styleClass="iconsvg" />
+               </graphic>
+            </ToggleButton>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="48.0" layoutY="32.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" AnchorPane.leftAnchor="48.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label fx:id="todayLabel" layoutX="33.0" layoutY="13.0" text="Today" AnchorPane.leftAnchor="25.0">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <HBox maxWidth="-Infinity" minWidth="-Infinity" prefWidth="192.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Button fx:id="openInBrowserButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#openInBrowser" prefHeight="50.0" prefWidth="48.0" styleClass="button2">
+                     <graphic>
+                        <SVGPath content="M12 2C8.741068 2 5.8486894 3.5773875 4.0214844 6L4 6L4 6.0273438C2.7499527 7.6966931 2 9.7603852 2 12C2 17.511003 6.4889971 22 12 22C17.511003 22 22 17.511003 22 12C22 6.4889971 17.511003 2 12 2 z M 15 4.5839844C17.935098 5.7673596 20 8.6326468 20 12C20 14.087831 19.200587 15.978318 17.898438 17.400391C17.642583 16.590687 16.894567 16 16 16L15 16L15 13C15 12.448 14.552 12 14 12L9 12L9 10L10 10C10.552 10 11 9.552 11 9L11 7L13 7C14.105 7 15 6.105 15 5L15 4.5839844 z M 4.2070312 10.207031L6 12L9 15L9 16C9 17.105 9.895 18 11 18L11 19.931641C7.0457719 19.441154 4 16.090654 4 12C4 11.382188 4.0755245 10.784033 4.2070312 10.207031 z" styleClass="iconsvg" />
+                     </graphic>
+                  </Button>
+                  <Button fx:id="copyArticleLinkButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#copyArticleLink" prefHeight="50.0" prefWidth="48.0" styleClass="button2">
+                     <graphic>
+                        <SVGPath content="M6.354 5.5H4a3 3 0 0 0 0 6h3a3 3 0 0 0 2.83-4H9c-.086 0-.17.01-.25.031A2 2 0 0 1 7 10.5H4a2 2 0 1 1 0-4h1.535c.218-.376.495-.714.82-1z M9 5.5a3 3 0 0 0-2.83 4h1.098A2 2 0 0 1 9 6.5h3a2 2 0 1 1 0 4h-1.535a4.02 4.02 0 0 1-.82 1H12a3 3 0 1 0 0-6H9z" styleClass="iconsvg" />
+                     </graphic>
+                  </Button>
+                  <Button fx:id="refreshButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#refresh" prefHeight="50.0" prefWidth="48.0" styleClass="button2">
+                     <graphic>
+                        <SVGPath content="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" styleClass="iconsvg" />
+                     </graphic>
+                  </Button>
+                  <Button fx:id="darkModeButton" accessibleRole="BUTTON" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#darkMode" prefHeight="50.0" prefWidth="48.0" styleClass="button2">
+                     <graphic>
+                        <SVGPath fx:id="darkModeSVGPath" content="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z" styleClass="iconsvg" />
+                     </graphic>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="mainPane" layoutX="48.0" layoutY="82.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="48.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+         <children>
+            <AnchorPane fx:id="articlesListPane" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="45.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <HBox fx:id="categoryHbox" alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="45.0" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <ToggleButton fx:id="newsButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayNewsList" prefHeight="45.0" prefWidth="95.0" styleClass="button3" text="News">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </ToggleButton>
+                        <ToggleButton fx:id="covidButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayCovidList" prefHeight="45.0" prefWidth="95.0" styleClass="button3" text="Covid">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </ToggleButton>
+                        <ToggleButton fx:id="politicsButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayPoliticsList" prefHeight="45.0" prefWidth="100.0" styleClass="button3" text="Politics">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </ToggleButton>
+                        <ToggleButton fx:id="businessButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayBusinessList" prefHeight="45.0" prefWidth="120.0" styleClass="button3" text="Business">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </ToggleButton>
+                        <ToggleButton fx:id="technologyButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayTechnologyList" prefHeight="45.0" prefWidth="140.0" styleClass="button3" text="Technology">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </ToggleButton>
+                        <ToggleButton fx:id="healthButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayHealthList" prefHeight="45.0" prefWidth="100.0" styleClass="button3" text="Health">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </ToggleButton>
+                        <ToggleButton fx:id="sportsButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displaySportsList" prefHeight="45.0" prefWidth="100.0" styleClass="button3" text="Sports">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </ToggleButton>
+                        <ToggleButton fx:id="entertainmentButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayEntertainmentList" prefHeight="45.0" prefWidth="170.0" styleClass="button3" text="Entertainment">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </ToggleButton>
+                        <ToggleButton fx:id="worldButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayWorldList" prefHeight="45.0" prefWidth="100.0" styleClass="button3" text="World">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </ToggleButton>
+                        <ToggleButton fx:id="othersButton" accessibleRole="TOGGLE_BUTTON" mnemonicParsing="false" onAction="#displayOthersList" prefHeight="45.0" prefWidth="100.0" styleClass="button3" text="Others">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </ToggleButton>
+                     </children>
+                  </HBox>
+                  <Button fx:id="previousCategoryButton" accessibleRole="BUTTON" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="25.0" styleClass="buttonarr" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <graphic>
+                        <SVGPath content="M10 12.796V3.204L4.519 8 10 12.796zm-.659.753-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753z" styleClass="iconsvg" />
+                     </graphic>
+                  </Button>
+                  <Button fx:id="nextCategoryButton" accessibleRole="BUTTON" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="25.0" styleClass="buttonarr" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <graphic>
+                        <SVGPath content="M6 12.796V3.204L11.481 8 6 12.796zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z" styleClass="iconsvg" />
+                     </graphic>
+                  </Button>
+               </children>
+            </AnchorPane>
+            <ScrollPane fx:id="scrollPane" fitToWidth="true" pannable="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0">
+               <content>
+                  <BorderPane fx:id="borderPaneUnderScrollPane" />
+               </content>
+            </ScrollPane>
+            <VBox fx:id="displaySettingsLayoutVbox" spacing="30.0" styleClass="root" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text36" text="Options" />
+                  <VBox spacing="10.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text20" text="Choose a mode" />
+                        <RadioButton fx:id="darkModeRadioButton" mnemonicParsing="false" text="Dark Mode" />
+                        <RadioButton fx:id="lightModeRadioButton" mnemonicParsing="false" text="Light Mode" />
+                     </children>
+                  </VBox>
+                  <VBox spacing="10.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text20" text="Font size" />
+                        <RadioButton fx:id="normalFontSizeRadioButton" mnemonicParsing="false" text="Normal" />
+                        <RadioButton fx:id="largeFontSizeRadioButton" mnemonicParsing="false" text="Large" />
+                        <RadioButton fx:id="veryLargeFontSizeRadioButton" mnemonicParsing="false" text="Very Large" />
+                     </children>
+                  </VBox>
+               </children>
+               <padding>
+                  <Insets left="30.0" top="30.0" />
+               </padding>
+            </VBox>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="menuPane" layoutY="82.0" prefHeight="200.0" prefWidth="260.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="50.0">
+         <children>
+            <Button fx:id="homeInMenuButton" alignment="BASELINE_LEFT" graphicTextGap="0.0" layoutX="104.0" layoutY="50.0" mnemonicParsing="false" onAction="#homeInMenu" prefHeight="45.0" prefWidth="260.0" styleClass="button1" text="       Today" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <graphic>
+                  <SVGPath content="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5z" styleClass="iconsvg" />
+               </graphic>
+               <padding>
+                  <Insets left="17.0" />
+               </padding>
+            </Button>
+            <Button fx:id="settingsInMenuButton" alignment="BASELINE_LEFT" graphicTextGap="0.0" layoutX="44.0" layoutY="274.0" mnemonicParsing="false" onAction="#settingsInMenu" prefHeight="45.0" prefWidth="260.0" styleClass="button1" text="       Settings" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <graphic>
+                  <SVGPath content="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z" styleClass="iconsvg" />
+               </graphic>
+               <padding>
+                  <Insets left="17.0" />
+               </padding>
+            </Button>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="tempPane" onMouseClicked="#exitSearch" styleClass="temppane" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <HBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" spacing="10.0" AnchorPane.leftAnchor="192.0" AnchorPane.rightAnchor="192.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Button fx:id="backToHomeButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#backToHome" prefHeight="35.0" prefWidth="35.0" styleClass="buttonsearch" HBox.hgrow="NEVER">
+               <graphic>
+                  <SVGPath content="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" styleClass="iconsvg" />
+               </graphic>
+            </Button>
+            <TextField fx:id="searchTextField" onMouseClicked="#takeSearchInput" prefHeight="38.0" prefWidth="426.0" promptText="Search Interests and Web" styleClass="text-field" HBox.hgrow="NEVER">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </TextField>
+            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#search" prefHeight="35.0" prefWidth="35.0" styleClass="buttonsearch" HBox.hgrow="NEVER">
+               <graphic>
+                  <SVGPath content="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" styleClass="iconsvg" />
+               </graphic>
+            </Button>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
