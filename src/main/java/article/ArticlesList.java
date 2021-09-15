@@ -1,5 +1,7 @@
 package article;
 
+import controller.WelcomeSceneController;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -91,6 +93,7 @@ public class ArticlesList {
             try {
                 vnexpressNewsList = ArticlesManager.getVnexpressList("https://vnexpress.net/rss/tin-moi-nhat.rss", "News");
                 getCovidList(); getPoliticsList();
+                WelcomeSceneController.progressBar.setProgress(WelcomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -100,6 +103,7 @@ public class ArticlesList {
             try {
                 zingNewsList = ArticlesManager.getZingWebList("https://zingnews.vn/", "News");
                 getBusinessList(); getTechnologyList();
+                WelcomeSceneController.progressBar.setProgress(WelcomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -109,6 +113,7 @@ public class ArticlesList {
             try {
                 tuoiTreNewsList = ArticlesManager.getTuoiTreList("https://tuoitre.vn/rss/tin-moi-nhat.rss", "News");
                 getHealthList(); getSportsList();
+                WelcomeSceneController.progressBar.setProgress(WelcomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -118,6 +123,7 @@ public class ArticlesList {
             try {
                 thanhNienNewsList = ArticlesManager.getThanhNienList("https://thanhnien.vn/rss/home.rss", "News");
                 getEntertainmentList(); getWorldList();
+                WelcomeSceneController.progressBar.setProgress(WelcomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -127,6 +133,7 @@ public class ArticlesList {
             try {
                 nhanDanNewsList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/", "News");
                 getOthersList();
+                WelcomeSceneController.progressBar.setProgress(WelcomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }

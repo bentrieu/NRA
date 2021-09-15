@@ -23,6 +23,16 @@
     -fx-text-fill: -fx-black;
 }
 
+.progress-bar > .bar {
+    -fx-background-radius: 10;
+    -fx-background-insets: 0;
+}
+
+.progress-bar > .track {
+    -fx-background-radius: 10;
+    -fx-background-insets: 0;
+}
+
 /*Setting styling from here*/
 .text36 {
     -fx-fill: -fx-black;

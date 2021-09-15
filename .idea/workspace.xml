@@ -9,9 +9,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1fc20fdf-c41c-4917-b80a-51ee7ac5045b" name="Default Changelist" comment="finalize">
+    <list default="true" id="1fc20fdf-c41c-4917-b80a-51ee7ac5045b" name="Default Changelist" comment="change welcomscreen multithread loading">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/article/ArticlesList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/article/ArticlesList.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/WelcomeSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/WelcomeSceneController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/css/cssdarkmode.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/css/cssdarkmode.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/layouts/WelcomeScene.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/layouts/WelcomeScene.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -167,7 +169,14 @@
       <option name="project" value="LOCAL" />
       <updated>1631725557027</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="change welcomscreen multithread loading">
+      <created>1631737890688</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1631737890688</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -212,6 +221,7 @@
     <MESSAGE value="adding git ignore the production folder" />
     <MESSAGE value="fix search text == null" />
     <MESSAGE value="finalize" />
-    <option name="LAST_COMMIT_MESSAGE" value="finalize" />
+    <MESSAGE value="change welcomscreen multithread loading" />
+    <option name="LAST_COMMIT_MESSAGE" value="change welcomscreen multithread loading" />
   </component>
 </project>

@@ -8,7 +8,6 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -16,7 +15,7 @@
    <children>
       <AnchorPane layoutX="25.0" layoutY="38.0" prefHeight="279.0" prefWidth="600.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="50.0">
          <children>
-            <AnchorPane layoutX="23.0" layoutY="59.0" prefHeight="421.0" prefWidth="627.0" style="-fx-background-color: linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1); -fx-background-radius: 20;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+            <AnchorPane fx:id="anchorPane" layoutX="23.0" layoutY="59.0" prefHeight="421.0" prefWidth="627.0" style="-fx-background-color: linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1); -fx-background-radius: 20;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
                <children>
                   <VBox alignment="CENTER" layoutX="60.0" layoutY="165.0" prefHeight="133.0" prefWidth="595.0" spacing="5.0" AnchorPane.bottomAnchor="147.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="180.0">
                      <children>
@@ -67,21 +66,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <HBox alignment="CENTER" prefHeight="38.0" spacing="5.0" AnchorPane.bottomAnchor="54.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-                     <children>
-                        <ImageView fx:id="loadingImageView" fitHeight="33.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../images/loadinggif.gif" />
-                           </image>
-                        </ImageView>
-                        <Label fx:id="loadingLabel" text="Loading...">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </HBox>
-                  <Button fx:id="gettingStartedButton" alignment="CENTER" contentDisplay="RIGHT" graphicTextGap="3.0" layoutX="283.0" layoutY="371.0" mnemonicParsing="false" onAction="#gettingStarted" prefHeight="35.0" prefWidth="169.0" styleClass="button1" stylesheets="@../css/loadingscreen.css" text="Getting Started" AnchorPane.bottomAnchor="54.0" AnchorPane.leftAnchor="273.0" AnchorPane.rightAnchor="273.0">
+                  <Button alignment="CENTER" contentDisplay="RIGHT" graphicTextGap="3.0" layoutX="283.0" layoutY="371.0" mnemonicParsing="false" onAction="#gettingStarted" prefHeight="35.0" prefWidth="169.0" styleClass="button1" stylesheets="@../css/loadingscreen.css" text="Getting Started" AnchorPane.bottomAnchor="54.0" AnchorPane.leftAnchor="273.0" AnchorPane.rightAnchor="273.0">
                      <graphic>
                         <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                            <image>
