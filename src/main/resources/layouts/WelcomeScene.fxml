@@ -8,6 +8,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -66,19 +67,21 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Label fx:id="loadingLabel" layoutX="305.0" layoutY="374.0" prefHeight="29.0" prefWidth="106.0" text="Loading...">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                     <graphic>
+                  <HBox alignment="CENTER" prefHeight="38.0" spacing="5.0" AnchorPane.bottomAnchor="54.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                     <children>
                         <ImageView fx:id="loadingImageView" fitHeight="33.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../images/loadinggif.gif" />
                            </image>
                         </ImageView>
-                     </graphic>
-                  </Label>
-                  <Button fx:id="gettingStartedButton" alignment="CENTER" contentDisplay="RIGHT" graphicTextGap="3.0" layoutX="283.0" layoutY="371.0" mnemonicParsing="false" onAction="#gettingStarted" prefHeight="35.0" prefWidth="150.0" styleClass="button1" stylesheets="@../css/loadingscreen.css" text="Getting Started" AnchorPane.bottomAnchor="54.0" AnchorPane.leftAnchor="283.0" AnchorPane.rightAnchor="282.0">
+                        <Label fx:id="loadingLabel" text="Loading...">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <Button fx:id="gettingStartedButton" alignment="CENTER" contentDisplay="RIGHT" graphicTextGap="3.0" layoutX="283.0" layoutY="371.0" mnemonicParsing="false" onAction="#gettingStarted" prefHeight="35.0" prefWidth="169.0" styleClass="button1" stylesheets="@../css/loadingscreen.css" text="Getting Started" AnchorPane.bottomAnchor="54.0" AnchorPane.leftAnchor="273.0" AnchorPane.rightAnchor="273.0">
                      <graphic>
                         <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                            <image>
