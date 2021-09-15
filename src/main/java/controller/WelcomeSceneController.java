@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
@@ -29,10 +30,13 @@ public class WelcomeSceneController implements Initializable {
     private Button gettingStartedButton;
     @FXML
     private Label loadingLabel;
+    @FXML
+    private ImageView loadingImageView;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadingLabel.setVisible(false);
+        loadingImageView.setImage(new Image("/images/loadinggif.gif"));
     }
 
     public void close() {

@@ -71,7 +71,7 @@
                         <Font size="16.0" />
                      </font>
                      <graphic>
-                        <ImageView fitHeight="33.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="loadingImageView" fitHeight="33.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../images/loadinggif.gif" />
                            </image>

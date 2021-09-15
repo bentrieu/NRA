@@ -25,16 +25,6 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Main.stage = new Stage();
 
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("layouts/WelcomeScene.fxml")));
-        Scene scene = new Scene(root);
-        primaryStage.setTitle("Hello World");
-        primaryStage.initStyle(StageStyle.TRANSPARENT);
-        addDraggableNode(root);
-        scene.setFill(Color.TRANSPARENT);
-
-        primaryStage.setScene(scene);
-        primaryStage.show();
-
         // Load the first news category
         es = Executors.newFixedThreadPool(1);
         es.execute(() -> {
@@ -45,6 +35,16 @@ public class Main extends Application {
             }
         });
         es.shutdown();
+
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("layouts/WelcomeScene.fxml")));
+        Scene scene = new Scene(root);
+        primaryStage.setTitle("Hello World");
+        primaryStage.initStyle(StageStyle.TRANSPARENT);
+        addDraggableNode(root);
+        scene.setFill(Color.TRANSPARENT);
+
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
     public static void main(String[] args) {
