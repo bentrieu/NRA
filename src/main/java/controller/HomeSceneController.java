@@ -448,7 +448,7 @@ public class HomeSceneController implements Initializable {
             searchText = searchTextField.getText().trim();
             searchText = searchText.replaceAll("[\\s]+", " ");
         }
-        if (!searchText.isEmpty()) {
+        if (searchText != null && !searchText.isEmpty()) {
             scrollPane.setVvalue(0);
             scrollPane.setHvalue(0);
             currentCategoryIndex = 10;

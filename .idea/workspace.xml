@@ -9,39 +9,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1fc20fdf-c41c-4917-b80a-51ee7ac5045b" name="Default Changelist" comment="restructure all the project">
-      <change beforePath="$PROJECT_DIR$/target/classes/article/Article.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/article/ArticlesList.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/article/ArticlesManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/article/Helper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controller/HomeSceneController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controller/LayoutController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controller/WelcomeSceneController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/css/css.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/css/cssdarkmode.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/css/largefont.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/css/loadingscreen.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/css/verylargefont.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/book_loadinganimation_dark.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/book_loadinganimation_white.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/loadinggif.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/newsicon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/nhandan_big.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/nhandan_small.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/rightarrow.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/shutdownicon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/thanhnien_big.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/thanhnien_small.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/tuoitre_big.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/tuoitre_small.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/vnexpress_big.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/vnexpress_small.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/zingnews_big.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/images/zingnews_small.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/layouts/HomeScene.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/layouts/Layout.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/layouts/WelcomeScene.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/Main.class" beforeDir="false" />
+    <list default="true" id="1fc20fdf-c41c-4917-b80a-51ee7ac5045b" name="Default Changelist" comment="adding git ignore the production folder">
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/newsaggregator_jar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/HomeSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/HomeSceneController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,7 +47,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$USER_HOME$/Desktop" />
-    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.19409762" />
     <property name="project.structure.side.proportion" value="0.331384" />
   </component>
@@ -168,7 +140,21 @@
       <option name="project" value="LOCAL" />
       <updated>1631588998631</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="delete production folder">
+      <created>1631589294609</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1631589294609</updated>
+    </task>
+    <task id="LOCAL-00011" summary="adding git ignore the production folder">
+      <created>1631589442772</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1631589442772</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -182,7 +168,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/master" />
+                        <option value="thinh" />
                       </list>
                     </value>
                   </entry>
@@ -209,6 +195,8 @@
     <MESSAGE value="delete close button welcome scene" />
     <MESSAGE value="delete thanhniendiff and timetounixlong function" />
     <MESSAGE value="restructure all the project" />
-    <option name="LAST_COMMIT_MESSAGE" value="restructure all the project" />
+    <MESSAGE value="delete production folder" />
+    <MESSAGE value="adding git ignore the production folder" />
+    <option name="LAST_COMMIT_MESSAGE" value="adding git ignore the production folder" />
   </component>
 </project>
