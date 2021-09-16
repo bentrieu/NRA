@@ -9,14 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1fc20fdf-c41c-4917-b80a-51ee7ac5045b" name="Default Changelist" comment="add loading progress bar to welcome scene">
+    <list default="true" id="1fc20fdf-c41c-4917-b80a-51ee7ac5045b" name="Default Changelist" comment="adding loading bar to HomeSceneController">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/article/ArticlesList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/article/ArticlesList.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/HomeSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/HomeSceneController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/WelcomeSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/WelcomeSceneController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/css/css.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/css/css.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/css/cssdarkmode.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/css/cssdarkmode.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/layouts/WelcomeScene.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/layouts/WelcomeScene.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +45,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$USER_HOME$/Desktop" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.19409762" />
     <property name="project.structure.side.proportion" value="0.331384" />
   </component>
@@ -185,7 +180,14 @@
       <option name="project" value="LOCAL" />
       <updated>1631740337255</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="adding loading bar to HomeSceneController">
+      <created>1631767854563</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1631767854563</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -232,6 +234,7 @@
     <MESSAGE value="finalize" />
     <MESSAGE value="change welcomscreen multithread loading" />
     <MESSAGE value="add loading progress bar to welcome scene" />
-    <option name="LAST_COMMIT_MESSAGE" value="add loading progress bar to welcome scene" />
+    <MESSAGE value="adding loading bar to HomeSceneController" />
+    <option name="LAST_COMMIT_MESSAGE" value="adding loading bar to HomeSceneController" />
   </component>
 </project>
