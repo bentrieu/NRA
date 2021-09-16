@@ -112,6 +112,9 @@ public class HomeSceneController implements Initializable {
 
     public String searchText;
 
+    public static ProgressBar progressBar = new ProgressBar();
+    public static ProgressBar newsProgressBar = new ProgressBar();
+
     public HomeSceneController() {
         // Setup for layout controller
         // Setup fxml loader
@@ -129,6 +132,14 @@ public class HomeSceneController implements Initializable {
 
         // Get the LayoutController instance of layout.fxml
         layoutController = loader.getController();
+
+        // Setup progress bar
+        progressBar.setProgress(0.0);
+        progressBar.setPrefHeight(5);
+        progressBar.setPrefWidth(200);
+        newsProgressBar.setProgress(0.0);
+        newsProgressBar.setPrefHeight(5);
+        newsProgressBar.setPrefWidth(200);
     }
 
     @Override
@@ -143,10 +154,12 @@ public class HomeSceneController implements Initializable {
         loadingImageView = new ImageView();
         loadingImageView.setImage(whiteLoadingImage);
         VBox loadingVbox = new VBox();
-        loadingVbox.setSpacing(10);
+        loadingVbox.setSpacing(20);
         loadingVbox.setAlignment(Pos.CENTER);
         ArticlesManager.connectStatusTextFlow.getStyleClass().add("textflowcenter");
-        loadingVbox.getChildren().addAll(loadingImageView, ArticlesManager.connectStatusTextFlow);
+        StackPane progressBarStackPane = new StackPane();
+        progressBarStackPane.getChildren().addAll(newsProgressBar, progressBar);
+        loadingVbox.getChildren().addAll(loadingImageView, progressBarStackPane, ArticlesManager.connectStatusTextFlow);
         loadingStackPane.getChildren().add(loadingVbox);
         Main.stage.heightProperty().addListener((observableValue, number, t1) -> {
             loadingStackPane.setMinHeight(t1.doubleValue() - 95);

@@ -1,5 +1,6 @@
 package article;
 
+import controller.HomeSceneController;
 import controller.WelcomeSceneController;
 
 import java.io.IOException;
@@ -87,6 +88,9 @@ public class ArticlesList {
     }
 
     public static void getNewsList() throws IOException {
+        HomeSceneController.newsProgressBar.setProgress(0.0);
+        HomeSceneController.progressBar.setVisible(false);
+
         ExecutorService es = Executors.newCachedThreadPool();
         es.execute(() -> {
             vnexpressNewsList.clear();
@@ -94,6 +98,7 @@ public class ArticlesList {
                 vnexpressNewsList = ArticlesManager.getVnexpressList("https://vnexpress.net/rss/tin-moi-nhat.rss", "News");
                 getCovidList(); getPoliticsList();
                 WelcomeSceneController.progressBar.setProgress(WelcomeSceneController.progressBar.getProgress() + 0.2);
+                HomeSceneController.newsProgressBar.setProgress(HomeSceneController.newsProgressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -104,6 +109,7 @@ public class ArticlesList {
                 zingNewsList = ArticlesManager.getZingWebList("https://zingnews.vn/", "News");
                 getBusinessList(); getTechnologyList();
                 WelcomeSceneController.progressBar.setProgress(WelcomeSceneController.progressBar.getProgress() + 0.2);
+                HomeSceneController.newsProgressBar.setProgress(HomeSceneController.newsProgressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -114,6 +120,7 @@ public class ArticlesList {
                 tuoiTreNewsList = ArticlesManager.getTuoiTreList("https://tuoitre.vn/rss/tin-moi-nhat.rss", "News");
                 getHealthList(); getSportsList();
                 WelcomeSceneController.progressBar.setProgress(WelcomeSceneController.progressBar.getProgress() + 0.2);
+                HomeSceneController.newsProgressBar.setProgress(HomeSceneController.newsProgressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -124,6 +131,7 @@ public class ArticlesList {
                 thanhNienNewsList = ArticlesManager.getThanhNienList("https://thanhnien.vn/rss/home.rss", "News");
                 getEntertainmentList(); getWorldList();
                 WelcomeSceneController.progressBar.setProgress(WelcomeSceneController.progressBar.getProgress() + 0.2);
+                HomeSceneController.newsProgressBar.setProgress(HomeSceneController.newsProgressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -134,6 +142,7 @@ public class ArticlesList {
                 nhanDanNewsList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/", "News");
                 getOthersList();
                 WelcomeSceneController.progressBar.setProgress(WelcomeSceneController.progressBar.getProgress() + 0.2);
+                HomeSceneController.newsProgressBar.setProgress(HomeSceneController.newsProgressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -162,9 +171,13 @@ public class ArticlesList {
         newsList.addAll(othersList);
         sortList(newsList);
         removeDuplicateArticle(newsList);
+
+        HomeSceneController.progressBar.setVisible(true);
     }
 
     public static void getCovidList() throws IOException {
+        HomeSceneController.progressBar.setProgress(0.0);
+
         ExecutorService es = Executors.newCachedThreadPool();
         es.execute(() -> {
             vnexpressCovidList.clear();
@@ -172,6 +185,7 @@ public class ArticlesList {
                 vnexpressCovidList = ArticlesManager.getVnexpressWebList("https://vnexpress.net/covid-19/tin-tuc", "Covid");
                 vnexpressCovidList.addAll(ArticlesManager.getVnexpressWebList("https://vnexpress.net/covid-19/tin-tuc-p2", "Covid"));
                 vnexpressCovidList.addAll(ArticlesManager.getVnexpressWebList("https://vnexpress.net/covid-19/tin-tuc-p3", "Covid"));
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -180,6 +194,7 @@ public class ArticlesList {
             zingCovidList.clear();
             try {
                 zingCovidList = ArticlesManager.getZingSearchList("covid", "Covid");
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -188,6 +203,7 @@ public class ArticlesList {
             tuoiTreCovidList.clear();
             try {
                 tuoiTreCovidList = ArticlesManager.getTuoiTreSearchList("covid", "Covid");
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -196,6 +212,7 @@ public class ArticlesList {
             thanhNienCovidList.clear();
             try {
                 thanhNienCovidList = ArticlesManager.getThanhNienWebList("https://thanhnien.vn/dich-covid-19/", "Politics");
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -205,6 +222,7 @@ public class ArticlesList {
             try {
 //                nhanDanCovidList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/tag/Covid19-53", "Covid");
                 nhanDanCovidList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/Article/PagingByTag?tagId=53&pageSize=50&pageIndex=1&fromDate=&toDate=&displayView=PagingPartial", "Covid");
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -220,12 +238,15 @@ public class ArticlesList {
     }
 
     public static void getPoliticsList() throws IOException {
+        HomeSceneController.progressBar.setProgress(0.0);
+
         ExecutorService es = Executors.newCachedThreadPool();
         es.execute(() -> {
             vnexpressPoliticsList.clear();
             try {
                 vnexpressPoliticsList = ArticlesManager.getVnexpressWebList("https://vnexpress.net/thoi-su/chinh-tri", "Politics");
                 vnexpressPoliticsList.addAll(ArticlesManager.getVnexpressWebList("https://vnexpress.net/thoi-su/chinh-tri-p2", "Politics"));
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -235,6 +256,7 @@ public class ArticlesList {
             try {
                 zingPoliticsList = ArticlesManager.getZingWebList("https://zingnews.vn/chinh-tri.html/?page=1", "Politics");
                 zingPoliticsList.addAll(ArticlesManager.getZingWebList("https://zingnews.vn/chinh-tri.html/?page=2", "Politics"));
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -243,6 +265,7 @@ public class ArticlesList {
             tuoiTrePoliticsList.clear();
             try {
                 tuoiTrePoliticsList = ArticlesManager.getTuoiTreSearchList("chính trị", "Politics");
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -251,6 +274,7 @@ public class ArticlesList {
             thanhNienPoliticsList.clear();
             try {
                 thanhNienPoliticsList = ArticlesManager.getThanhNienList("https://thanhnien.vn/rss/thoi-su/chinh-tri.rss", "Politics");
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -263,6 +287,7 @@ public class ArticlesList {
                 nhanDanPoliticsList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1171&pageIndex=2&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "Politics"));
                 nhanDanPoliticsList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1171&pageIndex=3&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "Politics"));
                 nhanDanPoliticsList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1171&pageIndex=4&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "Politics"));
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -278,6 +303,8 @@ public class ArticlesList {
     }
 
     public static void getBusinessList() throws IOException {
+        HomeSceneController.progressBar.setProgress(0.0);
+
         ExecutorService es = Executors.newCachedThreadPool();
         es.execute(() -> {
             vnexpressBusinessList.clear();
@@ -285,6 +312,7 @@ public class ArticlesList {
                 vnexpressBusinessList = ArticlesManager.getVnexpressWebList("https://vnexpress.net/kinh-doanh", "Business");
                 vnexpressBusinessList.addAll(ArticlesManager.getVnexpressWebList("https://vnexpress.net/kinh-doanh-p2", "Business"));
                 vnexpressBusinessList.addAll(ArticlesManager.getVnexpressWebList("https://vnexpress.net/kinh-doanh-p3", "Business"));
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -295,6 +323,7 @@ public class ArticlesList {
                 zingBusinessList = ArticlesManager.getZingWebList("https://zingnews.vn/kinh-doanh-tai-chinh.html", "Business");
                 zingBusinessList.addAll(ArticlesManager.getZingWebList("https://zingnews.vn/kinh-doanh-tai-chinh.html/?page=2", "Business"));
                 zingBusinessList.addAll(ArticlesManager.getZingWebList("https://zingnews.vn/kinh-doanh-tai-chinh.html/?page=3", "Business"));
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -303,6 +332,7 @@ public class ArticlesList {
             tuoiTreBusinessList.clear();
             try {
                 tuoiTreBusinessList = ArticlesManager.getTuoiTreList("https://tuoitre.vn/rss/kinh-doanh.rss", "Business");
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -311,6 +341,7 @@ public class ArticlesList {
             thanhNienBusinessList.clear();
             try {
                 thanhNienBusinessList = ArticlesManager.getThanhNienWebList("https://thanhnien.vn/tai-chinh-kinh-doanh/", "Business");
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -323,6 +354,7 @@ public class ArticlesList {
                 nhanDanBusinessList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1185&pageIndex=2&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "Business"));
                 nhanDanBusinessList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1185&pageIndex=3&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "Business"));
                 nhanDanBusinessList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1185&pageIndex=4&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "Business"));
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -338,6 +370,8 @@ public class ArticlesList {
     }
 
     public static void getTechnologyList() throws IOException {
+        HomeSceneController.progressBar.setProgress(0.0);
+
         ExecutorService es = Executors.newCachedThreadPool();
         es.execute(() -> {
             vnexpressTechnologyList.clear();
@@ -346,6 +380,7 @@ public class ArticlesList {
                 vnexpressTechnologyList = ArticlesManager.getVnexpressWebList("https://vnexpress.net/so-hoa/cong-nghe", "Technology");
                 vnexpressTechnologyList.addAll(ArticlesManager.getVnexpressWebList("https://vnexpress.net/so-hoa/cong-nghe-p2", "Technology"));
                 vnexpressTechnologyList.addAll(ArticlesManager.getVnexpressWebList("https://vnexpress.net/so-hoa/cong-nghe-p3", "Technology"));
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -357,6 +392,7 @@ public class ArticlesList {
                 zingTechnologyList = ArticlesManager.getZingWebList("https://zingnews.vn/cong-nghe.html/?page=1", "Technology");
                 zingTechnologyList.addAll(ArticlesManager.getZingWebList("https://zingnews.vn/cong-nghe.html/?page=2", "Technology"));
                 zingTechnologyList.addAll(ArticlesManager.getZingWebList("https://zingnews.vn/cong-nghe.html/?page=3", "Technology"));
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -366,6 +402,7 @@ public class ArticlesList {
             try {
 //                tuoiTreTechnologyList = ArticlesManager.getTuoiTreList("https://tuoitre.vn/rss/nhip-song-so.rss", "Technology");
                 tuoiTreTechnologyList.addAll(ArticlesManager.getTuoiTreWebList("https://congnghe.tuoitre.vn/", "Technology"));
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -374,6 +411,7 @@ public class ArticlesList {
             thanhNienTechnologyList.clear();
             try {
                 thanhNienTechnologyList = ArticlesManager.getThanhNienWebList("https://thanhnien.vn/cong-nghe/", "Technology");
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -385,6 +423,7 @@ public class ArticlesList {
                 nhanDanTechnologyList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1292&pageIndex=1&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "Technology");
                 nhanDanTechnologyList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1292&pageIndex=2&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "Technology"));
                 nhanDanTechnologyList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1292&pageIndex=3&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "Technology"));
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -400,6 +439,8 @@ public class ArticlesList {
     }
 
     public static void getHealthList() throws IOException {
+        HomeSceneController.progressBar.setProgress(0.0);
+
         ExecutorService es = Executors.newCachedThreadPool();
         es.execute(() -> {
             vnexpressHealthList.clear();
@@ -407,6 +448,7 @@ public class ArticlesList {
                 vnexpressHealthList = ArticlesManager.getVnexpressWebList("https://vnexpress.net/suc-khoe", "Health");
                 vnexpressHealthList.addAll(ArticlesManager.getVnexpressWebList("https://vnexpress.net/suc-khoe-p2", "Health"));
                 vnexpressHealthList.addAll(ArticlesManager.getVnexpressWebList("https://vnexpress.net/suc-khoe-p3", "Health"));
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -417,6 +459,7 @@ public class ArticlesList {
                 zingHealthList = ArticlesManager.getZingWebList("https://zingnews.vn/suc-khoe.html", "Health");
                 zingHealthList.addAll(ArticlesManager.getZingWebList("https://zingnews.vn/suc-khoe.html/?page=2", "Health"));
                 zingHealthList.addAll(ArticlesManager.getZingWebList("https://zingnews.vn/suc-khoe.html/?page=3", "Health"));
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -425,6 +468,7 @@ public class ArticlesList {
             tuoiTreHealthList.clear();
             try {
                 tuoiTreHealthList = ArticlesManager.getTuoiTreList("https://tuoitre.vn/rss/suc-khoe.rss", "Health");
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -433,6 +477,7 @@ public class ArticlesList {
             thanhNienHealthList.clear();
             try {
                 thanhNienHealthList = ArticlesManager.getThanhNienWebList("https://thanhnien.vn/suc-khoe/", "Health");
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -444,6 +489,7 @@ public class ArticlesList {
                 nhanDanHealthList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1309&pageIndex=1&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "Health");
                 nhanDanHealthList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1309&pageIndex=2&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "Health"));
                 nhanDanHealthList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1309&pageIndex=3&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "Health"));
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -459,11 +505,14 @@ public class ArticlesList {
     }
 
     public static void getSportsList() throws IOException {
+        HomeSceneController.progressBar.setProgress(0.0);
+
         ExecutorService es = Executors.newCachedThreadPool();
         es.execute(() -> {
             vnexpressSportsList.clear();
             try {
                 vnexpressSportsList = ArticlesManager.getVnexpressList("https://vnexpress.net/rss/the-thao.rss", "Sports");
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -474,6 +523,7 @@ public class ArticlesList {
                 zingSportsList = ArticlesManager.getZingWebList("https://zingnews.vn/the-thao.html", "Sports");
                 zingSportsList.addAll(ArticlesManager.getZingWebList("https://zingnews.vn/the-thao.html/?page=2", "Sports"));
                 zingSportsList.addAll(ArticlesManager.getZingWebList("https://zingnews.vn/the-thao.html/?page=3", "Sports"));
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -482,6 +532,7 @@ public class ArticlesList {
             tuoiTreSportsList.clear();
             try {
                 tuoiTreSportsList = ArticlesManager.getTuoiTreList("https://tuoitre.vn/rss/the-thao.rss", "Sports");
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -490,6 +541,7 @@ public class ArticlesList {
             thanhNienSportsList.clear();
             try {
                 thanhNienSportsList = ArticlesManager.getThanhNienWebList("https://thanhnien.vn/the-thao/", "Sports");
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -501,6 +553,7 @@ public class ArticlesList {
                 nhanDanSportsList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1224&pageIndex=1&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "Sports");
                 nhanDanSportsList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1224&pageIndex=2&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "Sports"));
                 nhanDanSportsList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1224&pageIndex=3&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "Sports"));
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -516,6 +569,8 @@ public class ArticlesList {
     }
 
     public static void getEntertainmentList() throws IOException {
+        HomeSceneController.progressBar.setProgress(0.0);
+
         ExecutorService es = Executors.newCachedThreadPool();
         es.execute(() -> {
             vnexpressEntertainmentList.clear();
@@ -523,6 +578,7 @@ public class ArticlesList {
                 vnexpressEntertainmentList = ArticlesManager.getVnexpressWebList("https://vnexpress.net/giai-tri", "Entertainment");
                 vnexpressEntertainmentList.addAll(ArticlesManager.getVnexpressWebList("https://vnexpress.net/giai-tri-p2", "Entertainment"));
                 vnexpressEntertainmentList.addAll(ArticlesManager.getVnexpressWebList("https://vnexpress.net/giai-tri-p3", "Entertainment"));
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -533,6 +589,7 @@ public class ArticlesList {
                 zingEntertainmentList = ArticlesManager.getZingWebList("https://zingnews.vn/giai-tri.html", "Entertainment");
                 zingEntertainmentList.addAll(ArticlesManager.getZingWebList("https://zingnews.vn/giai-tri.html/?page=2", "Entertainment"));
                 zingEntertainmentList.addAll(ArticlesManager.getZingWebList("https://zingnews.vn/giai-tri.html/?page=3", "Entertainment"));
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -541,6 +598,7 @@ public class ArticlesList {
             tuoiTreEntertainmentList.clear();
             try {
                 tuoiTreEntertainmentList = ArticlesManager.getTuoiTreList("https://tuoitre.vn/rss/giai-tri.rss", "Entertainment");
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -549,6 +607,7 @@ public class ArticlesList {
             thanhNienEntertainmentList.clear();
             try {
                 thanhNienEntertainmentList = ArticlesManager.getThanhNienWebList("https://thanhnien.vn/giai-tri/", "Entertainment");
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -560,6 +619,7 @@ public class ArticlesList {
                 nhanDanEntertainmentList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1251&pageIndex=1&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "Entertainment");
                 nhanDanEntertainmentList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1251&pageIndex=2&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "Entertainment"));
                 nhanDanEntertainmentList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1251&pageIndex=3&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "Entertainment"));
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -575,11 +635,14 @@ public class ArticlesList {
     }
 
     public static void getWorldList() throws IOException {
+        HomeSceneController.progressBar.setProgress(0.0);
+
         ExecutorService es = Executors.newCachedThreadPool();
         es.execute(() -> {
             vnexpressWorldList.clear();
             try {
                 vnexpressWorldList = ArticlesManager.getVnexpressList("https://vnexpress.net/rss/the-gioi.rss", "World");
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -590,6 +653,7 @@ public class ArticlesList {
                 zingWorldList = ArticlesManager.getZingWebList("https://zingnews.vn/the-gioi.html", "World");
                 zingWorldList.addAll(ArticlesManager.getZingWebList("https://zingnews.vn/the-gioi.html/?page=2", "World"));
                 zingWorldList.addAll(ArticlesManager.getZingWebList("https://zingnews.vn/the-gioi.html/?page=3", "World"));
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -598,6 +662,7 @@ public class ArticlesList {
             tuoiTreWorldList.clear();
             try {
                 tuoiTreWorldList = ArticlesManager.getTuoiTreList("https://tuoitre.vn/rss/the-gioi.rss", "World");
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -606,6 +671,7 @@ public class ArticlesList {
             thanhNienWorldList.clear();
             try {
                 thanhNienWorldList = ArticlesManager.getThanhNienWebList("https://thanhnien.vn/the-gioi/", "World");
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -617,6 +683,7 @@ public class ArticlesList {
                 nhanDanWorldList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1231&pageIndex=1&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "World");
                 nhanDanWorldList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1231&pageIndex=2&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "World"));
                 nhanDanWorldList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/article/Paging?categoryId=1231&pageIndex=3&pageSize=15&fromDate=&toDate=&displayView=PagingPartial", "World"));
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -632,6 +699,8 @@ public class ArticlesList {
     }
 
     public static void getOthersList() throws IOException {
+        HomeSceneController.progressBar.setProgress(0.0);
+
         ExecutorService es = Executors.newCachedThreadPool();
         es.execute(() -> {
             vnexpressOthersList.clear();
@@ -641,6 +710,7 @@ public class ArticlesList {
 //                vnexpressOthersList.addAll(ArticlesManager.getVnexpressList("https://vnexpress.net/rss/oto-xe-may.rss", "Others"));
                 vnexpressOthersList.addAll(ArticlesManager.getVnexpressList("https://vnexpress.net/rss/du-lich.rss", "Others"));
 //                vnexpressOthersList.addAll(ArticlesManager.getVnexpressList("https://vnexpress.net/rss/gia-dinh.rss", "Others"));
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -652,6 +722,7 @@ public class ArticlesList {
                 zingOthersList.addAll(ArticlesManager.getZingWebList("https://zingnews.vn/oto.html", "Others"));
                 zingOthersList.addAll(ArticlesManager.getZingWebList("https://zingnews.vn/xu-huong.html", "Others"));
                 zingOthersList.addAll(ArticlesManager.getZingWebList("https://zingnews.vn/am-thuc.html", "Others"));
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -662,6 +733,7 @@ public class ArticlesList {
                 tuoiTreOthersList = ArticlesManager.getTuoiTreList("https://tuoitre.vn/rss/du-lich.rss", "Others");
                 tuoiTreOthersList.addAll(ArticlesManager.getTuoiTreList("https://tuoitre.vn/rss/xe.rss", "Others"));
                 tuoiTreOthersList.addAll(ArticlesManager.getTuoiTreList("https://tuoitre.vn/rss/nhip-song-tre.rss", "Others"));
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -673,6 +745,7 @@ public class ArticlesList {
                 thanhNienOthersList.addAll(ArticlesManager.getThanhNienList("https://thanhnien.vn/rss/doi-song/am-thuc.rss", "Others"));
                 thanhNienOthersList.addAll(ArticlesManager.getThanhNienList("https://thanhnien.vn/rss/du-lich.rss", "Others"));
                 thanhNienOthersList.addAll(ArticlesManager.getThanhNienList("https://thanhnien.vn/rss/giao-duc/du-hoc.rss", "Others"));
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -682,6 +755,7 @@ public class ArticlesList {
             try {
                 nhanDanOthersList = ArticlesManager.getNhanDanWebList("https://nhandan.vn/du-lich", "Others");
                 nhanDanOthersList.addAll(ArticlesManager.getNhanDanWebList("https://nhandan.vn/bandoc", "Others"));
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -697,11 +771,14 @@ public class ArticlesList {
     }
 
     public static void getSearchList(String keyword) throws IOException {
+        HomeSceneController.progressBar.setProgress(0.0);
+
         ExecutorService es = Executors.newCachedThreadPool();
         es.execute(() -> {
             vnexpressSearchList.clear();
             try {
                 vnexpressSearchList = ArticlesManager.getVnexpressSearchList(keyword, "Search");
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.25);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -710,6 +787,7 @@ public class ArticlesList {
             zingSearchList.clear();
             try {
                 zingSearchList = ArticlesManager.getZingSearchList(keyword, "Search");
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.25);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -718,6 +796,7 @@ public class ArticlesList {
             tuoiTreSearchList.clear();
             try {
                 tuoiTreSearchList = ArticlesManager.getTuoiTreSearchList(keyword, "Search");
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.25);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -726,6 +805,7 @@ public class ArticlesList {
             nhanDanSearchList.clear();
             try {
                 nhanDanSearchList = ArticlesManager.getNhanDanSearchList(keyword, "Search");
+                HomeSceneController.progressBar.setProgress(HomeSceneController.progressBar.getProgress() + 0.25);
             } catch (IOException e) {
                 e.printStackTrace();
             }

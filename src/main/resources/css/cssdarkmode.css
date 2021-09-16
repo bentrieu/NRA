@@ -23,11 +23,13 @@
     -fx-text-fill: -fx-black;
 }
 
+.progress-bar {
+    -fx-accent: -fx-blue;
+}
 .progress-bar > .bar {
     -fx-background-radius: 10;
     -fx-background-insets: 0;
 }
-
 .progress-bar > .track {
     -fx-background-radius: 10;
     -fx-background-insets: 0;

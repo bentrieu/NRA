@@ -66,7 +66,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button alignment="CENTER" contentDisplay="RIGHT" graphicTextGap="3.0" layoutX="283.0" layoutY="371.0" mnemonicParsing="false" onAction="#gettingStarted" prefHeight="35.0" prefWidth="169.0" styleClass="button1" stylesheets="@../css/loadingscreen.css" text="Getting Started" AnchorPane.bottomAnchor="54.0" AnchorPane.leftAnchor="273.0" AnchorPane.rightAnchor="273.0">
+                  <Button fx:id="gettingStartedButton" alignment="CENTER" contentDisplay="RIGHT" graphicTextGap="3.0" layoutX="283.0" layoutY="371.0" mnemonicParsing="false" onAction="#gettingStarted" prefHeight="35.0" prefWidth="169.0" styleClass="button1" stylesheets="@../css/loadingscreen.css" text="Getting Started" AnchorPane.bottomAnchor="54.0" AnchorPane.leftAnchor="273.0" AnchorPane.rightAnchor="273.0">
                      <graphic>
                         <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                            <image>

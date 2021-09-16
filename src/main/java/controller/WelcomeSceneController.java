@@ -1,11 +1,15 @@
 package controller;
 
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -23,11 +27,14 @@ import java.util.ResourceBundle;
 public class WelcomeSceneController implements Initializable {
     @FXML
     private AnchorPane anchorPane;
+    @FXML
+    private Button gettingStartedButton;
 
     public static ProgressBar progressBar = new ProgressBar();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        gettingStartedButton.setText("Loading now");
         AnchorPane.setLeftAnchor(progressBar, 50.0);
         AnchorPane.setRightAnchor(progressBar, 50.0);
         AnchorPane.setBottomAnchor(progressBar, 20.0);
@@ -35,7 +42,17 @@ public class WelcomeSceneController implements Initializable {
         progressBar.setProgress(0.0);
         progressBar.getStylesheets().add("/css/cssdarkmode.css");
         progressBar.getStyleClass().add("progress-bar");
-        progressBar.setPrefHeight(10);
+        progressBar.setPrefHeight(5);
+        progressBar.progressProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                if (newValue.doubleValue() == 1) {
+                    Platform.runLater(() -> {
+                        gettingStartedButton.setText("Getting Started");
+                    });
+                }
+            }
+        });
     }
 
     public void close() {
