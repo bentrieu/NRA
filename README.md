@@ -1,4 +1,4 @@
-# PunPoQue
+# PunPoQue (NRA Team)
 Application for reading Vietnamese news
 
 Ngo Ngoc Thinh - s3879364
