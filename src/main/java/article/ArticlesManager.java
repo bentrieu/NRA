@@ -390,6 +390,7 @@ public class ArticlesManager extends Application {
                 services.showDocument(article.getLinkToFullArticles());
             });
             Text text6 = new Text(".");
+            text6.getStyleClass().add("textReadTheOriginalPost");
             textFlow5.getChildren().addAll(text5, articleLink, text6);
             textFlow5.setStyle("-fx-font-style: italic; -fx-font-size: 18; -fx-alignment: left;");
             vbox.getChildren().add(textFlow5);
@@ -884,6 +885,7 @@ public class ArticlesManager extends Application {
                 services.showDocument(article.getLinkToFullArticles());
             });
             Text text6 = new Text(".");
+            text6.getStyleClass().add("textReadTheOriginalPost");
             textFlow5.getChildren().addAll(text5, articleLink, text6);
             textFlow5.setStyle("-fx-font-style: italic; -fx-font-size: 18; -fx-alignment: left;");
             vbox.getChildren().add(textFlow5);
@@ -1278,6 +1280,7 @@ public class ArticlesManager extends Application {
                 services.showDocument(article.getLinkToFullArticles());
             });
             Text text6 = new Text(".");
+            text6.getStyleClass().add("textReadTheOriginalPost");
             textFlow5.getChildren().addAll(text5, articleLink, text6);
             textFlow5.setStyle("-fx-font-style: italic; -fx-font-size: 18; -fx-alignment: left;");
             vbox.getChildren().add(textFlow5);
@@ -2194,6 +2197,7 @@ public class ArticlesManager extends Application {
                 services.showDocument(article.getLinkToFullArticles());
             });
             Text text6 = new Text(".");
+            text6.getStyleClass().add("textReadTheOriginalPost");
             textFlow5.getChildren().addAll(text5, articleLink, text6);
             textFlow5.setStyle("-fx-font-style: italic; -fx-font-size: 18; -fx-alignment: left;");
             vbox.getChildren().add(textFlow5);
