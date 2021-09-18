@@ -9,9 +9,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1fc20fdf-c41c-4917-b80a-51ee7ac5045b" name="Default Changelist" comment="change time out time to 2 second">
+    <list default="true" id="1fc20fdf-c41c-4917-b80a-51ee7ac5045b" name="Default Changelist" comment="fixing &quot;.&quot; color">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/article/ArticlesManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/article/ArticlesManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,13 +43,17 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../javafx-sdk-11.0.2/lib" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.19409762" />
     <property name="project.structure.side.proportion" value="0.331384" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Administrator\Documents\NRA\lib" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Administrator\Documents\NRA" />
       <recent name="C:\Users\Administrator\Documents\NRA\src\main\resources\layouts" />
       <recent name="C:\Users\Administrator\Documents\NRA\src\main\resources" />
     </key>
@@ -201,7 +204,14 @@
       <option name="project" value="LOCAL" />
       <updated>1631889594584</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="fixing &quot;.&quot; color">
+      <created>1631894935309</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1631894935309</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -251,6 +261,7 @@
     <MESSAGE value="adding loading bar to HomeSceneController" />
     <MESSAGE value="adding acknowledgement" />
     <MESSAGE value="change time out time to 2 second" />
-    <option name="LAST_COMMIT_MESSAGE" value="change time out time to 2 second" />
+    <MESSAGE value="fixing &quot;.&quot; color" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixing &quot;.&quot; color" />
   </component>
 </project>
